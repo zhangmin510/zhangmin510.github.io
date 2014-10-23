@@ -1,0 +1,387 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>SSH开发新方案之基于SSH开发架构的重新分层 | ZhangMin.name</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="zhangmin.name">
+    
+    <meta name="description" content="www.diybl.com &amp;nbsp; &amp;nbsp;时间 ： 2010-06-28 &amp;nbsp;作者：佚名 &amp;nbsp; 编辑：壹枝雪糕&amp;nbsp;现代的企业开发中，越来越多地引入了多层架构设计模式。Struts+Spring+Hibernate (一下简称为SSH)就是其中之一，SSH架构是当前">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/blog/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/blog/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/blog/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/blog/"><img src="/blog/img/logo.svg" alt="ZhangMin.name" title="ZhangMin.name"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/blog/" title="ZhangMin.name">ZhangMin.name</a></h1>
+				<h2 class="blog-motto">勤思敏行 思行合一</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.zhangmin.name/blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2012/03/SSH开发新方案之基于SSH开发架构的重新分层/" title="SSH开发新方案之基于SSH开发架构的重新分层" itemprop="url">SSH开发新方案之基于SSH开发架构的重新分层</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://www.zhangmin.name/blog" title="zhangmin.name">zhangmin.name</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2012-03-22T02:44:31.000Z" itemprop="datePublished">3月 22 2012</time>
+    更新日期:<time datetime="2014-10-23T07:14:59.000Z" itemprop="dateModified">10月 23 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<div>www.diybl.com &nbsp; &nbsp;时间 ： 2010-06-28 &nbsp;作者：佚名 &nbsp; 编辑：壹枝雪糕&nbsp;</div><br><div>现代的企业开发中，越来越多地引入了多层架构设计模式。Struts+Spring+Hibernate (一下简称为SSH)就是其中之一，SSH架构是当前非常火的架构，很多金融、电信项目，大型门户网站均选择该架构作为业务支撑架构，开发流程也已经非常成熟。但是该结构开发起来，依旧存在一些问题。分析这些问题，得先从SSH架构的组成说起。</div><br><div>SSH为Struts+Spring+Hibernate的组成方式，Struts实现MVC，Spring负责架构的结合，Hibernate进行数据的持久化。通常其分层开发的结构图(以一个业务新增为例)如下：</div><br><div>&nbsp;</div><br><div><img src="http://pic.diybl.com/pic/20100628/212224/0.png" alt="diyblPic"></div>
+
+<p>&nbsp;</p>
+<div>这样的结构，满足了一般的业务需要，但是对于当前日益复杂化的WEB2.0的开发，却存在不少问题，归纳起来主要有以下几点的不足：</div><br><div>A)DAO和服务层容易出现职责不明，由于按照MVC逻辑，业务代码应该写在Struts Action里，但是其事务的提供，却是配置在Service层。为了一组在逻辑上完整的数据操作业务逻辑，需要涉及两个层（Serveice、Action）来进行编写，遇到判断的情况下，为了保证完整的事务操作，则需要将业务代码移到Service层完成，而通常习惯了在Struts Action里调用多次Service而产生多个事务而在出现Exception时导致出错时操作之前调用的Service事务的业务数据没有回滚。</div><br><div>B)当需要返回的数据供AJAX使用，操作JSON或XML的的大量使用时。开发起来会很费力，一段同样的业务代码，为了使用AJAX和XML可能需要重新编写一次，或者在同一个ACTION里通过标志来判断，对分层结构造成了比较糟糕的破坏。如果设计得不好，为了使用JSON和XML还得额外增加大量的配置，严重降低了开发效率。</div><br><div>因此，为了克服这些缺点，本人对于SSH架构，进行了实现了重新的分层，共享了业务代码。简化了开发、增强了与AJAX技术、MXL技术的结合。提供了一种更高效的开发模式。</div><br><div>其开发的结构图如下：</div><br><div>&nbsp;</div><br><div>&nbsp;</div>
+
+<p><img src="http://pic.diybl.com/pic/20100628/212224/1.png" alt="diyblPic"></p>
+<p>看到这个架构图有人可能会问，Struts Action类的编写去哪了呢？答案正是这个架构的优点，由于业务代码统一实现IbusinessService接口，使得只需要相对固定的几个Struts Action类调用Service层的方法，便可以完成工作。包括JSON格式输出，XML输出及WebService输出均调用Service层方法来完成功能。这样便实现了业务代码的分离，以及与前端框架的极大解耦。</p>
+<p>&nbsp;</p>
+<p>本文转自：飞诺网开发频道<a href="http://www.diybl.com/course/3_program/java/javajs/2008525/117741.html" target="_blank" rel="external">http://www.diybl.com/course/3_program/java/javajs/2008525/117741.html</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/Java/">Java</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.zhangmin.name/blog/2012/03/SSH开发新方案之基于SSH开发架构的重新分层/" data-title="SSH开发新方案之基于SSH开发架构的重新分层 | ZhangMin.name" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2012/04/Ubuntu-12-04-LTS-倒计时/" title="Ubuntu 12.04 LTS 倒计时">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Ubuntu 12.04 LTS 倒计时</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2012/03/CVS常用命令速查/"  title="CVS常用命令速查">
+ <strong>NEXT:</strong><br/> 
+ <span>CVS常用命令速查
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/blog/categories/Java/" title="Java">Java<sup>21</sup></a></li>
+		
+			<li><a href="/blog/categories/MSE/" title="MSE">MSE<sup>102</sup></a></li>
+		
+			<li><a href="/blog/categories/linux/" title="linux">linux<sup>8</sup></a></li>
+		
+			<li><a href="/blog/categories/storm/" title="storm">storm<sup>1</sup></a></li>
+		
+			<li><a href="/blog/categories/分享/" title="分享">分享<sup>70</sup></a></li>
+		
+			<li><a href="/blog/categories/原创/" title="原创">原创<sup>21</sup></a></li>
+		
+			<li><a href="/blog/categories/学习笔记/" title="学习笔记">学习笔记<sup>7</sup></a></li>
+		
+			<li><a href="/blog/categories/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/blog/tags/Java/" title="Java">Java<sup>22</sup></a></li>
+		
+			<li><a href="/blog/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/OSGi/" title="OSGi">OSGi<sup>2</sup></a></li>
+		
+			<li><a href="/blog/tags/UCAS/" title="UCAS">UCAS<sup>9</sup></a></li>
+		
+			<li><a href="/blog/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>6</sup></a></li>
+		
+			<li><a href="/blog/tags/Web-Service/" title="Web Service">Web Service<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/public-speaking/" title="public speaking">public speaking<sup>18</sup></a></li>
+		
+			<li><a href="/blog/tags/storm/" title="storm">storm<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/wordpress/" title="wordpress">wordpress<sup>2</sup></a></li>
+		
+			<li><a href="/blog/tags/国科大/" title="国科大">国科大<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/工程哲学/" title="工程哲学">工程哲学<sup>10</sup></a></li>
+		
+			<li><a href="/blog/tags/技术/" title="技术">技术<sup>15</sup></a></li>
+		
+			<li><a href="/blog/tags/明德/" title="明德">明德<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/札记/" title="札记">札记<sup>25</sup></a></li>
+		
+			<li><a href="/blog/tags/生活/" title="生活">生活<sup>13</sup></a></li>
+		
+			<li><a href="/blog/tags/记事/" title="记事">记事<sup>5</sup></a></li>
+		
+			<li><a href="/blog/tags/讲座/" title="讲座">讲座<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/读书·旅行/" title="读书·旅行">读书·旅行<sup>7</sup></a></li>
+		
+			<li><a href="/blog/tags/问题与算法/" title="问题与算法">问题与算法<sup>12</sup></a></li>
+		
+			<li><a href="/blog/tags/马上有OFFER/" title="马上有OFFER">马上有OFFER<sup>13</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://www.zhangmin.name/blog" target="_blank" title="zhangmin.name">zhangmin.name</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/blog/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"zhangmin"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>

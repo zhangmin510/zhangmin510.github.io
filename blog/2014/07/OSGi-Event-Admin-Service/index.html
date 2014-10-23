@@ -1,0 +1,424 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>OSGi Event Admin Service | ZhangMin.name</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="zhangmin.name">
+    
+    <meta name="description" content="Event Admin是OSGi中用于bundles之间通信的手段,是处理事件的一种通用机制。采用的是pub/sub架构。
+发布订阅模型
+发布订阅模型应满足的需求：
+1. 发布者不应该拥有订阅者的信息。2. 新的发布者或者新的订阅者的动态增加或者删除不能影响这个发布订阅系统3. 订阅者不应该阻塞发布">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/blog/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/blog/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/blog/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/blog/"><img src="/blog/img/logo.svg" alt="ZhangMin.name" title="ZhangMin.name"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/blog/" title="ZhangMin.name">ZhangMin.name</a></h1>
+				<h2 class="blog-motto">勤思敏行 思行合一</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.zhangmin.name/blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2014/07/OSGi-Event-Admin-Service/" title="OSGi Event Admin Service" itemprop="url">OSGi Event Admin Service</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://www.zhangmin.name/blog" title="zhangmin.name">zhangmin.name</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-07-03T08:10:38.000Z" itemprop="datePublished">7月 3 2014</time>
+    更新日期:<time datetime="2014-10-23T07:14:59.000Z" itemprop="dateModified">10月 23 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#发布订阅模型"><span class="toc-number">1.</span> <span class="toc-text">发布订阅模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Topic"><span class="toc-number">2.</span> <span class="toc-text">Topic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Event"><span class="toc-number">3.</span> <span class="toc-text">Event</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#OSGi框架的事件"><span class="toc-number">3.1.</span> <span class="toc-text">OSGi框架的事件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件处理"><span class="toc-number">4.</span> <span class="toc-text">事件处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件过滤"><span class="toc-number">5.</span> <span class="toc-text">事件过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Event_Admin的缺点"><span class="toc-number">6.</span> <span class="toc-text">Event Admin的缺点</span></a></li></ol>
+		</div>
+		
+		<p>Event Admin是OSGi中用于bundles之间通信的手段,是处理事件的一种通用机制。采用的是pub/sub架构。</p>
+<h3 id="发布订阅模型">发布订阅模型</h3>
+<p>发布订阅模型应满足的需求：</p>
+<p>1. 发布者不应该拥有订阅者的信息。<br>2. 新的发布者或者新的订阅者的动态增加或者删除不能影响这个发布订阅系统<br>3. 订阅者不应该阻塞发布者。</p>
+<p>在发布订阅模型需要一个中间人来解耦发布者和订阅者。在Event Admin Service中这个中间人就是EventAdmin。</p>
+<p>Event Admin service使用Topic来定义分发通道，类似于JMS。发布者发送事件到Topic，订阅者从Topic中接受信息。向Topic发送事件的发布者可以是多个，从Topic接受的订阅者也可以是多个。也就是说是一种多对多的关系。</p>
+<p>下面是示例代码：</p>
+<p>[java]<br>SimpleSubscriber subscriber = new SimpleSubscriber();<br>Dictionary dict = new Properties();<br>dict.put(EventConstants.EVENT_TOPIC,<br>&quot;manning/osgi/LoginEvent&quot;);<br>context.registerService(EventHandler.class.getName(),<br>subscriber, dict);​<br>[/java]<br>[java]<br>public class SimpleSubscriber implements EventHandler {<br>public void handleEvent(Event event) {<br>System.out.println(&quot;Received event on topic = &quot; +<br>event.getTopic());<br>for (String propertyName :<br>event.getPropertyNames()) {<br>System.out.println(&quot;\t&quot; + propertyName + &quot; = &quot; +<br>event.getProperty(propertyName));<br>​}<br>}<br>}<br>[/java]</p>
+<h3 id="Topic">Topic</h3>
+<p>Topic一般使用类似于java的包名的命名方法，只不过使用右斜杠替换点号。</p>
+<p>如果使用”manning/osgi/TravelAgent/*”，则会匹配四层的事件，如<br>“manning/osgi/TravelAgent/CarEvent”<br>“manning/osgi/TravelAgent/HotelEvent”<br>“manning/osgi/TravelAgent/FlightEvent”<br>但不会匹配<br>​”manning/osgi/TravelAgent/HotelEvent/USA”<br>“manning/osgi/TravelAgent”<br>因为它们一个是五层一个是四层。</p>
+<p>一个空的或者不存在的EVENT_TOPIC表示不接受任何事件，一个通配符”*”表示接收所有事件。</p>
+<p>指定多个订阅者接收多种事件的方法是使用Sring[]。</p>
+<p>[java]<br>Dictionary dict = new Properties();<br>dict.put(EventConstants.EVENT_TOPIC,<br>new String [] {&quot;manning/osgi/TravelAgent/CarEvent&quot;,<br>&quot;manning/osgi/TravelAgent/HotelEvent&quot;,<br>&quot;manning/osgi/TravelAgent/FlightEvent&quot;});<br>context.registerService(EventHandler.class.getName(),<br>subscriber, dict);<br>[/java]​</p>
+<h3 id="Event">Event</h3>
+<p>Event对象包含Topic名和时间相关的属性信息。自定义事件对象必须继承Event。关于事件的常量最好放到一个Property对象中，而不是写在代码中。</p>
+<h4 id="OSGi框架的事件">OSGi框架的事件</h4>
+<p>框架变化：包括启动类路径变化，包刷新，异常，被停止等等。<br>bundle变化：包括安装，更新，卸载。<br>服务变化：服务注册，修改，删除。</p>
+<p>这些事件可以通过bundle context进行监听。事件会按照注册的顺序进行发送。<br>[java]<br>public void start(BundleContext bundleContext) throws Exception {<br>BundleListener bundleListener = // …<br>bundleContext.addBundleListener(bundleListener);<br>// …<br>}<br>[/java]​</p>
+<p>[java]<br>public class MyBundleListener implements BundleListener {<br>public void bundleChanged(BundleEvent bundleEvent) {<br>if (bundleEvent.getType() == BundleEvent.INSTALLED) {<br>// …<br>}<br>}<br>}<br>[/java]​</p>
+<p>BundleEvent 包含一个Bundle类的实例，可以通过这个类来获取bundle的任何内容。</p>
+<h3 id="事件处理">事件处理</h3>
+<p>EventAdmin的post方法异步发送事件，是非阻塞的；而send则是同步发送事件，是阻塞的。</p>
+<p>要注意EvenHandler的handleEvent方法要尽快返回，而且该方法有可能被阻塞。</p>
+<p>事件的传递顺序也受发布者发布方式的影响。如果是多线程发送，则无法保证事件的顺序。</p>
+<p>如果handleEvent抛出一个异常，该异常并不会传递到发布者，EventAdmin会处理下一个订阅者。</p>
+<p>EventAdmin在发送事件时会将所有可用的订阅者做一份拷贝，这就避免了订阅者收到在它存在之前的事件。同时，EventAdmin也会确保订阅者仍然注册并愿意接收事件。</p>
+<p>由于发布者和订阅者的解耦，要特别注意发生死锁的情况。</p>
+<h3 id="事件过滤">事件过滤</h3>
+<p>使用EVENT_FILTERE来进行事件过滤。</p>
+<p>[java]<br>Dictionary payload = new Properties();<br>payload.put(&quot;price&quot;, 80);<br>Event event =<br>new Event(&quot;manning/osgi/TravelAgent/HotelEvent&quot;, payload);<br>admin.postEvent(event);<br>[/java]<br>[java]<br>Dictionary dict = new Properties();<br>dict.put(EventConstants.EVENT_TOPIC,<br>&quot;manning/osgi/TravelAgent/HotelEvent&quot;);<br>dict.put(EventConstants.EVENT_FILTER, &quot;(price&lt;100)&quot;);<br>context.registerService(EventHandler.class.getName(),<br>travelAgentEventHandler, dict);<br>[/java]​</p>
+<h3 id="Event_Admin的缺点">Event Admin的缺点</h3>
+<p>​1. 事件丢失</p>
+<p>如果Event Admin突然挂掉，事件就会丢失。解决的办法是可以通过配置让Event Admin对事件进行持久化存储。</p>
+<ol>
+<li>过滤能力有限</li>
+</ol>
+<p>基于LDAP的过滤机制很难实现复杂的事件过滤。解决的方法是通过插入复杂事件处理引擎来实现。<br>另一个问题是对于大型系统事件的关联属性可能很多，处理起来会非常复杂，而且有可能导致事件内容过大。解决的办法是直接发送<br>java 对象，然后再接收端进行相应的处理。<br>另一个缺点是服务保证订阅者接受事件的顺序。解决的方法是扩展EventAdmin。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/Java/">Java</a><a href="/blog/tags/OSGi/">OSGi</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/Java/">Java</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.zhangmin.name/blog/2014/07/OSGi-Event-Admin-Service/" data-title="OSGi Event Admin Service | ZhangMin.name" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2014/07/可爱又可敬的苏轼/" title="可爱又可敬的苏轼">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  可爱又可敬的苏轼</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2014/06/Java并发编程入门/"  title="Java并发编程入门">
+ <strong>NEXT:</strong><br/> 
+ <span>Java并发编程入门
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#发布订阅模型"><span class="toc-number">1.</span> <span class="toc-text">发布订阅模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Topic"><span class="toc-number">2.</span> <span class="toc-text">Topic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Event"><span class="toc-number">3.</span> <span class="toc-text">Event</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#OSGi框架的事件"><span class="toc-number">3.1.</span> <span class="toc-text">OSGi框架的事件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件处理"><span class="toc-number">4.</span> <span class="toc-text">事件处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件过滤"><span class="toc-number">5.</span> <span class="toc-text">事件过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Event_Admin的缺点"><span class="toc-number">6.</span> <span class="toc-text">Event Admin的缺点</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/blog/categories/Java/" title="Java">Java<sup>21</sup></a></li>
+		
+			<li><a href="/blog/categories/MSE/" title="MSE">MSE<sup>102</sup></a></li>
+		
+			<li><a href="/blog/categories/linux/" title="linux">linux<sup>8</sup></a></li>
+		
+			<li><a href="/blog/categories/storm/" title="storm">storm<sup>1</sup></a></li>
+		
+			<li><a href="/blog/categories/分享/" title="分享">分享<sup>70</sup></a></li>
+		
+			<li><a href="/blog/categories/原创/" title="原创">原创<sup>21</sup></a></li>
+		
+			<li><a href="/blog/categories/学习笔记/" title="学习笔记">学习笔记<sup>7</sup></a></li>
+		
+			<li><a href="/blog/categories/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/blog/tags/Java/" title="Java">Java<sup>22</sup></a></li>
+		
+			<li><a href="/blog/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/OSGi/" title="OSGi">OSGi<sup>2</sup></a></li>
+		
+			<li><a href="/blog/tags/UCAS/" title="UCAS">UCAS<sup>9</sup></a></li>
+		
+			<li><a href="/blog/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>6</sup></a></li>
+		
+			<li><a href="/blog/tags/Web-Service/" title="Web Service">Web Service<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/public-speaking/" title="public speaking">public speaking<sup>18</sup></a></li>
+		
+			<li><a href="/blog/tags/storm/" title="storm">storm<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/wordpress/" title="wordpress">wordpress<sup>2</sup></a></li>
+		
+			<li><a href="/blog/tags/国科大/" title="国科大">国科大<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/工程哲学/" title="工程哲学">工程哲学<sup>10</sup></a></li>
+		
+			<li><a href="/blog/tags/技术/" title="技术">技术<sup>15</sup></a></li>
+		
+			<li><a href="/blog/tags/明德/" title="明德">明德<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/札记/" title="札记">札记<sup>25</sup></a></li>
+		
+			<li><a href="/blog/tags/生活/" title="生活">生活<sup>13</sup></a></li>
+		
+			<li><a href="/blog/tags/记事/" title="记事">记事<sup>5</sup></a></li>
+		
+			<li><a href="/blog/tags/讲座/" title="讲座">讲座<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/读书·旅行/" title="读书·旅行">读书·旅行<sup>7</sup></a></li>
+		
+			<li><a href="/blog/tags/问题与算法/" title="问题与算法">问题与算法<sup>12</sup></a></li>
+		
+			<li><a href="/blog/tags/马上有OFFER/" title="马上有OFFER">马上有OFFER<sup>13</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://www.zhangmin.name/blog" target="_blank" title="zhangmin.name">zhangmin.name</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/blog/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"zhangmin"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>

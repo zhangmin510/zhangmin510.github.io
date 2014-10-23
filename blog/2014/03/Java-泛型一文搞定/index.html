@@ -1,0 +1,466 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Java 泛型一文搞定 | ZhangMin.name</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="zhangmin.name">
+    
+    <meta name="description" content="为什么要引入泛型机制
+你可以使用泛型机制写出更安全、更简单易读的代码，而不是使用Object变量和强制转换。泛型编程意味着你可以写出对不同类型都可以重用的代码。
+先看在Java SE 5.0之前，java的泛型编程是通过继承实现的。如一个ArrayList的实现：[java]public class">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/blog/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/blog/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/blog/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/blog/"><img src="/blog/img/logo.svg" alt="ZhangMin.name" title="ZhangMin.name"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/blog/" title="ZhangMin.name">ZhangMin.name</a></h1>
+				<h2 class="blog-motto">勤思敏行 思行合一</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.zhangmin.name/blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2014/03/Java-泛型一文搞定/" title="Java 泛型一文搞定" itemprop="url">Java 泛型一文搞定</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://www.zhangmin.name/blog" title="zhangmin.name">zhangmin.name</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-03-04T08:24:59.000Z" itemprop="datePublished">3月 4 2014</time>
+    更新日期:<time datetime="2014-10-23T07:14:59.000Z" itemprop="dateModified">10月 23 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要引入泛型机制"><span class="toc-number">1.</span> <span class="toc-text">为什么要引入泛型机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型类"><span class="toc-number">2.</span> <span class="toc-text">泛型类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型方法"><span class="toc-number">3.</span> <span class="toc-text">泛型方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型参数的边界"><span class="toc-number">4.</span> <span class="toc-text">类型参数的边界</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型代码与虚拟机"><span class="toc-number">5.</span> <span class="toc-text">泛型代码与虚拟机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型擦除引起的问题"><span class="toc-number">6.</span> <span class="toc-text">类型擦除引起的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java泛型的限制和局限（多数是由于类型擦除）"><span class="toc-number">7.</span> <span class="toc-text">java泛型的限制和局限（多数是由于类型擦除）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型通配符"><span class="toc-number">8.</span> <span class="toc-text">类型通配符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#协变与泛型"><span class="toc-number">9.</span> <span class="toc-text">协变与泛型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型类型参数T,?和Object之间的区别"><span class="toc-number">10.</span> <span class="toc-text">泛型类型参数T,?和Object之间的区别</span></a></li></ol>
+		</div>
+		
+		<h3 id="为什么要引入泛型机制">为什么要引入泛型机制</h3>
+<p>你可以使用泛型机制写出更安全、更简单易读的代码，而不是使用Object变量和强制转换。<br>泛型编程意味着你可以写出对不同类型都可以重用的代码。</p>
+<p>先看在Java SE 5.0之前，java的泛型编程是通过继承实现的。如一个ArrayList的实现：<br>[java]<br>public class ArrayList{<br>    public Object get(int i){…}<br>    public void add(Object o){…}<br>    …<br>    private Object[] elementData;<br>[/java]</p>
+<p>这种方法有两个问题：</p>
+<p>1）当你调用get方法时，你必须使用强制类型转换。</p>
+<p>2）由于没有类型检查，你可以add任何类型的对象。而这可能导致运行时发生错误。</p>
+<p>Java泛型使用类型参数很好的解决了这两个问题：无论是编译器还是程序员都可以很容易的获得类型<br>信息，从而避免强制类型转换并且必要时（如add）进行类型检查以避免运行时的发生错误。</p>
+<p>一般情况下，只有涉及到大量的强制转换和一般类型（如Object，Comparable）的代码才会从泛型编程中受益。</p>
+<h3 id="泛型类">泛型类</h3>
+<p>将类型参数作为方法返回值和域及本地变量的类型定义，一个泛型类定义示例:</p>
+<p>[java]<br>public class Pair&lt;T,U&gt;{<br>    private T first;<br>    private U second;<br>    public Pair(){<br>        first = null;<br>        second = null;<br>    }<br>    public Pair(T first,U second){<br>        this.first = first;<br>        this.second = second;<br>    }<br>    public T getFirst(){<br>        return first;<br>    }<br>    …<br>}<br>[/java]</p>
+<h3 id="泛型方法">泛型方法</h3>
+<p>你也可以在普通类中定义泛型方法，示例如下：</p>
+<p>[java]<br>class GenericMethod{<br>    public static &lt;T&gt; T getMiddle(T[] a){<br>           return a[a.length/2];<br>    }<br>}<br>[/java]<br>注意类型参数&lt;T&gt;在修饰符（public static）后面，方法返回类型之前。<br>在使用泛型方法时你可以指定类型，如:</p>
+<p>[java]<br>String[] name = {&quot;a&quot;,&quot;b&quot;};<br>String mid = GenericMethod.&lt;String&gt;getMiddle(names);<br>[/java]</p>
+<p>但一般情况下你不需要指定，因为编译器会帮你搞定的。</p>
+<h3 id="类型参数的边界">类型参数的边界</h3>
+<p>可以指定类型参数的边界：</p>
+<p>[java]<br>&lt;T extends BoundingType&gt;<br>[/java]</p>
+<p>也可以是多个边界：</p>
+<p>[java]<br>&lt;T extends Comparable &amp; Serializable&gt;<br>[/java]</p>
+<p>由于java是单继承，所以在指定泛型类型边界时只能指定一个类，且必须放在第一位，但可以指定多个接口。</p>
+<h3 id="泛型代码与虚拟机">泛型代码与虚拟机</h3>
+<p>当你定义泛型时，编译器会自动提供一个对应的原始类型。原始类型的名称就是泛型类型的名称，只是移除了类型参数。<br>类型变量将会被第一个边界类型替代，如果没有边界类型，将由Object代替。因此，一般把标记接口（没有方法的接口，如<br>Seralizable）放在边界类型列表的后一位。</p>
+<p>下面的代码显示了Pair&lt;T,U&gt;的原始类型：</p>
+<p>[java]<br>public class Pair{<br>    private Object first;<br>    private Object second;<br>    public Pair(){<br>        first = null;<br>        second = null;<br>    }<br>    public Pair(Object first,Object second){<br>        this.first = first;<br>        this.second = second;<br>    }<br>    public Object getFirst(){<br>        return first;<br>    }<br>    …<br>}<br>[/java]</p>
+<p>当你进行方法调用时，编译器会先调用方法（Object的），然后自动加入类型转换。</p>
+<h3 id="类型擦除引起的问题">类型擦除引起的问题</h3>
+<p>java的泛型在编译期有效，在运行期被擦除。</p>
+<p>对于代码：</p>
+<p>[java]<br>class DateInterval extends Pair&lt;Date&gt;<br>{<br>public void setSecond(Date second)<br>{<br>if (second.compareTo(getFirst()) &gt;= 0)<br>super.setSecond(second);<br>}<br>}<br>[/java]</p>
+<p>类型擦除后为：</p>
+<p>[java]<br>class DateInterval extends Pair<br>{<br>public void setSecond(Date second)<br>{…}<br>. . .<br>}<br>[/java]</p>
+<p>但是DateInterval内还有一个方法，继承自Pair，即：</p>
+<p>[java]<br>public void setSecond(Object second)<br>[/java]</p>
+<p>这两个方法是完全不同的方法，因为它们的参数类型不一样。当进行调用时，它们应该没什么不同。</p>
+<p>[java]<br>DateInterval interval = new DateInterval(. . .);<br>Pair&lt;Date&gt; pair = interval;<br>pair.setSecond(aDate);<br>[/java]</p>
+<p>期望的运行结果是调用dateInterval的setSecond方法。</p>
+<p>为了确保正确性，编译器会在DateInterval中加入桥方法：</p>
+<p>[java]<br>public void setSecond(Object second) {<br>      setSecond((Date) second);<br>}<br>[/java]</p>
+<p>现在让我们看一下执行过程：</p>
+<p>pair的类型是Pair&lt;Date&gt;，该类只有一个setSecond(Object)方法。编译器调用pair指向的对象的<br>方法即DateInterval的setSecond(Object),这是一个桥方法，调用了我们期望调用的方法。</p>
+<p>关于泛型代码的翻译：</p>
+<p>1）虚拟机没有泛型，只有普通的类和方法。</p>
+<p>2）类型参数都被替换了。</p>
+<p>3）桥方法用于保证多态。</p>
+<p>4）强制转换被插入以保证类型安全。</p>
+<h3 id="java泛型的限制和局限（多数是由于类型擦除）">java泛型的限制和局限（多数是由于类型擦除）</h3>
+<p>1）类型参数不能使用原始类型。类型被擦除成Object了。</p>
+<p>2）运行时类型查询只适合原始类型。getClass返回的也是原始类型。</p>
+<p>3）不能抛出或者捕捉泛型类的实例。</p>
+<p>[java]<br>public static &lt;T extends Throwable&gt; void doWork(Class&lt;T&gt; t)<br>{<br>try<br>{<br>do work<br>}<br>catch (T e)//错误<br>{<br>}<br>}<br>[/java]</p>
+<p>但可以指定抛出异常：</p>
+<p>[java]<br>public static &lt;T extends Throwable&gt; void doWork(T t) throws T // OK<br>{<br>try<br>{<br>do work<br>}<br>catch (Throwable realCause)<br>{<br>t.initCause(realCause);<br>throw t;<br>}<br>}<br>[/java]</p>
+<p>4）不能创建泛型数组。类型擦除后，List&lt;Object&gt;[] 和 List&lt;String&gt;[]是一样的，由于数组会检查每一项的类型，如果类型不一致，会抛出ArrayStoreException。擦除机制不能很好的处理，仍然会抛出异常，所以干脆就不允许。（注：创建泛型数组的方法：T[] t = (T[]) Array.newInstance(class,size);)</p>
+<p>5）不能实例化类型参数变量。new T()。不过可以通过Class.newInstance来创建。</p>
+<p>6）不能再static域使用类型参数。</p>
+<p>7）小心类型擦除后的冲突。</p>
+<h3 id="类型通配符">类型通配符</h3>
+<p>java泛型支持通配符，可以单独使用一个“？”来表示任意类型，也可以使用extends关键词表示某一个类或者接口的子类型。还可以使用super关键词表示某一个类或者接口的父类型。</p>
+<p>一般情况下，泛型结构只参与“读”操作则限定上界（extends），如：</p>
+<p>[java]<br>public static &lt;E&gt; void read(List&lt;? super E&gt; list){<br>    …<br>}<br>[/java]</p>
+<p>编译器只能推断出是E类型的父类，不能确定E类型的父类到底是什么，只能在运行时确定。<br>当然你可以把它当做Object类来处理，需要时在转换成E类型，但这违背了泛型的初衷——避免强制类型转换。<br>如果使用extends，虽然也不能确定具体是什么类型，但它一定是一个确定的类型，比如read(Arrays.asList(“A’))调动该方法就可以确定是String。</p>
+<p>只参与“写”操作则限定下界（super），如：</p>
+<p>[java]<br>public static void write(List&lt;? extends Number&gt; list){<br>    …<br>}<br>[/java]</p>
+<p>编译器无法推断出泛型类型到底是什么，是Integer还是Double？在这种情况下，只有null可以write。因为null是一个万用类型，它可以是所有类的实例对象。如果使用super关键字，无论是123，还是1.23都是Number类型，都可以进行操作。</p>
+<p>如果既读又写，直接使用泛型类型，如List&lt;E&gt;。</p>
+<h3 id="协变与泛型">协变与泛型</h3>
+<p>协变（covariance）,即用一个窄类型替换宽类型。相反，逆变（contravariance），则是用宽类型替代子类型。​<br>泛型不支持协变，数组支持协变。</p>
+<p>[java]<br>Number[] n = new Integer[10];<br>//error<br>List&lt;Number&gt; ln = new ArrayList&lt;Integer&gt;();<br>[/java]</p>
+<p>java为了保证运行期安全，必须保证参数类型是固定的，所以不允许一个泛型参数可以同时包含两种类型。<br>但可以使用通配符模拟协变。</p>
+<p>[java]<br>//correct<br>List&lt;? extends Number&gt; ln = new ArrayList&lt;Integer&gt;();<br>[/java]</p>
+<p>​表示允许Number的所有子类，包括自身作为泛型类型，但在运行期只能有一个具体类型。也就是通配符只在编码期有效，<br>运行期必须是一个确定的类型。</p>
+<p>java泛型也不支持逆变，但同样可以使用super关键字模拟逆变。</p>
+<p>[java]<br>//correct<br>List&lt;? super Integer&gt; ln = new ArrayList&lt;Number&gt;();<br>[/java]</p>
+<h3 id="泛型类型参数T,?和Object之间的区别">泛型类型参数T,?和Object之间的区别</h3>
+<p>三者都可以容纳所有对象，但使用顺序应该是List&lt;T&gt;,List&lt;?&gt;,List&lt;Object&gt;。<br>List&lt;T&gt;表示集合中都是T类型，具体类型运行时确定；List&lt;?&gt;表示的是任意类型，与List&lt;T&gt;类似，<br>而List&lt;Object&gt;表示集合中的类型是Object类型.<br>List&lt;T&gt;可以进行读写操作，因为它是固定的类型，不需要转型。<br>List&lt;?&gt;是只读类型，可以且只支持删除操作，因为编译器不知道是什么类型，无法校验安全。而且List&lt;?&gt;读出的类型是Object类型，<br>需要主动转型，通常用于泛型方法的返回值。<br>List&lt;Object&gt;可以执行读写操作，但是执行写入操作时要向上转型，读出时要向下转型，而此时已经失去了泛型的意义。</p>
+<p><em>参考文献</em></p>
+<ol>
+<li>《Java核心技术》2.  《编写高质量代码——改善Java程序的151个建议》</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/Java/">Java</a><a href="/blog/tags/技术/">技术</a><a href="/blog/tags/马上有OFFER/">马上有OFFER</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/Java/">Java</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.zhangmin.name/blog/2014/03/Java-泛型一文搞定/" data-title="Java 泛型一文搞定 | ZhangMin.name" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2014/03/无锡物博会/" title="无锡物博会">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  无锡物博会</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2014/02/书呆子/"  title="书呆子">
+ <strong>NEXT:</strong><br/> 
+ <span>书呆子
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要引入泛型机制"><span class="toc-number">1.</span> <span class="toc-text">为什么要引入泛型机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型类"><span class="toc-number">2.</span> <span class="toc-text">泛型类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型方法"><span class="toc-number">3.</span> <span class="toc-text">泛型方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型参数的边界"><span class="toc-number">4.</span> <span class="toc-text">类型参数的边界</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型代码与虚拟机"><span class="toc-number">5.</span> <span class="toc-text">泛型代码与虚拟机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型擦除引起的问题"><span class="toc-number">6.</span> <span class="toc-text">类型擦除引起的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java泛型的限制和局限（多数是由于类型擦除）"><span class="toc-number">7.</span> <span class="toc-text">java泛型的限制和局限（多数是由于类型擦除）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型通配符"><span class="toc-number">8.</span> <span class="toc-text">类型通配符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#协变与泛型"><span class="toc-number">9.</span> <span class="toc-text">协变与泛型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型类型参数T,?和Object之间的区别"><span class="toc-number">10.</span> <span class="toc-text">泛型类型参数T,?和Object之间的区别</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/blog/categories/Java/" title="Java">Java<sup>21</sup></a></li>
+		
+			<li><a href="/blog/categories/MSE/" title="MSE">MSE<sup>102</sup></a></li>
+		
+			<li><a href="/blog/categories/linux/" title="linux">linux<sup>8</sup></a></li>
+		
+			<li><a href="/blog/categories/storm/" title="storm">storm<sup>1</sup></a></li>
+		
+			<li><a href="/blog/categories/分享/" title="分享">分享<sup>70</sup></a></li>
+		
+			<li><a href="/blog/categories/原创/" title="原创">原创<sup>21</sup></a></li>
+		
+			<li><a href="/blog/categories/学习笔记/" title="学习笔记">学习笔记<sup>7</sup></a></li>
+		
+			<li><a href="/blog/categories/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/blog/tags/Java/" title="Java">Java<sup>22</sup></a></li>
+		
+			<li><a href="/blog/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/OSGi/" title="OSGi">OSGi<sup>2</sup></a></li>
+		
+			<li><a href="/blog/tags/UCAS/" title="UCAS">UCAS<sup>9</sup></a></li>
+		
+			<li><a href="/blog/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>6</sup></a></li>
+		
+			<li><a href="/blog/tags/Web-Service/" title="Web Service">Web Service<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/public-speaking/" title="public speaking">public speaking<sup>18</sup></a></li>
+		
+			<li><a href="/blog/tags/storm/" title="storm">storm<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/wordpress/" title="wordpress">wordpress<sup>2</sup></a></li>
+		
+			<li><a href="/blog/tags/国科大/" title="国科大">国科大<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/工程哲学/" title="工程哲学">工程哲学<sup>10</sup></a></li>
+		
+			<li><a href="/blog/tags/技术/" title="技术">技术<sup>15</sup></a></li>
+		
+			<li><a href="/blog/tags/明德/" title="明德">明德<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/札记/" title="札记">札记<sup>25</sup></a></li>
+		
+			<li><a href="/blog/tags/生活/" title="生活">生活<sup>13</sup></a></li>
+		
+			<li><a href="/blog/tags/记事/" title="记事">记事<sup>5</sup></a></li>
+		
+			<li><a href="/blog/tags/讲座/" title="讲座">讲座<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/读书·旅行/" title="读书·旅行">读书·旅行<sup>7</sup></a></li>
+		
+			<li><a href="/blog/tags/问题与算法/" title="问题与算法">问题与算法<sup>12</sup></a></li>
+		
+			<li><a href="/blog/tags/马上有OFFER/" title="马上有OFFER">马上有OFFER<sup>13</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://www.zhangmin.name/blog" target="_blank" title="zhangmin.name">zhangmin.name</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/blog/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"zhangmin"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>

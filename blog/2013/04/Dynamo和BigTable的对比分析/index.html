@@ -1,0 +1,398 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Dynamo和BigTable的对比分析 | ZhangMin.name</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="zhangmin.name">
+    
+    <meta name="description" content="本文将从实现这些系统的关键技术，如数据划分、数据一致性与可用性、负载均衡、容错控制，来对比分析Google的BigTable和Amazon的Dynamo。
+数据划分
+Dynamo采用一致性哈希的方式对数据进行划分。这种数据划分方式在数据存入时就将数据均匀地映射到系统的存储单元中，从而最大限度地避免系">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/blog/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/blog/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/blog/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/blog/"><img src="/blog/img/logo.svg" alt="ZhangMin.name" title="ZhangMin.name"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/blog/" title="ZhangMin.name">ZhangMin.name</a></h1>
+				<h2 class="blog-motto">勤思敏行 思行合一</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.zhangmin.name/blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2013/04/Dynamo和BigTable的对比分析/" title="Dynamo和BigTable的对比分析" itemprop="url">Dynamo和BigTable的对比分析</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://www.zhangmin.name/blog" title="zhangmin.name">zhangmin.name</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2013-04-04T09:08:18.000Z" itemprop="datePublished">4月 4 2013</time>
+    更新日期:<time datetime="2014-10-23T07:14:59.000Z" itemprop="dateModified">10月 23 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>本文将从实现这些系统的关键技术，如数据划分、数据一致性与可用性、负载均衡、容错控制，来对比分析Google的BigTable和Amazon的Dynamo。</p>
+<p><strong>数据划分</strong></p>
+<p>Dynamo采用一致性哈希的方式对数据进行划分。这种数据划分方式在数据存入时就将数据均匀地映射到系统的存储单元中，从而最大限度地避免系统单点存储的数据量过大的问题。同时，一致性哈希算法也为系统带来了良好的扩展性。</p>
+<p>BigTable使用顺序分裂的方式进行数据划分。这种划分方式可以有效地利用系统资源，并能提供很好的扩展性。与使用哈希方式不同的是，顺序分裂的数据与存储节点并不存在直接映射的关系，需要有一个节点管理这些映射关系，这也使得整个系统的扩展性限制于这个管理节点的能力。</p>
+<p><strong>数据一致性和可用性</strong></p>
+<p>Dynamo和BigTable都采用副本冗余的方式来保证数据的高可用性。但是由于个系统采用不同的管理方式，它们的实现方式是不同的。Dynamo在整个哈希环上通过gossip机制进行通讯来完成副本的异步复制。BigTable则采用日志的方式来保证服务节点内存中的数据的可用性。</p>
+<p><strong>负载均衡</strong></p>
+<p>Dynamo采用了虚拟节点技术，通过虚拟化的手段将节点的服务能力单元化，将访问将访问压力较大的虚拟节点映射到服务能力较强的物理节点，达到访问压力的均衡。访问压力的均衡同时伴随着数据的均衡。为了最小化数据均衡过程中数据迁移的开销，Dynamo 同样采用虚拟化技术，量化节点的存储能力，将虚拟后的存储节点相对均匀地分散到集群哈希环上，避免数据均衡过程中全环的数据移动。</p>
+<p>与Dynamo不同的是，BigTable 通过主控节点来监控各个子表服务器上的访问负载状态，利用主控节点调度管理子表服务器的分裂和迁移将访问压力均匀地分散到各个子表服务器上。由于BigTable 采用分布式文件系统作为数据的底层存储，因而访问压力均衡过程中并不涉及到存储数据的迁移操作，以一种巧妙的方式避免了数据均衡的问题。</p>
+<p><strong>容错控制</strong></p>
+<p>Dynamo通过各节点之间定期进行通信来了解节点的活动状态，从而侦测是否有失效存在。如果出现失效状态，，由于哈希方式的数据划分策略，使得系统中各个节点既作为存储节点也作为服务节点，服务迁移的过程伴随着大量的数据迁移，因而系统必须认真应对各种失效状态，以使失效恢复过程中尽量避免大规模存储数据迁移带来的系统开销。</p>
+<p>BigTable通过分布式锁服务chubby来跟踪主控节点和子表节点的服务状态。如果出现失效状态，主控节点将停止失效的节点，并将相关服务转移到其他节点。服务的迁移并不涉及存储数据的移动，不会引入额外的系统开销，因而也就无需区分各种失效状态。这种依赖于底层分布式文件系统的共享存储方式，简化了系统的失效恢复。</p>
+<p>上述差异归纳如下表所示。</p>
+<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/04/dynamoVsBigtable.jpg" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/04/dynamoVsBigtable.jpg" alt="dynamoVsBigtable"></a></p>
+<p>参考文献</p>
+<p>1.郭斯杰，贾鸿飞，熊劲，互联网海量数据存储和处理技术综述，《信息技术快报》第7卷第5期</p>
+<p>2.大数据101：非结构化数据分析</p>
+<p><a href="http://www.intel.cn/content/www/cn/zh/big-data/unstructured-data-analytics-paper.html" target="_blank" rel="external">http://www.intel.cn/content/www/cn/zh/big-data/unstructured-data-analytics-paper.html</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/MSE/">MSE</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.zhangmin.name/blog/2013/04/Dynamo和BigTable的对比分析/" data-title="Dynamo和BigTable的对比分析 | ZhangMin.name" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2013/04/工程决策的合理性标准/" title="工程决策的合理性标准">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  工程决策的合理性标准</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2013/04/《白鹿原》读后感/"  title="《白鹿原》读后感">
+ <strong>NEXT:</strong><br/> 
+ <span>《白鹿原》读后感
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/blog/categories/Java/" title="Java">Java<sup>21</sup></a></li>
+		
+			<li><a href="/blog/categories/MSE/" title="MSE">MSE<sup>102</sup></a></li>
+		
+			<li><a href="/blog/categories/linux/" title="linux">linux<sup>8</sup></a></li>
+		
+			<li><a href="/blog/categories/storm/" title="storm">storm<sup>1</sup></a></li>
+		
+			<li><a href="/blog/categories/分享/" title="分享">分享<sup>70</sup></a></li>
+		
+			<li><a href="/blog/categories/原创/" title="原创">原创<sup>21</sup></a></li>
+		
+			<li><a href="/blog/categories/学习笔记/" title="学习笔记">学习笔记<sup>7</sup></a></li>
+		
+			<li><a href="/blog/categories/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/blog/tags/Java/" title="Java">Java<sup>22</sup></a></li>
+		
+			<li><a href="/blog/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/OSGi/" title="OSGi">OSGi<sup>2</sup></a></li>
+		
+			<li><a href="/blog/tags/UCAS/" title="UCAS">UCAS<sup>9</sup></a></li>
+		
+			<li><a href="/blog/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>6</sup></a></li>
+		
+			<li><a href="/blog/tags/Web-Service/" title="Web Service">Web Service<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/public-speaking/" title="public speaking">public speaking<sup>18</sup></a></li>
+		
+			<li><a href="/blog/tags/storm/" title="storm">storm<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/wordpress/" title="wordpress">wordpress<sup>2</sup></a></li>
+		
+			<li><a href="/blog/tags/国科大/" title="国科大">国科大<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/工程哲学/" title="工程哲学">工程哲学<sup>10</sup></a></li>
+		
+			<li><a href="/blog/tags/技术/" title="技术">技术<sup>15</sup></a></li>
+		
+			<li><a href="/blog/tags/明德/" title="明德">明德<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/札记/" title="札记">札记<sup>25</sup></a></li>
+		
+			<li><a href="/blog/tags/生活/" title="生活">生活<sup>13</sup></a></li>
+		
+			<li><a href="/blog/tags/记事/" title="记事">记事<sup>5</sup></a></li>
+		
+			<li><a href="/blog/tags/讲座/" title="讲座">讲座<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/读书·旅行/" title="读书·旅行">读书·旅行<sup>7</sup></a></li>
+		
+			<li><a href="/blog/tags/问题与算法/" title="问题与算法">问题与算法<sup>12</sup></a></li>
+		
+			<li><a href="/blog/tags/马上有OFFER/" title="马上有OFFER">马上有OFFER<sup>13</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://www.zhangmin.name/blog" target="_blank" title="zhangmin.name">zhangmin.name</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/blog/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"zhangmin"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>

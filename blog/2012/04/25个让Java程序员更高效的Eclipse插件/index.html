@@ -1,0 +1,504 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>25个让Java程序员更高效的Eclipse插件 | ZhangMin.name</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="zhangmin.name">
+    
+    <meta name="description" content="Eclipse提供了一个可扩展插件的开发系统。这就使得Eclipse在运行系统之上可以实现各种功能。这些插件也不同于其他的应用（插件的功能是最难用代码实现的）。拥有合适的Eclipse插件是非常重要的，因为它们能让Java开发者们无缝的开发基于J2EE和服务的应用程序。Eclipse的插件也能帮助他">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/blog/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/blog/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/blog/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/blog/"><img src="/blog/img/logo.svg" alt="ZhangMin.name" title="ZhangMin.name"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/blog/" title="ZhangMin.name">ZhangMin.name</a></h1>
+				<h2 class="blog-motto">勤思敏行 思行合一</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.zhangmin.name/blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2012/04/25个让Java程序员更高效的Eclipse插件/" title="25个让Java程序员更高效的Eclipse插件" itemprop="url">25个让Java程序员更高效的Eclipse插件</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://www.zhangmin.name/blog" title="zhangmin.name">zhangmin.name</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2012-04-11T13:28:54.000Z" itemprop="datePublished">4月 11 2012</time>
+    更新日期:<time datetime="2014-10-23T07:14:59.000Z" itemprop="dateModified">10月 23 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>Eclipse提供了一个可扩展插件的开发系统。这就使得Eclipse在运行系统之上可以实现各种功能。这些插件也不同于其他的应用（插件的功能是最难用代码实现的）。拥有合适的Eclipse插件是非常重要的，因为它们能让Java开发者们无缝的开发基于J2EE和服务的应用程序。Eclipse的插件也能帮助他们开发不同应用架构上的程序。</p>
+<p><img src="http://www.zhangmin.name/blog/wp-content/uploads/0737020704587373.jpg" alt="eclipse"></p>
+<pre><code>下面列出来的是25个最好的免费Eclipse插件，可以让开发者更高效的工作 。
+
+提高代码质量的插件
+
+<span class="keyword">*</span><span class="keyword">*</span>1\. FindBugs<span class="keyword">*</span><span class="keyword">*</span>
+
+FindBugs可以帮你找到Java代码中的bug，它使用Lesser GNU Public License的自由软件许可。
+
+<span class="keyword">*</span><span class="keyword">*</span>2\. Checkstyle<span class="keyword">*</span><span class="keyword">*</span>
+
+Checkstyle插件可以集成到Eclipse IDE中去，能确保Java代码遵循标准代码样式。
+
+<span class="keyword">*</span><span class="keyword">*</span>3\. ECLemma<span class="keyword">*</span><span class="keyword">*</span>
+
+ECLemma是一款拥有Eclipse Public License许可的免费工具，它提供了方便快捷的开发和测试环境。你可以使用代码覆盖模式下的&amp;ldquo;launch&amp;rdquo;功能，用起来就像是真正的运行/调试模式。你可以通过使用代码覆盖试图，高亮源文件，计数来分析代码。
+
+<span class="keyword">*</span><span class="keyword">*</span>4\. JDepend4Eclipse<span class="keyword">*</span><span class="keyword">*</span>
+
+JDepend4Eclipse可以帮助你遍历文件夹，协助你量化设计的质量。它使用Eclipse Public License v1.0许可。
+
+<span class="keyword">*</span><span class="keyword">*</span>5\. PMD<span class="keyword">*</span><span class="keyword">*</span>
+
+PMD是一款代码分析器，用来检测变量和写得不好的代码。（更新网址-http://pmd.sourceforge.net/eclipse/）
+
+<span class="keyword">*</span><span class="keyword">*</span>6\. SourceHelper<span class="keyword">*</span><span class="keyword">*</span>
+
+SourceHelper可以协助编码和调试，对写好的代码提供说明。
+
+<span class="keyword">*</span><span class="keyword">*</span>7\. Structure101<span class="keyword">*</span><span class="keyword">*</span>
+
+Structure101帮助修改代码的架构，就是说你可以改变架构，而不打乱代码。
+
+文本编辑插件
+
+<span class="keyword">*</span><span class="keyword">*</span>8\. AnyEdit Tools<span class="keyword">*</span><span class="keyword">*</span>
+
+AnyEdit为输出控制台和工具栏增加了新的编辑器，帮助导入和导出数据。它使用Eclipse Public License v1.0许可。
+
+<span class="keyword">*</span><span class="keyword">*</span>9\. Eclim<span class="keyword">*</span><span class="keyword">*</span>
+
+Eclim给Eclipse引入了Vim的功能，Vim是最好的编辑器之一。开发者可以采用不同的语言来编写代码，它也提供bug纠错功能。Eclim使用GPLV3许可。
+
+<span class="keyword">*</span><span class="keyword">*</span>10\. Eclipse-rbe<span class="keyword">*</span><span class="keyword">*</span>
+
+Eclipse-rbe用来编辑Java文件，它的功能有为缺失变量发出警告信息，排序键值，转变Unicode编码等。它使用GNU库或LGPL许可。
+
+依赖性管理插件
+
+<span class="keyword">*</span><span class="keyword">*</span>11\. Apache IvyDE<span class="keyword">*</span><span class="keyword">*</span>
+
+Apache IvyDE集成了Apache Ivy的依赖管理功能。它能管理&amp;rsquo;ivy.xml&amp;rsquo;中的依赖，也能够配合WPT和Ant插件的使用。
+
+<span class="keyword">*</span><span class="keyword">*</span>12\. M2eclipse (Maven插件)<span class="keyword">*</span><span class="keyword">*</span>
+
+M2eclipse能够管理简单的项目，也能管理多模块项目，它能在Eclipse中启动maven。它提供依赖管理，能提供自动下载。
+
+版本控制插件
+
+<span class="keyword">*</span><span class="keyword">*</span>13\. Subclipse<span class="keyword">*</span><span class="keyword">*</span>
+
+Subclipse是一个SVN插件，它为Eclipse IDE提供subversion支持，使用EPL 1.0许可。
+
+<span class="keyword">*</span><span class="keyword">*</span>14\. EGit<span class="keyword">*</span><span class="keyword">*</span>
+
+EGit提供同步视图，可以读.git/ 下排除的文件，提供rebase功能，为pull和push提供精简的操作。
+
+<span class="keyword">*</span><span class="keyword">*</span>15\. MercurialEclipse<span class="keyword">*</span><span class="keyword">*</span>
+
+MercurialEclipse是个流行的版本控制系统。它提供了clone repository功能，push-pull同步功能，以及简单的回滚功能。
+
+<span class="keyword">*</span><span class="keyword">*</span>16\. P4Eclipse<span class="keyword">*</span><span class="keyword">*</span>
+
+P4Eclipse吸纳了Perforce管理系统的特长。它提供了以开发者为导向的一系列的功能，并且支持许多Agile开流程发以及传统开发流程。
+
+框架开发插件
+
+<span class="keyword">*</span><span class="keyword">*</span>17\. Spring Tool Suite<span class="keyword">*</span><span class="keyword">*</span>
+
+Spring Tool Suite提供了XML文件预览以及图形化的spring配置编辑器等开发环境和工具，它能让开发变得更简单。
+
+<span class="keyword">*</span><span class="keyword">*</span>18\. Spring IDE<span class="keyword">*</span><span class="keyword">*</span>
+
+Spring IDE帮助你开发Spring应用，它提供了图形编辑界面。它还能用图形的方式显示bean之间的关系。（更新网址 &amp;ndash; http://springide.org/updatesite）
+
+<span class="keyword">*</span><span class="keyword">*</span>19\. Hibernator<span class="keyword">*</span><span class="keyword">*</span>
+
+Hibernator能够创建或更新数据库schema，运行hibernate查询语句，创建映射文档。用户可以将一个Java类和一个相关的映射文件同步起来。
+
+<span class="keyword">*</span><span class="keyword">*</span>20\. JbossTools<span class="keyword">*</span><span class="keyword">*</span>
+
+JbossTools 3.2x支持JBoss，Hibernate，Drools，XHTML，Seam等。（更新网址-http://download.jboss.org/jbosstools/updates/JBossTools-2.1.2.GA）
+
+其他功能插件
+
+<span class="keyword">*</span><span class="keyword">*</span>21\. ASM &amp;ndash; 二进制预览插件<span class="keyword">*</span><span class="keyword">*</span>
+
+ASM Bytecode <span class="keyword">Outline</span>插件可以显示当前的Java文件或class文件的分解的二进制代码，便于Java/class文件的二进制比较，也可以显示当前二进制代码的ASMifier代码。你可以用Eclipse更新管理器来安装ASM。（更新网址-http://download.forge.objectweb.org/eclipse-update/）
+
+<span class="keyword">*</span><span class="keyword">*</span>22\. Mylyn &amp;ndash; 任务管理<span class="keyword">*</span><span class="keyword">*</span>
+
+Mylyn采用任务为中心的界面，它为开发者提供了任务管理工具。另外，也集成了富文本编辑工具，以及监测工具。
+
+23\. Eclipse Launcher
+
+Eclipse launcher采用Delphi 6写成，使用它你可以自定义启动Eclipse IDE时的配置。
+
+<span class="keyword">*</span><span class="keyword">*</span>24\. FileSync<span class="keyword">*</span><span class="keyword">*</span>
+
+FileSync拥有Eclipse Pulic License v1.0许可，它是一个文件同步工具，可以创建，删除，映射文件。
+
+<span class="keyword">*</span><span class="keyword">*</span>25\. Log4E<span class="keyword">*</span><span class="keyword">*</span>
+
+Log4E可以帮你更容易的写日志，而不需要受特定日志框架的约束。当然你也可以自定义你自己的日志模版。
+
+总而言之，插件能让Eclipse用其他语言来编写。Eclipse插件是必不可少的，因为它们让Java应用无缝连接，降低了Java的复杂度。然而，装了过多的插件会让你的Eclipse变慢，所以你需要有选择性的安装插件。
+
+除了以上提到的插件，当然还有其他的高效率的插件，如Jadclipse。如果你还有其他让你觉得好用的插件，请写下来吧。
+
+英文原文：[ fromdev.com](http://www.fromdev.com/2012/01/25-best-free-eclipse-plug-ins-for-java.html) 编译：[伯乐在线 &amp;ndash; 唐小娟](http://www.jobbole.com/)
+</code></pre>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/Java/">Java</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/分享/">分享</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.zhangmin.name/blog/2012/04/25个让Java程序员更高效的Eclipse插件/" data-title="25个让Java程序员更高效的Eclipse插件 | ZhangMin.name" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2012/04/Ubuntu-Unity界面消失的解决方法/" title="Ubuntu Unity界面消失的解决方法">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Ubuntu Unity界面消失的解决方法</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2012/04/草原秘境——杭锦旗/"  title="草原秘境——杭锦旗">
+ <strong>NEXT:</strong><br/> 
+ <span>草原秘境——杭锦旗
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/blog/categories/Java/" title="Java">Java<sup>21</sup></a></li>
+		
+			<li><a href="/blog/categories/MSE/" title="MSE">MSE<sup>102</sup></a></li>
+		
+			<li><a href="/blog/categories/linux/" title="linux">linux<sup>8</sup></a></li>
+		
+			<li><a href="/blog/categories/storm/" title="storm">storm<sup>1</sup></a></li>
+		
+			<li><a href="/blog/categories/分享/" title="分享">分享<sup>70</sup></a></li>
+		
+			<li><a href="/blog/categories/原创/" title="原创">原创<sup>21</sup></a></li>
+		
+			<li><a href="/blog/categories/学习笔记/" title="学习笔记">学习笔记<sup>7</sup></a></li>
+		
+			<li><a href="/blog/categories/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/blog/tags/Java/" title="Java">Java<sup>22</sup></a></li>
+		
+			<li><a href="/blog/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/OSGi/" title="OSGi">OSGi<sup>2</sup></a></li>
+		
+			<li><a href="/blog/tags/UCAS/" title="UCAS">UCAS<sup>9</sup></a></li>
+		
+			<li><a href="/blog/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>6</sup></a></li>
+		
+			<li><a href="/blog/tags/Web-Service/" title="Web Service">Web Service<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/public-speaking/" title="public speaking">public speaking<sup>18</sup></a></li>
+		
+			<li><a href="/blog/tags/storm/" title="storm">storm<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/wordpress/" title="wordpress">wordpress<sup>2</sup></a></li>
+		
+			<li><a href="/blog/tags/国科大/" title="国科大">国科大<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/工程哲学/" title="工程哲学">工程哲学<sup>10</sup></a></li>
+		
+			<li><a href="/blog/tags/技术/" title="技术">技术<sup>15</sup></a></li>
+		
+			<li><a href="/blog/tags/明德/" title="明德">明德<sup>3</sup></a></li>
+		
+			<li><a href="/blog/tags/札记/" title="札记">札记<sup>25</sup></a></li>
+		
+			<li><a href="/blog/tags/生活/" title="生活">生活<sup>13</sup></a></li>
+		
+			<li><a href="/blog/tags/记事/" title="记事">记事<sup>5</sup></a></li>
+		
+			<li><a href="/blog/tags/讲座/" title="讲座">讲座<sup>8</sup></a></li>
+		
+			<li><a href="/blog/tags/读书·旅行/" title="读书·旅行">读书·旅行<sup>7</sup></a></li>
+		
+			<li><a href="/blog/tags/问题与算法/" title="问题与算法">问题与算法<sup>12</sup></a></li>
+		
+			<li><a href="/blog/tags/马上有OFFER/" title="马上有OFFER">马上有OFFER<sup>13</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://www.zhangmin.name/blog" target="_blank" title="zhangmin.name">zhangmin.name</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/blog/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"zhangmin"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>

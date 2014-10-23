@@ -1,4 +1,4 @@
-zhangmin510.github.io
+www.zhangmin.name
 =====================
 
-My GitHub Page
+My Personal Website.
