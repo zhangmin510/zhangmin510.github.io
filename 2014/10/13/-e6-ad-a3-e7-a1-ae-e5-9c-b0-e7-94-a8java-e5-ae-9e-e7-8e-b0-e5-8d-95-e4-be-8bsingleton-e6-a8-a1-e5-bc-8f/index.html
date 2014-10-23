@@ -1,0 +1,480 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>正确地用Java实现单例(Singleton)模式 | ZhangMin.name</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="张敏">
+    
+    <meta name="description" content="在设计模式中，单例模式解决的是创建对象实例的数量及创建时间的问题。该模式保证一个类只有一个实例，并提供一个全局的访问点访问对象。之所以需要单例模式一个原因是在某些业务背景下，一个对象只能有一个实例，如金融相关的交易管理引擎；另外一个原因是有的对象创建所需要的内存和CPU开销较大，为了优化程序，只在内">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="ZhangMin.name" title="ZhangMin.name"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ZhangMin.name">ZhangMin.name</a></h1>
+				<h2 class="blog-motto">勤思敏行 思行合一</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:localhost:4000">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/10/13/-e6-ad-a3-e7-a1-ae-e5-9c-b0-e7-94-a8java-e5-ae-9e-e7-8e-b0-e5-8d-95-e4-be-8bsingleton-e6-a8-a1-e5-bc-8f/" title="正确地用Java实现单例(Singleton)模式" itemprop="url">正确地用Java实现单例(Singleton)模式</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://localhost:4000" title="张敏">张敏</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-10-13T06:26:15.000Z" itemprop="datePublished">Oct 13 2014</time>
+    Updated:<time datetime="2014-10-20T09:41:49.000Z" itemprop="dateModified">Oct 20 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#单例模式实现的特点"><span class="toc-number">1.</span> <span class="toc-text">单例模式实现的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单例模式的优缺点"><span class="toc-number">2.</span> <span class="toc-text">单例模式的优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单线程下的实现"><span class="toc-number">3.</span> <span class="toc-text">单线程下的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多线程下的实现"><span class="toc-number">4.</span> <span class="toc-text">多线程下的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一些特殊应用场景下的实现"><span class="toc-number">5.</span> <span class="toc-text">一些特殊应用场景下的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#多ClassLoader环境下的实现"><span class="toc-number">5.1.</span> <span class="toc-text">多ClassLoader环境下的实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#需要序列化时的实现"><span class="toc-number">5.2.</span> <span class="toc-text">需要序列化时的实现</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参考文献"><span class="toc-number">6.</span> <span class="toc-text">参考文献</span></a></li></ol>
+		</div>
+		
+		<p>在设计模式中，单例模式解决的是创建对象实例的数量及创建时间的问题。该模式保证一个类只有一个实例，并提供一个全局的访问点访问对象。之所以需要单例模式一个原因是在某些业务背景下，一个对象只能有一个实例，如金融相关的交易管理引擎；另外一个原因是有的对象创建所需要的内存和CPU开销较大，为了优化程序，只在内存中保存一个对象实例。</p>
+<h4 id="单例模式实现的特点">单例模式实现的特点</h4>
+<p>单例模式实现的特点有：</p>
+<ol>
+<li>有一个无参的私有构造函数。</li>
+<li>有一个私有的静态变量保存单例实例的引用。</li>
+<li>有一个公有的静态方法来获取单例实例的引用。</li>
+</ol>
+<h4 id="单例模式的优缺点">单例模式的优缺点</h4>
+<p>单例模式控制了实例的数量，从而保证了访问对象的唯一性。另外，由于由类自己控制实例化进程，所以类在改变实例化进程上有相应的伸缩性。但是由于单例模式自己控制实例化过程，所以整个对象的生命周期也需要由单例类来实现。</p>
+<h4 id="单线程下的实现">单线程下的实现</h4>
+<p>在单线程的情况下，一个单例模式的实现非常简单，代码如下所示：<br>[java]<br>public class Singleton {<br>     private static Singleton instance;<br>     private Singleton() { }<br>     public static Singleton getInstance() {<br>           if (instance == null) {<br>                 instance = new Singleton();<br>           }<br>           return instance;<br>     }<br>}<br>[/java]</p>
+<h4 id="多线程下的实现">多线程下的实现</h4>
+<p>Java多线程下最简单的同步方法就是使用系统内置的synchronized关键词，只需要在单线程实现代码的getInstance()方法加上synchronized关键词就可以做到线程安全。但是这种实现并不高效。每次只有一个线程访问getInstance方法，但事实上，只要第一次当instance为null时才有必要进行同步，之后就完全没有必要了。所以就有了一种改进实现叫做双重锁检查（Double Checked Locking）。其代码实现如下所示：</p>
+<p>[java]<br>public class Singleton {<br>    private static Singleton instance;<br>    private Singleton() { }<br>    public static Singleton getInstance() {<br>          if (instance == null) {<br>             synchronized(Singleton.class) {<br>                 if (instance == null) {<br>                     instance = new Singleton();<br>                 }<br>              }<br>           }<br>           return instance;<br>      }<br>}<br>[/java]<br>之所以要使用双重锁检查是因为如果同时又两个线程进入第一个if语句，就有可能导致创建多个对象的情况。</p>
+<p>但是这种实现还是存在问题的。主要是对于语句instance = new Singleton()这条语句在JVM中执行是分三步的：<br>1. 给instance分配内存。</p>
+<p>2. 调用Singleton的构造函数来初始化成员变量。</p>
+<p>3. 将instance对象指向已经创建完的对象。</p>
+<p>由于JVM为了优化指令执行存在指令重拍，所以2,3两步的顺序不能得到保证。如果对象没有完成初始化就将对象所在的地址引用赋值给了instance，则会导致运行错误。解决这一问题的方法是使用volatile关键字，该关键字在Java内存模型级别保证了变量的可见性，即读到的值一定是最近一次修改的值。它同时也会禁止指令重拍。在Java SE5以后，上述代码就是线程安全的了，因为在Java SE5之前的Java内存模型不能保证volatile关键字禁止指令重拍。</p>
+<p>上面的代码实现不够简洁，一种更简洁的实现如下所示。<br>[java]<br>public class Singleton {<br>    private static final Singleton instance = new Singleton();<br>    private Singleton() { }<br>    public static Singleton getInstance() {<br>           return instance;<br>      }<br>}<br>[/java]<br>上述代码虽然简洁但是有一个问题是它会在类加载时就被创建，如果这个对象依赖于一些配置文件，就不能使用这种方式实现单例模式了。</p>
+<p>在《Effective Java》中推荐的实现方式是使用静态内部类来实现的。利用的JVM的实现机制。SingletonHolder类是私有的，只有Singleton才能访问。也是在第一次使用时才创建对象，而且不需要使用同步。<br>[java]<br>public class Singleton {<br>       private static class SingletonHolder {<br>             private static final Singleton INSTANCE = new Singleton();<br>       }<br>       private Singleton() { }<br>       public static Singleton getInstance() {<br>              return SingletonHolder.INSTANCE;<br>       }<br>}<br>[/java]</p>
+<p>推荐的另外一种实现是使用Java的enmu类型，也是使用JVM的实现机制来保证线程安全性的。</p>
+<p>[java]<br>public enum Singleton {<br>     INSTANCE;<br>}<br>[/java]</p>
+<p>上述代码实现的Singleton可以通过Singleton.INSTANCE来访问。</p>
+<h4 id="一些特殊应用场景下的实现">一些特殊应用场景下的实现</h4>
+<h5 id="多ClassLoader环境下的实现">多ClassLoader环境下的实现</h5>
+<p>在多个ClassLoader的环境中，由于Java中每个ClassLoader具有隔离性，即同一个类可以被多个ClassLoader加载并创建实例。为了实现单例模式，就要保证所有的单例类使用相同的ClassLoader。</p>
+<p>[java]<br>private static Class getClass(String classname) throws ClassNotFoundException {<br>      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();<br>      if(classLoader == null)<br>         classLoader = Singleton.class.getClassLoader();<br>      return (classLoader.loadClass(classname));<br>   }<br>}<br>[/java]</p>
+<h5 id="需要序列化时的实现">需要序列化时的实现</h5>
+<p>要在单例类的方法中加入readResolve方法保证反序列化的对象仍然是原来的对象。<br>[java]<br>private Object readResolve() {<br>     return getInstance();<br>}<br>[/java]</p>
+<h4 id="参考文献">参考文献</h4>
+<ol>
+<li>《Effective Java》</li>
+<li><a href="http://wuchong.me/blog/2014/08/28/how-to-correctly-write-singleton-pattern/" target="_blank" rel="external">http://wuchong.me/blog/2014/08/28/how-to-correctly-write-singleton-pattern/</a><br>3.</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Java/">Java</a><a href="/tags/马上有OFFER/">马上有OFFER</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Java/">Java</a>►<a class="article-category-link" href="/categories/Java/原创/">原创</a>►<a class="article-category-link" href="/categories/Java/原创/学习笔记/">学习笔记</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://localhost:4000/2014/10/13/-e6-ad-a3-e7-a1-ae-e5-9c-b0-e7-94-a8java-e5-ae-9e-e7-8e-b0-e5-8d-95-e4-be-8bsingleton-e6-a8-a1-e5-bc-8f/" data-title="正确地用Java实现单例(Singleton)模式 | ZhangMin.name" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/10/13/jvm-e5-86-85-e5-ad-98-e5-8c-ba-e5-9f-9f-oom/" title="Java内存区域及内存溢出处理">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Java内存区域及内存溢出处理</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/10/08/-e6-9c-8d-e5-8a-a1-e6-8f-90-e4-be-9b-e8-80-85-e6-9e-b6-e6-9e-84/"  title="服务提供者架构">
+ <strong>NEXT:</strong><br/> 
+ <span>服务提供者架构
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#单例模式实现的特点"><span class="toc-number">1.</span> <span class="toc-text">单例模式实现的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单例模式的优缺点"><span class="toc-number">2.</span> <span class="toc-text">单例模式的优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单线程下的实现"><span class="toc-number">3.</span> <span class="toc-text">单线程下的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多线程下的实现"><span class="toc-number">4.</span> <span class="toc-text">多线程下的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一些特殊应用场景下的实现"><span class="toc-number">5.</span> <span class="toc-text">一些特殊应用场景下的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#多ClassLoader环境下的实现"><span class="toc-number">5.1.</span> <span class="toc-text">多ClassLoader环境下的实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#需要序列化时的实现"><span class="toc-number">5.2.</span> <span class="toc-text">需要序列化时的实现</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参考文献"><span class="toc-number">6.</span> <span class="toc-text">参考文献</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Java/" title="Java">Java<sup>21</sup></a></li>
+		
+			<li><a href="/categories/MSE/" title="MSE">MSE<sup>102</sup></a></li>
+		
+			<li><a href="/categories/linux/MSE/" title="MSE">MSE<sup>2</sup></a></li>
+		
+			<li><a href="/categories/Java/MSE/" title="MSE">MSE<sup>6</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>8</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/" title="storm">storm<sup>7</sup></a></li>
+		
+			<li><a href="/categories/storm/" title="storm">storm<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分享/" title="分享">分享<sup>70</sup></a></li>
+		
+			<li><a href="/categories/Java/分享/" title="分享">分享<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/分享/" title="分享">分享<sup>10</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/" title="原创">原创<sup>22</sup></a></li>
+		
+			<li><a href="/categories/Java/MSE/原创/" title="原创">原创<sup>5</sup></a></li>
+		
+			<li><a href="/categories/分享/原创/" title="原创">原创<sup>3</sup></a></li>
+		
+			<li><a href="/categories/原创/" title="原创">原创<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Java/原创/" title="原创">原创<sup>8</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/学习笔记/" title="学习笔记">学习笔记<sup>4</sup></a></li>
+		
+			<li><a href="/categories/linux/MSE/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Java/MSE/原创/学习笔记/" title="学习笔记">学习笔记<sup>3</sup></a></li>
+		
+			<li><a href="/categories/分享/原创/学习笔记/" title="学习笔记">学习笔记<sup>2</sup></a></li>
+		
+			<li><a href="/categories/原创/学习笔记/" title="学习笔记">学习笔记<sup>8</sup></a></li>
+		
+			<li><a href="/categories/MSE/学习笔记/" title="学习笔记">学习笔记<sup>33</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Java/原创/学习笔记/" title="学习笔记">学习笔记<sup>4</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/" title="学习笔记">学习笔记<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Java/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分享/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
+		
+			<li><a href="/categories/MSE/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>27</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>5</sup></a></li>
+		
+			<li><a href="/categories/linux/MSE/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/原创/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
+		
+			<li><a href="/categories/MSE/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>23</sup></a></li>
+		
+			<li><a href="/categories/原创/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/linux/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/分享/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>7</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>12</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>6</sup></a></li>
+		
+			<li><a href="/categories/分享/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>3</sup></a></li>
+		
+			<li><a href="/categories/Java/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/分享/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/生活/" title="生活">生活<sup>3</sup></a></li>
+		
+			<li><a href="/categories/分享/每日一文-94天/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分享/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/学习笔记/略懂/" title="略懂">略懂<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>22</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+		
+			<li><a href="/tags/OSGi/" title="OSGi">OSGi<sup>2</sup></a></li>
+		
+			<li><a href="/tags/UCAS/" title="UCAS">UCAS<sup>9</sup></a></li>
+		
+			<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Web-Service/" title="Web Service">Web Service<sup>3</sup></a></li>
+		
+			<li><a href="/tags/public-speaking/" title="public speaking">public speaking<sup>18</sup></a></li>
+		
+			<li><a href="/tags/storm/" title="storm">storm<sup>8</sup></a></li>
+		
+			<li><a href="/tags/wordpress/" title="wordpress">wordpress<sup>2</sup></a></li>
+		
+			<li><a href="/tags/国科大/" title="国科大">国科大<sup>8</sup></a></li>
+		
+			<li><a href="/tags/工程哲学/" title="工程哲学">工程哲学<sup>10</sup></a></li>
+		
+			<li><a href="/tags/技术/" title="技术">技术<sup>15</sup></a></li>
+		
+			<li><a href="/tags/明德/" title="明德">明德<sup>3</sup></a></li>
+		
+			<li><a href="/tags/札记/" title="札记">札记<sup>25</sup></a></li>
+		
+			<li><a href="/tags/生活/" title="生活">生活<sup>13</sup></a></li>
+		
+			<li><a href="/tags/记事/" title="记事">记事<sup>5</sup></a></li>
+		
+			<li><a href="/tags/讲座/" title="讲座">讲座<sup>8</sup></a></li>
+		
+			<li><a href="/tags/读书·旅行/" title="读书·旅行">读书·旅行<sup>7</sup></a></li>
+		
+			<li><a href="/tags/问题与算法/" title="问题与算法">问题与算法<sup>12</sup></a></li>
+		
+			<li><a href="/tags/马上有OFFER/" title="马上有OFFER">马上有OFFER<sup>13</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://localhost:4000" target="_blank" title="张敏">张敏</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

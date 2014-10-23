@@ -1,0 +1,481 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Java实现RESTful Service | ZhangMin.name</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="张敏">
+    
+    <meta name="description" content="原文地址：http://www.vogella.com/tutorials/REST/article.html
+本教程介绍了如何使用JAX-RS的参考实现Jersey来实现REST Web Service。本教程使用Eclipse 4.4，Java 1.6，Tomcat 6.0 及JAX-RS 1.">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="ZhangMin.name" title="ZhangMin.name"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ZhangMin.name">ZhangMin.name</a></h1>
+				<h2 class="blog-motto">勤思敏行 思行合一</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:localhost:4000">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/07/16/java-e5-ae-9e-e7-8e-b0restful-service/" title="Java实现RESTful Service" itemprop="url">Java实现RESTful Service</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://localhost:4000" title="张敏">张敏</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-07-16T06:41:24.000Z" itemprop="datePublished">Jul 16 2014</time>
+    Updated:<time datetime="2014-10-20T09:41:49.000Z" itemprop="dateModified">Oct 20 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-REST-Representational_State_Transfer"><span class="toc-number">1.</span> <span class="toc-text">1.REST-Representational State Transfer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1_什么是REST"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 什么是REST</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2_Http方法"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 Http方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3_RESTful_web_Service"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 RESTful web Service</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JAX-RS"><span class="toc-number">2.</span> <span class="toc-text">2.JAX-RS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1_JAX-RS"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 JAX-RS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2_JAX-RS的参考实现Jersey"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 JAX-RS的参考实现Jersey</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3_JRX-RS注解"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 JRX-RS注解</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Jersey"><span class="toc-number">3.</span> <span class="toc-text">3.Jersey</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-创建一个REST示例服务"><span class="toc-number">4.</span> <span class="toc-text">4.创建一个REST示例服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-RESTful_Web_Service与JAXB"><span class="toc-number">5.</span> <span class="toc-text">5.RESTful Web Service与JAXB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1创建项目"><span class="toc-number">5.1.</span> <span class="toc-text">5.1创建项目</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-创建CURD的RESTful_web_service"><span class="toc-number">6.</span> <span class="toc-text">6.创建CURD的RESTful web service</span></a></li></ol>
+		</div>
+		
+		<p>原文地址：<a href="http://www.vogella.com/tutorials/REST/article.html" target="_blank" rel="external">http://www.vogella.com/tutorials/REST/article.html</a></p>
+<p>本教程介绍了如何使用JAX-RS的参考实现Jersey来实现REST Web Service。<br>本教程使用Eclipse 4.4，Java 1.6，Tomcat 6.0 及JAX-RS 1.1 (Jersey 1.5)。</p>
+<h3 id="1-REST-Representational_State_Transfer">1.REST-Representational State Transfer</h3>
+<h4 id="1-1_什么是REST">1.1 什么是REST</h4>
+<p>REST是一种基于web标准和http协议的架构风格。REST是由Roy Fielding在2000年提出的。<br>在REST中一切都是resource，resource的访问是通过Http的标准接口来实现的。有一个REST服务器提供相关REST的服务，如<br>访问resource，修改resource。<br>每种resource都有一个唯一的URI标识，且都应该支持标准的http操作。REST允许resource使用不同的表示方法，如文本，XML，JSON等。<br>REST客户端可以通过Http请求使用特定的表示。</p>
+<h4 id="1-2_Http方法">1.2 Http方法</h4>
+<p>PUT，GET，POST，DELETE是REST中常用的Http方法。它们分别表示：<br>1. GET 定义resource的读取。没有任何的副作用，即不会改变resource。要满足幂等这个性质（自己重复运算得到的结果仍然是自己）。<br>2. PUT 创建一个resource。也是幂等的。<br>3. DELETE 移除一个resource。幂等，可以执行多次而不会产生不同的结果。<br>4. POST 更新一个已经存在的resource或者创建一个新的resource。</p>
+<h4 id="1-3_RESTful_web_Service">1.3 RESTful web Service</h4>
+<p>RESTful web Service是使用REST的基本概念及Http的方法实现的。一个典型的RESTful web Service定义了服务的基本的resource，支持的MIME Type（XML，JSON，用户自定义等），及支持的操作集合（GET，POST，PUT，DELETE）。</p>
+<h3 id="2-JAX-RS">2.JAX-RS</h3>
+<h4 id="2-1_JAX-RS">2.1 JAX-RS</h4>
+<p>Java通过JSR 311提供了REST支持。全名是The Java API for RESTful Web Service）。JAX-RS使用朱姐来定义REST相关的Java类。</p>
+<h4 id="2-2_JAX-RS的参考实现Jersey">2.2 JAX-RS的参考实现Jersey</h4>
+<p>Jersey是JAX-RS的参考实现。在Java Servlet容器中实现RESTful web Service。在服务端，Jersey提供了一个Servlet实现用来扫描可识别的resource。需要在web.xml中进行配置，即对这个Servlet进行注册和配置。<br>Jersey也提供了一个客户端程序用于与服务端的交互。<br>这个Servlet的基本的URL是<br>[java]<br><a href="http://your_domain:port/display-name/url-pattern/path_from_rest_class" target="_blank" rel="external">http://your_domain:port/display-name/url-pattern/path_from_rest_class</a><br>[/java]<br>这个Servlet分析Http请求，并选择正确的类和方法来响应请求。这些选择是基于每个提供resource的类的注解。<br>一个REST web Service包括数据类（resource）和服务。这两种类型要在不同的包中进行维护，这样可以方便Jersey的Servlet进行查找特定的数据类。<br>JAX-RS支持使用Java Architecture for XML Binding（[JAXB教程](<a href="http://www.vogella.com/tutorials/JAXB/article.html）创建XML，JSON。" target="_blank" rel="external">http://www.vogella.com/tutorials/JAXB/article.html）创建XML，JSON。</a></p>
+<h4 id="2-3_JRX-RS注解">2.3 JRX-RS注解</h4>
+<p>@PATH(your_path) 将访问路径设置为基本的URL+/your_path。基本路径取决于web.xml中配置的应用名称，Servlet的URL。<br>@POST 指示下面的方法将响应http POST请求。<br>@GET  指示下面的方法将响应http GET请求。<br>@PUT  指示下面的方法将响应http PUT请求。<br>@DELETE  指示下面的方法将响应http DELETE请求。<br>@Produces(MediaType.TEXT_PLAIN[, more-types])  @Produces 定义被注解为@GET的方法将要使用的MIME Type。d<br>@Consumes(type[, more-types])  @Consumes 定义这个方法将消费什么样的MIME Type。<br>@PathParam  用于从URL中提取参数并注入为方法的参数。</p>
+<h3 id="3-Jersey">3.Jersey</h3>
+<p>在<a href="http://jersey.java.net/" target="_blank" rel="external">http://jersey.java.net/</a>下载Jersey。</p>
+<h3 id="4-创建一个REST示例服务">4.创建一个REST示例服务</h3>
+<p>在Eclipse中创建Dynamic Web Project。将下载的jars放入WEB-INF/lib目录下。</p>
+<p>创建下面的Java类<br>[java]<br>package de.vogella.jersey.first;<br>import javax.ws.rs.GET;<br>import javax.ws.rs.Path;<br>import javax.ws.rs.Produces;<br>import javax.ws.rs.core.MediaType;<br>// Plain old Java Object it does not extend as class or implements<br>// an interface<br>// The class registers its methods for the HTTP GET request using the @GET annotation.<br>// Using the @Produces annotation, it defines that it can deliver several MIME types,<br>// text, XML and HTML.<br>// The browser requests per default the HTML MIME type.<br>//Sets the path to base URL + /hello<br>@Path(&quot;/hello&quot;)<br>public class Hello {<br>  // This method is called if TEXT_PLAIN is request<br>  @GET<br>  @Produces(MediaType.TEXT_PLAIN)<br>  public String sayPlainTextHello() {<br>    return &quot;Hello Jersey&quot;;<br>  }<br>  // This method is called if XML is request<br>  @GET<br>  @Produces(MediaType.TEXT_XML)<br>  public String sayXMLHello() {<br>    return &quot;&lt;?xml version=\&quot;1.0\&quot;?&gt;&quot; + &quot;&lt;hello&gt; Hello Jersey&quot; + &quot;&lt;/hello&gt;&quot;;<br>  }<br>  // This method is called if HTML is request<br>  @GET<br>  @Produces(MediaType.TEXT_HTML)<br>  public String sayHtmlHello() {<br>    return &quot;&lt;html&gt; &quot; + &quot;&lt;title&gt;&quot; + &quot;Hello Jersey&quot; + &quot;&lt;/title&gt;&quot;</p>
+<pre><code>    <span class="subst">+</span> <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;body<span class="subst">&amp;</span><span class="literal">gt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;h1<span class="subst">&amp;</span><span class="literal">gt</span>;<span class="subst">&amp;</span>quot; <span class="subst">+</span> <span class="subst">&amp;</span>quot;Hello Jersey<span class="subst">&amp;</span>quot; <span class="subst">+</span> <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;/body<span class="subst">&amp;</span><span class="literal">gt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;/h1<span class="subst">&amp;</span><span class="literal">gt</span>;<span class="subst">&amp;</span>quot; <span class="subst">+</span> <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;/html<span class="subst">&amp;</span><span class="literal">gt</span>; <span class="subst">&amp;</span>quot;;
+</code></pre><p>  }<br>}<br>[/java]</p>
+<p>在web.xml中进行配置</p>
+<p>[java]<br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;web-app xmlns:xsi=&quot;<a href="http://www.w3.org/2001/XMLSchema-instance&amp;quot" target="_blank" rel="external">http://www.w3.org/2001/XMLSchema-instance&amp;quot</a>; xmlns=&quot;<a href="http://java.sun.com/xml/ns/javaee&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee&amp;quot</a>; xmlns:web=&quot;<a href="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot</a>; xsi:schemaLocation=&quot;<a href="http://java.sun.com/xml/ns/javaee" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee</a> <a href="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot</a>; id=&quot;WebApp_ID&quot; version=&quot;2.5&quot;&gt;<br>  &lt;display-name&gt;de.vogella.jersey.first&lt;/display-name&gt;<br>  &lt;servlet&gt;<br>    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;<br>    &lt;servlet-class&gt;com.sun.jersey.spi.container.servlet.ServletContainer&lt;/servlet-class&gt;<br>    &lt;init-param&gt;<br>      &lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;<br>      &lt;param-value&gt;de.vogella.jersey.first&lt;/param-value&gt;<br>    &lt;/init-param&gt;<br>    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;<br>  &lt;/servlet&gt;<br>  &lt;servlet-mapping&gt;<br>    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;<br>    &lt;url-pattern&gt;/rest/*&lt;/url-pattern&gt;<br>  &lt;/servlet-mapping&gt;<br>&lt;/web-app&gt;<br>[/java]<br>访问网址测试： <a href="http://localhost:8080/de.vogella.jersey.first/rest/hello" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.first/rest/hello</a>.<br>或者使用Jersey的客户端测试，当然你也可以使用Apache HttpClient。<br>[java]<br>package de.vogella.jersey.first.client;<br>import java.net.URI;<br>import javax.ws.rs.core.MediaType;<br>import javax.ws.rs.core.UriBuilder;<br>import com.sun.jersey.api.client.Client;<br>import com.sun.jersey.api.client.ClientResponse;<br>import com.sun.jersey.api.client.WebResource;<br>import com.sun.jersey.api.client.config.ClientConfig;<br>import com.sun.jersey.api.client.config.DefaultClientConfig;<br>public class Test {<br>  public static void main(String[] args) {<br>    ClientConfig config = new DefaultClientConfig();<br>    Client client = Client.create(config);<br>    WebResource service = client.resource(getBaseURI());<br>    // Fluent interfaces<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;hello&quot;).accept(MediaType.TEXT_PLAIN).get(ClientResponse.class).toString());<br>    // Get plain text<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;hello&quot;).accept(MediaType.TEXT_PLAIN).get(String.class));<br>    // Get XML<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;hello&quot;).accept(MediaType.TEXT_XML).get(String.class));<br>    // The HTML<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;hello&quot;).accept(MediaType.TEXT_HTML).get(String.class));<br>  }<br>  private static URI getBaseURI() {<br>    return UriBuilder.fromUri(&quot;<a href="http://localhost:8080/de.vogella.jersey.first&quot;).build(" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.first&quot;).build(</a>);<br>  }<br>}<br>[/java]</p>
+<h3 id="5-RESTful_Web_Service与JAXB">5.RESTful Web Service与JAXB</h3>
+<h4 id="5-1创建项目">5.1创建项目</h4>
+<p>新建项目方法如上。</p>
+<p>[java]<br>package de.vogella.jersey.jaxb.model;<br>import javax.xml.bind.annotation.XmlRootElement;<br>@XmlRootElement<br>// JAX-RS supports an automatic mapping from JAXB annotated class to XML and JSON<br>// Isn’t that cool?<br>public class Todo {<br>  private String summary;<br>  private String description;<br>  public String getSummary() {<br>    return summary;<br>  }<br>  public void setSummary(String summary) {<br>    this.summary = summary;<br>  }<br>  public String getDescription() {<br>    return description;<br>  }<br>  public void setDescription(String description) {<br>    this.description = description;<br>  }<br>}<br>[/java]</p>
+<p>[java]<br>package de.vogella.jersey.jaxb;<br>import javax.ws.rs.GET;<br>import javax.ws.rs.Path;<br>import javax.ws.rs.Produces;<br>import javax.ws.rs.core.MediaType;<br>import de.vogella.jersey.jaxb.model.Todo;<br>@Path(&quot;/todo&quot;)<br>public class TodoResource {<br>  // This method is called if XMLis request<br>  @GET<br>  @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })<br>  public Todo getXML() {<br>    Todo todo = new Todo();<br>    todo.setSummary(&quot;This is my first todo&quot;);<br>    todo.setDescription(&quot;This is my first todo&quot;);<br>    return todo;<br>  }<br>  // This can be used to test the integration with the browser<br>  @GET<br>  @Produces({ MediaType.TEXT_XML })<br>  public Todo getHTML() {<br>    Todo todo = new Todo();<br>    todo.setSummary(&quot;This is my first todo&quot;);<br>    todo.setDescription(&quot;This is my first todo&quot;);<br>    return todo;<br>  }<br>}<br>[/java]</p>
+<p>[java]<br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;web-app xmlns:xsi=&quot;<a href="http://www.w3.org/2001/XMLSchema-instance&amp;quot" target="_blank" rel="external">http://www.w3.org/2001/XMLSchema-instance&amp;quot</a>;<br>  xmlns=&quot;<a href="http://java.sun.com/xml/ns/javaee&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee&amp;quot</a>; xmlns:web=&quot;<a href="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot</a>;<br>  xsi:schemaLocation=&quot;<a href="http://java.sun.com/xml/ns/javaee" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee</a> <a href="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot</a>;<br>  id=&quot;WebApp_ID&quot; version=&quot;2.5&quot;&gt;<br>  &lt;display-name&gt;de.vogella.jersey.jaxb&lt;/display-name&gt;<br>  &lt;servlet&gt;<br>    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;<br>    &lt;servlet-class&gt;com.sun.jersey.spi.container.servlet.ServletContainer&lt;/servlet-class&gt;<br>    &lt;init-param&gt;<br>      &lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;<br>      &lt;param-value&gt;de.vogella.jersey.jaxb&lt;/param-value&gt;<br>    &lt;/init-param&gt;<br>    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;<br>  &lt;/servlet&gt;<br>  &lt;servlet-mapping&gt;<br>    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;<br>    &lt;url-pattern&gt;/rest/*&lt;/url-pattern&gt;<br>  &lt;/servlet-mapping&gt;<br>&lt;/web-app&gt;<br>[/java]<br>访问网址：<a href="http://localhost:8080/de.vogella.jersey.jaxb/rest/todo" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.jaxb/rest/todo</a><br>创建客户端访问<br>[java]<br>package de.vogella.jersey.jaxb.client;<br>import java.net.URI;<br>import javax.ws.rs.core.MediaType;<br>import javax.ws.rs.core.UriBuilder;<br>import com.sun.jersey.api.client.Client;<br>import com.sun.jersey.api.client.WebResource;<br>import com.sun.jersey.api.client.config.ClientConfig;<br>import com.sun.jersey.api.client.config.DefaultClientConfig;<br>public class Test {<br>  public static void main(String[] args) {<br>    ClientConfig config = new DefaultClientConfig();<br>    Client client = Client.create(config);<br>    WebResource service = client.resource(getBaseURI());<br>    // Get XML  System.out.println(service.path(&quot;rest&quot;).path(&quot;todo&quot;).accept(MediaType.TEXT_XML).get(String.class));<br>    // Get XML for application  System.out.println(service.path(&quot;rest&quot;).path(&quot;todo&quot;).accept(MediaType.APPLICATION_JSON).get(String.class));<br>    // Get JSON for application<br> System.out.println(service.path(&quot;rest&quot;).path(&quot;todo&quot;).accept(MediaType.APPLICATION_XML).get(String.class));<br>  }<br>  private static URI getBaseURI() {<br>    return UriBuilder.fromUri(&quot;<a href="http://localhost:8080/de.vogella.jersey.jaxb&quot;).build(" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.jaxb&quot;).build(</a>);<br>  }<br>}<br>[/java]</p>
+<h3 id="6-创建CURD的RESTful_web_service">6.创建CURD的RESTful web service</h3>
+<p>[java]<br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;web-app xmlns:xsi=&quot;<a href="http://www.w3.org/2001/XMLSchema-instance&amp;quot" target="_blank" rel="external">http://www.w3.org/2001/XMLSchema-instance&amp;quot</a>; xmlns=&quot;<a href="http://java.sun.com/xml/ns/javaee&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee&amp;quot</a>; xmlns:web=&quot;<a href="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot</a>; xsi:schemaLocation=&quot;<a href="http://java.sun.com/xml/ns/javaee" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee</a> <a href="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot</a>; id=&quot;WebApp_ID&quot; version=&quot;2.5&quot;&gt;<br>  &lt;display-name&gt;de.vogella.jersey.todo&lt;/display-name&gt;<br>  &lt;servlet&gt;<br>    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;<br>    &lt;servlet-class&gt;com.sun.jersey.spi.container.servlet.ServletContainer&lt;/servlet-class&gt;<br>    &lt;init-param&gt;<br>      &lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;<br>      &lt;param-value&gt;de.vogella.jersey.todo.resources&lt;/param-value&gt;<br>    &lt;/init-param&gt;<br>    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;<br>  &lt;/servlet&gt;<br>  &lt;servlet-mapping&gt;<br>    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;<br>    &lt;url-pattern&gt;/rest/*&lt;/url-pattern&gt;<br>  &lt;/servlet-mapping&gt;<br>&lt;/web-app&gt;<br>[/java]<br>创建下面的数据模型作为数据模型及一个单体提供这个模型。<br>[java]<br>package de.vogella.jersey.todo.model;<br>import javax.xml.bind.annotation.XmlRootElement;<br>@XmlRootElement<br>public class Todo {<br>  private String id;<br>  private String summary;<br>  private String description;<br>  public Todo(){<br>  }<br>  public Todo (String id, String summary){<br>    this.id = id;<br>    this.summary = summary;<br>  }<br>  public String getId() {<br>    return id;<br>  }<br>  public void setId(String id) {<br>    this.id = id;<br>  }<br>  public String getSummary() {<br>    return summary;<br>  }<br>  public void setSummary(String summary) {<br>    this.summary = summary;<br>  }<br>  public String getDescription() {<br>    return description;<br>  }<br>  public void setDescription(String description) {<br>    this.description = description;<br>  }<br>}<br>[/java]</p>
+<p>[java]<br>package de.vogella.jersey.todo.dao;<br>import java.util.HashMap;<br>import java.util.Map;<br>import de.vogella.jersey.todo.model.Todo;<br>public enum TodoDao {<br>  instance;<br>  private Map&lt;String, Todo&gt; contentProvider = new HashMap&lt;String, Todo&gt;();<br>  private TodoDao() {<br>    Todo todo = new Todo(&quot;1&quot;, &quot;Learn REST&quot;);<br>    todo.setDescription(&quot;Read <a href="http://www.vogella.com/tutorials/REST/article.html&amp;quot" target="_blank" rel="external">http://www.vogella.com/tutorials/REST/article.html&amp;quot</a>;);<br>    contentProvider.put(&quot;1&quot;, todo);<br>    todo = new Todo(&quot;2&quot;, &quot;Do something&quot;);<br>    todo.setDescription(&quot;Read complete <a href="http://www.vogella.com&amp;quot" target="_blank" rel="external">http://www.vogella.com&amp;quot</a>;);<br>    contentProvider.put(&quot;2&quot;, todo);<br>  }<br>  public Map&lt;String, Todo&gt; getModel(){<br>    return contentProvider;<br>  }<br>}<br>[/java]<br>创建一个简单地html页面POST数据到Service。<br>[java]<br>&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br> &lt;head&gt;<br>  &lt;title&gt;Form to create a new resource&lt;/title&gt;<br> &lt;/head&gt;<br>&lt;body&gt;<br>  &lt;form action=&quot;../de.vogella.jersey.todo/rest/todos&quot; method=&quot;POST&quot;&gt;<br>  &lt;label for=&quot;id&quot;&gt;ID&lt;/label&gt;<br>  &lt;input name=&quot;id&quot; /&gt;<br>  &lt;br/&gt;<br>  &lt;label for=&quot;summary&quot;&gt;Summary&lt;/label&gt;<br>  &lt;input name=&quot;summary&quot; /&gt;<br>  &lt;br/&gt;<br>  Description:<br>  &lt;TEXTAREA NAME=&quot;description&quot; COLS=40 ROWS=6&gt;&lt;/TEXTAREA&gt;<br>  &lt;br/&gt;<br>  &lt;input type=&quot;submit&quot; value=&quot;Submit&quot; /&gt;<br>  &lt;/form&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;<br>[/java]<br>REST Service<br>[java]<br>package de.vogella.jersey.todo.resources;<br>import javax.ws.rs.Consumes;<br>import javax.ws.rs.DELETE;<br>import javax.ws.rs.GET;<br>import javax.ws.rs.PUT;<br>import javax.ws.rs.Produces;<br>import javax.ws.rs.core.Context;<br>import javax.ws.rs.core.MediaType;<br>import javax.ws.rs.core.Request;<br>import javax.ws.rs.core.Response;<br>import javax.ws.rs.core.UriInfo;<br>import javax.xml.bind.JAXBElement;<br>import de.vogella.jersey.todo.dao.TodoDao;<br>import de.vogella.jersey.todo.model.Todo;<br>public class TodoResource {<br>  @Context<br>  UriInfo uriInfo;<br>  @Context<br>  Request request;<br>  String id;<br>  public TodoResource(UriInfo uriInfo, Request request, String id) {<br>    this.uriInfo = uriInfo;<br>    this.request = request;<br>    this.id = id;<br>  }<br>  //Application integration</p>
+<p>  @GET<br>  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})<br>  public Todo getTodo() {<br>    Todo todo = TodoDao.instance.getModel().get(id);<br>    if(todo==null)<br>      throw new RuntimeException(&quot;Get: Todo with &quot; + id +  &quot; not found&quot;);<br>    return todo;<br>  }<br>  // for the browser<br>  @GET<br>  @Produces(MediaType.TEXT_XML)<br>  public Todo getTodoHTML() {<br>    Todo todo = TodoDao.instance.getModel().get(id);<br>    if(todo==null)<br>      throw new RuntimeException(&quot;Get: Todo with &quot; + id +  &quot; not found&quot;);<br>    return todo;<br>  }<br>  @PUT<br>  @Consumes(MediaType.APPLICATION_XML)<br>  public Response putTodo(JAXBElement&lt;Todo&gt; todo) {<br>    Todo c = todo.getValue();<br>    return putAndGetResponse(c);<br>  }<br>  @DELETE<br>  public void deleteTodo() {<br>    Todo c = TodoDao.instance.getModel().remove(id);<br>    if(c==null)<br>      throw new RuntimeException(&quot;Delete: Todo with &quot; + id +  &quot; not found&quot;);<br>  }<br>  private Response putAndGetResponse(Todo todo) {<br>    Response res;<br>  if(TodoDao.instance.getModel().containsKey(todo.getId())) {<br>      res = Response.noContent().build();<br>    } else {<br>      res = Response.created(uriInfo.getAbsolutePath()).build();<br>    }<br>    TodoDao.instance.getModel().put(todo.getId(), todo);<br>    return res;<br>  }<br>}<br>[/java]<br>[java]<br>package de.vogella.jersey.todo.resources;<br>import java.io.IOException;<br>import java.net.URI;<br>import java.util.ArrayList;<br>import java.util.List;<br>import javax.servlet.http.HttpServletResponse;<br>import javax.ws.rs.Consumes;<br>import javax.ws.rs.FormParam;<br>import javax.ws.rs.GET;<br>import javax.ws.rs.POST;<br>import javax.ws.rs.Path;<br>import javax.ws.rs.PathParam;<br>import javax.ws.rs.Produces;<br>import javax.ws.rs.core.Context;<br>import javax.ws.rs.core.MediaType;<br>import javax.ws.rs.core.Request;<br>import javax.ws.rs.core.Response;<br>import javax.ws.rs.core.UriInfo;<br>import de.vogella.jersey.todo.dao.TodoDao;<br>import de.vogella.jersey.todo.model.Todo;<br>// Will map the resource to the URL todos<br>@Path(&quot;/todos&quot;)<br>public class TodosResource {<br>  // Allows to insert contextual objects into the class,<br>  // e.g. ServletContext, Request, Response, UriInfo<br>  @Context<br>  UriInfo uriInfo;<br>  @Context<br>  Request request;<br>  // Return the list of todos to the user in the browser<br>  @GET<br>  @Produces(MediaType.TEXT_XML)<br>  public List&lt;Todo&gt; getTodosBrowser() {<br>    List&lt;Todo&gt; todos = new ArrayList&lt;Todo&gt;();<br>    todos.addAll(TodoDao.instance.getModel().values());<br>    return todos;<br>  }<br>  // Return the list of todos for applications<br>  @GET<br>  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})<br>  public List&lt;Todo&gt; getTodos() {<br>    List&lt;Todo&gt; todos = new ArrayList&lt;Todo&gt;();<br>    todos.addAll(TodoDao.instance.getModel().values());<br>    return todos;<br>  }<br>  // retuns the number of todos<br>  // use <a href="http://localhost:8080/de.vogella.jersey.todo/rest/todos/count" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.todo/rest/todos/count</a><br>  // to get the total number of records<br>  @GET<br>  @Path(&quot;count&quot;)<br>  @Produces(MediaType.TEXT_PLAIN)<br>  public String getCount() {<br>    int count = TodoDao.instance.getModel().size();<br>    return String.valueOf(count);<br>  }<br>  @POST<br>  @Produces(MediaType.TEXT_HTML)<br>  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)<br>  public void newTodo(@FormParam(&quot;id&quot;) String id,<br>      @FormParam(&quot;summary&quot;) String summary,<br>      @FormParam(&quot;description&quot;) String description,<br>      @Context HttpServletResponse servletResponse) throws IOException {<br>    Todo todo = new Todo(id,summary);<br>    if (description!=null){<br>      todo.setDescription(description);<br>    }<br>    TodoDao.instance.getModel().put(id, todo);<br>    servletResponse.sendRedirect(&quot;../create_todo.html&quot;);<br>  }<br>  // Defines that the next path parameter after todos is<br>  // treated as a parameter and passed to the TodoResources<br>  // Allows to type <a href="http://localhost:8080/de.vogella.jersey.todo/rest/todos/1" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.todo/rest/todos/1</a><br>  // 1 will be treaded as parameter todo and passed to TodoResource<br>  @Path(&quot;{todo}&quot;)<br>  public TodoResource getTodo(@PathParam(&quot;todo&quot;) String id) {<br>    return new TodoResource(uriInfo, request, id);<br>  }<br>}<br>[/java]<br>创建客户端<br>运行：<a href="http://localhost:8080/de.vogella.jersey.todo/rest/todos" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.todo/rest/todos</a><br>[java]<br>package de.vogella.jersey.todo.client;<br>import java.net.URI;<br>import javax.ws.rs.core.MediaType;<br>import javax.ws.rs.core.UriBuilder;<br>import com.sun.jersey.api.client.Client;<br>import com.sun.jersey.api.client.ClientResponse;<br>import com.sun.jersey.api.client.WebResource;<br>import com.sun.jersey.api.client.config.ClientConfig;<br>import com.sun.jersey.api.client.config.DefaultClientConfig;<br>import com.sun.jersey.api.representation.Form;<br>import de.vogella.jersey.todo.model.Todo;<br>public class Tester {<br>  public static void main(String[] args) {<br>    ClientConfig config = new DefaultClientConfig();<br>    Client client = Client.create(config);<br>    WebResource service = client.resource(getBaseURI());<br>    // create one todo<br>    Todo todo = new Todo(&quot;3&quot;, &quot;Blabla&quot;);<br>    ClientResponse response = service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>      .path(todo.getId()).accept(MediaType.APPLICATION_XML)<br>        .put(ClientResponse.class, todo);<br>    // Return code should be 201 == created resource<br>    System.out.println(response.getStatus());<br>    // Get the Todos<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>        .accept(MediaType.TEXT_XML).get(String.class));<br>    // Get JSON for application<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>.accept(MediaType.APPLICATION_JSON).get(String.class));<br>    // Get XML for application<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>     .accept(MediaType.APPLICATION_XML).get(String.class));<br>    // Get the Todo with id 1<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;todos/1&quot;)<br>     .accept(MediaType.APPLICATION_XML).get(String.class));<br>    // get Todo with id 1<br>    service.path(&quot;rest&quot;).path(&quot;todos/1&quot;).delete();<br>    // Get the all todos, id 1 should be deleted<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>    .accept(MediaType.APPLICATION_XML).get(String.class));<br>    // create a Todo<br>    Form form = new Form();<br>    form.add(&quot;id&quot;, &quot;4&quot;);<br>    form.add(&quot;summary&quot;, &quot;Demonstration of the client lib for forms&quot;);<br>    response = service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>        .type(MediaType.APPLICATION_FORM_URLENCODED)<br>        .post(ClientResponse.class, form);<br>    System.out.println(&quot;Form response &quot; + response.getEntity(String.class));<br>    // Get the all todos, id 4 should be created<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>     .accept(MediaType.APPLICATION_XML).get(String.class));<br>  }<br>  private static URI getBaseURI() {<br>    return UriBuilder.fromUri(&quot;<a href="http://localhost:8080/de.vogella.jersey.todo&quot;).build(" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.todo&quot;).build(</a>);<br>  }<br>}<br>[/java]</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Java/">Java</a><a href="/tags/Web-Service/">Web Service</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Java/">Java</a>►<a class="article-category-link" href="/categories/Java/MSE/">MSE</a>►<a class="article-category-link" href="/categories/Java/MSE/原创/">原创</a>►<a class="article-category-link" href="/categories/Java/MSE/原创/学习笔记/">学习笔记</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://localhost:4000/2014/07/16/java-e5-ae-9e-e7-8e-b0restful-service/" data-title="Java实现RESTful Service | ZhangMin.name" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/07/23/-e7-9c-9f-e4-bc-aa-e7-90-83-e8-bf-b7-e7-9a-842014-e5-b7-b4-e8-a5-bf-e4-b8-96-e7-95-8c-e6-9d-af/" title="真伪球迷的2014巴西世界杯">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  真伪球迷的2014巴西世界杯</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/07/13/-e5-8f-af-e7-88-b1-e5-8f-88-e5-8f-af-e6-95-ac-e7-9a-84-e8-8b-8f-e8-bd-bc/"  title="可爱又可敬的苏轼">
+ <strong>NEXT:</strong><br/> 
+ <span>可爱又可敬的苏轼
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-REST-Representational_State_Transfer"><span class="toc-number">1.</span> <span class="toc-text">1.REST-Representational State Transfer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1_什么是REST"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 什么是REST</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2_Http方法"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 Http方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3_RESTful_web_Service"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 RESTful web Service</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JAX-RS"><span class="toc-number">2.</span> <span class="toc-text">2.JAX-RS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1_JAX-RS"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 JAX-RS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2_JAX-RS的参考实现Jersey"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 JAX-RS的参考实现Jersey</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3_JRX-RS注解"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 JRX-RS注解</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Jersey"><span class="toc-number">3.</span> <span class="toc-text">3.Jersey</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-创建一个REST示例服务"><span class="toc-number">4.</span> <span class="toc-text">4.创建一个REST示例服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-RESTful_Web_Service与JAXB"><span class="toc-number">5.</span> <span class="toc-text">5.RESTful Web Service与JAXB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1创建项目"><span class="toc-number">5.1.</span> <span class="toc-text">5.1创建项目</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-创建CURD的RESTful_web_service"><span class="toc-number">6.</span> <span class="toc-text">6.创建CURD的RESTful web service</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Java/" title="Java">Java<sup>21</sup></a></li>
+		
+			<li><a href="/categories/MSE/" title="MSE">MSE<sup>102</sup></a></li>
+		
+			<li><a href="/categories/linux/MSE/" title="MSE">MSE<sup>2</sup></a></li>
+		
+			<li><a href="/categories/Java/MSE/" title="MSE">MSE<sup>6</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>8</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/" title="storm">storm<sup>7</sup></a></li>
+		
+			<li><a href="/categories/storm/" title="storm">storm<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分享/" title="分享">分享<sup>70</sup></a></li>
+		
+			<li><a href="/categories/Java/分享/" title="分享">分享<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/分享/" title="分享">分享<sup>10</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/" title="原创">原创<sup>22</sup></a></li>
+		
+			<li><a href="/categories/Java/MSE/原创/" title="原创">原创<sup>5</sup></a></li>
+		
+			<li><a href="/categories/分享/原创/" title="原创">原创<sup>3</sup></a></li>
+		
+			<li><a href="/categories/原创/" title="原创">原创<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Java/原创/" title="原创">原创<sup>8</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/学习笔记/" title="学习笔记">学习笔记<sup>4</sup></a></li>
+		
+			<li><a href="/categories/linux/MSE/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Java/MSE/原创/学习笔记/" title="学习笔记">学习笔记<sup>3</sup></a></li>
+		
+			<li><a href="/categories/分享/原创/学习笔记/" title="学习笔记">学习笔记<sup>2</sup></a></li>
+		
+			<li><a href="/categories/原创/学习笔记/" title="学习笔记">学习笔记<sup>8</sup></a></li>
+		
+			<li><a href="/categories/MSE/学习笔记/" title="学习笔记">学习笔记<sup>33</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Java/原创/学习笔记/" title="学习笔记">学习笔记<sup>4</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/" title="学习笔记">学习笔记<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Java/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分享/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
+		
+			<li><a href="/categories/MSE/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>27</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>5</sup></a></li>
+		
+			<li><a href="/categories/linux/MSE/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/原创/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
+		
+			<li><a href="/categories/MSE/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>23</sup></a></li>
+		
+			<li><a href="/categories/原创/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/linux/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/分享/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>7</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>12</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>6</sup></a></li>
+		
+			<li><a href="/categories/分享/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>3</sup></a></li>
+		
+			<li><a href="/categories/Java/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/分享/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/生活/" title="生活">生活<sup>3</sup></a></li>
+		
+			<li><a href="/categories/分享/每日一文-94天/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分享/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/学习笔记/略懂/" title="略懂">略懂<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>22</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+		
+			<li><a href="/tags/OSGi/" title="OSGi">OSGi<sup>2</sup></a></li>
+		
+			<li><a href="/tags/UCAS/" title="UCAS">UCAS<sup>9</sup></a></li>
+		
+			<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Web-Service/" title="Web Service">Web Service<sup>3</sup></a></li>
+		
+			<li><a href="/tags/public-speaking/" title="public speaking">public speaking<sup>18</sup></a></li>
+		
+			<li><a href="/tags/storm/" title="storm">storm<sup>8</sup></a></li>
+		
+			<li><a href="/tags/wordpress/" title="wordpress">wordpress<sup>2</sup></a></li>
+		
+			<li><a href="/tags/国科大/" title="国科大">国科大<sup>8</sup></a></li>
+		
+			<li><a href="/tags/工程哲学/" title="工程哲学">工程哲学<sup>10</sup></a></li>
+		
+			<li><a href="/tags/技术/" title="技术">技术<sup>15</sup></a></li>
+		
+			<li><a href="/tags/明德/" title="明德">明德<sup>3</sup></a></li>
+		
+			<li><a href="/tags/札记/" title="札记">札记<sup>25</sup></a></li>
+		
+			<li><a href="/tags/生活/" title="生活">生活<sup>13</sup></a></li>
+		
+			<li><a href="/tags/记事/" title="记事">记事<sup>5</sup></a></li>
+		
+			<li><a href="/tags/讲座/" title="讲座">讲座<sup>8</sup></a></li>
+		
+			<li><a href="/tags/读书·旅行/" title="读书·旅行">读书·旅行<sup>7</sup></a></li>
+		
+			<li><a href="/tags/问题与算法/" title="问题与算法">问题与算法<sup>12</sup></a></li>
+		
+			<li><a href="/tags/马上有OFFER/" title="马上有OFFER">马上有OFFER<sup>13</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://localhost:4000" target="_blank" title="张敏">张敏</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,464 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Storm概念 | ZhangMin.name</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="张敏">
+    
+    <meta name="description" content="流
+流(stream)是storm的核心抽象。流是无限的元组序列以分布式的方式进行处理。流由模式定义，所谓模式就是流中元组的域的名称。默认情况下，元组可以包含integer，long，short，byte，string，double，float，boolean及byte array。当然也可以自定义">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="ZhangMin.name" title="ZhangMin.name"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ZhangMin.name">ZhangMin.name</a></h1>
+				<h2 class="blog-motto">勤思敏行 思行合一</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:localhost:4000">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2013/03/14/storm-e6-a6-82-e5-bf-b5/" title="Storm概念" itemprop="url">Storm概念</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://localhost:4000" title="张敏">张敏</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2013-03-14T14:16:14.000Z" itemprop="datePublished">Mar 14 2013</time>
+    Updated:<time datetime="2014-10-20T09:41:48.000Z" itemprop="dateModified">Oct 20 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+		</div>
+		
+		<p><strong>流</strong></p>
+<p>流(stream)是storm的核心抽象。流是无限的元组序列以分布式的方式进行处理。流由模式定义，所谓模式就是流中元组的域的名称。默认情况下，元组可以包含integer，long，short，byte，string，double，float，boolean及byte array。当然也可以自定义Serializer来支持自定义类型或数据对象。声明流时会指定一个id，由于单流的spout和bolt非常常见，OutputFieldsDeclarer提供了便捷的方法声明一个指定id的单流。在这种情况下，流的默认id是“default”。</p>
+<p><strong>Spout</strong></p>
+<p>Spout:<span style="font-family: 宋体;">流计算的数据源。一般情况下，</span><span style="font-family: 'Times New Roman';">spout</span><span style="font-family: 宋体;">从队列代理读取数据，但是</span><span style="font-family: 'Times New Roman';">spout</span><span style="font-family: 宋体;">也可以产生自己的数据流，或者从</span><span style="font-family: 'Times New Roman';">twitter</span><span style="font-family: 宋体;">的流</span><span style="font-family: 'Times New Roman';">API</span><span style="font-family: 宋体;">读取。</span><span style="font-family: 'Times New Roman';">Spout</span><span style="font-family: 宋体;">实现了很多队列系统。</span></p>
+<p>Spout可以是可靠的也可以是非可靠的。一个可靠地spout重新处理一个失败的元组，而不可靠的spout只负责发送，不管元组是否被成功进行处理。Spout可以发送一个或多个流，可以通过OutputFieldsDeclarer的declareStream声明流，利用SpoutOutputCollector的emit方法发送元组，并制定流将如何发送。Spout的主要方法是nextTuple,nextTuple发送一个元组到 topology或简单的返回。如果没有新的元组需要发送，必须保证nextTuple不会阻塞任何spout的实现。因为storm会在同一个线程调用spout的所有方法。另一个主要的方法是ack和fail。这两个方法将在storm检测到元组被成功发送到topology及失败时分别调用。Ack和fail只能由可靠的spout调用。</p>
+<p><strong>Bolt</strong></p>
+<p>Bolt<span style="font-family: 宋体;">：处理任意数据的输入流并产生任意数据的输出流。大多数逻辑计算都通过</span><span style="font-family: 'Times New Roman';">bolt</span><span style="font-family: 宋体;">进行处理。如函数过滤器，流合并，流聚集，数据库连接等。</span></p>
+<p><strong>Topology</strong></p>
+<p>Topology<span style="font-family: 宋体;">：是</span><span style="font-family: 'Times New Roman';">spout</span><span style="font-family: 宋体;">和</span><span style="font-family: 'Times New Roman';">bolt</span><span style="font-family: 宋体;">的网络。网络中的每条边代表一个</span><span style="font-family: 'Times New Roman';">bolt</span><span style="font-family: 宋体;">订阅了其他的</span><span style="font-family: 'Times New Roman';">bolt</span><span style="font-family: 宋体;">或</span><span style="font-family: 'Times New Roman';">spout</span><span style="font-family: 宋体;">的输出流。一个</span><span style="font-family: 'Times New Roman';">topology</span><span style="font-family: 宋体;">是任意复杂的多阶段流计算。部署后，就不能确定</span><span style="font-family: 'Times New Roman';">topology</span><span style="font-family: 宋体;">在那个节点运行。</span></p>
+<p><strong>流分组</strong></p>
+<p>定义一个topology需要指定每一个bolt的输入信息是什么，流分组定义流是如何在众多bolt任务之间被分割的。通过事先CustomStreamGrouping接口可以自定义流分组方式。Storm的内置流分组方式有：<br>All Grouping 全分组：流被复制发送到所有bolt任务，要小心使用该分组方式。<br>Global Grouping 全局分组：整个流将由一个bolt任务处理，特别的，将由最小id的bolt处理。<br>None Grouping 不分组：这个分组方式表示不关心分组的方式。现在，此方式或与随机分组方式相同。但最终storm将在相同的线程执行使用该分组方式的bolt。<br>Direct Grouping 直接分组：这是一个比较特别的分组方式，元组的消费者将决定消费者的那个任务接受该元组。直接分组方式只能用于声明为直接流的流。发送到直接流的元组必须用emitDirect方法发送元组。通过提供TopologyContext或跟踪emit方法的输出，可以得到一个bolt的消费者的id。（给方法返回元组发送到任务的id）<br>Local or Shuffle Grouping 本地分组或随机分组：如果目标bolt有一个或多个任务，在相同worker进程，元组将只为那些进程的任务进行随机分组。否则，该分组方式与随机分组类似。</p>
+<p><strong>可靠性</strong></p>
+<p>Storm通过追踪有每一个spout触发的元组树，并决定什么时候元组树成功的完成处理。每一个topology都有一个消息超时属性。如果流在该时间内spout没能完成处理，则storm会重新发送并处理该元组。为了充分利用storm的可靠性，必须告诉storm当新的边添加到元组树及何时完成处理独立元组。这可以通过OutputCollector对象实现。通过emit方法制定发送到的流，通过ack发送确认信息。</p>
+<p><strong>任务</strong></p>
+<p>每一个spout和bolt可以在集群上执行多个任务，每一个任务对应一个线程。流分组决定如何在两个任务集合之间发送元组。你可以设置每一个spout和bolt的并行度，通过TopoloBuilder的setSpout和setBolt方法。</p>
+<p><strong>Worker </strong></p>
+<p>Topology 在一个或多个工作者进程内执行。每一个工作者进程是一个物理的JVM并执行topology集合的一部分。</p>
+<p><em>注：以上内容翻译自<a href="https://github.com/nathanmarz/storm/wiki/Concepts" target="_blank" rel="external">https://github.com/nathanmarz/storm/wiki/Concepts</a></em></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/storm/">storm</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/MSE/">MSE</a>►<a class="article-category-link" href="/categories/MSE/storm/">storm</a>►<a class="article-category-link" href="/categories/MSE/storm/每日一文-94天/">每日一文(94天)</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://localhost:4000/2013/03/14/storm-e6-a6-82-e5-bf-b5/" data-title="Storm概念 | ZhangMin.name" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2013/03/15/storm-e9-85-8d-e7-bd-ae/" title="Storm配置">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Storm配置</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2013/03/13/storm-e5-8e-9f-e7-90-86/"  title="Storm原理">
+ <strong>NEXT:</strong><br/> 
+ <span>Storm原理
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Java/" title="Java">Java<sup>21</sup></a></li>
+		
+			<li><a href="/categories/MSE/" title="MSE">MSE<sup>102</sup></a></li>
+		
+			<li><a href="/categories/linux/MSE/" title="MSE">MSE<sup>2</sup></a></li>
+		
+			<li><a href="/categories/Java/MSE/" title="MSE">MSE<sup>6</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>8</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/" title="storm">storm<sup>7</sup></a></li>
+		
+			<li><a href="/categories/storm/" title="storm">storm<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分享/" title="分享">分享<sup>70</sup></a></li>
+		
+			<li><a href="/categories/Java/分享/" title="分享">分享<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/分享/" title="分享">分享<sup>10</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/" title="原创">原创<sup>22</sup></a></li>
+		
+			<li><a href="/categories/Java/MSE/原创/" title="原创">原创<sup>5</sup></a></li>
+		
+			<li><a href="/categories/分享/原创/" title="原创">原创<sup>3</sup></a></li>
+		
+			<li><a href="/categories/原创/" title="原创">原创<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Java/原创/" title="原创">原创<sup>8</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/学习笔记/" title="学习笔记">学习笔记<sup>4</sup></a></li>
+		
+			<li><a href="/categories/linux/MSE/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Java/MSE/原创/学习笔记/" title="学习笔记">学习笔记<sup>3</sup></a></li>
+		
+			<li><a href="/categories/分享/原创/学习笔记/" title="学习笔记">学习笔记<sup>2</sup></a></li>
+		
+			<li><a href="/categories/原创/学习笔记/" title="学习笔记">学习笔记<sup>8</sup></a></li>
+		
+			<li><a href="/categories/MSE/学习笔记/" title="学习笔记">学习笔记<sup>33</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Java/原创/学习笔记/" title="学习笔记">学习笔记<sup>4</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/" title="学习笔记">学习笔记<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Java/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分享/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
+		
+			<li><a href="/categories/MSE/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>27</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>5</sup></a></li>
+		
+			<li><a href="/categories/linux/MSE/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/原创/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
+		
+			<li><a href="/categories/MSE/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>23</sup></a></li>
+		
+			<li><a href="/categories/原创/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/linux/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/分享/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>7</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>12</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>6</sup></a></li>
+		
+			<li><a href="/categories/分享/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>3</sup></a></li>
+		
+			<li><a href="/categories/Java/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/分享/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/生活/" title="生活">生活<sup>3</sup></a></li>
+		
+			<li><a href="/categories/分享/每日一文-94天/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分享/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/学习笔记/略懂/" title="略懂">略懂<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>22</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+		
+			<li><a href="/tags/OSGi/" title="OSGi">OSGi<sup>2</sup></a></li>
+		
+			<li><a href="/tags/UCAS/" title="UCAS">UCAS<sup>9</sup></a></li>
+		
+			<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Web-Service/" title="Web Service">Web Service<sup>3</sup></a></li>
+		
+			<li><a href="/tags/public-speaking/" title="public speaking">public speaking<sup>18</sup></a></li>
+		
+			<li><a href="/tags/storm/" title="storm">storm<sup>8</sup></a></li>
+		
+			<li><a href="/tags/wordpress/" title="wordpress">wordpress<sup>2</sup></a></li>
+		
+			<li><a href="/tags/国科大/" title="国科大">国科大<sup>8</sup></a></li>
+		
+			<li><a href="/tags/工程哲学/" title="工程哲学">工程哲学<sup>10</sup></a></li>
+		
+			<li><a href="/tags/技术/" title="技术">技术<sup>15</sup></a></li>
+		
+			<li><a href="/tags/明德/" title="明德">明德<sup>3</sup></a></li>
+		
+			<li><a href="/tags/札记/" title="札记">札记<sup>25</sup></a></li>
+		
+			<li><a href="/tags/生活/" title="生活">生活<sup>13</sup></a></li>
+		
+			<li><a href="/tags/记事/" title="记事">记事<sup>5</sup></a></li>
+		
+			<li><a href="/tags/讲座/" title="讲座">讲座<sup>8</sup></a></li>
+		
+			<li><a href="/tags/读书·旅行/" title="读书·旅行">读书·旅行<sup>7</sup></a></li>
+		
+			<li><a href="/tags/问题与算法/" title="问题与算法">问题与算法<sup>12</sup></a></li>
+		
+			<li><a href="/tags/马上有OFFER/" title="马上有OFFER">马上有OFFER<sup>13</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://localhost:4000" target="_blank" title="张敏">张敏</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

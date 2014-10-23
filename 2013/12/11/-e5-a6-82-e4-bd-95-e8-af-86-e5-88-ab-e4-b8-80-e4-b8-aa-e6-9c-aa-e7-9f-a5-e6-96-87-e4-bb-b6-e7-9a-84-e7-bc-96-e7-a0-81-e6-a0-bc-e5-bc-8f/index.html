@@ -1,0 +1,552 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>如何识别一个未知文件的编码格式 | ZhangMin.name</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="张敏">
+    
+    <meta name="description" content="识别一个未知文件的格式（英文专业术语为Codepage-detection）在诸多领域有应用，如搜索引擎，浏览器等。对于Unicode编码的文件，在文件的开头有两个字节或者多个字节用于表示文件的编码格式及字节顺序。这几个字节不会出现在文件的内容中，只会影响文件被装进内存时的方式。UTF-8，UCS-">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="ZhangMin.name" title="ZhangMin.name"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ZhangMin.name">ZhangMin.name</a></h1>
+				<h2 class="blog-motto">勤思敏行 思行合一</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:localhost:4000">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2013/12/11/-e5-a6-82-e4-bd-95-e8-af-86-e5-88-ab-e4-b8-80-e4-b8-aa-e6-9c-aa-e7-9f-a5-e6-96-87-e4-bb-b6-e7-9a-84-e7-bc-96-e7-a0-81-e6-a0-bc-e5-bc-8f/" title="如何识别一个未知文件的编码格式" itemprop="url">如何识别一个未知文件的编码格式</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://localhost:4000" title="张敏">张敏</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2013-12-11T08:47:07.000Z" itemprop="datePublished">Dec 11 2013</time>
+    Updated:<time datetime="2014-10-20T09:41:49.000Z" itemprop="dateModified">Oct 20 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+		</div>
+		
+		<p>识别一个未知文件的格式（英文专业术语为Codepage-detection）在诸多领域有应用，如搜索引擎，浏览器等。<br>对于Unicode编码的文件，在文件的开头有两个字节或者多个字节用于表示文件的编码格式及字节顺序。这几个字节不会出现在文件的内容中，只会影响文件被装进内存时的方式。UTF-8，UCS-2/UTF-16等编码格式可以通过文件开头的BOM（Byte Order Mark）来识别。常见BOM及对应编码格式如下所示：<br>FF FE  UCS-2LE or UTF-16LE<br>FE FF  UCS-2BE or UTF-16BE<br>EF BB BF  UTF-8<br>当然这个方法也不能保证识别的正确性，因为有的文件开头可能就会有相同的字节。况且大多数文件都没有BOM。</p>
+<p>由于所有其他的编码格式都兼容ASCII编码，所以如果一个文件的内容都是ASCII，就不能判断该文件的编码格式。如果一个文件既有ASCII编码的字符也有UTF-8编码的字符可以通过寻找UTF-8的字节序列来实现，如：<br>0xxxxxxx  ASCII &lt; 0x80 (128)<br>110xxxxx 10xxxxxx  2-byte &gt;= 0x80<br>1110xxxx 10xxxxxx 10xxxxxx  3-byte &gt;= 0x400<br>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx  4-byte &gt;= 0x10000</p>
+<p>在java中有几种工具可以进行文件编码的识别，如Mozilla jchardet（<a href="http://jchardet.sourceforge.net/）和IBM的ICU4j（http://site.icu-project.org/）。相比而言，后者的准确性更高。" target="_blank" rel="external">http://jchardet.sourceforge.net/）和IBM的ICU4j（http://site.icu-project.org/）。相比而言，后者的准确性更高。</a><br>下面是两个工具的使用示例：<br>[java]<br>/<em>*
+ </em></p>
+<ul>
+<li>ICUExample.java</li>
+<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>name.zhangmin.timediary<br><em>
+</em>/<br>package name.zhangmin.timediary.util;</li>
+</ul>
+<p>import java.io.BufferedInputStream;<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.FileNotFoundException;<br>import java.io.IOException;</p>
+<p>import com.ibm.icu.text.CharsetDetector;<br>import com.ibm.icu.text.CharsetMatch;</p>
+<p>/**</p>
+<ul>
+<li><p>@author ZhangMin.name<br><em>
+</em>/<br>public class ICUExample {</p>
+<p> /**</p>
+<ul>
+<li>@param args</li>
+<li><p>@throws IOException<br>*/<br>public static void main(String[] args) throws IOException {<br> String base = &quot;C:\Users\ZhangMin.name\Desktop\EncodeTest&quot;;<br> File[] f = new File(base).listFiles();<br> for(int i = 0 ; i &lt; f.length ; i ++){</p>
+<pre><code> System.out.<span class="keyword">println</span>(&amp;quot;Detcting <span class="keyword">file</span> &amp;quot; + f[i].getName());
+ FileInputStream fis = <span class="keyword">new</span> FileInputStream(f[i]);
+ BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(fis);
+ <span class="keyword">byte</span>[] content =  <span class="keyword">new</span> <span class="keyword">byte</span>[(<span class="keyword">int</span>) f[i].length()];
+ bis.<span class="keyword">read</span>(content);
+
+ CharsetDetector detector = <span class="keyword">new</span> CharsetDetector();
+ detector.setText(content);
+
+ CharsetMatch cm = detector.detect();
+ <span class="keyword">if</span>(cm != <span class="keyword">null</span>){
+     <span class="keyword">int</span> confidence = cm.getConfidence();
+     System.out.<span class="keyword">println</span>(&amp;quot;Charset: &amp;quot; + cm.getName() + &amp;quot;, confidence: &amp;quot;
+     + confidence + &amp;quot;%&amp;quot;);
+ }
+</code></pre><p> }</p>
+<p>}<br>}</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>[/java]</p>
+<p>[java]<br>/<em>*
+ </em></p>
+<ul>
+<li>JchardetExample.java</li>
+<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>name.zhangmin.timediary<br><em>
+</em>/<br>package name.zhangmin.timediary.util;</li>
+</ul>
+<p>import java.io.BufferedInputStream;<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.IOException;<br>import org.mozilla.intl.chardet.<em> ;<br>/*</em></p>
+<ul>
+<li><p>@author ZhangMin.name<br><em>
+</em>/<br>public class JchardetExample {<br> public static boolean found = false;<br> /**</p>
+<ul>
+<li>@param args</li>
+<li><p>@throws IOException<br>*/<br>public static void main(String[] args) throws IOException {<br> String base = &quot;C:\Users\ZhangMin.name\Desktop\EncodeTest&quot;;<br> File[] f = new File(base).listFiles();<br> for(int i = 0 ; i &lt; f.length ; i ++){</p>
+<pre><code> System.out.<span class="keyword">println</span>(&amp;quot;Detcting <span class="keyword">file</span> &amp;quot; + f[i].getName());
+ FileInputStream fis = <span class="keyword">new</span> FileInputStream(f[i]);
+ BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(fis);
+ <span class="comment">// Initalize the nsDetector() ;</span>
+ nsDetector det = <span class="keyword">new</span> nsDetector(nsPSMDetector.ALL);
+ <span class="comment">// Set an observer...</span>
+ <span class="comment">// The Notify() will be called when a matching charset is found.</span>
+ det.Init(<span class="keyword">new</span> nsICharsetDetectionObserver(){
+     <span class="keyword">public</span> <span class="keyword">void</span> Notify(String charset){
+         JchardetExample.found = <span class="keyword">true</span>;
+         System.out.<span class="keyword">println</span>(&amp;quot;CHARSET: &amp;quot; + charset);
+     }
+ });
+
+ <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];
+ <span class="keyword">int</span> len;
+ <span class="keyword">boolean</span> done = <span class="keyword">false</span>;
+ <span class="keyword">boolean</span> isAscii = <span class="keyword">true</span>;
+
+ <span class="keyword">while</span>((len = bis.<span class="keyword">read</span>(buf, <span class="number">0</span>, buf.length)) != -<span class="number">1</span>){
+     <span class="comment">// Check if the stream is only ascii.</span>
+     <span class="keyword">if</span>(isAscii){
+         isAscii = det.isAscii(buf, len);
+     }
+     <span class="comment">// DoIt if non-ascii and not done yet.</span>
+     <span class="keyword">if</span>(!isAscii &amp;amp;&amp;amp; !done){
+         done = det.DoIt(buf, len, <span class="keyword">false</span>);
+     }
+ }
+ det.DataEnd();
+
+ <span class="keyword">if</span>(isAscii){
+     System.out.<span class="keyword">println</span>(&amp;quot;CHARSET: ASCII&amp;quot;);
+     JchardetExample.found = <span class="keyword">true</span>;
+ }
+ <span class="keyword">if</span>(!found){
+     String prob[] = det.getProbableCharsets();
+     <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &amp;lt; prob.length ; j ++){
+         System.out.<span class="keyword">println</span>(&amp;quot;Probable Charset :&amp;quot; + prob[j]);
+     }
+ }
+</code></pre><p> }</p>
+<p>}</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>}</p>
+<p>[/java]</p>
+<p><strong>参考文献：</strong><br><a href="http://stackoverflow.com/questions/1288899/java-text-file-encoding" target="_blank" rel="external">http://stackoverflow.com/questions/1288899/java-text-file-encoding</a><br><a href="http://codesnipers.com/?q=node/68" target="_blank" rel="external">http://codesnipers.com/?q=node/68</a><br><a href="http://jchardet.sourceforge.net/" target="_blank" rel="external">http://jchardet.sourceforge.net/</a><br><a href="http://site.icu-project.org/" target="_blank" rel="external">http://site.icu-project.org/</a><br><a href="http://site.icu-project.org/" target="_blank" rel="external">http://site.icu-project.org/</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Java/">Java</a><a href="/tags/技术/">技术</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Java/">Java</a>►<a class="article-category-link" href="/categories/Java/原创/">原创</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://localhost:4000/2013/12/11/-e5-a6-82-e4-bd-95-e8-af-86-e5-88-ab-e4-b8-80-e4-b8-aa-e6-9c-aa-e7-9f-a5-e6-96-87-e4-bb-b6-e7-9a-84-e7-bc-96-e7-a0-81-e6-a0-bc-e5-bc-8f/" data-title="如何识别一个未知文件的编码格式 | ZhangMin.name" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2013/12/29/-e9-ab-98-e4-ba-a4-e4-bc-9a-c2-b7-e6-b7-b1-e5-9c-b3/" title="高交会·深圳">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  高交会·深圳</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2013/10/31/java-jni-e5-ad-a6-e4-b9-a0-e4-bb-a3-e7-a0-81-e7-a4-ba-e4-be-8b/"  title="Java JNI 学习代码示例">
+ <strong>NEXT:</strong><br/> 
+ <span>Java JNI 学习代码示例
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Java/" title="Java">Java<sup>21</sup></a></li>
+		
+			<li><a href="/categories/MSE/" title="MSE">MSE<sup>102</sup></a></li>
+		
+			<li><a href="/categories/linux/MSE/" title="MSE">MSE<sup>2</sup></a></li>
+		
+			<li><a href="/categories/Java/MSE/" title="MSE">MSE<sup>6</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>8</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/" title="storm">storm<sup>7</sup></a></li>
+		
+			<li><a href="/categories/storm/" title="storm">storm<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分享/" title="分享">分享<sup>70</sup></a></li>
+		
+			<li><a href="/categories/Java/分享/" title="分享">分享<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/分享/" title="分享">分享<sup>10</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/" title="原创">原创<sup>22</sup></a></li>
+		
+			<li><a href="/categories/Java/MSE/原创/" title="原创">原创<sup>5</sup></a></li>
+		
+			<li><a href="/categories/分享/原创/" title="原创">原创<sup>3</sup></a></li>
+		
+			<li><a href="/categories/原创/" title="原创">原创<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Java/原创/" title="原创">原创<sup>8</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/学习笔记/" title="学习笔记">学习笔记<sup>4</sup></a></li>
+		
+			<li><a href="/categories/linux/MSE/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Java/MSE/原创/学习笔记/" title="学习笔记">学习笔记<sup>3</sup></a></li>
+		
+			<li><a href="/categories/分享/原创/学习笔记/" title="学习笔记">学习笔记<sup>2</sup></a></li>
+		
+			<li><a href="/categories/原创/学习笔记/" title="学习笔记">学习笔记<sup>8</sup></a></li>
+		
+			<li><a href="/categories/MSE/学习笔记/" title="学习笔记">学习笔记<sup>33</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Java/原创/学习笔记/" title="学习笔记">学习笔记<sup>4</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/" title="学习笔记">学习笔记<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Java/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分享/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
+		
+			<li><a href="/categories/MSE/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>27</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>5</sup></a></li>
+		
+			<li><a href="/categories/linux/MSE/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/原创/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
+		
+			<li><a href="/categories/MSE/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>23</sup></a></li>
+		
+			<li><a href="/categories/原创/学习笔记/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/linux/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/分享/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>7</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>12</sup></a></li>
+		
+			<li><a href="/categories/MSE/storm/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>6</sup></a></li>
+		
+			<li><a href="/categories/分享/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>3</sup></a></li>
+		
+			<li><a href="/categories/Java/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/原创/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/分享/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/生活/" title="生活">生活<sup>3</sup></a></li>
+		
+			<li><a href="/categories/分享/每日一文-94天/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分享/生活/" title="生活">生活<sup>1</sup></a></li>
+		
+			<li><a href="/categories/MSE/学习笔记/略懂/" title="略懂">略懂<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>22</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+		
+			<li><a href="/tags/OSGi/" title="OSGi">OSGi<sup>2</sup></a></li>
+		
+			<li><a href="/tags/UCAS/" title="UCAS">UCAS<sup>9</sup></a></li>
+		
+			<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Web-Service/" title="Web Service">Web Service<sup>3</sup></a></li>
+		
+			<li><a href="/tags/public-speaking/" title="public speaking">public speaking<sup>18</sup></a></li>
+		
+			<li><a href="/tags/storm/" title="storm">storm<sup>8</sup></a></li>
+		
+			<li><a href="/tags/wordpress/" title="wordpress">wordpress<sup>2</sup></a></li>
+		
+			<li><a href="/tags/国科大/" title="国科大">国科大<sup>8</sup></a></li>
+		
+			<li><a href="/tags/工程哲学/" title="工程哲学">工程哲学<sup>10</sup></a></li>
+		
+			<li><a href="/tags/技术/" title="技术">技术<sup>15</sup></a></li>
+		
+			<li><a href="/tags/明德/" title="明德">明德<sup>3</sup></a></li>
+		
+			<li><a href="/tags/札记/" title="札记">札记<sup>25</sup></a></li>
+		
+			<li><a href="/tags/生活/" title="生活">生活<sup>13</sup></a></li>
+		
+			<li><a href="/tags/记事/" title="记事">记事<sup>5</sup></a></li>
+		
+			<li><a href="/tags/讲座/" title="讲座">讲座<sup>8</sup></a></li>
+		
+			<li><a href="/tags/读书·旅行/" title="读书·旅行">读书·旅行<sup>7</sup></a></li>
+		
+			<li><a href="/tags/问题与算法/" title="问题与算法">问题与算法<sup>12</sup></a></li>
+		
+			<li><a href="/tags/马上有OFFER/" title="马上有OFFER">马上有OFFER<sup>13</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://localhost:4000" target="_blank" title="张敏">张敏</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>
