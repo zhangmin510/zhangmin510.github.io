@@ -15,13 +15,18 @@ Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个
     
     
     
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="zhangmin_name" />
+    <meta name="twitter:title" content="Java内存区域及内存溢出处理 | ZhangMin.name" />
+      
     
     
-    <link rel="icon" href="/blog/img/favicon.ico">
+    
+    <link rel="icon" href="/blog/img/favicon.png">
     
     
-    <link rel="apple-touch-icon" href="/blog/img/pacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/blog/img/pacman.jpg">
+    <link rel="apple-touch-icon" href="/blog/img/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="/blog/img/favicon.png">
     
     <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
 
@@ -31,10 +36,6 @@ Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个
     <header>
       <div>
 		
-			<div id="imglogo">
-				<a href="/blog/"><img src="/blog/img/logo.svg" alt="ZhangMin.name" title="ZhangMin.name"/></a>
-			</div>
-			
 			<div id="textlogo">
 				<h1 class="site-name"><a href="/blog/" title="ZhangMin.name">ZhangMin.name</a></h1>
 				<h2 class="blog-motto">勤思敏行 思行合一</h2>
@@ -45,9 +46,11 @@ Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个
 				<ul>
 					<ul>
 					 
-						<li><a href="/">Home</a></li>
+						<li><a href="http://www.zhangmin.name/blog/">首页</a></li>
 					
-						<li><a href="/archives">Archives</a></li>
+						<li><a href="/blog/archives">存档</a></li>
+					
+						<li><a href="/blog/readings">读书</a></li>
 					
 					<li>
 					
@@ -76,8 +79,8 @@ Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个
       <a href="http://www.zhangmin.name/blog" title="zhangmin.name">zhangmin.name</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-10-13T07:22:19.000Z" itemprop="datePublished">10月 13 2014</time>
-    更新日期:<time datetime="2014-10-23T07:14:59.000Z" itemprop="dateModified">10月 23 2014</time>
+    <time datetime="2014-10-13T07:22:19.000Z" itemprop="datePublished">2014-10-13</time>
+    更新日期:<time datetime="2014-10-27T06:29:13.000Z" itemprop="dateModified">2014-10-27</time>
     
   </p>
 </header>
@@ -86,11 +89,11 @@ Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Java内存划分"><span class="toc-number">1.</span> <span class="toc-text">Java内存划分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决OutOfMemoryError"><span class="toc-number">2.</span> <span class="toc-text">解决OutOfMemoryError</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java内存划分"><span class="toc-number">1.</span> <span class="toc-text">Java内存划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决OutOfMemoryError"><span class="toc-number">2.</span> <span class="toc-text">解决OutOfMemoryError</span></a></li></ol>
 		</div>
 		
 		<p>本文是学习Java内存管理的学习笔记。更详细的内容参见《深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）》第二章 Java内存区域及内存溢出异常。</p>
-<h4 id="Java内存划分">Java内存划分</h4>
+<h2 id="Java内存划分">Java内存划分</h2>
 <p>Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个不同的数据区域。每个区域都有各自的用途及各自创建和销毁的时间。这些区域可以分为两类：所有线程共享的区域（如方法区和堆）和线程私有的区域（如虚拟机栈，本地方法栈和程序计数器）。<br>​<br>各个区域的用途可以都可以用一句话进行概括：</p>
 <p>先是线程私有的区域，它们和线程的生命周期相同。</p>
 <ol>
@@ -109,7 +112,7 @@ Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个
 </li>
 </ol>
 <p>另外还有一块内存就是直接内存：该区域不是虚拟机运行时数据区的一部分，最常见的例子就是Java NIO。该去也会抛出OutOfMemoryError。</p>
-<h4 id="解决OutOfMemoryError">解决OutOfMemoryError</h4>
+<h2 id="解决OutOfMemoryError">解决OutOfMemoryError</h2>
 <p>先判断是那些内存区域出现了该异常，然后再根据可能在这些区域出现问题的代码中进行定位。</p>
 <ol>
 <li><p>堆溢出。大量从GC Roots可达的对象在堆上被创建。可以同过VM Args来进行调试：-Xms20m -Xmx20 -XX:+HeapDumpOnOutOfMemoryError。让虚拟机在出现内存异常是Dump出当前的内存堆快照以便分析。可以通过Eclipse的内存映像分析工具分析Dump出的文件，重点确认内存中的对象是否是必要的，是内存溢出还是内存泄露。如果是内存泄露，可以查看泄露对象到GC Roots的引用链。找出了泄漏对象的类型信息及GC Roots引用链信息就可以定位泄露代码的位置。如果是内存溢出，则要看堆参数大小是否合适，从代码检查是否有某些对象生命周期过长，尝试减少程序运行时内存消耗。</p>
@@ -170,7 +173,7 @@ Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Java内存划分"><span class="toc-number">1.</span> <span class="toc-text">Java内存划分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决OutOfMemoryError"><span class="toc-number">2.</span> <span class="toc-text">解决OutOfMemoryError</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java内存划分"><span class="toc-number">1.</span> <span class="toc-text">Java内存划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决OutOfMemoryError"><span class="toc-number">2.</span> <span class="toc-text">解决OutOfMemoryError</span></a></li></ol>
   </div>
 
 <div id="asidepart">
@@ -251,9 +254,14 @@ Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个
 </div>
 
 
-  <div class="rsspart">
-	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://www.zhangmin.name" target="_blank" title="ZhangMin.name">ZhangMin.name</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
 </div>
+
 
 </aside>
 </div>
@@ -266,9 +274,20 @@ Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个
 	</div>
 	
 	
+	<section class="info">
+		<p> 2014 <br/>
+			专注 勇敢爱 当下</p>
+	</section>
+	 
 	<div class="social-font" class="clearfix">
 		
+		<a href="http://weibo.com/302585340" target="_blank" title="weibo"></a>
 		
+		
+		<a href="https://twitter.com/zhangmin_name" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/zhangmin510" target="_blank" title="github"></a>
 		
 		
 	</div>
