@@ -21,13 +21,13 @@
 
 
 
-    <meta name="keywords" content="Hexo,next" />
+    <meta name="keywords" content="zhangmin.name,张敏,张敏的个人主页,张敏的博客,zhangmin.name's blog" />
 
 
 
 
 
-    <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.1" />
+    <link rel="shorticon icon" type="image/x-icon" href="http://www.zhangmin.name/images/favicon.png?v=0.4.1" />
 
 
 
@@ -67,10 +67,26 @@
       </li>
     
       
+      <li class="menu-item menu-item-categories">
+        <a href="/blog/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
       <li class="menu-item menu-item-archives">
         <a href="/blog/archives">
           <i class="menu-item-icon icon-archives"></i> <br />
           归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/blog/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
         </a>
       </li>
     
@@ -109,8 +125,8 @@
           
           
             
-              <a class="post-title-link" href="/blog/2013/05/Web-Service-ppt/">
-                Web Service ppt
+              <a class="post-title-link" href="/blog/2013/09/Java基本数据类型和操作符需要注意的问题/">
+                Java基本数据类型和操作符需要注意的问题
               </a>
             
           
@@ -120,7 +136,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-05-25
+            发表于 2013-09-12
           
         </span>
 
@@ -129,7 +145,7 @@
             <span class="post-category">
               &nbsp; | &nbsp; 分类于
               
-                <a href="/blog/categories/MSE/">MSE</a>
+                <a href="/blog/categories/Java/">Java</a>
 
                 
                 
@@ -143,8 +159,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/05/Web-Service-ppt/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/Web-Service-ppt/"></span>
+            <a href="/blog/2013/09/Java基本数据类型和操作符需要注意的问题/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/Java基本数据类型和操作符需要注意的问题/"></span>
             </a>
           </span>
           
@@ -160,8 +176,28 @@
 
         
           
-            <p>该ppt先简单地介绍了web service，然后介绍了web service的三大要素SOAP，WSDL和UDDI，最后是一个hello web service的例子。</p>
-<p>传送门：<a href="http://wenku.baidu.com/view/5bbf8c33482fb4daa58d4bf0.html" target="_blank" rel="external">百度文库</a></p>
+            <h3 id="1-java中基本数据类型大小、默认值及其范围">1.java中基本数据类型大小、默认值及其范围</h3><p>boolean - false -</p>
+<p>char 16bits ‘u0000’(null) Unicode 0~Unicode 2^16-1(无符号类型）</p>
+<p>byte 8bits (byte)0  -128~127</p>
+<p>short 16bits (short)0  -2^15~2^15-1</p>
+<p>int 32bits 0  -2^31~2^31-1</p>
+<p>long 64bits 0L  -2^62~2^63-1</p>
+<p>float 32bits 0.0f  IEEE754</p>
+<p>double 64bits 0.0d  IEEE754</p>
+<h3 id="2-System-out-println()中的“+”">2.System.out.println()中的“+”</h3><p>在这种上下文环境中，“+”意味着“字符串连接”，并且如果必要，它还要执行“字符串转换”。如果编译器观察到一个String后面紧跟一个“+”，而这个“+”后面又紧跟一个非String类型的元素时，就会将非String转化为String类型。</p>
+<h3 id="3-基本类型的赋值">3.基本类型的赋值</h3><p>基本类型存储了实际的数值，而并非是指向一个对象的引用，所以在为其赋值的时候是直接将一个地方的数值复制到另一个地方。而对于将“一个对象赋值给另一个对象”，实际是将“引用”从一个地方复制到另一个地方。如果一个对象的所有引用都被覆盖了，那么这个不再被引用的对象就由“垃圾回收器”自动清理了。</p>
+<h3 id="4-算数操作符">4.算数操作符</h3><p>1）整数除法会直接去掉结果的小数位，而不是四舍五入的结果。</p>
+<p>2）一元减号用于转变数据的符号，而一元加号知识为了与一元减号相对应，但是它唯一的作用就是将较小的数据类型的操作数提升为int。</p>
+<h3 id="5-关系操作符">5.关系操作符</h3><p>==和!=适用于所有的基本数据类型，而其他比较符不适用于boolean。因为boolean只有true和false两个值，比较大小没意义。另外，对两个内容相同的对象执行==和!=操作时，比较的是对象的引用。如果想比较对象的内容，则需要覆盖equals方法。</p>
+<h3 id="6-逻辑操作符">6.逻辑操作符</h3><p>1）&amp;&amp;、||、！操作只能应用与布尔值。在java中不能将一个非布尔值当做布尔值来用。</p>
+<p>2）如果在该使用String的地方使用了布尔值，则布尔值会被自动转换成适当的文本形式。</p>
+<h3 id="7-直接常量">7.直接常量</h3><p>如果试图将一个变量初始化为超出自身范围的值，编译器都会向我们报告一条错误信息。如果超出范围编译器会自动转换成int，并告诉我们需要对这次赋值进行“窄化转型”。各种类型范围详见1。</p>
+<h3 id="8-移位操作符">8.移位操作符</h3><p>1）移位操作符只能操作整数类型。左移(&lt;&lt;)按照操作符右侧指定的位数将操作符左边的数向左移动（在低位补0）。“有符号”右移(&gt;&gt;)按照操作符右侧指定的位数将操作符左边的操作数右移。“有符号”右移操作符使用“符合扩展”：若为正，则在高位插入0；若为负，则在高位插入1。“无符号”右移(&gt;&gt;&gt;)，使用“0”扩展，无论正负，在高位插入0。</p>
+<p>2）对char，byte或者short的移位时，它们会被转换成int类型，并且得到的结果也是int类型的值。且只有低5位才有用，因为如果移动32位以上，原来的信息就会全部丢失。例如对于表达式x&lt;&lt;y，如果y&gt;32，那么将只取y的二进制表示的低5位。如果y=34（10 0010），低五位就是00010，即最终只移动两位。上述规则对于long类型及&gt;&gt;和&lt;&lt;&lt;都适用。</p>
+<p>3）如果对byte或者short进行无符号右移位结合赋值操作(&gt;&gt;&gt;=)可能会得到错误的结果。它们先会被转换成int，再进行右移操作，然后截断，赋值给原类型，在这种情况下会出现-1的结果。</p>
+<h3 id="9-类型转换">9.类型转换</h3><p>1）如果执行一种名为“窄化转换”的操作（将能容纳更多信息的数据类型转化成无法容纳那么多信息的类型），就有可能面临信息丢失的危险。此时，必须进行强制类型转换。而进行名为“扩展转换”，则不必进行类型转化，也不会丢失信息。</p>
+<p>2）再进行“窄化转换”是，必须注意截尾和舍入的问题。如将float转换成int是直接将小数点后面的数值截掉，而不是舍入。如果想舍入可用Math.round()方法。</p>
+<p>3）通常，在一个表达式中，最大的数据类型决定了结果的类型。</p>
 
           
         
@@ -173,8 +209,112 @@
         
           <div class="post-tags">
             
-              <a href="/blog/tags/Web-Service/">
-                #Web Service
+              <a href="/blog/tags/Java/">
+                #Java
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2013/09/Ubuntu-13-04-自定义Grub/">
+                Ubuntu 13.04 自定义Grub
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-09-01
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/linux/">linux</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/09/Ubuntu-13-04-自定义Grub/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/Ubuntu-13-04-自定义Grub/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>在windows直接安装ubuntu后，windows的启动项会变成最后一项，为了将windows设为默认启动项，可以尝试以下几种方法：</p>
+<p>1.安装启动管理器</p>
+<p>[shell]sudo apt-get install startupmanager[/shell]</p>
+<p>安装好后打开应用程序将windows设置为默认启动项就可以了。</p>
+<p>2.更改grub配置文件（也是最基本的方法)</p>
+<p>在/etc/grub.d目录下有几个文件。默认情况下win7对应的文件名是30_os-prober，第一个linux系统对应的是10-linux，00是header，05是debian-theme，可见10是第一个启动项，只需要更改win7的文件名(06-09均可)即可改变启动顺序。</p>
+<p>[shell]<br>sudo mv /etc/grub.d/30_os-prober /etc/grub.d/08_os-prober<br>sudo update-grub（这个命令会重新生成/boot/grub/grub.cfg）<br>[/shell]</p>
+<p>3.安装GRUB Customizer</p>
+<p>Ubuntu 13.04下通过PPA安装，打开终端，输入命令：</p>
+<p>[shell]<br>sudo add-apt-repository ppa:danielrichter2007/grub-customizer<br>sudo apt-get update<br>sudo apt-get install grub-customizer<br>[/shell]</p>
+<p>安装好后打开软件设置即可。</p>
+<p>参考文章:<br>1.<a href="http://www.linuxidc.com/Linux/2013-05/84109.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2013-05/84109.htm</a><br>2.<a href="http://www.th7.cn/system/win/201305/39122.shtml" target="_blank" rel="external">http://www.th7.cn/system/win/201305/39122.shtml</a> </p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/Linux/">
+                #Linux
               </a>
             
               <a href="/blog/tags/技术/">
@@ -207,8 +347,8 @@
           
           
             
-              <a class="post-title-link" href="/blog/2013/05/Delivering-the-speech/">
-                Delivering the speech
+              <a class="post-title-link" href="/blog/2013/08/使用Apache-MINA开发Java网络应用程序/">
+                使用Apache MINA开发Java网络应用程序
               </a>
             
           
@@ -218,7 +358,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-05-24
+            发表于 2013-08-29
           
         </span>
 
@@ -227,7 +367,7 @@
             <span class="post-category">
               &nbsp; | &nbsp; 分类于
               
-                <a href="/blog/categories/MSE/">MSE</a>
+                <a href="/blog/categories/Java/">Java</a>
 
                 
                 
@@ -241,8 +381,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/05/Delivering-the-speech/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/Delivering-the-speech/"></span>
+            <a href="/blog/2013/08/使用Apache-MINA开发Java网络应用程序/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/使用Apache-MINA开发Java网络应用程序/"></span>
             </a>
           </span>
           
@@ -258,478 +398,65 @@
 
         
           
-            <p><strong>What is a good delivery</strong></p>
-<p>Good delivery does not call attention to itself.It conveys the speaker’s idea clearly,interestingly,and without distracting the audience.Most audiences prefer delivery that combines a certain degree of formality with the best attributes of good conversation-directness,spontaneity,animation,vocal and facial expressiveness and a lively sense of communication.</p>
-<p>Speech is an art,not a science.There is no substitute for experience.But take heart,a textbook can give you basic pointer to get you started in the right direction.</p>
-<p><strong>Methods of delivery</strong></p>
+            <p>Apache MINA是一种Java NIO 的网络应用框架。通过使用Apache MINA可以开发高性能，高扩展性的网络应用程序。MINA提供基于抽象事件驱动的统一的异步API。</p>
+<p>MINA的架构如下图所示：<br><img src="http://mina.apache.org/staticresources/images/mina/mina_app_arch.png" alt="MINA架构图"></p>
+<p>由上图可知，基于MINA的应用程序可分为三层：<br>1. I/O Service 执行实际的I/O操作<br>2. Filter Chain 将字节数据过滤成所需数据结构，或者相反<br>3. I/O Handler 执行实际业务逻辑</p>
+<p>所以，如果你要创建一个基于MINA的网络应用程序，你需要：<br>1. 创建I/O Service。可以从已有的Service（*Accepter）中选择或者自己创建。<br>2. 创建Filter Chain。从已有的Filters中选择或者自定义。<br>3. 创建I/O Handler。处理消息或实现具体的业务逻辑。</p>
+<p>下面是一个基于TCP/IP的TimeServer：</p>
+<p>TimeServer的代码如下：</p>
+<p>[java]<br>/<em>*
+ </em></p>
 <ul>
-<li>Reading from a manuscript.In situations that absolute accuracy is essential.</li>
-<li>Reciting from memory.Make brief presentations such as toasts,congratulatory remarks,acceptance speeches,introductions,and the like.</li>
-<li>Speaking impromptu.Practice makes perfect.</li>
-<li>Speaking extemporaneously.Popular usage.Carefully prepared and practiced in advance,presenting with a set of brief notes to job the memory.</li>
+<li>MinaTimeServer.java</li>
+<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>name.zhangmin.java<br><em>
+</em>/<br>package name.zhangmin.java.mina;<br>import java.io.IOException;<br>import java.net.InetSocketAddress;<br>import java.nio.charset.Charset;<br>import org.apache.mina.core.service.IoAcceptor;<br>import org.apache.mina.core.session.IdleStatus;<br>import org.apache.mina.filter.codec.ProtocolCodecFilter;<br>import org.apache.mina.filter.codec.textline.TextLineCodecFactory;<br>import org.apache.mina.filter.logging.LoggingFilter;<br>import org.apache.mina.transport.socket.nio.NioSocketAcceptor;<br>/**</li>
+<li>@author ZhangMin.name<br><em>
+</em>/<br>public class MinaTimeServer {<br> public static int PORT = 1234;<br> /**<ul>
+<li>一个Apache MINA</li>
+<li>@param args<br>*/<br>public static void main(String[] args) throws IOException{<br> //创建一个对象监听从客户端建立的连接<br> IoAcceptor acceptor = new NioSocketAcceptor();<br> //增加 一个filter，用于答应相关日志信息<br> acceptor.getFilterChain().addLast(&quot;logger&quot;, new LoggingFilter());<br> //增加一个filter用于将二进制数据或者协议特定数据翻译成为Message对象，或者相反<br> //本实例使用自带的TextLineFactory来处理文本信息<br> acceptor.getFilterChain().addLast(&quot;codec&quot;,<pre><code>new ProtocolCodecFilter<span class="list">(
+<span class="keyword">new</span> TextLineCodecFactory<span class="list">(
+    <span class="keyword">Charset</span>.forName<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;UTF-8&amp;quot;)</span>
+    )</span>)</span>)</span><span class="comment">;</span>
+</code></pre> //设置处理请求的Handler<br> acceptor.setHandler(new TimeServerHandler());<br> //设置套接字相关的配置参数<br> acceptor.getSessionConfig().setReadBufferSize(2048);<br> acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);<br> //设置绑定的端口号<br> acceptor.bind(new InetSocketAddress(PORT));<br> System.out.println(&quot;Start listening to PORT: &quot; + PORT);<br>}</li>
 </ul>
-<p><strong>The speaker’s voice</strong></p>
-<p>The aspects of voice you should work to control are volume,pitch,rate,pauses,variety,pronunciation and articulation(the physical production of particular speech sounds).</p>
-<p><strong>The speaker’s body</strong></p>
-<p>Posture,facial expression,gesture and eye contact.</p>
-<p><strong>Practicing delivery</strong></p>
-<p>Popular wisdom promises that practice makes perfect,This is true,but only if we practice properly.</p>
-<p>Five-step method:</p>
-<ol>
-<li>Go through your preparation outline aloud to check how it translates into spoken discourse.</li>
-<li>Prepare your speaking outline.</li>
-<li>Practice the speech aloud several times using only the speaking outline.</li>
-<li>Now begin to polish and refine your delivery.</li>
-<li>Finally,give your speech a dress rehearsal under conditions as close as possible you will face on speech day.</li>
-</ol>
-<p><strong>Always remember:start early.A single practice session-no matter how long-is rarely enough.</strong></p>
-<p><strong>The above content adapt from the book <em>The art of Public Speaking</em> written by Stephen E. Lucas</strong></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/public-speaking/">
-                #public speaking
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/05/五月病/">
-                五月病
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-05-23
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/分享/">分享</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/05/五月病/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/五月病/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><strong>本文主要内容转自中新网</strong></p>
-<p>五月病，又称为季节性懒惰症候群，在此时节不少人意气消沉、郁闷塞心，不但抵触上学上班，还整日慵懒倦怠，难以提起兴致。“好多事要忙，却又什么都不想做；情绪低落，总提不起精神”。医生建议：多晒太阳多运动，多吃水果，适当吃些甜食。</p>
-<p>“豆瓣”里100多位“五月病患者”表示，初夏五月，虽然不冷不热，但我们整日慵懒倦怠，对任何事都提不起兴趣。不仅头疼眼花、抑郁不安，还想旷课、缺勤、沉默不语。</p>
-<p>记者搜索网络后发现，“五月病”的名称原本来自于日本。据了解，每到初夏五月，不少日本人在此时节意气消沉、慵懒倦怠、抵触上学上班，这种病症被日本医学界称为“五月病”。主要表现为饮食习惯改变，失眠，兴趣减少或注意力分散，对履行社会职责有抵触感，反应迟钝或敏感等。</p>
-<p>“这种病在医学上虽然还未明确定义，但基本上是属于季节性抑郁，也叫心情障碍或情绪障碍。”郑州市第八人民医院精神科主任医师刘俊德对此现象解释说，这种情况表现较多的是高考前和大学生就业前的焦虑，也有上班族的“情绪中暑”。进入夏季后，精神疾病的发病率也进入了尾声，但情绪障碍就会进入一个多发状态，也叫季节性抑郁。</p>
-<p>刘俊德建议说，如果只是轻度的焦虑和抑郁，可以进行生活上的自我调节，如多晒太阳，多运动等。饮食调节的话，可以多吃水果适当吃些甜食都可以缓解焦虑和抑郁。“如果跟认知有关系，对一些事情过分在乎，达到一种病理性的心态，那就要纠正这种错误的认知，保持一种平衡的心态，因为从心理学上来讲，最高的境界就是顺其自然，为所当为。”</p>
-<p>参考文献：情绪低落、提不起精神 网友戏称“五月病”上身 <a href="http://www.chinanews.com/sh/2013/05-20/4837280.shtml" target="_blank" rel="external">http://www.chinanews.com/sh/2013/05-20/4837280.shtml</a></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/生活/">
-                #生活
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/05/参加“创新与美的思考”大型讲座暨2013编程之美全国挑战赛颁奖盛典/">
-                参加“创新与美的思考”大型讲座暨2013编程之美全国挑战赛颁奖盛典
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-05-22
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/05/参加“创新与美的思考”大型讲座暨2013编程之美全国挑战赛颁奖盛典/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/参加“创新与美的思考”大型讲座暨2013编程之美全国挑战赛颁奖盛典/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>早上收到了编程之美编程挑战赛纪念体恤(参加本次比赛的目标——进入1300强——实现了^_^,不过自己的编程能力现如今也就是这个水平）。下午去参加“创新与美的思考”大型讲座暨2013编程之美全国挑战赛颁奖盛典。首先工作人员带着我们参观了微软亚洲研究院的工作环境。当然那是各种好。每个人的工作空间较小，但是公共的空间，如会议室，讨论室，演示室等，很多都很大，而且各种设备齐全。每层的玻璃都是可以写字的，而且清洁员也不会轻易擦掉。而且有很多电梯可以方便员工上下，最有意思的是到了第一层电梯的语音系统会说：“首层到了”，第一层是首层还是第一次听说。</p>
-<p>其次，《编程之美》的作者之一邹欣做了题为《创新的迷思》的演讲，主要谈对创新的误解及创新的一些相关研究。不过，对于一个昨天刚上过自然辩证法且讲的内容也是关于创新的我来说，其中的新意或是新的思想就不是很多了。虽然有很多内容是相似的，但是显然还是自然辩证法课上讲得内容更全面，更有深度。<strong>唯一一点比较受益的就是给别人讲你的创意时，一定要讲清楚这个创意能给对方带了什么</strong>，这样你才有可能得到别人的认可。另外，今天关于创新很多内容与我最近看的<a href="http://video.sina.com.cn/v/b/101779334-2036021381.html" title="Everything is a remix" target="_blank" rel="external">Everything is a remix</a>又有很多相似之处。</p>
-<p>[caption id=”attachment_1648” align=”alignnone” width=”3264”]<a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130522_154557.jpg" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130522_154557.jpg" alt="邹欣"></a> 邹欣[/caption]</p>
-<p>然后就是参加2013编程之美挑战赛的颁奖典礼，六名选手分获一二三等奖。第一名是北邮的李雪。</p>
-<p>最后是IEEE轮值主席Roberto de Marca介绍了一下IEEE的使命，历史，成就，责任，及发展。</p>
-<p>[caption id=”attachment_1649” align=”alignnone” width=”3264”]<a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130522_161636.jpg" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130522_161636.jpg" alt="IEEE轮值主席Roberto de Marca"></a> IEEE轮值主席Roberto de Marca[/caption]</p>
-<p>最后的最后就是送小礼品时间，回答问题得小礼品。最后我得了一个Lock&amp;Lock的杯子。</p>
-<p><em>相关链接：</em></p>
-<ol>
-<li>邹欣博客园 创新的迷思：<a href="http://www.cnblogs.com/xinz/archive/2011/07/09/2102052.html" target="_blank" rel="external">http://www.cnblogs.com/xinz/archive/2011/07/09/2102052.html</a></li>
-<li>IEEE轮值主席Roberto de Marca主页：<a href="http://www.robertodemarca.org/" target="_blank" rel="external">http://www.robertodemarca.org/</a></li>
-</ol>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/UCAS/">
-                #UCAS
-              </a>
-            
-              <a href="/blog/tags/国科大/">
-                #国科大
-              </a>
-            
-              <a href="/blog/tags/生活/">
-                #生活
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/05/Everything-is-a-remix/">
-                Everything is a remix
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-05-21
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/05/Everything-is-a-remix/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/Everything-is-a-remix/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><strong>Main points of the video</strong></p>
-<p>Remix. To combine or edit existing materials to produce something new.The term remix originally applied to music. It rose to prominence late last century during the heyday of hip-hop, the first musical form to incorporate sampling from existing recordings.</p>
-<p>Skip ahead to the present and anybody can remix anything — music, video, photos, whatever — and distribute it globally pretty much instantly.</p>
-<p>You don’t need expensive tools, you don’t need a distributor, you don’t even need skills. Remixing is a folk art — anybody can do it. Yet these techniques — collecting material, combining it, transforming it — are the same ones used at any level of creation. You could even say that everything is a remix.</p>
-<p>Perhaps it’s because movies are so massively expensive to make. Perhaps it’s because graphic novels, TV shows, video games, books and the like are such rich sources of material. Or perhaps it’s because audiences prefer the familiar. Whatever the reason, most box office hits rely heavily on existing material.</p>
-<p>Creation requires influence. Everything we make is a remix of existing creations, our lives, and the lives of others.As Isaac Newton once said, we stand on the shoulders of giants — which is what he was doing when he adapted that saying from Bernard de Chartres.</p>
-<p>The act of creation is surrounded by a fog of myths. Myths that creativity comes via inspiration. That original creations break the mold, that they’re the products of geniuses, and appear as quickly as electricity can heat a filament. But creativity is not magic: it happens by applying ordinary tools of thought to existing materials.</p>
-<p>And the soil from which we grow our creations is something we scorn and misunderstand, even though it gives us so much… and that’s copying. Put simply, copying is how we learn. We can’t introduce anything new until we’re fluent in the language of our domain, and we do that through emulation.</p>
-<p>Nobody starts out original. We need copying to build a foundation of knowledge and understanding. And after that… things can get interesting.After we’ve grounded ourselves in the fundamentals through copying, it’s then possible to create something new through transformation. Taking an idea and creating variations. This is time-consuming tinkering but it can eventually produce a breakthrough.</p>
-<p>These are all major advances, but they’re not original ideas so much as tipping points in a continuous line of invention by many different people.But the most dramatic results can happen when ideas are combined. By connecting ideas together creative leaps can be made, producing some of history’s biggest breakthroughs.</p>
-<p>Whenever there’s a major breakthrough, there’s usually others on the same path. Maybe a bit behind, maybe not behind at all.</p>
-<p>These are the basic elements of creativity: copy, transform, and combine.</p>
-<p>Luca, the Last Universal Common Ancestor. As Luca reproduced, its genes copied and copied and copied and copied, sometimes with mistakes — they transformed. Over time this produced every one of the billions of species of life on earth. Some of these adopted sexual reproduction, combining the genes of individuals, and altogether, the best-adapted life forms prospered.This is evolution. Copy, transform and combine.</p>
-<p>And culture evolves in a similar way, but the elements aren’t genes, they’re memes — ideas, behaviors, skills. Memes are copied, transformed, and combined. And the dominant ideas of our time are the memes that spread the most.This is social evolution.</p>
-<p>Copy, transform and combine. It’s who we are, it’s how we live, and of course, it’s how we create. Our new ideas evolve from the old ones.</p>
-<p>People tend to place a much higher value on losses than on gains. So the gains we get from copying the work of others don’t make a big impression, but when it’s our ideas being copied, we perceive this as a loss and we get territorial.When we copy we justify it. When others copy we vilify it. Most of us have no problem with copying… as long as we’re the ones doing it.</p>
-<p>We live in an age with daunting problems. We need the best ideas possible, we need them now, we need them to spread fast. The common good is a meme that was overwhelmed by intellectual property. It needs to spread again. If the meme prospers, our laws, our norms, our society, they all transform.</p>
-<p>Transcript Source:<a href="http://www.allremix.ru/" target="_blank" rel="external">http://www.allremix.ru/</a>.</p>
-<p>Video source:<a href="http://www.everythingisaremix.info" target="_blank" rel="external">http://www.everythingisaremix.info</a></p>
-<p><strong>Watch for more details</strong></p>
-<object id="sinaplayer" width="480" height="370"><param name="allowScriptAccess" value="always"><embed pluginspage="http://www.macromedia.com/go/getflashplayer" src="http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/vid=101779334_2036021381_Px6zGis+CjXK+l1lHz2stqlF+6xCpv2xhGi0uFSkJw9aXQ2YJMXNb9wH4S7RCcxB9XoLHcwydP4n0Boka6lc/s.swf" type="application/x-shockwave-flash" name="sinaplayer" allowfullscreen="true" allowscriptaccess="always" width="480" height="370"></object>
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/UCAS/">
-                #UCAS
-              </a>
-            
-              <a href="/blog/tags/国科大/">
-                #国科大
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/05/工程思维与工程设计/">
-                工程思维与工程设计
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-05-20
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/05/工程思维与工程设计/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/工程思维与工程设计/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>本文内容摘自中科院大学人文学院王大洲老师《工程哲学》课程ppt的内容。</p>
-<p><strong>工程思维的特点</strong></p>
+</li>
+</ul>
+<p>}</p>
+<p>[/java]</p>
+<p>Handler的代码如下：</p>
+<p>[java]<br>/<em>*
+ </em></p>
 <ul>
-<li>造物定向。面向现实，创造未来：在头脑中构造现实与未来之间的桥梁。工程思维是以造物为导向、以价值为导向的思维。在工程思维中，确定造物目标不但在时间过程上是居先的，而且它在整个工程思维活动中在结构上也居于高层位置。</li>
-<li>创造性。卡门：“科学家发现已经存在的世界；工程师创造一个过去从来没有存在过的世界。”。工程思维是逻辑性思维和非逻辑性思维的结合，其中包含着创造力/想象力/个性。工程思维非逻辑因素，出表现在决策环节和执行环节。工程问题求解的非唯一性，决定了工程需要创造力和想象力，需要工程决策者、设计师、工程师表现出“思维个性”上面（理想的工程决策机器是不存在的）。</li>
-<li>可视化。工程思维的想象性是具有“实践”目标的想象性。人们不能按图索骥地询问在现实世界是否真正存在着<br>或将要出现艺术描写的对象，可是，设计师的图纸却是以可以通过工程实践而在现实世界中“变成现实”为思维目标的。</li>
-<li>调和性。工程是一个行动系统（目标、资源、约束、规范），关乎“物理”，更关乎“事理”工程中的系统思维有自己特色。决策者、设计师和工程师常常面对“矛盾要求”，不得不采取权衡、折中（trade-off）的立场和态度（超协调逻辑）。这种调和是一种特殊的“综合”和“收敛”。所谓综合集成方法，一个关键就是在系统框架下进行调和、综合和收敛。其中需要工程共同体成员之间的对话和磋商。</li>
-<li>系统性。由于工程是一种要素集成，因此，工程思维的基本方向，是针对工程难题，立足于特定的时空条件，解决如何“集成”的问题，在这个过程中，体现系统性的运筹能力和收敛性思维就显得十分重要了。</li>
-<li>可操作性。工程思维和现实世界相互关系的核心是“设计性”和“实践性”关系。它既不同于科学思维和现实世界的“反映性”关系，又不同于艺术思维和现实世界关系的“虚构性”关系。工程讲究在特定约束条件和资源条件下达<br>成目标的可行性、可操作性，其中就包含了讲求效率、安全等意思。这是工程思维的灵魂所在。</li>
+<li>TimeServerHandler.java</li>
+<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>name.zhangmin.java<br><em>
+</em>/<br>package name.zhangmin.java.mina;<br>import java.util.Date;<br>import org.apache.mina.core.service.IoHandlerAdapter;<br>import org.apache.mina.core.session.IdleStatus;<br>import org.apache.mina.core.session.IoSession;<br>/**</li>
+<li><p>@author ZhangMin.name<br><em>
+</em>/<br>public class TimeServerHandler extends IoHandlerAdapter {<br> //处理相关异常<br> @Override<br> public void exceptionCaught(IoSession session, Throwable cause)</p>
+<pre><code>    <span class="keyword">throws</span> Exception {
+cause.printStackTrace();
+</code></pre><p> }<br>//处理从客户端发来的请求和向客户端发送数据<br> @Override<br> public void messageReceived(IoSession session, Object message)</p>
+<pre><code>    <span class="keyword">throws</span> Exception {
+<span class="keyword">String</span> <span class="built_in">str</span> = message.toString();
+System.out.<span class="built_in">println</span>(&amp;quot;Receiving Message :&amp;quot; + <span class="built_in">str</span>);
+<span class="keyword">if</span>(<span class="built_in">str</span>.<span class="built_in">trim</span>().equalsIgnoreCase(&amp;quot;quit&amp;quot;)){
+    session.close(<span class="keyword">true</span>);
+    System.<span class="built_in">exit</span>(<span class="number">0</span>);
+    <span class="keyword">return</span>;
+}
+Date date = <span class="keyword">new</span> Date();
+session.write(date.toString());
+System.out.<span class="built_in">println</span>(&amp;quot;Messge written...&amp;quot;);
+</code></pre><p> }</p>
+<p> @Override<br> public void sessionIdle(IoSession session, IdleStatus status)</p>
+<pre><code>    throws Exception {
+System.<span class="type">out</span>.println(&amp;quot;IDLE: &amp;quot; + session.getIdleCount(<span class="keyword">status</span>));
+</code></pre><p> }</p>
+</li>
 </ul>
-<p><strong>工程设计的特点</strong></p>
-<p><em>4C（Dieter, 2000）</em></p>
-<ul>
-<li>创造性（creativity）：工程设计要创造出先前不存在的新东西。</li>
-<li>复杂性（complexity）：涉及多变量、多参数、多目标和多重约束条件。</li>
-<li>选择性（choice）：允许在不同的解决方案中进行选择。</li>
-<li>妥协性（compromise）：需要在多个相互冲突的目标及约束条件之间进行权衡和折衷。</li>
-</ul>
-<p><strong>不确定性与工程设计</strong></p>
-<p>工程总是面对着不确定性：目标函数、约束条件、资源条件，都会随着时间的推移发生变化，那么工程如何适应这种变化？工程设计如何在一开始就考虑到未来可能发生的变化，由此增进工程的可靠性和适应性？</p>
-<p><em>一套框架：Hastings, Daniel, 2004</em><br>不确定性（uncertainties）（带来）风险（risks）（需要采取）缓解手段（mitigations）（以达到）预期结果（outcomes）。</p>
-<ol>
-<li>不确定性（uncertainties）。缺乏知识（lack of knowledge）：对有关事实缺乏了解，或者仅有有限的理解；缺乏定义（lack of defination）：对工程问题还没有良好的界定；统计变量（statistically characterized variables）：如金属的疲劳特性、天气以及空间环境变量；知道自己无知（known unkowns）；不知道自己无知（unkown unkowns）。</li>
-<li>风险、机会（risks/opportunities）。灾难（disaster）；失败（failure）：工程系统根本不能运行；<br>降格（degradation）：系统可以运行，但没有达到设计要求；成本/计划（cost/shedule）（+/-）；市场变动（markets shifts）（+/-）；需求变动（need shifts）（+/-）；多余能力（extra capacity）：超越了设计要求；突现能力（emergent capabilities）：工程系统具有出人意料的良好的新功能。</li>
-<li>缓解/利用（mitigations/exploitations）。余量（margins）：留下余地；冗余（redundancy）：设计多个并行子系统，确保在任何情况下至少有一个能够正常运行。；设计选择（design choices）：针对已知的风<br>险，选择更加可靠的设计战略、技术或者子系统；核实与试验（verification and test）：对设计结果进行检验，排查有关部件，改善设计界面；通用性（generality）：利用多功能系统或者子系统，而尽量不用专用的系统或子系统。如采用通用芯片而不是专用芯片；升级能力（upgradeablity）：工程设计可以被修改，以达到改善或者改变功能的目的；模块化（modularity）：设计功能模块，利用标准界面进行关联。有利于形成冗余性、通用性、<br>升级性和易检验性；权衡空间探索（tradespace exploration）：利用仿真模型和强大的计算能力，在多种可能的条件下分析/模拟众多可能方案；组合与期权（portfolios &amp; real options）：这是产生于金融领域的分析技术。基本战略思想是，尝试性地执行多个设计方案，而后根据新的信息和市场状况的变化来修定设计</li>
-<li>结果（outcomes）。可靠性（reliability）：工程系统执行预定要求的概率；鲁棒性（robustness）：工程系统在预料之外的恶劣环境中正常运行的能力；多用性（versatility）：工程系统执行各类不同的预定工作甚至预定要求之外的工作的能力；灵活性（flexibility）：基于对设计、生产或经营的调整，工程系统完成超出原设计要求的其他工作的能力；进化性（evolvability）：原系统作为新系统的基础以满足新需求或达到新水平的能力；共用性（interoperability）：系统与其他系统协同运行，共同发挥作用的能力。</li>
-</ol>
+<p>}<br>[/java]</p>
+<p>使用telnet程序进行测试：&gt;telent 127.0.0.1 1234</p>
 
           
         
@@ -741,328 +468,133 @@
         
           <div class="post-tags">
             
-              <a href="/blog/tags/工程哲学/">
-                #工程哲学
+              <a href="/blog/tags/Java/">
+                #Java
               </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/05/Using-visual-aids/">
-                Using visual aids
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-05-19
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/05/Using-visual-aids/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/Using-visual-aids/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>As the old saying tells us,one picture can be worth a thousand words.People find a speaker’s message more interesting,grasp it more easily,ant retain it longer when it is presented visually as well as verbally.When used properly,visual aids enhance almost every aspect of a speech.In this article I will look at the major kinds of visual aids and how to prepare and present them most effectively.</p>
-<p><strong>Kinds of Visual Aids</strong></p>
-<ul>
-<li>Object and models.</li>
-<li>Photographs and drawings.Make sure they are large enough for the audience to see without straining.*   Graphs.Such as line graph,pie graph,and bar graph.Line graph often use to show statistical trends and patterns.Pie graph is best suited for illustrating simple distribution patterns,because it dramatize relationships among the parts of a whole.While bar graph is good way to show comparisons among two or more items.</li>
-<li>Charts.It is especially useful for summarizing large blocks of information.</li>
-<li>Video.Make sure the video is not too long and is cued to start exactly where you want it and blend smoothly into your speech.</li>
-<li>The speaker.Doing a demonstration well requires special practice to coordinate your actions with your words and to maintain eye contact with the audience.</li>
-<li>Powerpoint.Rather than putting everything you say on screen for the audience,you need to choose which aspects of your speech need to illstrate.</li>
-</ul>
-<p><strong>Tips for Preparing Visual Aids</strong></p>
-<ul>
-<li>Keep visual aids simple.</li>
-<li>Make sure visual aids are large enough.</li>
-<li>Use fonts that are easy to read.</li>
-<li>Use color effectively.</li>
-</ul>
-<p><strong>Tips for Presenting the Visual Aids</strong></p>
-<ul>
-<li>Display visual aids where listeners can see them.</li>
-<li>Explain visual aids.</li>
-<li>Avoid passing visual aids among the audience.</li>
-<li>Display visual aids only while discussing them.</li>
-<li>Talk to the audience,not to your visual aids.</li>
-<li>Practice with your visual aids.</li>
-<li>Check the room and equipment.</li>
-<li>Develop a backup plan.</li>
-</ul>
-<p><strong>The above content adapt from the book <em>The art of Public Speaking</em> written by Stephen E. Lucas</strong></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/public-speaking/">
-                #public speaking
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/05/公众科学日：走马观正负电子对撞机/">
-                公众科学日：走马观正负电子对撞机
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-05-18
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/05/公众科学日：走马观正负电子对撞机/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/公众科学日：走马观正负电子对撞机/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>高能所于2013年5月18日举办第九届公众科学日，主题为“微观世界探秘之旅”。本次活动高能所将向公众免费开放北京正负电子对撞机国家实验室、核探测与核电子学国家重点实验室、中科院核分析重点实验室、同步辐射大厅、计算中心等，实现科研工作与公众的零距离接触；同时还将通过主题展板等形式向公众介绍高能所承担的国家重大科技基础设施以及其他研发成果。</p>
-<p><img src="http://www.ihep.cas.cn/kxcb/kpzt/kxr_2013/gdtp/201305/W020130514583646095613.jpg" alt="参观路线图"></p>
-<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_091439.jpg" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_091439-620x348.jpg" alt="IMG_20130518_091439"></a></p>
-<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_092208.jpg" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_092208-620x348.jpg" alt="IMG_20130518_092208"></a></p>
-<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_094324.jpg" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_094324-620x348.jpg" alt="IMG_20130518_094324"></a><br><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_093008.jpg" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_093008.jpg" alt="IMG_20130518_093008"></a></p>
-<p>详细内容参见：<a href="http://www.ihep.cas.cn/kxcb/kpzt/kxr_2013/" target="_blank" rel="external">高能所第九届公众科学日</a></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/UCAS/">
-                #UCAS
-              </a>
-            
-              <a href="/blog/tags/国科大/">
-                #国科大
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/05/YOURLS改造总结/">
-                YOURLS改造总结
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-05-17
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/05/YOURLS改造总结/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/YOURLS改造总结/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>这是大规模web性能优化的小组作业是对一个系统进行改造，以实现性能的改进。在项目的立项阶段主要是找一个应用可以利用memcachedb进行改造。经过memcachedb调研后知道memcachedb适合需要频繁读写的小数据的场景。例如数字类服务就像点击数，需要频繁写入小数据的例如评论系统，需要记录用户状态的例如在线人数以及在线用户等等。最后找到了YOURLS这个短网址程序，是基于PHP和MySQL开发的。先开始我认为可以将mysql数据库直接替换成memcachedb，经过研读源代码，发现这样不太现实，基本需要重写大半部分的核心代码。进一步分析代码后，发现YOURLS是可以基于plugin进行扩展，而且也有一个类似的APC缓存插件，所以我们决定使用插件改造这个系统。<br>在实现阶段，主要就是编写插件函数将短网址和长网址之间的映射保存到memcachedb中，这样可以减少大量的数据库读写。同时还要对链接的点击次数，在一定的时间内将点击次数先写到缓存中，时间过后再统一写到数据库中。另外，还要将日志的记录也要写入到缓存。可以确认，缓存后，响应时间会大幅度下降。<br>改造完后的第一个感觉就是YOURLS设计的很巧妙，plugin机制可以让开发者不修改核心的代码就可以修改应用程序的大部分功能,非常灵活多变。这也是我将来在应用开发过程中需要学习的。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
             
               <a href="/blog/tags/技术/">
                 #技术
               </a>
             
-              <a href="/blog/tags/札记/">
-                #札记
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2013/08/-转-25个让Java程序员更高效的Eclipse插件/">
+                [转]25个让Java程序员更高效的Eclipse插件
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-08-29
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/Java/">Java</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/08/-转-25个让Java程序员更高效的Eclipse插件/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/-转-25个让Java程序员更高效的Eclipse插件/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p><img src="http://eclipse.org/eclipse.org-common/themes/Nova/images/eclipse.png" alt="Eclipse"></p>
+<p>下面列出来的是25个最好的免费Eclipse插件，可以让开发者更高效的工作 。</p>
+<p><strong>提高代码质量的插件</strong></p>
+<ol>
+<li>FindBugs<br>FindBugs可以帮你找到Java代码中的bug，它使用Lesser GNU Public License的自由软件许可。2.  Checkstyle<br>Checkstyle插件可以集成到Eclipse IDE中去，能确保Java代码遵循标准代码样式。3.  ECLemma<br>ECLemma是一款拥有Eclipse Public License许可的免费工具，它提供了方便快捷的开发和测试环境。你可以使用代码覆盖模式下的“launch”功能，用起来就像是真正的运行/调试模式。你可以通过使用代码覆盖试图，高亮源文件，计数来分析代码。4.  JDepend4Eclipse JDepend4Eclipse可以帮助你遍历文件夹，协助你量化设计的质量。它使用Eclipse Public License v1.0许可。5.  PMD PMD是一款代码分析器，用来检测变量和写得不好的代码。（更新网址-<a href="http://pmd.sourceforge.net/eclipse/）6" target="_blank" rel="external">http://pmd.sourceforge.net/eclipse/）6</a>.  SourceHelper SourceHelper可以协助编码和调试，对写好的代码提供说明。7.  Structure101 Structure101帮助修改代码的架构，就是说你可以改变架构，而不打乱代码。</li>
+</ol>
+<p><strong>文本编辑插件</strong></p>
+<ol>
+<li>AnyEdit ToolsAnyEdit为输出控制台和工具栏增加了新的编辑器，帮助导入和导出数据。它使用Eclipse Public License v1.0许可。2.  Eclim Eclim给Eclipse引入了Vim的功能，Vim是最好的编辑器之一。开发者可以采用不同的语言来编写代码，它也提供bug纠错功能。Eclim使用GPLV3许可。3.  Eclipse-rbe Eclipse-rbe用来编辑Java文件，它的功能有为缺失变量发出警告信息，排序键值，转变Unicode编码等。它使用GNU库或LGPL许可。</li>
+</ol>
+<p><strong>依赖管理</strong></p>
+<ol>
+<li>Apache IvyDE Apache IvyDE集成了Apache Ivy的依赖管理功能。它能管理’ivy.xml’中的依赖，也能够配合WPT和Ant插件的使用。2.  M2eclipse (Maven插件)M2eclipse能够管理简单的项目，也能管理多模块项目，它能在Eclipse中启动maven。它提供依赖管理，能提供自动下载。</li>
+</ol>
+<p><strong>版本控制插件</strong></p>
+<ol>
+<li>Subclipse Subclipse是一个SVN插件，它为Eclipse IDE提供subversion支持，使用EPL 1.0许可。2.  EGit EGit提供同步视图，可以读.git/ 下排除的文件，提供rebase功能，为pull和push提供精简的操作。3.  MercurialEclipse MercurialEclipse是个流行的版本控制系统。它提供了clone repository功能，push-pull同步功能，以及简单的回滚功能。4.  P4Eclipse P4Eclipse吸纳了Perforce管理系统的特长。它提供了以开发者为导向的一系列的功能，并且支持许多Agile开流程发以及传统开发流程。</li>
+</ol>
+<p><strong>框架开发插件</strong></p>
+<ol>
+<li>Spring Tool Suite Spring Tool Suite提供了XML文件预览以及图形化的spring配置编辑器等开发环境和工具，它能让开发变得更简单。2.  Spring IDE  Spring IDE帮助你开发Spring应用，它提供了图形编辑界面。它还能用图形的方式显示bean之间的关系。（更新网址 – <a href="http://springide.org/updatesite）3" target="_blank" rel="external">http://springide.org/updatesite）3</a>.  Hibernator Hibernator能够创建或更新数据库schema，运行hibernate查询语句，创建映射文档。用户可以将一个Java类和一个相关的映射文件同步起来。4.  JbossTools JbossTools 3.2x支持JBoss，Hibernate，Drools，XHTML，Seam等。（更新网址-<a href="http://download.jboss.org/jbosstools/updates/JBossTools-2.1.2.GA）" target="_blank" rel="external">http://download.jboss.org/jbosstools/updates/JBossTools-2.1.2.GA）</a></li>
+</ol>
+<p><strong>其他功能插件</strong></p>
+<ol>
+<li>ASM – 二进制预览插件 ASM Bytecode Outline插件可以显示当前的Java文件或class文件的分解的二进制代码，便于Java/class文件的二进制比较，也可以显示当前二进制代码的ASMifier代码。你可以用Eclipse更新管理器来安装ASM。（更新网址-<a href="http://download.forge.objectweb.org/eclipse-update/）2" target="_blank" rel="external">http://download.forge.objectweb.org/eclipse-update/）2</a>.  Mylyn – 任务管理 Mylyn采用任务为中心的界面，它为开发者提供了任务管理工具。另外，也集成了富文本编辑工具，以及监测工具。3.  Eclipse Launcher Eclipse launcher采用Delphi 6写成，使用它你可以自定义启动Eclipse IDE时的配置。4.  FileSync FileSync拥有Eclipse Pulic License v1.0许可，它是一个文件同步工具，可以创建，删除，映射文件。5.  Log4E Log4E可以帮你更容易的写日志，而不需要受特定日志框架的约束。当然你也可以自定义你自己的日志模版。</li>
+</ol>
+<p>总而言之，插件能让Eclipse用其他语言来编写。Eclipse插件是必不可少的，因为它们让Java应用无缝连接，降低了Java的复杂度。然而，装了过多的插件会让你的Eclipse变慢，所以你需要有选择性的安装插件。除了以上提到的插件，当然还有其他的高效率的插件，如Jadclipse。如果你还有其他让你觉得好用的插件，请写下来吧。</p>
+<p>英文原文： <a href="http://www.fromdev.com/2012/01/25-best-free-eclipse-plug-ins-for-java.html" target="_blank" rel="external">fromdev.com</a></p>
+<p>编译：<a href="http://blog.jobbole.com/16127/" target="_blank" rel="external">伯乐在线 – 唐小娟</a></p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/Java/">
+                #Java
               </a>
             
           </div>
@@ -1091,8 +623,8 @@
           
           
             
-              <a class="post-title-link" href="/blog/2013/05/一些想法/">
-                一些想法
+              <a class="post-title-link" href="/blog/2013/08/一个文件说明Java编码规范/">
+                一个文件说明Java编码规范
               </a>
             
           
@@ -1102,7 +634,205 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-05-16
+            发表于 2013-08-21
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/Java/">Java</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/08/一个文件说明Java编码规范/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/一个文件说明Java编码规范/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>[java]<br>/<em>*
+ </em></p>
+<ul>
+<li>JavaCodeConvention.java</li>
+<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>name.zhangmin.java</li>
+<li>2013年8月21日<br><em>
+</em>/<br>package name.zhangmin.java;</li>
+</ul>
+<p>import java.util.Date;<br>import java.math.*;</p>
+<p>/**</p>
+<ul>
+<li>这里是类或者借口的注释内容。属于Java文档注释，主要类的设计规范。<br>*</li>
+<li>对于所有的注释应该注意以下几点：</li>
+<li>1.注释应该提供代码的概要信息及其他一些不易通过代码就能理解的附属的信息；</li>
+<li>2.注释应该只包括哪些与代码实现和理解相关的内容。</li>
+<li>3.注释一般不要包括特殊字符，如格式符和退格。<br>*</li>
+<li>缩进一般为4个空格，Tab为八个空格。一行内容不要超过80个字符。<br>*</li>
+<li><p>@author ZhangMin.name<br><em>
+</em>/<br>public class JavaCodeConvention {</p>
+<p> /<em> 类或者接口范围内的注释内容 。属于实现注释，主要描述具体的代码实现</em>/</p>
+<p> /<em> 静态变量 </em>/<br> public static String hello = &quot;hello world&quot;;</p>
+<p> /<em> 实例变量 </em>/<br> public final int MIN_WIDTH = 4;</p>
+<p> public    int     id;                /<em> id标识 </em>/<br> protected String  name;                /<em> 名字 </em>/<br> private   Date    birthday;            /<em> 生日 </em>/</p>
+<p> int level; // indentation level<br> int size; // size of table</p>
+<p> /<em> 构造器 </em>/<br> public JavaCodeConvention(String name){</p>
+<pre><code>this.<span class="property">name</span> = <span class="property">name</span>;
+</code></pre><p> }</p>
+<p> /<em> 方法应该按照功能进行排序，而不是按照可访问性来进行排序 </em>/<br> public void setBirthday(Date birth){</p>
+<pre><code><span class="keyword">this</span>.birthday = birth;
+</code></pre><p> }</p>
+<p> /<em> 将过长的代码行进行分解 </em>/<br> public void function(String longExpression1, String longExpression2, String longExpression3,</p>
+<pre><code>    <span class="built_in">String</span> longExpression4, <span class="built_in">String</span> longExpression5){
+name = longExpression1 + longExpression2 + longExpression3 + longExpression4
+         + longExpression5; <span class="comment">// PREFER</span>
+</code></pre><p> }</p>
+<p> //传统的缩进<br> public void someMethod(int anArg, Object anotherArg, String yetAnotherArg,<br>  Object andStillAnother) {</p>
+<p> }</p>
+<p> public void emptyMethod(){ }</p>
+<p> //八个空格的缩进<br> private synchronized void horkingLongMethodName(int anArg,</p>
+<pre><code><span class="built_in">Object</span> anotherArg, <span class="built_in">String</span> yetAnotherArg,
+<span class="built_in">Object</span> andStillAnother) {
+</code></pre><p> }</p>
+<p> private void doSomethingAboutIt(){</p>
+<pre><code><span class="comment">//变量声明放到方法的第一行</span>
+Integer <span class="built_in">alpha</span> = <span class="keyword">new</span> Integer(<span class="number">0</span>);
+<span class="built_in">int</span> condition = <span class="number">1</span>;
+
+<span class="comment">//过长三元运算语句的处理方法</span>
+<span class="keyword">String</span> aLongBooleanExpression = <span class="keyword">new</span> <span class="keyword">String</span>(&amp;quot;world&amp;quot;);
+<span class="built_in">int</span> beta = <span class="number">1</span>,gamma = <span class="number">2</span>;
+<span class="built_in">alpha</span> = (aLongBooleanExpression.equals(&amp;quot;hello&amp;quot;)) ? beta : gamma;
+<span class="built_in">alpha</span> = (aLongBooleanExpression.equals(&amp;quot;hello&amp;quot;)) ? beta
+                                                 : gamma;
+<span class="built_in">alpha</span> = (aLongBooleanExpression.equals(&amp;quot;hello&amp;quot;))
+        ? beta
+        : gamma;
+
+<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &amp;lt; <span class="number">1000</span>; i++);
+<span class="keyword">while</span> (condition == <span class="number">1</span>) {
+
+}
+<span class="keyword">switch</span> (condition) {
+    <span class="keyword">case</span> <span class="number">1</span>:
+        System.out.<span class="built_in">println</span>(<span class="number">1</span>);
+        <span class="comment">/* falls through */</span>
+    <span class="keyword">case</span> <span class="number">2</span>:
+        System.out.<span class="built_in">println</span>(<span class="number">2</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">default</span>:
+        System.out.<span class="built_in">println</span>(<span class="number">3</span>);
+        <span class="keyword">break</span>;
+}
+<span class="comment">//if (bar &amp;gt; 1) {</span>
+<span class="comment">//</span>
+<span class="comment">// // Do a triple-flip.</span>
+<span class="comment">// ...</span>
+<span class="comment">//}</span>
+<span class="comment">//else</span>
+<span class="comment">// return false;</span>
+</code></pre><p> }</p>
+<p> protected void ifStatement(){</p>
+<pre><code>int a=1,b=2,c=2,<span class="keyword">d</span>=1;
+
+a += c + <span class="keyword">d</span>;
+a = (a + b) / (c * <span class="keyword">d</span>);
+
+<span class="comment">//过长条件语句的处理方法</span>
+<span class="keyword">if</span> ((a &amp;gt; b &amp;amp;&amp;amp; c &amp;gt; <span class="keyword">d</span>)
+        || (b == <span class="keyword">d</span> &amp;amp;&amp;amp; a &amp;lt; <span class="keyword">d</span>)
+        ||!(a == c &amp;amp;&amp;amp; <span class="keyword">d</span> == b)) {
+ doSomethingAboutIt();
+}<span class="keyword">else</span> <span class="keyword">if</span>( b == <span class="keyword">d</span>){
+
+}<span class="keyword">else</span>{
+
+}
+
+<span class="comment">//或者</span>
+<span class="keyword">if</span> ((a &amp;gt; b &amp;amp;&amp;amp; c &amp;gt; <span class="keyword">d</span>) || ((b == <span class="keyword">d</span> &amp;amp;&amp;amp; a &amp;lt; <span class="keyword">d</span>)
+        ||!(a == c &amp;amp;&amp;amp; <span class="keyword">d</span> == b))) {
+ doSomethingAboutIt();
+}
+</code></pre><p> }<br>}<br>[/java]</p>
+</li>
+</ul>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/Java/">
+                #Java
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2013/08/罗辑思维/">
+                罗辑思维
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-08-09
           
         </span>
 
@@ -1125,8 +855,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/05/一些想法/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/一些想法/"></span>
+            <a href="/blog/2013/08/罗辑思维/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/罗辑思维/"></span>
             </a>
           </span>
           
@@ -1142,7 +872,24 @@
 
         
           
-            <p>最近有部电影《致我们终将逝去的青春》特别火，勾起了大家对青春的种种怀念。青春的悸动和张扬，爱情的美好与感伤，现实的无奈与苍凉。然而，正如马尔克斯在《百年孤独》中所说的：“无论走到哪里，都应该记住过去都是假的，回忆是一条没有尽头的路，以往的春天不复存在，就连那坚韧而有狂乱的爱情归根结底也不过是一种转瞬即逝的现实。”有时候我觉得我很享受现在的研究生生活，这也许是我们最后的校园时光。在象牙塔中的生活是自由的：你可以选择你想学习的课程，了解你感兴趣的研究方向，做你感兴趣的事。每个月900元的补助也可以保证你过的很舒服。这样的生活确实需要倍加珍惜。<br>说到每个月900元的补助，我意识到，我认为这种意识很重要，我在花纳税人的钱，花的是国家和社会的钱。我的学习不仅要对自己，对父母负责，更要对国家和社会负责。说到国家和社会，虽然存在很多问题，但是我相信我们年轻的足够的聪明和智慧去解决，我相信未来会把它变得更好。</p>
+            <p>2012年12月21日，传说中世界末日的那一天。一个叫《罗辑思维》的节目上线了。从此，每天早上打开微信就会有一个60秒语音的马桶伴侣，每周五还有我，一个叫罗振宇的胖子在镜头前唠叨“歪理邪说”。</p>
+<p>一晃8个月。如今《罗辑思维》视频光在优酷上就拥有超过3000万人次的观看量，我们的微信公众号上聚集了50万忠实用户。一颗小小的种子，正迎着互联网的轻风成长。</p>
+<p>我自知，大家爱的不是我，罗胖只是歪嘴肉身凡胎。更不是我的搭档，那个叫申音的小胡子。</p>
+<p><strong>大家爱的是罗辑思维里展现的那个魅力人格体，寄托着我们对知识、对自由、对未来、对独立的向往。</strong></p>
+<p>回到我和老申的初心，罗辑思维是一个要跨越十年的互联网实验，它不仅仅是一个脱口秀，一个自媒体。我们想要打造的是一个有灵魂的知识社群，一帮自由人的自由联合。</p>
+<p>现在是我们再向前迈出一步的时候了。</p>
+<p>茫茫人海中，罗辑思维想找到这样一帮朋友，十六个字概括：<strong>爱智求真、积极上进、自由阳光、人格健全。</strong><br>十万同道，这样的要求算不算高？这样的一群人如果真能通过互联网聚集在一起，究竟能发生什么？值得想象和期待。</p>
+<p>公元627年，一个叫玄奘的和尚出玉门关，陪伴他的只有古道西风瘦马。</p>
+<p>三藏法师只有目标和愿力，没有清晰明确的路线图。</p>
+<p>爱，就供养。不爱，就观望。</p>
+<p>凡新事业，必有它的投入和付出，罗辑思维也不例外。树木愈大，根基越深，为了罗辑思维能够持续地健康地走下去，我们需要大家的供养、资助。众人举炬，焰照前路。</p>
+<p>第一年，“罗辑思维朋友圈”诚求5000位发起会员，200元会费，两年会员资格。和我们一道同行。</p>
+<p>200元，也许只是半张演唱会门票，一顿美餐，或者4张电影票，但也可以用来供养一个事业。</p>
+<p>如果您有能力有意愿为罗辑思维贡献更多，我们还额外准备了500个铁杆会员的名额。1200元，2年资格之外，您还有义务为社群做更大的贡献。</p>
+<p>在这里，我和老申要做一个特别承诺：《罗辑思维》的常规视频、微信语音及文章永久免费，向所有热爱知识的朋友奉上，与会员权益无关。</p>
+<p>我承认，这也许是史上最无理的会员方案。没有高高在上的特权，没有清晰可见的权益回报，甚至还有主动参与的义务。但罗胖相信爱的愿力。</p>
+<p>8月9日到8月13日，我在桥这边等你，等你成为罗辑思维生命中的一部分，我们一起来做一个有意义的事业。</p>
+<p><em>转自罗辑思维的《史上最无理会员方案》一文</em></p>
 
           
         
@@ -1154,8 +901,8 @@
         
           <div class="post-tags">
             
-              <a href="/blog/tags/札记/">
-                #札记
+              <a href="/blog/tags/读书·旅行/">
+                #读书·旅行
               </a>
             
           </div>
@@ -1178,7 +925,7 @@
 
           
             <div class="pagination">
-              <a class="extend prev" rel="prev" href="/blog/page/6/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/blog/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/24/">24</a><a class="extend next" rel="next" href="/blog/page/8/">&raquo;</a>
+              <a class="extend prev" rel="prev" href="/blog/page/6/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/blog/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/39/">39</a><a class="extend next" rel="next" href="/blog/page/8/">&raquo;</a>
             </div>
           
         </div>
@@ -1212,17 +959,17 @@
         </div>
 
         <div class="site-state-item site-state-categories">
-          
+          <a href="/blog/categories">
             <span class="site-state-item-count">9</span>
             <span class="site-state-item-name">分类</span>
-          
+          </a>
         </div>
 
         <div class="site-state-item site-state-tags">
-          
+          <a href="/blog/tags">
             <span class="site-state-item-count">20</span>
             <span class="site-state-item-name">标签</span>
-          
+          </a>
         </div>
 
       </div>

@@ -21,13 +21,13 @@
 
 
 
-    <meta name="keywords" content="Hexo,next" />
+    <meta name="keywords" content="zhangmin.name,张敏,张敏的个人主页,张敏的博客,zhangmin.name's blog" />
 
 
 
 
 
-    <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.1" />
+    <link rel="shorticon icon" type="image/x-icon" href="http://www.zhangmin.name/images/favicon.png?v=0.4.1" />
 
 
 
@@ -67,10 +67,26 @@
       </li>
     
       
+      <li class="menu-item menu-item-categories">
+        <a href="/blog/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
       <li class="menu-item menu-item-archives">
         <a href="/blog/archives">
           <i class="menu-item-icon icon-archives"></i> <br />
           归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/blog/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
         </a>
       </li>
     
@@ -109,8 +125,8 @@
           
           
             
-              <a class="post-title-link" href="/blog/2013/12/如何识别一个未知文件的编码格式/">
-                如何识别一个未知文件的编码格式
+              <a class="post-title-link" href="/blog/2014/05/Java版本BitMap实现/">
+                Java版本BitMap实现
               </a>
             
           
@@ -120,7 +136,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-12-11
+            发表于 2014-05-13
           
         </span>
 
@@ -143,8 +159,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/12/如何识别一个未知文件的编码格式/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/12/如何识别一个未知文件的编码格式/"></span>
+            <a href="/blog/2014/05/Java版本BitMap实现/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/05/Java版本BitMap实现/"></span>
             </a>
           </span>
           
@@ -160,113 +176,99 @@
 
         
           
-            <p>识别一个未知文件的格式（英文专业术语为Codepage-detection）在诸多领域有应用，如搜索引擎，浏览器等。<br>对于Unicode编码的文件，在文件的开头有两个字节或者多个字节用于表示文件的编码格式及字节顺序。这几个字节不会出现在文件的内容中，只会影响文件被装进内存时的方式。UTF-8，UCS-2/UTF-16等编码格式可以通过文件开头的BOM（Byte Order Mark）来识别。常见BOM及对应编码格式如下所示：<br>FF FE  UCS-2LE or UTF-16LE<br>FE FF  UCS-2BE or UTF-16BE<br>EF BB BF  UTF-8<br>当然这个方法也不能保证识别的正确性，因为有的文件开头可能就会有相同的字节。况且大多数文件都没有BOM。</p>
-<p>由于所有其他的编码格式都兼容ASCII编码，所以如果一个文件的内容都是ASCII，就不能判断该文件的编码格式。如果一个文件既有ASCII编码的字符也有UTF-8编码的字符可以通过寻找UTF-8的字节序列来实现，如：<br>0xxxxxxx  ASCII &lt; 0x80 (128)<br>110xxxxx 10xxxxxx  2-byte &gt;= 0x80<br>1110xxxx 10xxxxxx 10xxxxxx  3-byte &gt;= 0x400<br>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx  4-byte &gt;= 0x10000</p>
-<p>在java中有几种工具可以进行文件编码的识别，如Mozilla jchardet（<a href="http://jchardet.sourceforge.net/）和IBM的ICU4j（http://site.icu-project.org/）。相比而言，后者的准确性更高。" target="_blank" rel="external">http://jchardet.sourceforge.net/）和IBM的ICU4j（http://site.icu-project.org/）。相比而言，后者的准确性更高。</a><br>下面是两个工具的使用示例：<br>[java]<br>/<em>*
- </em></p>
-<ul>
-<li>ICUExample.java</li>
-<li>ZhangMin.name - zhangmin@zhangmin.name</li>
-<li>name.zhangmin.timediary<br><em>
-</em>/<br>package name.zhangmin.timediary.util;</li>
-</ul>
-<p>import java.io.BufferedInputStream;<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.FileNotFoundException;<br>import java.io.IOException;</p>
-<p>import com.ibm.icu.text.CharsetDetector;<br>import com.ibm.icu.text.CharsetMatch;</p>
-<p>/**</p>
-<ul>
-<li><p>@author ZhangMin.name<br><em>
-</em>/<br>public class ICUExample {</p>
-<p> /**</p>
-<ul>
-<li>@param args</li>
-<li><p>@throws IOException<br>*/<br>public static void main(String[] args) throws IOException {<br> String base = &quot;C:\Users\ZhangMin.name\Desktop\EncodeTest&quot;;<br> File[] f = new File(base).listFiles();<br> for(int i = 0 ; i &lt; f.length ; i ++){</p>
-<pre><code>System.out.<span class="keyword">println</span>(&amp;quot;Detcting <span class="keyword">file</span> &amp;quot; + f[i].getName());
-FileInputStream fis = <span class="keyword">new</span> FileInputStream(f[i]);
-BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(fis);
-<span class="keyword">byte</span>[] content =  <span class="keyword">new</span> <span class="keyword">byte</span>[(<span class="keyword">int</span>) f[i].length()];
-bis.<span class="keyword">read</span>(content);
+            <p>BitMap即位图数据结构。此数据结构代表了有限域中的一个稠密集合，每个元素在集合中出现至多一次。<br>这一数据结构在《编程珠玑》一书中用于高效解决一定范围内无重复整数的排序问题。</p>
+<p>比如一个小于10的整数集合如{1,2,3,4,8}可以用下面的二进制字符串表示：<br>0 1 1 1 1 0 0 0 1 0</p>
+<p>如果整数在集合中，则其相应位置为1，否则为0。</p>
+<p>可以通过对int的位操作来实现BitMap。实现的思路是先找到相应位的存储位置，然后把该位设为0或1.<br>由于Java中int为32位，所以每次通过右移5位来找到i所在的整数在int[]中的位置（右移5位相当于除以32），然后将相应的位置设为1.</p>
+<p>具体的实现代码如下：</p>
+<pre>
+[java]
+/**
+ *
+ * BitMap.java
+ * ZhangMin.name - zhangmin@zhangmin.name
+ * name.zhangmin.java
+ *
+ */
+package name.zhangmin.java.bop;
 
-CharsetDetector detector = <span class="keyword">new</span> CharsetDetector();
-detector.setText(content);
+import name.zhangmin.util.StdOut;
 
-CharsetMatch cm = detector.detect();
-<span class="keyword">if</span>(cm != <span class="keyword">null</span>){
-    <span class="keyword">int</span> confidence = cm.getConfidence();
-    System.out.<span class="keyword">println</span>(&amp;quot;Charset: &amp;quot; + cm.getName() + &amp;quot;, confidence: &amp;quot;
-    + confidence + &amp;quot;%&amp;quot;);
-}
-</code></pre><p> }</p>
-<p>}<br>}</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>[/java]</p>
-<p>[java]<br>/<em>*
- </em></p>
-<ul>
-<li>JchardetExample.java</li>
-<li>ZhangMin.name - zhangmin@zhangmin.name</li>
-<li>name.zhangmin.timediary<br><em>
-</em>/<br>package name.zhangmin.timediary.util;</li>
-</ul>
-<p>import java.io.BufferedInputStream;<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.IOException;<br>import org.mozilla.intl.chardet.<em> ;<br>/*</em></p>
-<ul>
-<li><p>@author ZhangMin.name<br><em>
-</em>/<br>public class JchardetExample {<br> public static boolean found = false;<br> /**</p>
-<ul>
-<li>@param args</li>
-<li><p>@throws IOException<br>*/<br>public static void main(String[] args) throws IOException {<br> String base = &quot;C:\Users\ZhangMin.name\Desktop\EncodeTest&quot;;<br> File[] f = new File(base).listFiles();<br> for(int i = 0 ; i &lt; f.length ; i ++){</p>
-<pre><code>System.out.<span class="keyword">println</span>(&amp;quot;Detcting <span class="keyword">file</span> &amp;quot; + f[i].getName());
-FileInputStream fis = <span class="keyword">new</span> FileInputStream(f[i]);
-BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(fis);
-<span class="comment">// Initalize the nsDetector() ;</span>
-nsDetector det = <span class="keyword">new</span> nsDetector(nsPSMDetector.ALL);
-<span class="comment">// Set an observer...</span>
-<span class="comment">// The Notify() will be called when a matching charset is found.</span>
-det.Init(<span class="keyword">new</span> nsICharsetDetectionObserver(){
-    <span class="keyword">public</span> <span class="keyword">void</span> Notify(String charset){
-        JchardetExample.found = <span class="keyword">true</span>;
-        System.out.<span class="keyword">println</span>(&amp;quot;CHARSET: &amp;quot; + charset);
+/**
+ * The &lt;tt&gt;BitMap&lt;/tt&gt; class represents a bit map.
+ * It supports operations such as &lt;em&gt;set&lt;/em&gt;, &lt;em&gt;test&lt;/em&gt;,
+ * &lt;em&gt;clear&lt;/em&gt;.
+ * &lt;p&gt;
+ * This implementation use bitwise logical operations (such as
+ * and, or, shift).
+ * 
+ * @author ZhangMin.name
+ *
+ */
+public class BitMap {
+    private static final int BITPERWORD = 32;
+    private static final int SHIFT = 5;
+    private static final int MASK = 0x1F;
+    private int[] a;
+
+    /**
+     * Initialize a empty bitmap.
+     * @param N the bitmap size
+     */
+    public BitMap(int N) {
+        if (N &lt; 0 || N &gt; Integer.MAX_VALUE)
+            throw new IllegalArgumentException(N + &quot; shoule be in [0,2147483647)&quot;);
+        this.a = new int[1 + N / BITPERWORD];
+        for (int i = 0; i &lt; a.length; i++)
+            a[i] &amp;= 0x0;
     }
-});
-
-<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];
-<span class="keyword">int</span> len;
-<span class="keyword">boolean</span> done = <span class="keyword">false</span>;
-<span class="keyword">boolean</span> isAscii = <span class="keyword">true</span>;
-
-<span class="keyword">while</span>((len = bis.<span class="keyword">read</span>(buf, <span class="number">0</span>, buf.length)) != -<span class="number">1</span>){
-    <span class="comment">// Check if the stream is only ascii.</span>
-    <span class="keyword">if</span>(isAscii){
-        isAscii = det.isAscii(buf, len);
+    /**
+     * Set the i&lt;em&gt;th&lt;/em&gt; bit to 1.
+     * @param i
+     */
+    public void set(int i) {
+        if (i &lt; 0 || i &gt; Integer.MAX_VALUE)
+            throw new IllegalArgumentException(i + &quot; shoule be in [0,2147483647]&quot;);
+        a[i &gt;&gt; SHIFT] |= (1 &lt;&lt; (i &amp; MASK));
     }
-    <span class="comment">// DoIt if non-ascii and not done yet.</span>
-    <span class="keyword">if</span>(!isAscii &amp;amp;&amp;amp; !done){
-        done = det.DoIt(buf, len, <span class="keyword">false</span>);
+    /**
+     * Clear the i&lt;em&gt;th&lt;/em&gt; bit to 0.
+     * @param i
+     */
+    public void clear(int i) {
+        if (i &lt; 0 || i &gt; Integer.MAX_VALUE)
+            throw new IllegalArgumentException(i + &quot; shoule be in [0,2147483647]&quot;);
+        a[i &gt;&gt; SHIFT] &amp;= ~(1 &lt;&lt; (i &amp; MASK));
     }
-}
-det.DataEnd();
+    /**
+     * Test the i&lt;em&gt;th&lt;/em&gt; bit.
+     * @param i
+     * @return 0 if the i&lt;em&gt;th&lt;/em&gt; bit is 0, non-zero otherwise.
+     */
+    public int test(int i) {
+        if (i &lt; 0 || i &gt; Integer.MAX_VALUE)
+            throw new IllegalArgumentException(i + &quot; shoule be in [0,2147483647]&quot;);
+        return a[i &gt;&gt; SHIFT] &amp; (1 &lt;&lt; (i &amp; MASK));
+    }
+    /**
+     * Unit test.
+     */
+    public static void main(String[] args) {
+        int N = 100;
+        BitMap bm = new BitMap(N);
+        for (int i = 0; i &lt; N; i += 3) {
+            bm.set(i);
+            StdOut.printf(&quot;%dth value is %d\n&quot;, i, bm.test(i));
+            bm.clear(i);
+            StdOut.printf(&quot;%dth value is %d\n&quot;, i, bm.test(i));
+        }
+    }
 
-<span class="keyword">if</span>(isAscii){
-    System.out.<span class="keyword">println</span>(&amp;quot;CHARSET: ASCII&amp;quot;);
-    JchardetExample.found = <span class="keyword">true</span>;
 }
-<span class="keyword">if</span>(!found){
-    String prob[] = det.getProbableCharsets();
-    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &amp;lt; prob.length ; j ++){
-        System.out.<span class="keyword">println</span>(&amp;quot;Probable Charset :&amp;quot; + prob[j]);
-    }
-}
-</code></pre><p> }</p>
-<p>}</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>}</p>
-<p>[/java]</p>
-<p><strong>参考文献：</strong><br><a href="http://stackoverflow.com/questions/1288899/java-text-file-encoding" target="_blank" rel="external">http://stackoverflow.com/questions/1288899/java-text-file-encoding</a><br><a href="http://codesnipers.com/?q=node/68" target="_blank" rel="external">http://codesnipers.com/?q=node/68</a><br><a href="http://jchardet.sourceforge.net/" target="_blank" rel="external">http://jchardet.sourceforge.net/</a><br><a href="http://site.icu-project.org/" target="_blank" rel="external">http://site.icu-project.org/</a><br><a href="http://site.icu-project.org/" target="_blank" rel="external">http://site.icu-project.org/</a></p>
+[/java]
+</pre>
+
+<p><em>参考文献</em><br>1. 《编程珠玑》第一章</p>
 
           
         
@@ -282,8 +284,8 @@ det.DataEnd();
                 #Java
               </a>
             
-              <a href="/blog/tags/技术/">
-                #技术
+              <a href="/blog/tags/马上有OFFER/">
+                #马上有OFFER
               </a>
             
           </div>
@@ -312,8 +314,8 @@ det.DataEnd();
           
           
             
-              <a class="post-title-link" href="/blog/2013/10/Java-JNI-学习代码示例/">
-                Java JNI 学习代码示例
+              <a class="post-title-link" href="/blog/2014/04/2014无锡环太湖徒步大会/">
+                2014无锡环太湖徒步大会
               </a>
             
           
@@ -323,520 +325,7 @@ det.DataEnd();
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-10-31
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/10/Java-JNI-学习代码示例/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/Java-JNI-学习代码示例/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><strong>Java 本地方法声明及测试类</strong><br>[java]<br>package name.zhangmin.java.jni;</p>
-<p>/**</p>
-<ul>
-<li>Basics of JNI</li>
-<li><p>@author ZhangMin.name<br><em>
-</em>/<br>public class JNIExample {<br> private POJO pj;<br> private POJO[] pjs;<br> private float f;<br> private boolean[] bs;</p>
-<p> public native void sayHello();<br> public static native POJO getPOJO(int i,double[] d,JObject obj,JObject[] objs);<br> public native int getData();<br> public native JObject[] getRefs();</p>
-<p> public static void main(String[] args) {</p>
-<pre><code><span class="type">JNIExample</span> exp = <span class="keyword">new</span> <span class="type">JNIExample</span><span class="literal">()</span>;
-
-exp.sayHello<span class="literal">()</span>;
-
-double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span class="number">0.2</span>};
-<span class="type">JObject</span> obj = <span class="keyword">new</span> <span class="type">JObject</span>(<span class="number">5</span>);
-<span class="type">JObject</span><span class="literal">[]</span> objs = {<span class="keyword">new</span> <span class="type">JObject</span>(<span class="number">1</span>),<span class="keyword">new</span> <span class="type">JObject</span>(<span class="number">2</span>)};
-<span class="type">POJO</span> pj = getPOJO(<span class="number">5</span>,d,obj,objs);
-<span class="type">System</span>.out.println(pj.toString<span class="literal">()</span>);
-
-<span class="type">System</span>.out.println(&amp;quot;<span class="type">Get</span> <span class="built_in">int</span> data:&amp;quot; + exp.getData<span class="literal">()</span>);
-
-<span class="type">JObject</span><span class="literal">[]</span> jos = exp.getRefs<span class="literal">()</span>;
-<span class="type">System</span>.out.println(jos[<span class="number">0</span>].toString<span class="literal">()</span>);
-</code></pre><p> }</p>
-<p> static{</p>
-<pre><code>System.loadLibrary<span class="comment">(&amp;quot;JavaNativeCode&amp;quot;)</span>;
-</code></pre><p> }</p>
-</li>
-</ul>
-<p>}<br>[/java]</p>
-<p><strong>Java native method C++实现</strong><br>[c]<br>// JavaNativeCode.cpp : 定义 DLL 应用程序的导出函数。<br>//<br>/*</p>
-<ul>
-<li>JavaNativeCode implementation</li>
-<li>zhangmin@zhangmin.name<br>*/<h1 id="include_&quot;stdafx-h&quot;">include &quot;stdafx.h&quot;</h1></li>
-</ul>
-<h1 id="include_&lt;iostream&gt;">include &lt;iostream&gt;</h1><p>using namespace std;<br>/*</p>
-<ul>
-<li>Class:     name_zhangmin_java_jni_JNIExample</li>
-<li>Method:    sayHello</li>
-<li>Signature: ()V<br><em>/<br>JNIEXPORT void JNICALL Java_name_zhangmin_java_jni_JNIExample_sayHello<br>(JNIEnv </em> env, jobject){<br>   jstring jstr;<br>   const char greeting[] = &quot; Hello JNI World!&quot;;<br>   jstr = env-&gt;NewStringUTF(greeting);<br>   cout&lt;&lt;&quot;From C++&quot;&lt;&lt;env-&gt;GetStringUTFChars(jstr,0)&lt;&lt;endl;<br>}</li>
-</ul>
-<p>/*</p>
-<ul>
-<li>Class:     name_zhangmin_java_jni_JNIExample</li>
-<li>Method:    getPOJO</li>
-<li>Signature: (I[DLname/zhangmin/java/jni/JObject;[Lname/zhangmin/java/jni/JObject;)Lname/zhangmin/java/jni/POJO;<br><em>/<br>JNIEXPORT jobject JNICALL Java_name_zhangmin_java_jni_JNIExample_getPOJO<br>(JNIEnv </em> env, jclass jc, jint i, jdoubleArray da, jobject jo, jobjectArray joa){<br>   jclass pojo = env-&gt;FindClass(&quot;name/zhangmin/java/jni/POJO&quot;);<br>   //获取数组元素<br>   jobject ele = env-&gt;GetObjectArrayElement(joa,0);<br>   jclass jobj = env-&gt;GetObjectClass(jo);<br>   //调用对象的get方法<br>   jint id = env-&gt;CallIntMethod(ele,env-&gt;GetMethodID(jobj,&quot;getId&quot;,&quot;()I&quot;));<br>   //获取对象的属性<br>   jfieldID objID = env-&gt;GetFieldID(jobj,&quot;field&quot;,&quot;D&quot;);<br>   jdouble field = env-&gt;GetDoubleField(jo,objID);<br>   //创建一个jdoubleArray<br>   jdouble dd[2] = {1.2,3.4};<br>   jdoubleArray d = env-&gt;NewDoubleArray(2);<br>   env-&gt;SetDoubleArrayRegion(d,0,2,dd);<br>   //通过调用对象的构造器创建一个对象<br>   jobject ret = env-&gt;NewObject(pojo,<pre><code>env<span class="subst">-&amp;</span><span class="literal">gt</span>;GetMethodID(pojo,<span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;init<span class="subst">&amp;</span><span class="literal">gt</span>;<span class="subst">&amp;</span>quot;,<span class="subst">&amp;</span>quot;(I<span class="preprocessor">[</span>DLname/zhangmin/java/jni/JObject;)V<span class="subst">&amp;</span>quot;)
-,id,d,ele);
-</code></pre>   return ret;<br>}</li>
-</ul>
-<p>/*</p>
-<ul>
-<li>Class:     name_zhangmin_java_jni_JNIExample</li>
-<li>Method:    getData</li>
-<li>Signature: ()I<br><em>/<br>JNIEXPORT jint JNICALL Java_name_zhangmin_java_jni_JNIExample_getData<br>(JNIEnv </em>, jobject){<br>   jint i = 510;<br>   return i;<br>}</li>
-</ul>
-<p>/*</p>
-<ul>
-<li>Class:     name_zhangmin_java_jni_JNIExample</li>
-<li>Method:    getRefs</li>
-<li>Signature: ()[Lname/zhangmin/java/jni/JObject;<br><em>/<br>JNIEXPORT jobjectArray JNICALL Java_name_zhangmin_java_jni_JNIExample_getRefs<br>(JNIEnv </em> env, jobject jobj){<br>   //返回一个对象数组<br>   jclass jc = env-&gt;FindClass(&quot;name/zhangmin/java/jni/JObject&quot;);<br>   jobject jo = env-&gt;NewObject(jc,env-&gt;GetMethodID(jc,&quot;&lt;init&gt;&quot;,&quot;(I)V&quot;),100);<br>   jobjectArray joa = env-&gt;NewObjectArray(2,jc,NULL);<br>   env-&gt;SetObjectArrayElement(joa,0,jo);<br>   return joa;<br>}</li>
-</ul>
-<p>[/c]</p>
-<p><strong>POJO类</strong></p>
-<p>[java]<br>package name.zhangmin.java.jni;</p>
-<p>/**</p>
-<ul>
-<li>@author ZhangMin.name<br><em>
-</em>/<br>public class POJO {<br> private int i;<br> private double[] d;<br> private JObject obj;<br> private JObject[] objs;<br> public POJO(int i,double[] d,JObject obj){<pre><code><span class="keyword">this</span>.i = i;
-<span class="keyword">this</span>.d = d;
-<span class="keyword">this</span>.obj = obj;
-</code></pre> }<br> @Override<br> public String toString() {<pre><code><span class="keyword">return</span> <span class="built_in">i</span> + &amp;quot;,&amp;quot; + d<span class="matrix">[<span class="number">0</span>]</span> + &amp;quot;,&amp;quot; + obj.getId() ;
-</code></pre> }<br>}</li>
-</ul>
-<p>[/java]<br>[java]<br>/<em>*
- </em></p>
-<ul>
-<li>JObject.java</li>
-<li>ZhangMin.name - zhangmin@zhangmin.name</li>
-<li>name.zhangmin.java<br><em>
-</em>/<br>package name.zhangmin.java.jni;</li>
-</ul>
-<p>/**</p>
-<ul>
-<li>@author ZhangMin.name<br><em>
-</em>/<br>public class JObject {<br> private int id;<br> public double field;<br> public JObject(int id){<pre><code>this.<span class="property">id</span> = <span class="property">id</span>;
-</code></pre> }<br> public int getId() {<pre><code><span class="command">return</span> <span class="property">id</span>;
-</code></pre> }<br> public void setId(int id) {<pre><code>this.<span class="property">id</span> = <span class="property">id</span>;
-</code></pre> }<br> @Override<br> public String toString() {<pre><code><span class="command">return</span> <span class="property">id</span> + &amp;quot;,&amp;quot; + field;
-</code></pre> }<br>}</li>
-</ul>
-<p>[/java]</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-              <a href="/blog/tags/技术/">
-                #技术
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/10/利用Java-Service-Wrapper将Java应用程序发布为Service/">
-                利用Java Service Wrapper将Java应用程序发布为Service
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-10-25
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/10/利用Java-Service-Wrapper将Java应用程序发布为Service/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/利用Java-Service-Wrapper将Java应用程序发布为Service/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><a href="http://wrapper.tanukisoftware.com/doc/english/download.jsp" target="_blank" rel="external">Java Service Wrapper</a> 主要用于包装其他java服务器端程序（比如tomcat，或者自己开发的java服务器程序），提供如下特性：</p>
-<ul>
-<li>作为windows服务或者unix守护进程运行；<em>   增强程序的可靠性，程序崩溃后的自动重启，比如内存溢出，虚拟机崩溃等造成JVM退出的监控和恢复运行（重新启动）；</em>   标准的，可独立使用的配置JVM参数的脚本；<em>   支持java应用程序重启JVM，比如应用程序修改了配置文件，或者重启系统避免内存溢出等问题；</em>   灵活的配置；<em>   简化应用程序的安装；</em>   记录日志。</li>
-</ul>
-<p>本文将以Java Service Wrapper的第四种集成方法WrapperJarApp。利用WrapperJarApp helper类来启动应用程序。该方法用于配置和运行可执行jar文件。</p>
-<h3 id="将所需文件放到应用目录下">将所需文件放到应用目录下</h3><p>下载windows平台下的Java Service Wrapper，将src/bin中的App.bat.in，InstallApp-NT.bat.in，和UninstallApp-NT.bat.in拷贝到你的AppDir目录的bin中，去掉这些文件的.in后缀。然后将src/conf下的wrapper.conf.in几conf下的wrapper-license.conf复制到AppDir的conf目录中。将你lib下的wrapper.dll，wrapper.jar及你自己的应用程序的jar包放到AppDir的lib目录下。最终的目录结构如下所示：<br>[java]<br>AppDir/bin<br>————App.bat<br>————InstallApp-NT.bat<br>————UninstallApp-NT.bat<br>————wrapper.exe<br>———/conf<br>————wrapper.conf<br>————wrapper-license.conf<br>———/lib<br>————App.jar<br>————wrapper.dll<br>————wrapper.jar<br>———/logs<br>[/java]</p>
-<h3 id="修改配置文件wrapper-conf">修改配置文件wrapper.conf</h3><p>[java]<br>wrapper.java.command=javaw<br>wrapper.java.mainclass=org.tanukisoftware.wrapper.WrapperJarApp<br>wrapper.java.classpath.1=../lib/wrapper.jar<br>wrapper.java.classpath.2=../lib/*<br>wrapper.app.parameter.1=../lib/App.jar<br>wrapper.name=App<br>wrapper.displayname=MyAppService<br>wrapper.description=MyAppService<br>[/java]</p>
-<h3 id="启动App和安装，卸载App_Service">启动App和安装，卸载App Service</h3><p>点击App.bat启动App。点击InstallApp-NT.bat 安装到windows service，UninstallApp-NT.bat 删除windows service。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-              <a href="/blog/tags/技术/">
-                #技术
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/10/Spring-OSGi中如何获取ApplicationContext/">
-                Spring OSGi中如何获取ApplicationContext
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-10-22
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/10/Spring-OSGi中如何获取ApplicationContext/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/Spring-OSGi中如何获取ApplicationContext/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h3 id="Application_Context的创建">Application Context的创建</h3><p>Spring OSGi提供org.springframework.osgi.extender这个Bundle来为每个支持Spring功能的Bundle初始化一个Application Context。当extender Bundle启动后，它会为那些状态为ACTIVE并且支持Spring的Bundle创建application context。也就是说，这个Bundle通过监听bundle启动事件来完成Application Context的创建。Extender bundle创建application context是异步的，通过不同的线程启动每个Bundle。这样可以保证启动平台快速并且Bundles之间的服务引用不会引起死锁。如果 application context创建失败，bundle会是ACTIVE状态，但是这时将没有服务导出。<br>这和Application context销毁相反，Application context销毁是同步的，通过同一个线程。</p>
-<h3 id="如何判断Application_Context创建创建成功">如何判断Application Context创建创建成功</h3><p>当Application Context创建成功后，这个对象会被注册为一个服务。这个服务接口是 org.springframework.context.ApplicationContext。并且这个服务带有一个服务属性：org.springframework.context.service.name，对应的值为Bundle的symbolic name，这个值在Manifest文件中定义。注册这个服务主要目的是更容易测试管理。通过引用这个服务调用getBean()或类似的方法是不推荐的。建议的方式的将需要的Bean发布成一个服务，然后需要这个服务的Bundle引用它。</p>
-<h3 id="如何在Bundle中获得OSGi的BundleContext">如何在Bundle中获得OSGi的BundleContext</h3><p>Application context创建成功后会包含一个类型为BundleContext，名字为bundleContext的Bean。你可以在配制文件注入这个Bean。此外，你还可以通过实现org.springframework.osgi.context.BundleContextAware接口来获取。</p>
-<p>当一个bundle停止了，它发布的服务将会从服务注册表里删除，它的状态变成RESOLVED，它将释放所有资源，停止所有线程，但是导出的Packages对其他bundle继续有效。所有资源加载通过org.springframework.core.io.ResourceLoader并且通过它关将资源加入到application context。</p>
-<h3 id="如何在一个Bundle中获取Spring_Extender创建的ApplicationContext">如何在一个Bundle中获取Spring Extender创建的ApplicationContext</h3><p>1.通过实现ApplicationContextAware接口</p>
-<p>Spring中提供一些Aware相关接口，像是BeanFactoryAware、ApplicationContextAware、ResourceLoaderAware、ServletContextAware等等。这些Aware接口的Bean在被初始之后，可以取得一些相对应的资源，例如实现BeanFactoryAware的Bean在初始化后，Spring容器将会注入BeanFactory的实例，而实作ApplicationContextAware的Bean，在Bean被初始后，将会被注入 ApplicationContext的实例等等。<br>[java]<br> public class SomeBean implements ApplicationContextAware{<br>      private ApplicationContext context;<br>      …<br>      public void setApplicationContext(ApplicationContext     applicationcontext) throws BeansException {<br>         this.context= applicationcontext;<br>      }<br>   }<br>[/java]</p>
-<p>2.通过OSGi Service</p>
-<p>[java]<br>public static ApplicationContext getApplicationContext(final BundleContext bundleContext) {<br>        final String filter = &quot;(org.springframework.context.service.name=&quot; + bundleContext.getBundle().getSymbolicName() + &quot;)&quot;;<br>        final ServiceReference[] applicationContextRefs;<br>        final ApplicationContext applicationContext;<br>        try {<br>            applicationContextRefs = bundleContext.getServiceReferences(ApplicationContext.class.getName(), filter);<br>        } catch (final InvalidSyntaxException e) {/&gt;<br>            throw new RuntimeException(e);<br>        }<br>        if(applicationContextRefs.length != 1) {<br>            return null;<br>        }<br>        applicationContext = (ApplicationContext) bundleContext.getService(applicationContextRefs[0]);<br>       return applicationContext;<br>}<br>[/java]</p>
-<h3 id="参考">参考</h3><p>1.<a href="http://www.cnblogs.com/ygyinx/archive/2012/10/27/osgi_application_context.html" target="_blank" rel="external">Spring DM Application Context</a></p>
-<p>2.<a href="http://tech-tauk.blogspot.com/2009/10/ways-to-get-spring-applicationcontext.html" target="_blank" rel="external">Ways to get Spring ApplicationContext -In Spring DM</a></p>
-<p>3.<a href="http://mindpipe.blogspot.com/2011/03/spring-osgi-how-to-get.html" target="_blank" rel="external">Spring OSGi - how to get ApplicationContext for a bundle</a></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-              <a href="/blog/tags/OSGi/">
-                #OSGi
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/10/如何长胖，终于被我找到了/">
-                如何长胖，终于被我找到了
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-10-08
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/分享/">分享</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/10/如何长胖，终于被我找到了/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/如何长胖，终于被我找到了/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><em>本文转自人人网，作者：杜涛</em></p>
-<p>一直想长胖，自己的身板实在是太瘦了。前些天一直在按照You Are Your Own Gym上的健身方法增重。下面是我在人人网发现的一篇关于如何长胖的文章，特转载分享。下面是原文：</p>
-<p>只要配合良好的生活作息与饮食控制，再配合中医师的药物调理，无病消瘦的瘦人，也能长胖成人见人爱的胖娃娃喔！本文超详细15种增肥方法教瘦人如何增肥长胖！</p>
-<h3 id="1-调理脾胃功能">1.调理脾胃功能</h3><p>消瘦者脾胃(消化)功能多半不好，不是食欲不振，就是消化吸收功能不良，所以吃再多东西身体也不长肉。因此想增肥的人必须先补脾健胃才行</p>
-<p>此外，在调理脾胃的同时，必须避免摄取有损脾胃功能的酸冷食物（包括山渣、柠檬、橘子、醋、生菜、泡菜等）、难消化的高纤蔬菜（比如韭菜、芹菜等）、以及高油脂食物都不宜多吃（如巧克力、油炸食物等）！可以补脾健胃的的食物则包括莲子、山药、扁豆、紫米、红枣、猪肚、薏仁等，其中最具代表性的食物是四神猪肚(小肠)、山药排骨等。</p>
-<p>中医学说「瘦者多火」，亦即干瘦者多属阴虚的热性体质，此火是指阴虚所引起的虚火，所以饮食上要以「滋阴清热」为主，应该避免摄取燥热、辛辣等容易助火散气的食物，比如葱、蒜、辣椒、虾、蟹等食物。此类患者特征就是舌头很红、舌苔少、解便小粒而干结，这是脾虚不能生津液所引起的。西医所说的胃液、胰液、唾液等消化液，全都属于中医的「津液」，消化液不足就很难将吃进肚子里的食物进行消化吸收与利用，此类患者吃大量的食物只会带给肠胃更大的负担，更别想要长肉。针对此症，中医采用补脾阴的法来治疗，一帖50元的四神，有补脾阴虚的良效；而猪肚、猪肠则含有酵素成分，可以辅助药力，发挥开胃、助吸收的功能。此外，一般错误印象以为高油脂食物（如巧克力、油炸食物等）最易增胖，事实上，脾胃虚弱者对油脂的消化力很差，所以容易堆积在消化道里，既无法消化也无法吸收，只会增加脾胃的负担，使脾胃更加虚弱。所以想调理好脾胃健康，应完全戒除摄取此类食品，多吃一些可以健脾健胃的食物，来强健脾胃系统，如此长胖才易见成效喔！</p>
-<h3 id="2-三餐定时，餐前一小时忌食零食">2.三餐定时，餐前一小时忌食零食</h3><p>三餐应定时，让肠胃养成正常运作习惯，而且餐前一个小时避免零食，以免影响食欲、影响正餐的摄取量，就算是增肥，也应以三餐为主要的营养及热量摄取来源才对。若是为了加强增肥的效果，可以斟酌在三餐的空档多加两餐，至于加餐的食物内容，则以油脂量少、蛋白质与淀粉含量高的食物为佳，像是口味清淡的核果类与天然谷物，少吃垃圾食物，以免增肥不成反而增加肠胃的负担！</p>
-<h3 id="3-合理分配三餐的摄取比例">3.合理分配三餐的摄取比例</h3><p>早餐很重要，因为早餐是承接昨天晚餐后的第一餐，所以饮食摄取比例不应该只是随便应付而已，原则上，三餐的份量比重应该是差不多的，其分布比例应该是：</p>
-<p>早餐占全天摄取总热量的25 ~30％；</p>
-<p>午餐占全天摄取总热量的30 ~35％；</p>
-<p>晚餐占全天摄取总热量的25 ~30％。</p>
-<h3 id="4-三餐种类丰富多样，摄取均衡营养">4.三餐种类丰富多样，摄取均衡营养</h3><p>要能确保摄取均衡的营养素，最好的方法是以米饭为主食，如此就能搭配鱼、肉、菜、豆类等五大类食物，所以这样的饮食习惯绝对优于西式饮食，喜欢只吃三明治、汉堡的人要赶快改正你的饮食习惯喔。</p>
-<h3 id="5-适度增加脂肪摄取量">5.适度增加脂肪摄取量</h3><p>前面说到「瘦者多火」，所以多吃油炸食物非但无法得到人体需要的脂肪，反而会火上加火，而且会妨碍胃酸分泌，造成肠胃的负担。</p>
-<p>奶油、五花肉都是不错的选择，只要不会引起腹泻或是腹胀气等消化不良的症状，就是适合妳的摄取量，想增胖的水水应小心摄取。</p>
-<h3 id="6-多摄取矿物质「锌」">6.多摄取矿物质「锌」</h3><p>矿物质「锌」可以促进荷尔蒙分泌、促进人体发育、增强性器官功能，而且它能刺激我们的味觉器官，让饭吃起来更有味道。</p>
-<p>「锌」广泛存在于奶类、瘦肉、牡蛎、蛤唎、香菇、南瓜子、豆类、核桃等食物之中。其中，牡蛎除了锌之外，还有能助丰胸的荷尔蒙促进物质，瘦弱者可以多多食用！</p>
-<h3 id="7-用餐当中不要喝汤或饮料">7.用餐当中不要喝汤或饮料</h3><p>汤或饮料会稀释胃酸，破坏肠胃的消化能力，亦会造成腹胀，进而影响进食的份量。想增胖者如有此习惯，应尽快戒除此恶习，以免肠胃越吃越虚弱！</p>
-<h3 id="8-专心进食">8.专心进食</h3><p>一心多用的进食法，常会让人不自觉吃得过多、或是草草了事，因此降低消化器官的活动能力，导致消化液分泌不足，增加肠胃器官的负担，想增胖者应专心进食才行！</p>
-<h3 id="9-餐后少量甜食">9.餐后少量甜食</h3><p>饭后甜点会刺激胰岛素分泌，将刚刚吃的正餐快速转化为脂肪，所以想增胖者可以从今天起，饭后来一碗红豆汤吧！</p>
-<h3 id="10-不摄取过量宵夜">10.不摄取过量宵夜</h3><p>一般错误的观念认为吃宵夜可以长肉，事实上过量的宵夜只会耗损脾胃功能，让消化功能越来越差。建议想增胖的人，可以在睡前半小时喝杯加糖的热牛奶，它有刺激胰岛素分泌的功用，加速蛋白质与糖分转化为脂肪，而且不会造成肠胃的负担，想增胖的人可以试试！</p>
-<h3 id="11-冬天进补养肉最快">11.冬天进补养肉最快</h3><p>冬天因为热量消耗大，所以特别容易饥饿，而且人体容易自发性的储存皮下脂肪，胃口大开加上吸收特好，只要加强进补，想增胖的瘦弱者大多能达到目的。但是千万别大吃大喝，反而让肠胃过劳，如此达不到养肉的目的，反而伤了元气就不好了！</p>
-<h3 id="12-不吃冰冷寒凉食物">12.不吃冰冷寒凉食物</h3><p>「瘦者多火」，所以特别嗜食冰冷的食物，但是冰冷的食物进入人体后会引起肠胃紧急收缩，食物积滞不化，容易造成胃胀、胃痛，脾胃虚弱者还可能腹泻。所以喜欢冰冷食物者，应尽快戒除此恶习，免得时日一久，末梢循环会出现障碍，手脚冰冷、早衰等其它慢性病会慢慢出现。逞一食口欲之快，损失的可是自己的健康喔！</p>
-<h3 id="13-睡眠充足">13.睡眠充足</h3><p>想长肉或长高一定要充分把握睡眠时段，因为充足的睡眠可以提高体内脂肪与蛋白质的合成与利用。因此，有熬夜习惯的人，若想长胖，得先调整生理时钟早早入睡，让身体睡饱有助身体长肉喔！</p>
-<h3 id="14-适度运动">14.适度运动</h3><p>适度的运动可以加强身体的新陈代谢，必且促进食欲，让妳的胃口大开；但是瘦小的人多半脾虚多火，脾虚不能生津液，太过剧烈的运动会加重津液不足的现象，让妳口渴及火气大，反而会完全没有食欲。所以想增胖的人应进行适度的运动就好，千万别以为剧烈运动才会让妳有食欲，这是错误的观念喔！</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/生活/">
-                #生活
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/10/国庆环太湖骑行之旅/">
-                国庆环太湖骑行之旅
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-10-08
+            发表于 2014-04-27
           
         </span>
 
@@ -859,8 +348,8 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/10/国庆环太湖骑行之旅/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/国庆环太湖骑行之旅/"></span>
+            <a href="/blog/2014/04/2014无锡环太湖徒步大会/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/2014无锡环太湖徒步大会/"></span>
             </a>
           </span>
           
@@ -876,48 +365,12 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
 
         
           
-            <blockquote>
-<p>年轻时请远行，行万里路；如果不能远行，就读万卷书。</p>
-</blockquote>
-<p>先来看看我的路线图，全程300公里左右。途径江苏苏州，浙江湖州，无锡宜兴，江苏常州，无锡。全程秋高气爽，颇适合骑车旅行。</p>
-<p>[caption id=”attachment_1942” align=”alignnone” width=”697”]<a href="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=f6dbfc5ad01b0ef468e8985bedff20e7/7c1ed21b0ef41bd5ff775c8053da81cb39db3d99.jpg?referer=2b288b11b119ebc4996f43a97b78&amp;x=.jpg" target="_blank" rel="external"><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=f6dbfc5ad01b0ef468e8985bedff20e7/7c1ed21b0ef41bd5ff775c8053da81cb39db3d99.jpg?referer=2b288b11b119ebc4996f43a97b78&amp;x=.jpg" alt="环太湖骑行路线"></a> 环太湖骑行路线[/caption]</p>
-<p>下面是我制作的google map路线图：</p>
-<iframe src="http://mapsengine.google.com/map/embed?mid=zpuGZvDq_nrg.kYJAe33rfEmI" width="640" height="480"></iframe>
-
-<p>无法显示的请点击链接：<a href="https://mapsengine.google.com/map/edit?mid=zpuGZvDq_nrg.kYJAe33rfEmI" target="_blank" rel="external">https://mapsengine.google.com/map/edit?mid=zpuGZvDq_nrg.kYJAe33rfEmI</a></p>
-<h3 id="出发">出发</h3><p>10月2日早上九点多出发。10月1日晚上和同学们玩杀人游戏玩到11点多，到寝室收拾了一下，在网上大致查了一下路线图就睡觉了。这样看来这也算是一次说走就走的旅行了。</p>
-<p>从青年公社出发，顺着菱湖大道走了一会儿就进入s320。一路上遇到很多骑行的人，有环太湖的，也有去上海的。</p>
-<p>[caption id=”attachment_1946” align=”alignnone” width=”1836”]<a href="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=3d18cbd4f403738dda4a0c278320c16c/4b90f603738da977bd0b325fb251f8198618e39a.jpg?referer=e73ee394f503918f8ec608fa4d78&amp;x=.jpg" target="_blank" rel="external"><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=3d18cbd4f403738dda4a0c278320c16c/4b90f603738da977bd0b325fb251f8198618e39a.jpg?referer=e73ee394f503918f8ec608fa4d78&amp;x=.jpg" alt="锵锵三人行"></a> 锵锵三人行[/caption]</p>
-<p>中午在路边的快餐店吃了饭，稍事休息一会儿就继续出发。下了s230上x205，随后就上了环太湖大道，右手边就是太湖，现在真正有了环太湖骑行的感觉了。</p>
-<p>[caption id=”attachment_1947” align=”alignnone” width=”3264”]<a href="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=cb01166fd60735fa95f04ebcae6a7e8e/962bd40735fae6cd1b901f150db30f2442a70f99.jpg?referer=c96eb856b11bb051d63386186978&amp;x=.jpg" target="_blank" rel="external"><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=cb01166fd60735fa95f04ebcae6a7e8e/962bd40735fae6cd1b901f150db30f2442a70f99.jpg?referer=c96eb856b11bb051d63386186978&amp;x=.jpg" alt="茫茫太湖"></a> 茫茫太湖[/caption]</p>
-<p>骑车到这里，暖风袭袭，吹在身上，好舒适惬意的感觉。</p>
-<p>[caption id=”attachment_1948” align=”alignnone” width=”3264”]<a href="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=cfc97647938fa0ec7bc7640816ac28d3/f603918fa0ec08fafc24a7d35bee3d6d55fbda9a.jpg?referer=9982827f59b5c9ea3be436d32678&amp;x=.jpg" target="_blank" rel="external"><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=cfc97647938fa0ec7bc7640816ac28d3/f603918fa0ec08fafc24a7d35bee3d6d55fbda9a.jpg?referer=9982827f59b5c9ea3be436d32678&amp;x=.jpg" alt="这里很是舒服，暖风袭袭"></a> 这里很是舒服，暖风袭袭[/caption]</p>
-<p>下午五点多到了东山镇，骑车找住的地方，然后去吃饭。吃饭前在东山镇里转悠，小镇里也有类似北京胡同的小巷，我们就在小巷中骑行，感受这里居民们的生活。偶尔遇到死路，掉头继续骑行。</p>
-<p>骑车路过很多江南的村庄，发现江南最具特色的景色就是这小桥流水人家了。</p>
-<p>[caption id=”attachment_1949” align=”alignnone” width=”3264”]<a href="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=84296860ba99a9013f355b332dae7b46/e824b899a9014c08f51f9cd1087b02087bf4f49a.jpg?referer=e0d28b02f01fbe094549f6243478&amp;x=.jpg" target="_blank" rel="external"><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=84296860ba99a9013f355b332dae7b46/e824b899a9014c08f51f9cd1087b02087bf4f49a.jpg?referer=e0d28b02f01fbe094549f6243478&amp;x=.jpgg" alt="小桥流水人家"></a> 小桥流水人家[/caption]</p>
-<p>吃完饭补给完回到住处看电视，今天有恒大和日本柏太阳神的比赛。看到最后真有种如解说员所说的中国球迷前所未有的幸福的感觉。该是埃尔克森进的球跑都跑不掉，最后还是进。最后三位前锋的配合也是相当的精彩。</p>
-<p>第二天早上八九点出发。路过太湖苏州湾大桥，下桥的冲刺时右手边车流涌动，左手边是浩瀚的太湖水，真有种速度与激情的感觉。</p>
-<p>[caption id=”attachment_1950” align=”alignnone” width=”3264”]<a href="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=de2e8a9560d9f2d3241124ea99d7fb2e/0bd162d9f2d3572cb40529a88813632763d0c3db.jpg?referer=4e229a08530fd9f9f90061592db9&amp;x=.jpg" target="_blank" rel="external"><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=de2e8a9560d9f2d3241124ea99d7fb2e/0bd162d9f2d3572cb40529a88813632763d0c3db.jpg?referer=4e229a08530fd9f9f90061592db9&amp;x=.jpg" alt="太湖苏州湾大桥"></a> 太湖苏州湾大桥[/caption]</p>
-<p>这是太湖旁边专供自行车骑行的道路旁边的雕塑。</p>
-<p>[caption id=”attachment_1951” align=”alignnone” width=”3264”]<a href="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8ff42a20014f78f0840b9af6490a7b68/aa64034f78f0f736dbdaf8750855b319ebc41399.jpg?referer=9d3d39ddab014c08402c1d955d78&amp;x=.jpg" target="_blank" rel="external"><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8ff42a20014f78f0840b9af6490a7b68/aa64034f78f0f736dbdaf8750855b319ebc41399.jpg?referer=9d3d39ddab014c08402c1d955d78&amp;x=.jpg" alt="骑行环太湖"></a> 骑行环太湖[/caption]</p>
-<p>环湖路上有很多卖太湖蟹的店，有很多食客前来品尝。</p>
-<p>[caption id=”attachment_1952” align=”alignnone” width=”3264”]<a href="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=7400075c347adab439d01b46bbefc221/8718367adab44aeda26a0a90b11c8701a18bfb9a.jpg?referer=d5f7bc2957fbb2fb6d3c6d224578&amp;x=.jpg" target="_blank" rel="external"><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=7400075c347adab439d01b46bbefc221/8718367adab44aeda26a0a90b11c8701a18bfb9a.jpg?referer=d5f7bc2957fbb2fb6d3c6d224578&amp;x=.jpg" alt="太湖蟹"></a> 太湖蟹[/caption]</p>
-<p>在路上遇到一个吉安特的自行车队，其中一位队员用鼓励的语气对我说，“小帅哥，加油，跟上我们！”。我也瞬间有了精神，开始加速，无奈腿疼，最终还是一个人慢慢的骑了。</p>
-<p>第一天下午我的右腿就有些疼，晚上休息了一下好了些。但今天还是疼，骑到这里真是到了力竭的地步了。我已经远远的拉到后面了，从此我成了我们三个小伙伴中的“关键角色”。</p>
-<p>[caption id=”attachment_1953” align=”alignnone” width=”3264”]<a href="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=27c60745a38b87d65442ab1a37335905/8601a18b87d6277f0af5874c2a381f30e824fcdb.jpg?referer=b47ec6670bf79052b608730e3cb9&amp;x=.jpg" target="_blank" rel="external"><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=27c60745a38b87d65442ab1a37335905/8601a18b87d6277f0af5874c2a381f30e824fcdb.jpg?referer=b47ec6670bf79052b608730e3cb9&amp;x=.jpg" alt="“力竭于此”"></a> “力竭于此”[/caption]</p>
-<p>由于我在小伙伴中间这个“决定性作用”，我们晚上六点才到湖州，在湖州一个商业区附近住。周围的商店、饭馆和小店个个人满为患，生意红火至极……</p>
-<p>[caption id=”attachment_1954” align=”alignnone” width=”3264”]<a href="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=dd247998d300baa1be2c47be772bc82f/f9dcd100baa1cd113092c654bb12c8fcc3ce2d99.jpg?referer=9b2a49d1d343ad4bff3973f08b77&amp;x=.jpg" target="_blank" rel="external"><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=dd247998d300baa1be2c47be772bc82f/f9dcd100baa1cd113092c654bb12c8fcc3ce2d99.jpg?referer=9b2a49d1d343ad4bff3973f08b77&amp;x=.jpg" alt="湖州"></a> 湖州[/caption]</p>
-<p>第二天骑完我的腿更疼了，小身板儿要扛不住了。走路开始一瘸一拐了，上楼梯更是困难。晚上三人边喝啤酒，边吃吃花生，边看《狙击精英之重装上阵》。</p>
-<p>第三天出发后不久，我拉的就更远了。小伙伴让我打车到长兴县然后坐车回去吧。我想了想，都走了一半了还是坚持着骑着回去吧。经过我的再三说服下，小伙伴们答应我一个人慢慢骑，他们今晚赶回无锡。</p>
-<p>[caption id=”attachment_1955” align=”alignnone” width=”1836”]<a href="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=0f7f51520b24ab18e416e13205c197f0/d1160924ab18972b891eb4bee4cd7b899e510a99.jpg?referer=17897747718da9771738b31b7678&amp;x=.jpg" target="_blank" rel="external"><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=0f7f51520b24ab18e416e13205c197f0/d1160924ab18972b891eb4bee4cd7b899e510a99.jpg?referer=17897747718da9771738b31b7678&amp;x=.jpg" alt="江苏界"></a> 江苏界[/caption]</p>
-<p>后面的路我就慢慢的骑，这一天我慢慢悠悠骑了50多公里。在洑东镇找了家旅馆住宿。房间在三楼，上楼梯时我真是横着扶着楼梯爬上去的。</p>
-<p>第四天早上起来，发现腿还是没好。只不过今天左腿疼，右腿好些了。按照这个顺序下来，明天左腿就好了。不过要赶回无锡还有七八十公里路程。</p>
-<p>路上又遇到了一个车队，前面一辆车，后面一辆车，中间是骑行队员。又有队员鼓励我，“小帅哥加油！”。但是无奈腿疼，相加快速度也加快不了了，只能慢慢骑。一路上我也慢慢的总结出了休息的方法：只要将两腿升直了，再按摩按摩，再把座椅调低，这样就可以借着右腿和大腿的力量来连续骑行个几公里了。</p>
-<p>到了无锡界，遇到一位驴友，问我是不是环太湖，认不认识路，还好心的给我指路。</p>
-<p>[caption id=”attachment_1956” align=”alignnone” width=”1836”]<a href="http://h.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=e22132bf41166d223c771591761878ca/b3fb43166d224f4a977ec6670bf790529922d1db.jpg?referer=8d5d6914372ac65c3e1252431fb9&amp;x=.jpg" target="_blank" rel="external"><img src="http://h.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=e22132bf41166d223c771591761878ca/b3fb43166d224f4a977ec6670bf790529922d1db.jpg?referer=8d5d6914372ac65c3e1252431fb9&amp;x=.jpg" alt="无锡界"></a> 无锡界[/caption]</p>
-<p>无锡的环太湖公路一个上坡又一个上坡，到后来我上坡基本靠推，下坡基本靠溜。路上遇到的驴友还是很多，反方向的也很多。</p>
-<p>[caption id=”attachment_1957” align=”alignnone” width=”3264”]<a href="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=34c53e4d6963f624185d3906b77f9ac5/bf096b63f6246b60cae90700e9f81a4c500fa2db.jpg?referer=679e2d705b82b2b7fe880df40eb9&amp;x=.jpg" target="_blank" rel="external"><img src="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=34c53e4d6963f624185d3906b77f9ac5/bf096b63f6246b60cae90700e9f81a4c500fa2db.jpg?referer=679e2d705b82b2b7fe880df40eb9&amp;x=.jpg" alt="一只小船"></a> 一只小船[/caption]<br>[caption id=”attachment_1958” align=”alignnone” width=”3264”]<a href="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8eec2f877b310a55c024def1877e3294/aec379310a55b319921e370141a98226cefc17da.jpg?referer=17dc9dd1087b020855de0bd151b9&amp;x=.jpg" target="_blank" rel="external"><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8eec2f877b310a55c024def1877e3294/aec379310a55b319921e370141a98226cefc17da.jpg?referer=17dc9dd1087b020855de0bd151b9&amp;x=.jpg" alt="环太湖公路"></a> 环太湖公路[/caption]</p>
-<h3 id="终点">终点</h3><p>晚上六点多进入市区，感受了一下无锡的夜生活。然后顺着菱湖大道回到了青年公社。回寝室很是兴奋，高兴，完全没有累的感觉。虽然腿疼，背部肌肉疼，斜方肌也疼，手臂也晒伤了。这个感觉真可以用一句话形容：痛并快乐着。</p>
+            <p>第一次参加徒步，一切都是新奇。<br>第二次参加徒步，一切都是比较。<br>有了比较，有了偏好，有了评价。<br>然而更多的是对第一次徒步的欢快场景的回忆。</p>
+<p><img src="http://h.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=91ceada6fffaaf5180e381babc6fe5d3/9c16fdfaaf51f3deeb5abce496eef01f3b297941.jpg?referer=c8df00fe271f95caffe2a686c75f&amp;x=.jpg" alt="皇族穿越来徒步"></p>
+<p><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=ab5499c73b12b31bc36ccd2cb6234747/a8773912b31bb05120c0b6a8347adab44bede04e.jpg?referer=4956905c0afa513d08bd58ee4044&amp;x=.jpg" alt="徒步开始"></p>
+<p><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=53d2ff4c1c178a82ca3c7fa5c63802b0/cefc1e178a82b9019b64c6b3718da9773812ef61.jpg?referer=86d8216fabec8a134d0d63d0493f&amp;x=.jpg" alt="队伍"></p>
+<p><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=23ce63f3f9f2b211e02e854bfabb1405/5243fbf2b21193138388fa3067380cd790238d62.jpg?referer=d4e7a05f74c6a7efe0319c16eb20&amp;x=.jpg" alt="徒步达人现身"></p>
+<p>徒步大会网址：<a href="http://walk.hellosport.cn/" target="_blank" rel="external">walk.hellosport.cn/</a></p>
 
           
         
@@ -928,10 +381,6 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
       <div class="post-footer">
         
           <div class="post-tags">
-            
-              <a href="/blog/tags/生活/">
-                #生活
-              </a>
             
               <a href="/blog/tags/读书·旅行/">
                 #读书·旅行
@@ -963,8 +412,8 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
           
           
             
-              <a class="post-title-link" href="/blog/2013/09/Java基本数据类型和操作符需要注意的问题/">
-                Java基本数据类型和操作符需要注意的问题
+              <a class="post-title-link" href="/blog/2014/03/《当卢浮宫遇见紫禁城》观看笔记/">
+                《当卢浮宫遇见紫禁城》观看笔记
               </a>
             
           
@@ -974,7 +423,7 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-09-12
+            发表于 2014-03-23
           
         </span>
 
@@ -983,7 +432,7 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
             <span class="post-category">
               &nbsp; | &nbsp; 分类于
               
-                <a href="/blog/categories/Java/">Java</a>
+                <a href="/blog/categories/MSE/">MSE</a>
 
                 
                 
@@ -997,8 +446,8 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/09/Java基本数据类型和操作符需要注意的问题/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/Java基本数据类型和操作符需要注意的问题/"></span>
+            <a href="/blog/2014/03/《当卢浮宫遇见紫禁城》观看笔记/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/《当卢浮宫遇见紫禁城》观看笔记/"></span>
             </a>
           </span>
           
@@ -1014,28 +463,62 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
 
         
           
-            <h3 id="1-java中基本数据类型大小、默认值及其范围">1.java中基本数据类型大小、默认值及其范围</h3><p>boolean - false -</p>
-<p>char 16bits ‘u0000’(null) Unicode 0~Unicode 2^16-1(无符号类型）</p>
-<p>byte 8bits (byte)0  -128~127</p>
-<p>short 16bits (short)0  -2^15~2^15-1</p>
-<p>int 32bits 0  -2^31~2^31-1</p>
-<p>long 64bits 0L  -2^62~2^63-1</p>
-<p>float 32bits 0.0f  IEEE754</p>
-<p>double 64bits 0.0d  IEEE754</p>
-<h3 id="2-System-out-println()中的“+”">2.System.out.println()中的“+”</h3><p>在这种上下文环境中，“+”意味着“字符串连接”，并且如果必要，它还要执行“字符串转换”。如果编译器观察到一个String后面紧跟一个“+”，而这个“+”后面又紧跟一个非String类型的元素时，就会将非String转化为String类型。</p>
-<h3 id="3-基本类型的赋值">3.基本类型的赋值</h3><p>基本类型存储了实际的数值，而并非是指向一个对象的引用，所以在为其赋值的时候是直接将一个地方的数值复制到另一个地方。而对于将“一个对象赋值给另一个对象”，实际是将“引用”从一个地方复制到另一个地方。如果一个对象的所有引用都被覆盖了，那么这个不再被引用的对象就由“垃圾回收器”自动清理了。</p>
-<h3 id="4-算数操作符">4.算数操作符</h3><p>1）整数除法会直接去掉结果的小数位，而不是四舍五入的结果。</p>
-<p>2）一元减号用于转变数据的符号，而一元加号知识为了与一元减号相对应，但是它唯一的作用就是将较小的数据类型的操作数提升为int。</p>
-<h3 id="5-关系操作符">5.关系操作符</h3><p>==和!=适用于所有的基本数据类型，而其他比较符不适用于boolean。因为boolean只有true和false两个值，比较大小没意义。另外，对两个内容相同的对象执行==和!=操作时，比较的是对象的引用。如果想比较对象的内容，则需要覆盖equals方法。</p>
-<h3 id="6-逻辑操作符">6.逻辑操作符</h3><p>1）&amp;&amp;、||、！操作只能应用与布尔值。在java中不能将一个非布尔值当做布尔值来用。</p>
-<p>2）如果在该使用String的地方使用了布尔值，则布尔值会被自动转换成适当的文本形式。</p>
-<h3 id="7-直接常量">7.直接常量</h3><p>如果试图将一个变量初始化为超出自身范围的值，编译器都会向我们报告一条错误信息。如果超出范围编译器会自动转换成int，并告诉我们需要对这次赋值进行“窄化转型”。各种类型范围详见1。</p>
-<h3 id="8-移位操作符">8.移位操作符</h3><p>1）移位操作符只能操作整数类型。左移(&lt;&lt;)按照操作符右侧指定的位数将操作符左边的数向左移动（在低位补0）。“有符号”右移(&gt;&gt;)按照操作符右侧指定的位数将操作符左边的操作数右移。“有符号”右移操作符使用“符合扩展”：若为正，则在高位插入0；若为负，则在高位插入1。“无符号”右移(&gt;&gt;&gt;)，使用“0”扩展，无论正负，在高位插入0。</p>
-<p>2）对char，byte或者short的移位时，它们会被转换成int类型，并且得到的结果也是int类型的值。且只有低5位才有用，因为如果移动32位以上，原来的信息就会全部丢失。例如对于表达式x&lt;&lt;y，如果y&gt;32，那么将只取y的二进制表示的低5位。如果y=34（10 0010），低五位就是00010，即最终只移动两位。上述规则对于long类型及&gt;&gt;和&lt;&lt;&lt;都适用。</p>
-<p>3）如果对byte或者short进行无符号右移位结合赋值操作(&gt;&gt;&gt;=)可能会得到错误的结果。它们先会被转换成int，再进行右移操作，然后截断，赋值给原类型，在这种情况下会出现-1的结果。</p>
-<h3 id="9-类型转换">9.类型转换</h3><p>1）如果执行一种名为“窄化转换”的操作（将能容纳更多信息的数据类型转化成无法容纳那么多信息的类型），就有可能面临信息丢失的危险。此时，必须进行强制类型转换。而进行名为“扩展转换”，则不必进行类型转化，也不会丢失信息。</p>
-<p>2）再进行“窄化转换”是，必须注意截尾和舍入的问题。如将float转换成int是直接将小数点后面的数值截掉，而不是舍入。如果想舍入可用Math.round()方法。</p>
-<p>3）通常，在一个表达式中，最大的数据类型决定了结果的类型。</p>
+            <h3 id="前几集没有记……">前几集没有记……</h3><h3 id="第五集_铁血长风">第五集 铁血长风</h3><p>古罗马与汉</p>
+<p>​无论杀戮与牺牲，代价总被忘记，荣耀总被歌颂。</p>
+<p>凯撒：我来 我看 我胜利</p>
+<p>甘延寿：明犯强汉者，虽远必诛。</p>
+<p>任何人失去的，不是什么别的生活，而是他们现在所过的生活。</p>
+<p>任何人所过的，也不是什么别的生活，而是他现在失去的生活。</p>
+<p>最长和最短生命因此同一。</p>
+<p>——《沉思录》</p>
+<h3 id="第六集_神圣无上">第六集 神圣无上</h3><p>公元五世纪到十五世纪 黑暗时代 中世纪。</p>
+<p>中世纪的人们认为，现实与美丽的艺术，实际上是诱惑人心的罪恶。形体越美好，色彩越逼真，就越偏离上帝指引的道路。于是这时期的艺术发生了一个根本的变化，去除了一些逼真与现实的手法和技术，以失真的，没有立体感的形象来传达上帝永恒的真理。</p>
+<p>哥特式建筑：轻盈明亮，高耸入云。</p>
+<p>中国的建筑：雨过清风润，树重禅寺幽。</p>
+<p>欣赏宗教艺术品时，我们所面对的已经不是作品本身，而是当时人们精神寄托的载体。这些作品使我们感受到那一颗颗诚挚的灵魂和他们内心崇高的存在。</p>
+<h3 id="第七集_完美人生">第七集 完美人生</h3><p>西方绘画求真。</p>
+<p>中国绘画超越自然，追求最高的审美：一种精神境界，一种精神追求。</p>
+<p>悠远淡则真。</p>
+<p>卢浮宫镇馆之宝：维纳斯，胜利女神，蒙娜丽莎。</p>
+<p>文艺复兴时期崇尚人性的自由张扬，崇尚理性的科学严谨。求真写实。</p>
+<p>倪瓒与达芬奇</p>
+<p>倪瓒作画：有感于当下情境，在挥毫的瞬间融入多年对人生对自然的体悟。他的《秋庭嘉树图》，随性而起，心劲而终，强调自在飘逸的创作冲动。</p>
+<p>西方科学理性来表达人性。</p>
+<p>中国文人独与天地精神往来，师造化自然，写心中境意。</p>
+<h3 id="第八集_激越内心">第八集 激越内心</h3><p>伦勃朗《牛肉》十七世纪西方艺术的重要转折。</p>
+<p>使用光线的明亮变化体现立体感。用画笔执着的游走在色彩和光影之间，创造神秘而微妙的心灵空间。</p>
+<p>西方的思维是一种逻辑的演绎的思维，需要假设需要求证。中国人的思维是一种感悟的，归纳的思维。</p>
+<p>八大山人《鸟石图》对意境的高度概括。创造了一个个冷意超绝的符号，存在画纸中坚定地沉淀。</p>
+<p>禅宗：不立文字，直指本性。禅是一种生活态度，一种心境，一种大彻大悟的状态，一种对纯净和智慧的追求。</p>
+<p>艺术先安慰自己，再安慰世人。</p>
+<h3 id="第九集_东西对望">第九集 东西对望</h3><p>洛可可时代 追求中国风情。 代表人物为布歇。蓬巴杜夫人（路易十五情妇之一）被称为洛可可之母。洛可可先驱华托。</p>
+<p>C型，S型，漩涡型的造型，明亮轻松的色彩，温婉华丽的气质，爱情享乐的主题，这种浪漫主义风格叫做洛可可风格。它的本意是有着卷曲花纹的贝壳装饰工艺。</p>
+<p>在欧洲文化中，棕榈树象征着航海，象征着遥远的地方。</p>
+<p>康熙与路易十四</p>
+<p>郎世宁</p>
+<h3 id="第十集_再造往昔">第十集 再造往昔</h3><p>普桑（法兰西绘画之父） 大卫 安格尔</p>
+<p>欧洲古典主义：和谐，平衡，朴实肃穆的美感。</p>
+<p>画家的觉醒：也要表达。</p>
+<p>古代经典作品中谋求自我发展的道路。</p>
+<p>赵孟頫 董其昌（画家中的画家） 文化复古运动：笔笔要有根据，笔笔效法古人，师法古人。</p>
+<p>知识分子的文化觉醒。</p>
+<p>创新的拉丁语义并不是指创新而是指返回和利用过去的资源找到一种新的可能性。 ——陈丹青</p>
+<h3 id="第十一集_生于浪漫">第十一集 生于浪漫</h3><p>浪漫主义：一种激情，率真，突破传统，一种革命性的举动。表达自我真实的情感。表达人性最深沉的东西。<br>绘画的浪漫与作家作家的个性相关。而不是我们日常理解的卿卿我我，优美的抒情式浪漫。</p>
+<p>德拉克罗瓦《自由引导人民》</p>
+<p>浪漫主义小说《巴黎圣母院》</p>
+<p>浪漫主义宣言：万物中的一切，并非都是合乎人情的美，感觉到丑就在美的旁边，畸形靠近着优美。粗俗藏在崇高的背后；善与恶并存；黑暗与光明相共。 ——雨果</p>
+<p>用色彩歌颂死亡。</p>
+<p>徐渭 墨葡萄 绍兴。</p>
+<p>用墨表达生命。恣肆汪洋，淋漓酣畅。粗服蓬发，不掩天姿国色。<br>《牡丹亭》</p>
+<h3 id="第十二集_人间关切">第十二集 人间关切</h3><p>欧洲从古希腊起就把艺术作为对现实和自然的观察和分析。到了文艺复兴时期，大师们将艺术发挥成一门科学。<br>因为尽可能的与物质世界接近，关切人间就成了西方绘画的一个方向。</p>
+<p>西方的艺术精神：一方面将传统送入博物馆，精心的保存和陈列。一方面又打破已有的深厚传统，不断的创新。这种过程一步步推动文化与艺术的现代化。</p>
+<p>画论：必须观察大自然，以最现实的方式复制大自然，然后让情绪发挥作用，要想象出理想地世界。</p>
+<p>巴比松画派 写实，但回避现代化的现实，对传统的终结。是卢浮宫收藏的终结。<br>卢浮宫收藏从古希腊到巴比松之间的作品，其代表人物有柯罗。表达内心的安宁，和对自然的幻想。</p>
+<p>现实主义用严谨的技法，呈现明确的主题。画家以最准确的手法再现现实。</p>
+<p>奥赛博物馆 柯罗之后的作品。写实主义之后的作品。</p>
+<p>沉寂，超越，优美的中国画。不问世事。</p>
+<p>五四运动影响。艺术来救亡图存。<br>西方写实主义来改良中国画。</p>
+<p>徐悲鸿的导师是康有为。</p>
 
           
         
@@ -1047,8 +530,8 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
         
           <div class="post-tags">
             
-              <a href="/blog/tags/Java/">
-                #Java
+              <a href="/blog/tags/札记/">
+                #札记
               </a>
             
           </div>
@@ -1077,8 +560,8 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
           
           
             
-              <a class="post-title-link" href="/blog/2013/09/Ubuntu-13-04-自定义Grub/">
-                Ubuntu 13.04 自定义Grub
+              <a class="post-title-link" href="/blog/2014/03/范冰冰版《武则天》群演记/">
+                范冰冰版《武则天》群演记
               </a>
             
           
@@ -1088,7 +571,7 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-09-01
+            发表于 2014-03-19
           
         </span>
 
@@ -1097,7 +580,7 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
             <span class="post-category">
               &nbsp; | &nbsp; 分类于
               
-                <a href="/blog/categories/linux/">linux</a>
+                <a href="/blog/categories/MSE/">MSE</a>
 
                 
                 
@@ -1111,8 +594,8 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/09/Ubuntu-13-04-自定义Grub/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/Ubuntu-13-04-自定义Grub/"></span>
+            <a href="/blog/2014/03/范冰冰版《武则天》群演记/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/范冰冰版《武则天》群演记/"></span>
             </a>
           </span>
           
@@ -1128,18 +611,26 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
 
         
           
-            <p>在windows直接安装ubuntu后，windows的启动项会变成最后一项，为了将windows设为默认启动项，可以尝试以下几种方法：</p>
-<p>1.安装启动管理器</p>
-<p>[shell]sudo apt-get install startupmanager[/shell]</p>
-<p>安装好后打开应用程序将windows设置为默认启动项就可以了。</p>
-<p>2.更改grub配置文件（也是最基本的方法)</p>
-<p>在/etc/grub.d目录下有几个文件。默认情况下win7对应的文件名是30_os-prober，第一个linux系统对应的是10-linux，00是header，05是debian-theme，可见10是第一个启动项，只需要更改win7的文件名(06-09均可)即可改变启动顺序。</p>
-<p>[shell]<br>sudo mv /etc/grub.d/30_os-prober /etc/grub.d/08_os-prober<br>sudo update-grub（这个命令会重新生成/boot/grub/grub.cfg）<br>[/shell]</p>
-<p>3.安装GRUB Customizer</p>
-<p>Ubuntu 13.04下通过PPA安装，打开终端，输入命令：</p>
-<p>[shell]<br>sudo add-apt-repository ppa:danielrichter2007/grub-customizer<br>sudo apt-get update<br>sudo apt-get install grub-customizer<br>[/shell]</p>
-<p>安装好后打开软件设置即可。</p>
-<p>参考文章:<br>1.<a href="http://www.linuxidc.com/Linux/2013-05/84109.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2013-05/84109.htm</a><br>2.<a href="http://www.th7.cn/system/win/201305/39122.shtml" target="_blank" rel="external">http://www.th7.cn/system/win/201305/39122.shtml</a> </p>
+            <h3 id="缘起及失望的第一次">缘起及失望的第一次</h3><p>记得来无锡之前就听人说，无锡有个中央影视基地，有很多戏都在那里拍。当时就想如果去做一次群众演员也是很好的生活体验。来无锡后也查过资料，当时没找着。前几天在陌陌上看到了一个人发群演招人的消息，就加了群。当晚和小伙伴商量想不想去当群众演员，小伙伴都很愿意，而且兴奋异常。过了一两天又有一人发群演消息，我就和负责人电话联系，问明情况就报了名。晚上回公寓后就睡觉，因为第二天早上六点起床。当天夜晚还曾经几度醒来，生怕早上错过这次机会。</p>
+<p>第二天早上六点钟起床，洗漱完毕就到电梯旁等小伙伴。打开手机发现有五条回电宝发来的信息，是同一个人在凌晨四点多打给我的。我回拨过去，她问我们有没有出发，我说马上；她又说，“那就不用了，昨晚打电话没打通就找别人替了，下次吧”。刚打完电话，小伙伴就下来了，也是睡眼朦胧。说明状况后两人无奈的继续回公寓睡觉。靠，不至于凌晨四点多打电话吧，那时我的手机还是被勿扰模式控制的……</p>
+<p>过了几天又有消息，又报了名。这次问清楚了所有情况，包括会不会打电话确认的问题。</p>
+<h3 id="群众演员的一天">群众演员的一天</h3><p>六点半起床，坐车通过一个接着一个的红灯向着水浒城进发。此时一轮红日已经挂在东方的天空中。路上都是去上班工作的人。我们到水浒城门口后，联系群主。然后拿着群演证，免费进入水浒城。先在水浒城里稍微转了转，然后去拍戏的地方——梅园。</p>
+<p><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8ff102bf950a304e5622a0ffe1f3d6bb/4034970a304e251fe7249243a586c9177e3e53bd.jpg?referer=c41311edd21609248532962b9d53&amp;x=.jpg" alt="群演证"></p>
+<p>找到后就是排队，分配角色，领取道具服。那种场景感觉就像是一群犯人等待着狱卒分配任务。</p>
+<p>我和小伙伴扮演的都是御林军。第一次群演，第一次穿这个衣服，不知所措。看旁人，找小伙伴互相系衣服上的带子。</p>
+<p>穿好衣服，领上长矛，然后跟着大部队进入今天的主场景梅园里，我被分配到一个角落的塔楼打鼓。我穿着这身笨重的衣服，拿着鼓锤，爬上在二层的鼓楼。上楼后放眼望去，对于我来说，塔楼下的一切都是新鲜的。一个个疑问在我的脑海中浮现：他们如何拍戏？主演有没有来？这些人都负责什么内容？怎么又两组同时拍……</p>
+<p>和我在一起的几个是个十五六岁的孩子，没咋念过书。而且我所知的群主演员有学生，有小青年，有女青年，有老头子，大多属于社会闲杂人等。我在塔楼上站了一上午，主要看拍戏的各个过程。我的另一个伙伴比较二，总烦我，我总开玩笑的说“滚”。一上午也把这个“滚”字练了好几十遍，也仿佛NG了好几十次，到了一种艺术的高度。</p>
+<p>到了中午，我这还是处于无所事事的状态。中午下楼，排队领剧组的盒饭吃。那场景对我来说是是非常有趣的，你会看到宫女，公公，御林军，锦衣卫几个人围一个圈坐下吃饭，外面有很多游客围观。在这种场景下，你可以感受到一丝时空错乱的感觉。饭菜还不错，大致相当于丽华十元套餐。</p>
+<h4 id="他们如何拍戏">他们如何拍戏</h4><p>上午几个妃子来了各自拍完了自己的戏份。拍戏时，一个演员，一个场景，导演念相关台词，演员演，NG几次，OK。</p>
+<p>小伙伴拍了一场打鼓的戏，几个人拿着鼓锤，佯装在打鼓。“开机，打鼓！”<br>“好，再来一次”……</p>
+<p><img src="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=95e838528f1001e94a3c140a88350ad1/7dd98d1001e93901171bfc8579ec54e736d1966b.jpg?referer=7f704da8df54564ebc72d109d229&amp;x=.jpg" alt="打鼓"></p>
+<h4 id="看范爷拍戏">看范爷拍戏</h4><p>当我回到拍摄场地时，看到有个女演员在拍戏，背对着我，没咋注意，走过才听人说是范冰冰，我再仔细一看，还真是范冰冰。现实中还是相当令人惊艳的，不愧是女神级别。刚想拿出手机拍照，就听工作人员在喊“不准拍照，把手机都收起来”。</p>
+<p>范爷拍摄的这个场景也拍了好几次，导演才喊OK。不断重复提升才是达到高水平必经的过程。我距离范爷的距离只有一两米的样子。</p>
+<p><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=988b6a56a1cc7cd9fe2d34dc093a5002/2fdda3cc7cd98d1035cd7d8a233fb80e7bec906b.jpg?referer=b9958f984b540923f37e564ed029&amp;x=.jpg" alt="范爷拍戏谢绝拍照"></p>
+<p>下午范爷几乎一直都在现场拍戏。范爷就是范爷，有人打伞，有人递水，有人找座，有人搀扶。坐下休息时也是围一帮人，与导演和工作人员讨论剧情及拍摄效果，有时都可以直接提议改台词。</p>
+<h4 id="不可或缺的替身演员">不可或缺的替身演员</h4><p>那几个替身演员一直在那里，从早上一直到晚上。下午张丰毅也来了，不过只拍了一个射箭的戏，以及和范冰冰一起拍过一个场景后，又等了一会儿后就走了。可是他的替身演员早上七点多就来了，晚上也是和我们群众演员一个时间点回去的。当背景，跪戏，高难度动作，无聊的工作都是他们的工作。一个演员从默默无闻到名满天下，其中艰辛，可见一斑。</p>
+<h4 id="意外">意外</h4><p>快结束时，两匹马“打架”，一匹可怜的白马被一匹黑马踢了，两匹马就在那里打架，吓坏了众人，好一会儿才在工作人员的努力下平息了这场混乱。可怜那匹白马，鲜血直流。</p>
+<h4 id="结束">结束</h4><p>排队交衣服，出门零钱，坐车走人，下馆吃饭，回寝休息。<br>两人共挣100元，两碗土豆烧牛肉盖浇面加煎蛋，一盘孜然牛肉，一份油饼，四桶饮料，节余7元。</p>
 
           
         
@@ -1151,12 +642,12 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
         
           <div class="post-tags">
             
-              <a href="/blog/tags/Linux/">
-                #Linux
+              <a href="/blog/tags/札记/">
+                #札记
               </a>
             
-              <a href="/blog/tags/技术/">
-                #技术
+              <a href="/blog/tags/生活/">
+                #生活
               </a>
             
           </div>
@@ -1185,8 +676,8 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
           
           
             
-              <a class="post-title-link" href="/blog/2013/08/使用Apache-MINA开发Java网络应用程序/">
-                使用Apache MINA开发Java网络应用程序
+              <a class="post-title-link" href="/blog/2014/03/图解如何选羽毛球/">
+                图解如何选羽毛球
               </a>
             
           
@@ -1196,7 +687,7 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-08-29
+            发表于 2014-03-17
           
         </span>
 
@@ -1205,7 +696,7 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
             <span class="post-category">
               &nbsp; | &nbsp; 分类于
               
-                <a href="/blog/categories/Java/">Java</a>
+                <a href="/blog/categories/MSE/">MSE</a>
 
                 
                 
@@ -1219,8 +710,8 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/08/使用Apache-MINA开发Java网络应用程序/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/使用Apache-MINA开发Java网络应用程序/"></span>
+            <a href="/blog/2014/03/图解如何选羽毛球/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/图解如何选羽毛球/"></span>
             </a>
           </span>
           
@@ -1236,65 +727,10 @@ double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span
 
         
           
-            <p>Apache MINA是一种Java NIO 的网络应用框架。通过使用Apache MINA可以开发高性能，高扩展性的网络应用程序。MINA提供基于抽象事件驱动的统一的异步API。</p>
-<p>MINA的架构如下图所示：<br><img src="http://mina.apache.org/staticresources/images/mina/mina_app_arch.png" alt="MINA架构图"></p>
-<p>由上图可知，基于MINA的应用程序可分为三层：<br>1. I/O Service 执行实际的I/O操作<br>2. Filter Chain 将字节数据过滤成所需数据结构，或者相反<br>3. I/O Handler 执行实际业务逻辑</p>
-<p>所以，如果你要创建一个基于MINA的网络应用程序，你需要：<br>1. 创建I/O Service。可以从已有的Service（*Accepter）中选择或者自己创建。<br>2. 创建Filter Chain。从已有的Filters中选择或者自定义。<br>3. 创建I/O Handler。处理消息或实现具体的业务逻辑。</p>
-<p>下面是一个基于TCP/IP的TimeServer：</p>
-<p>TimeServer的代码如下：</p>
-<p>[java]<br>/<em>*
- </em></p>
-<ul>
-<li>MinaTimeServer.java</li>
-<li>ZhangMin.name - zhangmin@zhangmin.name</li>
-<li>name.zhangmin.java<br><em>
-</em>/<br>package name.zhangmin.java.mina;<br>import java.io.IOException;<br>import java.net.InetSocketAddress;<br>import java.nio.charset.Charset;<br>import org.apache.mina.core.service.IoAcceptor;<br>import org.apache.mina.core.session.IdleStatus;<br>import org.apache.mina.filter.codec.ProtocolCodecFilter;<br>import org.apache.mina.filter.codec.textline.TextLineCodecFactory;<br>import org.apache.mina.filter.logging.LoggingFilter;<br>import org.apache.mina.transport.socket.nio.NioSocketAcceptor;<br>/**</li>
-<li>@author ZhangMin.name<br><em>
-</em>/<br>public class MinaTimeServer {<br> public static int PORT = 1234;<br> /**<ul>
-<li>一个Apache MINA</li>
-<li>@param args<br>*/<br>public static void main(String[] args) throws IOException{<br> //创建一个对象监听从客户端建立的连接<br> IoAcceptor acceptor = new NioSocketAcceptor();<br> //增加 一个filter，用于答应相关日志信息<br> acceptor.getFilterChain().addLast(&quot;logger&quot;, new LoggingFilter());<br> //增加一个filter用于将二进制数据或者协议特定数据翻译成为Message对象，或者相反<br> //本实例使用自带的TextLineFactory来处理文本信息<br> acceptor.getFilterChain().addLast(&quot;codec&quot;,<pre><code>new ProtocolCodecFilter<span class="list">(
-<span class="keyword">new</span> TextLineCodecFactory<span class="list">(
-    <span class="keyword">Charset</span>.forName<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;UTF-8&amp;quot;)</span>
-    )</span>)</span>)</span><span class="comment">;</span>
-</code></pre> //设置处理请求的Handler<br> acceptor.setHandler(new TimeServerHandler());<br> //设置套接字相关的配置参数<br> acceptor.getSessionConfig().setReadBufferSize(2048);<br> acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);<br> //设置绑定的端口号<br> acceptor.bind(new InetSocketAddress(PORT));<br> System.out.println(&quot;Start listening to PORT: &quot; + PORT);<br>}</li>
-</ul>
-</li>
-</ul>
-<p>}</p>
-<p>[/java]</p>
-<p>Handler的代码如下：</p>
-<p>[java]<br>/<em>*
- </em></p>
-<ul>
-<li>TimeServerHandler.java</li>
-<li>ZhangMin.name - zhangmin@zhangmin.name</li>
-<li>name.zhangmin.java<br><em>
-</em>/<br>package name.zhangmin.java.mina;<br>import java.util.Date;<br>import org.apache.mina.core.service.IoHandlerAdapter;<br>import org.apache.mina.core.session.IdleStatus;<br>import org.apache.mina.core.session.IoSession;<br>/**</li>
-<li><p>@author ZhangMin.name<br><em>
-</em>/<br>public class TimeServerHandler extends IoHandlerAdapter {<br> //处理相关异常<br> @Override<br> public void exceptionCaught(IoSession session, Throwable cause)</p>
-<pre><code>    <span class="keyword">throws</span> Exception {
-cause.printStackTrace();
-</code></pre><p> }<br>//处理从客户端发来的请求和向客户端发送数据<br> @Override<br> public void messageReceived(IoSession session, Object message)</p>
-<pre><code>    <span class="keyword">throws</span> Exception {
-<span class="keyword">String</span> <span class="built_in">str</span> = message.toString();
-System.out.<span class="built_in">println</span>(&amp;quot;Receiving Message :&amp;quot; + <span class="built_in">str</span>);
-<span class="keyword">if</span>(<span class="built_in">str</span>.<span class="built_in">trim</span>().equalsIgnoreCase(&amp;quot;quit&amp;quot;)){
-    session.close(<span class="keyword">true</span>);
-    System.<span class="built_in">exit</span>(<span class="number">0</span>);
-    <span class="keyword">return</span>;
-}
-Date date = <span class="keyword">new</span> Date();
-session.write(date.toString());
-System.out.<span class="built_in">println</span>(&amp;quot;Messge written...&amp;quot;);
-</code></pre><p> }</p>
-<p> @Override<br> public void sessionIdle(IoSession session, IdleStatus status)</p>
-<pre><code>    throws Exception {
-System.<span class="type">out</span>.println(&amp;quot;IDLE: &amp;quot; + session.getIdleCount(<span class="keyword">status</span>));
-</code></pre><p> }</p>
-</li>
-</ul>
-<p>}<br>[/java]</p>
-<p>使用telnet程序进行测试：&gt;telent 127.0.0.1 1234</p>
+            <p><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=01e3e9ddfa1986184547ef817ad65f4e/b151f8198618367a684c13612c738bd4b21ce541.jpg?referer=e3c57f1b5bee3d6d7bd1b3fb435f&amp;x=.jpg" alt="羽毛球结构图"></p>
+<p><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=1c73de5a257f9e2f74351d0d2f0b9819/86d6277f9e2f070895c046bceb24b899a801f241.jpg?referer=b40fc9de9a22720e22d9d6ca3e5f&amp;x=.jpg" alt="羽毛球等级分类"></p>
+<p><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=cad0ee038e5494ee83220f1c1dce91c3/b58f8c5494eef01f03277779e2fe9925bc317d5e.jpg?referer=e8c6fd0acb177f3e4923c93dbb34&amp;x=.jpg" alt="如何保养羽毛球"></p>
+<p><em>摘自淘宝Kawasaki川崎店</em></p>
 
           
         
@@ -1306,12 +742,8 @@ System.<span class="type">out</span>.println(&amp;quot;IDLE: &amp;quot; + sessio
         
           <div class="post-tags">
             
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-              <a href="/blog/tags/技术/">
-                #技术
+              <a href="/blog/tags/生活/">
+                #生活
               </a>
             
           </div>
@@ -1340,8 +772,8 @@ System.<span class="type">out</span>.println(&amp;quot;IDLE: &amp;quot; + sessio
           
           
             
-              <a class="post-title-link" href="/blog/2013/08/-转-25个让Java程序员更高效的Eclipse插件/">
-                [转]25个让Java程序员更高效的Eclipse插件
+              <a class="post-title-link" href="/blog/2014/03/无锡物博会/">
+                无锡物博会
               </a>
             
           
@@ -1351,7 +783,7 @@ System.<span class="type">out</span>.println(&amp;quot;IDLE: &amp;quot; + sessio
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-08-29
+            发表于 2014-03-04
           
         </span>
 
@@ -1360,7 +792,7 @@ System.<span class="type">out</span>.println(&amp;quot;IDLE: &amp;quot; + sessio
             <span class="post-category">
               &nbsp; | &nbsp; 分类于
               
-                <a href="/blog/categories/Java/">Java</a>
+                <a href="/blog/categories/MSE/">MSE</a>
 
                 
                 
@@ -1374,8 +806,8 @@ System.<span class="type">out</span>.println(&amp;quot;IDLE: &amp;quot; + sessio
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/08/-转-25个让Java程序员更高效的Eclipse插件/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/-转-25个让Java程序员更高效的Eclipse插件/"></span>
+            <a href="/blog/2014/03/无锡物博会/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/无锡物博会/"></span>
             </a>
           </span>
           
@@ -1391,35 +823,13 @@ System.<span class="type">out</span>.println(&amp;quot;IDLE: &amp;quot; + sessio
 
         
           
-            <p><img src="http://eclipse.org/eclipse.org-common/themes/Nova/images/eclipse.png" alt="Eclipse"></p>
-<p>下面列出来的是25个最好的免费Eclipse插件，可以让开发者更高效的工作 。</p>
-<p><strong>提高代码质量的插件</strong></p>
-<ol>
-<li>FindBugs<br>FindBugs可以帮你找到Java代码中的bug，它使用Lesser GNU Public License的自由软件许可。2.  Checkstyle<br>Checkstyle插件可以集成到Eclipse IDE中去，能确保Java代码遵循标准代码样式。3.  ECLemma<br>ECLemma是一款拥有Eclipse Public License许可的免费工具，它提供了方便快捷的开发和测试环境。你可以使用代码覆盖模式下的“launch”功能，用起来就像是真正的运行/调试模式。你可以通过使用代码覆盖试图，高亮源文件，计数来分析代码。4.  JDepend4Eclipse JDepend4Eclipse可以帮助你遍历文件夹，协助你量化设计的质量。它使用Eclipse Public License v1.0许可。5.  PMD PMD是一款代码分析器，用来检测变量和写得不好的代码。（更新网址-<a href="http://pmd.sourceforge.net/eclipse/）6" target="_blank" rel="external">http://pmd.sourceforge.net/eclipse/）6</a>.  SourceHelper SourceHelper可以协助编码和调试，对写好的代码提供说明。7.  Structure101 Structure101帮助修改代码的架构，就是说你可以改变架构，而不打乱代码。</li>
-</ol>
-<p><strong>文本编辑插件</strong></p>
-<ol>
-<li>AnyEdit ToolsAnyEdit为输出控制台和工具栏增加了新的编辑器，帮助导入和导出数据。它使用Eclipse Public License v1.0许可。2.  Eclim Eclim给Eclipse引入了Vim的功能，Vim是最好的编辑器之一。开发者可以采用不同的语言来编写代码，它也提供bug纠错功能。Eclim使用GPLV3许可。3.  Eclipse-rbe Eclipse-rbe用来编辑Java文件，它的功能有为缺失变量发出警告信息，排序键值，转变Unicode编码等。它使用GNU库或LGPL许可。</li>
-</ol>
-<p><strong>依赖管理</strong></p>
-<ol>
-<li>Apache IvyDE Apache IvyDE集成了Apache Ivy的依赖管理功能。它能管理’ivy.xml’中的依赖，也能够配合WPT和Ant插件的使用。2.  M2eclipse (Maven插件)M2eclipse能够管理简单的项目，也能管理多模块项目，它能在Eclipse中启动maven。它提供依赖管理，能提供自动下载。</li>
-</ol>
-<p><strong>版本控制插件</strong></p>
-<ol>
-<li>Subclipse Subclipse是一个SVN插件，它为Eclipse IDE提供subversion支持，使用EPL 1.0许可。2.  EGit EGit提供同步视图，可以读.git/ 下排除的文件，提供rebase功能，为pull和push提供精简的操作。3.  MercurialEclipse MercurialEclipse是个流行的版本控制系统。它提供了clone repository功能，push-pull同步功能，以及简单的回滚功能。4.  P4Eclipse P4Eclipse吸纳了Perforce管理系统的特长。它提供了以开发者为导向的一系列的功能，并且支持许多Agile开流程发以及传统开发流程。</li>
-</ol>
-<p><strong>框架开发插件</strong></p>
-<ol>
-<li>Spring Tool Suite Spring Tool Suite提供了XML文件预览以及图形化的spring配置编辑器等开发环境和工具，它能让开发变得更简单。2.  Spring IDE  Spring IDE帮助你开发Spring应用，它提供了图形编辑界面。它还能用图形的方式显示bean之间的关系。（更新网址 – <a href="http://springide.org/updatesite）3" target="_blank" rel="external">http://springide.org/updatesite）3</a>.  Hibernator Hibernator能够创建或更新数据库schema，运行hibernate查询语句，创建映射文档。用户可以将一个Java类和一个相关的映射文件同步起来。4.  JbossTools JbossTools 3.2x支持JBoss，Hibernate，Drools，XHTML，Seam等。（更新网址-<a href="http://download.jboss.org/jbosstools/updates/JBossTools-2.1.2.GA）" target="_blank" rel="external">http://download.jboss.org/jbosstools/updates/JBossTools-2.1.2.GA）</a></li>
-</ol>
-<p><strong>其他功能插件</strong></p>
-<ol>
-<li>ASM – 二进制预览插件 ASM Bytecode Outline插件可以显示当前的Java文件或class文件的分解的二进制代码，便于Java/class文件的二进制比较，也可以显示当前二进制代码的ASMifier代码。你可以用Eclipse更新管理器来安装ASM。（更新网址-<a href="http://download.forge.objectweb.org/eclipse-update/）2" target="_blank" rel="external">http://download.forge.objectweb.org/eclipse-update/）2</a>.  Mylyn – 任务管理 Mylyn采用任务为中心的界面，它为开发者提供了任务管理工具。另外，也集成了富文本编辑工具，以及监测工具。3.  Eclipse Launcher Eclipse launcher采用Delphi 6写成，使用它你可以自定义启动Eclipse IDE时的配置。4.  FileSync FileSync拥有Eclipse Pulic License v1.0许可，它是一个文件同步工具，可以创建，删除，映射文件。5.  Log4E Log4E可以帮你更容易的写日志，而不需要受特定日志框架的约束。当然你也可以自定义你自己的日志模版。</li>
-</ol>
-<p>总而言之，插件能让Eclipse用其他语言来编写。Eclipse插件是必不可少的，因为它们让Java应用无缝连接，降低了Java的复杂度。然而，装了过多的插件会让你的Eclipse变慢，所以你需要有选择性的安装插件。除了以上提到的插件，当然还有其他的高效率的插件，如Jadclipse。如果你还有其他让你觉得好用的插件，请写下来吧。</p>
-<p>英文原文： <a href="http://www.fromdev.com/2012/01/25-best-free-eclipse-plug-ins-for-java.html" target="_blank" rel="external">fromdev.com</a></p>
-<p>编译：<a href="http://blog.jobbole.com/16127/" target="_blank" rel="external">伯乐在线 – 唐小娟</a></p>
+            <p>[caption id=”attachment_1973” align=”alignnone” width=”3264”]<a href="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=19cd32588501a18bf4eb124aae147635/b21c8701a18b87d6b5661f6b050828381f30fd9a.jpg?referer=dd53a1e0442309f7be7898223b78&amp;x=.jpg" target="_blank" rel="external"><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=19cd32588501a18bf4eb124aae147635/b21c8701a18b87d6b5661f6b050828381f30fd9a.jpg?referer=dd53a1e0442309f7be7898223b78&amp;x=.jpg" alt="物博会工作会议"></a> 物博会工作会议[/caption]</p>
+<p>[caption id=”attachment_1963” align=”alignnone” width=”3264”]<a href="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8874d4bfb0fb43161e1f7a7f109f371e/54fbb2fb43166d22fa53a1e0442309f79052d29a.jpg?referer=8feabbc3eb50352ae87610381e78&amp;x=.jpg" target="_blank" rel="external"><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8874d4bfb0fb43161e1f7a7f109f371e/54fbb2fb43166d22fa53a1e0442309f79052d29a.jpg?referer=8feabbc3eb50352ae87610381e78&amp;x=.jpg" alt="这是志愿者的专车"></a> 这是志愿者的专车[/caption]</p>
+<p>[caption id=”attachment_1965” align=”alignnone” width=”3264”]<a href="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=d7d5cbbff9edab6470724dc5c70ddefe/4afbfbedab64034f0b2a7772adc379310b551dda.jpg?referer=5be29f74eb24b899872b4d085bb9&amp;x=.jpg" target="_blank" rel="external"><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=d7d5cbbff9edab6470724dc5c70ddefe/4afbfbedab64034f0b2a7772adc379310b551dda.jpg?referer=5be29f74eb24b899872b4d085bb9&amp;x=.jpg" alt="国际大学生物联网创新创业大赛"></a> 国际大学生物联网创新创业大赛[/caption]</p>
+<p>[caption id=”attachment_1966” align=”alignnone” width=”3264”]<a href="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=e241837f59b5c9ea66f303e6e502c73d/023b5bb5c9ea15cee009557db4003af33b87b2db.jpg?referer=efdba17bba0e7bec7acd37d1feb9&amp;x=.jpg" target="_blank" rel="external"><img src="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=e241837f59b5c9ea66f303e6e502c73d/023b5bb5c9ea15cee009557db4003af33b87b2db.jpg?referer=efdba17bba0e7bec7acd37d1feb9&amp;x=.jpg" alt="移动的小提琴表演"></a> 移动的小提琴表演[/caption]</p>
+<p>[caption id=”attachment_1967” align=”alignnone” width=”3264”]<a href="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=c7e90700e9f81a4c2232eccce7111164/8644ebf81a4c510f1223576e6259252dd52aa5db.jpg?referer=c72eb1e9c9ef7609651cadaf03b9&amp;x=.jpg" target="_blank" rel="external"><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=c7e90700e9f81a4c2232eccce7111164/8644ebf81a4c510f1223576e6259252dd52aa5db.jpg?referer=c72eb1e9c9ef7609651cadaf03b9&amp;x=.jpg" alt="移动的模特"></a> 移动的模特[/caption]</p>
+<p>[caption id=”attachment_1969” align=”alignnone” width=”3264”]<a href="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=f3e2d307f9f2b211e02e854bfabb1405/5243fbf2b211931353a44ac467380cd790238ddb.jpg?referer=04cb10ab74c6a7efe0319c16ebb9&amp;x=.jpg" target="_blank" rel="external"><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=f3e2d307f9f2b211e02e854bfabb1405/5243fbf2b211931353a44ac467380cd790238ddb.jpg?referer=04cb10ab74c6a7efe0319c16ebb9&amp;x=.jpg" alt="最终展览特装效果"></a> 最终展览特装效果[/caption]</p>
+<p>[caption id=”attachment_1970” align=”alignnone” width=”3264”]<a href="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=9c9f48537d3e6709ba0045fa0bfcee00/c8177f3e6709c93d4bd6ba839d3df8dcd1005499.jpg?referer=0ee3678979899e5121990f249477&amp;x=.jpg" target="_blank" rel="external"><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=9c9f48537d3e6709ba0045fa0bfcee00/c8177f3e6709c93d4bd6ba839d3df8dcd1005499.jpg?referer=0ee3678979899e5121990f249477&amp;x=.jpg" alt="拆"></a> 拆[/caption]</p>
 
           
         
@@ -1431,8 +841,8 @@ System.<span class="type">out</span>.println(&amp;quot;IDLE: &amp;quot; + sessio
         
           <div class="post-tags">
             
-              <a href="/blog/tags/Java/">
-                #Java
+              <a href="/blog/tags/生活/">
+                #生活
               </a>
             
           </div>
@@ -1455,7 +865,7 @@ System.<span class="type">out</span>.println(&amp;quot;IDLE: &amp;quot; + sessio
 
           
             <div class="pagination">
-              <a class="extend prev" rel="prev" href="/blog/page/3/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/blog/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/24/">24</a><a class="extend next" rel="next" href="/blog/page/5/">&raquo;</a>
+              <a class="extend prev" rel="prev" href="/blog/page/3/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/blog/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/39/">39</a><a class="extend next" rel="next" href="/blog/page/5/">&raquo;</a>
             </div>
           
         </div>
@@ -1489,17 +899,17 @@ System.<span class="type">out</span>.println(&amp;quot;IDLE: &amp;quot; + sessio
         </div>
 
         <div class="site-state-item site-state-categories">
-          
+          <a href="/blog/categories">
             <span class="site-state-item-count">9</span>
             <span class="site-state-item-name">分类</span>
-          
+          </a>
         </div>
 
         <div class="site-state-item site-state-tags">
-          
+          <a href="/blog/tags">
             <span class="site-state-item-count">20</span>
             <span class="site-state-item-name">标签</span>
-          
+          </a>
         </div>
 
       </div>

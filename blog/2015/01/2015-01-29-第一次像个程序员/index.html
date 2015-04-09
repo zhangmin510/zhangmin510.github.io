@@ -55,10 +55,26 @@
       </li>
     
       
+      <li class="menu-item menu-item-categories">
+        <a href="/blog/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
       <li class="menu-item menu-item-archives">
         <a href="/blog/archives">
           <i class="menu-item-icon icon-archives"></i> <br />
           归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/blog/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
         </a>
       </li>
     
@@ -148,7 +164,7 @@
 <p>避免做重复的事，这是每个程序员都应该去做的事。</p>
 <h1 id="无聊的任务">无聊的任务</h1><p>一个已经用PowerDesigner设计好的数据库，还要去补充数据库表结构的详细文档。讨厌为了文档而文档的文档撰写工作。这是一个无聊，无趣，浪费生命的工作。</p>
 <h1 id="偷懒">偷懒</h1><p>能不能导出？这是我的第一个想法。但是PowerDesigner只导出SQL语句。无奈，文档需要更详细的内容。项目文件能不能直接用文本打开？用记事本打开，可以。而且我看到了程序员都喜欢看到的格式XML。剩下的工作就是解析XML，提取关于数据库表的内容，转成CSV文件，然后在复制粘贴到WORD中。</p>
-<h1 id="Show_Time">Show Time</h1><p>不修改文档只解析，用SAX就好了。</p>
+<h1 id="Show_Time">Show Time</h1><p>不修改文档只解析，用SAX就好了。<br><a id="more"></a></p>
 <h2 id="分析">分析</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;c:Tables&#62;&#10;&#60;o:Table Id=&#34;o83&#34;&#62;&#10;&#60;a:ObjectID&#62;11195183-1EF0-4FDB-BC9F-5F45A42D3200&#60;/a:ObjectID&#62;&#10;&#60;a:Name&#62;&#29992;&#25143;&#34920;&#60;/a:Name&#62;&#10;&#60;a:Code&#62;TBL_USER&#60;/a:Code&#62;&#10;&#60;a:CreationDate&#62;1407122337&#60;/a:CreationDate&#62;&#10;&#60;a:Creator&#62;Administrator&#60;/a:Creator&#62;&#10;&#60;a:ModificationDate&#62;1422326992&#60;/a:ModificationDate&#62;&#10;&#60;a:Modifier&#62;Administrator&#60;/a:Modifier&#62;&#10;&#60;a:Comment&#62;&#29992;&#25143;&#34920;&#60;/a:Comment&#62;&#10;&#60;a:TotalSavingCurrency/&#62;&#10;&#60;c:Columns&#62;&#10;&#60;o:Column Id=&#34;o112&#34;&#62;&#10;&#60;a:ObjectID&#62;46BD538A-51A2-4ED0-83DA-4840413F2993&#60;/a:ObjectID&#62;&#10;&#60;a:Name&#62;&#29992;&#25143;&#32534;&#21495;&#60;/a:Name&#62;&#10;&#60;a:Code&#62;U_ID&#60;/a:Code&#62;&#10;&#60;a:CreationDate&#62;1407122416&#60;/a:CreationDate&#62;&#10;&#60;a:Creator&#62;Administrator&#60;/a:Creator&#62;&#10;&#60;a:ModificationDate&#62;1421802615&#60;/a:ModificationDate&#62;&#10;&#60;a:Modifier&#62;Administrator&#60;/a:Modifier&#62;&#10;&#60;a:DataType&#62;int&#60;/a:DataType&#62;&#10;&#60;a:Mandatory&#62;1&#60;/a:Mandatory&#62;&#10;&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o113&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o114&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o115&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o116&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o117&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o118&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o119&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o120&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o121&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o122&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o123&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;/c:Columns&#62;&#10;&#60;c:Keys&#62;...&#60;/c:Keys&#62;&#10;&#60;c:PrimaryKey&#62;...&#60;/c:PrimaryKey&#62;&#10;&#60;/o:Table&#62;</span><br></pre></td></tr></table></figure>
 <p>对于如此工整，完美，结构化的数据，一定是程序的最爱。Java SAX解析主要代码如下：</p>
 <h2 id="解析">解析</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class PDMHandler extends DefaultHandler&#123;&#10;&#9;private List&#60;Table&#62; tables = null;&#10;&#9;private Table table = null;&#10;&#9;private List&#60;Column&#62; columns = null;&#10;&#9;private Column column = null;&#10;&#9;&#10;&#9;private boolean inTables = false;&#10;&#9;private boolean inTable = false;&#10;&#9;private boolean inColumns = false;&#10;&#9;private boolean inColumn = false;&#10;&#9;&#10;&#9;private String cur = null;&#10;&#9;&#10;&#9;public List&#60;Table&#62; getTables(InputStream is) throws Exception &#123;&#10;&#9;&#9;SAXParserFactory factory = SAXParserFactory.newInstance();&#10;&#9;&#9;SAXParser parser = factory.newSAXParser();&#10;&#9;&#9;PDMHandler handler = new PDMHandler();&#10;&#9;&#9;parser.parse(is, handler);&#10;&#9;&#9;return handler.getTables();&#10;&#9;&#125;&#10;&#9;&#10;&#9;public List&#60;Table&#62; getTables() &#123;&#10;&#9;&#9;return tables;&#10;&#9;&#125;&#10;&#10;&#9;@Override&#10;&#9;public void startDocument() throws SAXException &#123;&#10;&#9;&#9;System.out.println(&#34;Start parsing...&#34;);&#10;&#9;&#9;this.tables = new ArrayList&#60;Table&#62;();&#10;&#9;&#125;&#10;&#9;&#10;&#9;@Override&#10;&#9;public void endDocument() throws SAXException &#123;&#10;&#9;&#9;System.out.println(&#34;Parsing finished.&#34;);&#10;&#9;&#125;&#10;&#9;&#10;&#9;@Override&#10;&#9;public void startElement(String uri, String localName, String qName,&#10;&#9;&#9;&#9;Attributes attributes) throws SAXException &#123;&#10;&#9;&#9;if (&#34;c:Tables&#34;.equals(qName)) inTables = true;&#10;&#9;&#9;&#10;&#9;&#9;if (inTables) &#123;&#10;&#9;&#9;&#9;if (&#34;o:Table&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;&#9;inTable = true;&#10;&#9;&#9;&#9;&#9;table = new Table();&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#10;&#9;&#9;&#9;if (inTable) &#123;&#10;&#9;&#9;&#9;&#9;if (&#34;c:Columns&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;&#9;&#9;inColumns = true;&#10;&#9;&#9;&#9;&#9;&#9;columns = new ArrayList&#60;Column&#62;();&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#9;&#10;&#9;&#9;&#9;&#9;if (inColumns) &#123;&#10;&#9;&#9;&#9;&#9;&#9;if (&#34;o:Column&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;&#9;&#9;&#9;inColumn = true;&#10;&#9;&#9;&#9;&#9;&#9;&#9;column = new Column();&#10;&#9;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#125;&#10;&#9;&#9;cur = qName;&#10;&#9;&#125;&#10;&#9;&#10;&#9;@Override&#10;&#9;public void characters(char[] ch, int start, int length)&#10;&#9;&#9;&#9;throws SAXException &#123;&#10;&#9;&#9;String content = new String(ch, start, length);&#10;&#9;&#9;//&#60;a:code&#62;Name&#60;/a:code&#62; &#10;&#9;&#9;//First visit value is Name, second visit value is LF(10)&#10;&#9;&#9;boolean first = (int) content.charAt(0) != 10;&#10;&#9;&#9;if (inColumn) &#123;&#10;&#9;&#9;&#9;if (first) &#123;&#10;&#9;&#9;&#9;&#9;if (&#34;a:Name&#34;.equals(cur)) column.setName(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Code&#34;.equals(cur)) column.setDataItem(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:DataType&#34;.equals(cur)) column.setType(&#34;\&#34;&#34; + content + &#34;\&#34;&#34;);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Length&#34;.equals(cur)) column.setLength(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Comment&#34;.equals(cur)) column.setComment(content);&#10;&#9;&#9;&#9;&#9;else &#123; &#125;&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#10;&#9;&#9;&#125;  else if (inTable)&#123;&#10;&#9;&#9;&#9;if (first) &#123;&#10;&#9;&#9;&#9;&#9;if (&#34;a:Name&#34;.equals(cur)) table.setTableName(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Code&#34;.equals(cur)) table.setTableCode(content);&#10;&#9;&#9;&#9;&#9;else &#123; &#125;&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#10;&#9;&#9;&#125; else &#123; &#125;&#10;&#9;&#125;&#10;&#9;&#10;&#9;@Override&#10;&#9;public void endElement(String uri, String localName, String qName)&#10;&#9;&#9;&#9;throws SAXException &#123;&#10;&#9;&#9;if (&#34;o:Column&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;inColumn = false;&#10;&#9;&#9;&#9;if (inColumns) columns.add(column);&#10;&#9;&#9;&#125;&#10;&#9;&#9;if (&#34;c:Columns&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;inColumns = false;&#10;&#9;&#9;&#9;inTable = false;&#10;&#9;&#9;&#9;table.setColumns(columns);&#10;&#9;&#9;&#9;tables.add(table);&#10;&#9;&#9;&#125;&#10;&#9;&#9;if (&#34;c:Tables&#34;.equals(qName)) inTables = false;&#10;&#9;&#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
@@ -252,17 +268,17 @@
         </div>
 
         <div class="site-state-item site-state-categories">
-          
+          <a href="/blog/categories">
             <span class="site-state-item-count">9</span>
             <span class="site-state-item-name">分类</span>
-          
+          </a>
         </div>
 
         <div class="site-state-item site-state-tags">
-          
+          <a href="/blog/tags">
             <span class="site-state-item-count">20</span>
             <span class="site-state-item-name">标签</span>
-          
+          </a>
         </div>
 
       </div>

@@ -21,13 +21,13 @@
 
 
 
-    <meta name="keywords" content="Hexo,next" />
+    <meta name="keywords" content="zhangmin.name,张敏,张敏的个人主页,张敏的博客,zhangmin.name's blog" />
 
 
 
 
 
-    <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.1" />
+    <link rel="shorticon icon" type="image/x-icon" href="http://www.zhangmin.name/images/favicon.png?v=0.4.1" />
 
 
 
@@ -67,10 +67,26 @@
       </li>
     
       
+      <li class="menu-item menu-item-categories">
+        <a href="/blog/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
       <li class="menu-item menu-item-archives">
         <a href="/blog/archives">
           <i class="menu-item-icon icon-archives"></i> <br />
           归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/blog/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
         </a>
       </li>
     
@@ -109,8 +125,8 @@
           
           
             
-              <a class="post-title-link" href="/blog/2013/08/一个文件说明Java编码规范/">
-                一个文件说明Java编码规范
+              <a class="post-title-link" href="/blog/2014/03/Java-泛型一文搞定/">
+                Java 泛型一文搞定
               </a>
             
           
@@ -120,7 +136,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-08-21
+            发表于 2014-03-04
           
         </span>
 
@@ -143,8 +159,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/08/一个文件说明Java编码规范/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/一个文件说明Java编码规范/"></span>
+            <a href="/blog/2014/03/Java-泛型一文搞定/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/Java-泛型一文搞定/"></span>
             </a>
           </span>
           
@@ -160,112 +176,77 @@
 
         
           
-            <p>[java]<br>/<em>*
- </em></p>
-<ul>
-<li>JavaCodeConvention.java</li>
-<li>ZhangMin.name - zhangmin@zhangmin.name</li>
-<li>name.zhangmin.java</li>
-<li>2013年8月21日<br><em>
-</em>/<br>package name.zhangmin.java;</li>
-</ul>
-<p>import java.util.Date;<br>import java.math.*;</p>
-<p>/**</p>
-<ul>
-<li>这里是类或者借口的注释内容。属于Java文档注释，主要类的设计规范。<br>*</li>
-<li>对于所有的注释应该注意以下几点：</li>
-<li>1.注释应该提供代码的概要信息及其他一些不易通过代码就能理解的附属的信息；</li>
-<li>2.注释应该只包括哪些与代码实现和理解相关的内容。</li>
-<li>3.注释一般不要包括特殊字符，如格式符和退格。<br>*</li>
-<li>缩进一般为4个空格，Tab为八个空格。一行内容不要超过80个字符。<br>*</li>
-<li><p>@author ZhangMin.name<br><em>
-</em>/<br>public class JavaCodeConvention {</p>
-<p> /<em> 类或者接口范围内的注释内容 。属于实现注释，主要描述具体的代码实现</em>/</p>
-<p> /<em> 静态变量 </em>/<br> public static String hello = &quot;hello world&quot;;</p>
-<p> /<em> 实例变量 </em>/<br> public final int MIN_WIDTH = 4;</p>
-<p> public    int     id;                /<em> id标识 </em>/<br> protected String  name;                /<em> 名字 </em>/<br> private   Date    birthday;            /<em> 生日 </em>/</p>
-<p> int level; // indentation level<br> int size; // size of table</p>
-<p> /<em> 构造器 </em>/<br> public JavaCodeConvention(String name){</p>
-<pre><code>this.<span class="property">name</span> = <span class="property">name</span>;
-</code></pre><p> }</p>
-<p> /<em> 方法应该按照功能进行排序，而不是按照可访问性来进行排序 </em>/<br> public void setBirthday(Date birth){</p>
-<pre><code><span class="keyword">this</span>.birthday = birth;
-</code></pre><p> }</p>
-<p> /<em> 将过长的代码行进行分解 </em>/<br> public void function(String longExpression1, String longExpression2, String longExpression3,</p>
-<pre><code>    <span class="built_in">String</span> longExpression4, <span class="built_in">String</span> longExpression5){
-name = longExpression1 + longExpression2 + longExpression3 + longExpression4
-         + longExpression5; <span class="comment">// PREFER</span>
-</code></pre><p> }</p>
-<p> //传统的缩进<br> public void someMethod(int anArg, Object anotherArg, String yetAnotherArg,<br>  Object andStillAnother) {</p>
-<p> }</p>
-<p> public void emptyMethod(){ }</p>
-<p> //八个空格的缩进<br> private synchronized void horkingLongMethodName(int anArg,</p>
-<pre><code><span class="built_in">Object</span> anotherArg, <span class="built_in">String</span> yetAnotherArg,
-<span class="built_in">Object</span> andStillAnother) {
-</code></pre><p> }</p>
-<p> private void doSomethingAboutIt(){</p>
-<pre><code><span class="comment">//变量声明放到方法的第一行</span>
-Integer <span class="built_in">alpha</span> = <span class="keyword">new</span> Integer(<span class="number">0</span>);
-<span class="built_in">int</span> condition = <span class="number">1</span>;
-
-<span class="comment">//过长三元运算语句的处理方法</span>
-<span class="keyword">String</span> aLongBooleanExpression = <span class="keyword">new</span> <span class="keyword">String</span>(&amp;quot;world&amp;quot;);
-<span class="built_in">int</span> beta = <span class="number">1</span>,gamma = <span class="number">2</span>;
-<span class="built_in">alpha</span> = (aLongBooleanExpression.equals(&amp;quot;hello&amp;quot;)) ? beta : gamma;
-<span class="built_in">alpha</span> = (aLongBooleanExpression.equals(&amp;quot;hello&amp;quot;)) ? beta
-                                                 : gamma;
-<span class="built_in">alpha</span> = (aLongBooleanExpression.equals(&amp;quot;hello&amp;quot;))
-        ? beta
-        : gamma;
-
-<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &amp;lt; <span class="number">1000</span>; i++);
-<span class="keyword">while</span> (condition == <span class="number">1</span>) {
-
-}
-<span class="keyword">switch</span> (condition) {
-    <span class="keyword">case</span> <span class="number">1</span>:
-        System.out.<span class="built_in">println</span>(<span class="number">1</span>);
-        <span class="comment">/* falls through */</span>
-    <span class="keyword">case</span> <span class="number">2</span>:
-        System.out.<span class="built_in">println</span>(<span class="number">2</span>);
-        <span class="keyword">break</span>;
-    <span class="keyword">default</span>:
-        System.out.<span class="built_in">println</span>(<span class="number">3</span>);
-        <span class="keyword">break</span>;
-}
-<span class="comment">//if (bar &amp;gt; 1) {</span>
-<span class="comment">//</span>
-<span class="comment">// // Do a triple-flip.</span>
-<span class="comment">// ...</span>
-<span class="comment">//}</span>
-<span class="comment">//else</span>
-<span class="comment">// return false;</span>
-</code></pre><p> }</p>
-<p> protected void ifStatement(){</p>
-<pre><code>int a=1,b=2,c=2,<span class="keyword">d</span>=1;
-
-a += c + <span class="keyword">d</span>;
-a = (a + b) / (c * <span class="keyword">d</span>);
-
-<span class="comment">//过长条件语句的处理方法</span>
-<span class="keyword">if</span> ((a &amp;gt; b &amp;amp;&amp;amp; c &amp;gt; <span class="keyword">d</span>)
-        || (b == <span class="keyword">d</span> &amp;amp;&amp;amp; a &amp;lt; <span class="keyword">d</span>)
-        ||!(a == c &amp;amp;&amp;amp; <span class="keyword">d</span> == b)) {
- doSomethingAboutIt();
-}<span class="keyword">else</span> <span class="keyword">if</span>( b == <span class="keyword">d</span>){
-
-}<span class="keyword">else</span>{
-
-}
-
-<span class="comment">//或者</span>
-<span class="keyword">if</span> ((a &amp;gt; b &amp;amp;&amp;amp; c &amp;gt; <span class="keyword">d</span>) || ((b == <span class="keyword">d</span> &amp;amp;&amp;amp; a &amp;lt; <span class="keyword">d</span>)
-        ||!(a == c &amp;amp;&amp;amp; <span class="keyword">d</span> == b))) {
- doSomethingAboutIt();
-}
-</code></pre><p> }<br>}<br>[/java]</p>
-</li>
-</ul>
+            <h3 id="为什么要引入泛型机制">为什么要引入泛型机制</h3><p>你可以使用泛型机制写出更安全、更简单易读的代码，而不是使用Object变量和强制转换。<br>泛型编程意味着你可以写出对不同类型都可以重用的代码。</p>
+<p>先看在Java SE 5.0之前，java的泛型编程是通过继承实现的。如一个ArrayList的实现：<br>[java]<br>public class ArrayList{<br>    public Object get(int i){…}<br>    public void add(Object o){…}<br>    …<br>    private Object[] elementData;<br>[/java]</p>
+<p>这种方法有两个问题：</p>
+<p>1）当你调用get方法时，你必须使用强制类型转换。</p>
+<p>2）由于没有类型检查，你可以add任何类型的对象。而这可能导致运行时发生错误。</p>
+<p>Java泛型使用类型参数很好的解决了这两个问题：无论是编译器还是程序员都可以很容易的获得类型<br>信息，从而避免强制类型转换并且必要时（如add）进行类型检查以避免运行时的发生错误。</p>
+<p>一般情况下，只有涉及到大量的强制转换和一般类型（如Object，Comparable）的代码才会从泛型编程中受益。</p>
+<h3 id="泛型类">泛型类</h3><p>将类型参数作为方法返回值和域及本地变量的类型定义，一个泛型类定义示例:</p>
+<p>[java]<br>public class Pair&lt;T,U&gt;{<br>    private T first;<br>    private U second;<br>    public Pair(){<br>        first = null;<br>        second = null;<br>    }<br>    public Pair(T first,U second){<br>        this.first = first;<br>        this.second = second;<br>    }<br>    public T getFirst(){<br>        return first;<br>    }<br>    …<br>}<br>[/java]</p>
+<h3 id="泛型方法">泛型方法</h3><p>你也可以在普通类中定义泛型方法，示例如下：</p>
+<p>[java]<br>class GenericMethod{<br>    public static &lt;T&gt; T getMiddle(T[] a){<br>           return a[a.length/2];<br>    }<br>}<br>[/java]<br>注意类型参数&lt;T&gt;在修饰符（public static）后面，方法返回类型之前。<br>在使用泛型方法时你可以指定类型，如:</p>
+<p>[java]<br>String[] name = {&quot;a&quot;,&quot;b&quot;};<br>String mid = GenericMethod.&lt;String&gt;getMiddle(names);<br>[/java]</p>
+<p>但一般情况下你不需要指定，因为编译器会帮你搞定的。</p>
+<h3 id="类型参数的边界">类型参数的边界</h3><p>可以指定类型参数的边界：</p>
+<p>[java]<br>&lt;T extends BoundingType&gt;<br>[/java]</p>
+<p>也可以是多个边界：</p>
+<p>[java]<br>&lt;T extends Comparable &amp; Serializable&gt;<br>[/java]</p>
+<p>由于java是单继承，所以在指定泛型类型边界时只能指定一个类，且必须放在第一位，但可以指定多个接口。</p>
+<h3 id="泛型代码与虚拟机">泛型代码与虚拟机</h3><p>当你定义泛型时，编译器会自动提供一个对应的原始类型。原始类型的名称就是泛型类型的名称，只是移除了类型参数。<br>类型变量将会被第一个边界类型替代，如果没有边界类型，将由Object代替。因此，一般把标记接口（没有方法的接口，如<br>Seralizable）放在边界类型列表的后一位。</p>
+<p>下面的代码显示了Pair&lt;T,U&gt;的原始类型：</p>
+<p>[java]<br>public class Pair{<br>    private Object first;<br>    private Object second;<br>    public Pair(){<br>        first = null;<br>        second = null;<br>    }<br>    public Pair(Object first,Object second){<br>        this.first = first;<br>        this.second = second;<br>    }<br>    public Object getFirst(){<br>        return first;<br>    }<br>    …<br>}<br>[/java]</p>
+<p>当你进行方法调用时，编译器会先调用方法（Object的），然后自动加入类型转换。</p>
+<h3 id="类型擦除引起的问题">类型擦除引起的问题</h3><p>java的泛型在编译期有效，在运行期被擦除。</p>
+<p>对于代码：</p>
+<p>[java]<br>class DateInterval extends Pair&lt;Date&gt;<br>{<br>public void setSecond(Date second)<br>{<br>if (second.compareTo(getFirst()) &gt;= 0)<br>super.setSecond(second);<br>}<br>}<br>[/java]</p>
+<p>类型擦除后为：</p>
+<p>[java]<br>class DateInterval extends Pair<br>{<br>public void setSecond(Date second)<br>{…}<br>. . .<br>}<br>[/java]</p>
+<p>但是DateInterval内还有一个方法，继承自Pair，即：</p>
+<p>[java]<br>public void setSecond(Object second)<br>[/java]</p>
+<p>这两个方法是完全不同的方法，因为它们的参数类型不一样。当进行调用时，它们应该没什么不同。</p>
+<p>[java]<br>DateInterval interval = new DateInterval(. . .);<br>Pair&lt;Date&gt; pair = interval;<br>pair.setSecond(aDate);<br>[/java]</p>
+<p>期望的运行结果是调用dateInterval的setSecond方法。</p>
+<p>为了确保正确性，编译器会在DateInterval中加入桥方法：</p>
+<p>[java]<br>public void setSecond(Object second) {<br>      setSecond((Date) second);<br>}<br>[/java]</p>
+<p>现在让我们看一下执行过程：</p>
+<p>pair的类型是Pair&lt;Date&gt;，该类只有一个setSecond(Object)方法。编译器调用pair指向的对象的<br>方法即DateInterval的setSecond(Object),这是一个桥方法，调用了我们期望调用的方法。</p>
+<p>关于泛型代码的翻译：</p>
+<p>1）虚拟机没有泛型，只有普通的类和方法。</p>
+<p>2）类型参数都被替换了。</p>
+<p>3）桥方法用于保证多态。</p>
+<p>4）强制转换被插入以保证类型安全。</p>
+<h3 id="java泛型的限制和局限（多数是由于类型擦除）">java泛型的限制和局限（多数是由于类型擦除）</h3><p>1）类型参数不能使用原始类型。类型被擦除成Object了。</p>
+<p>2）运行时类型查询只适合原始类型。getClass返回的也是原始类型。</p>
+<p>3）不能抛出或者捕捉泛型类的实例。</p>
+<p>[java]<br>public static &lt;T extends Throwable&gt; void doWork(Class&lt;T&gt; t)<br>{<br>try<br>{<br>do work<br>}<br>catch (T e)//错误<br>{<br>}<br>}<br>[/java]</p>
+<p>但可以指定抛出异常：</p>
+<p>[java]<br>public static &lt;T extends Throwable&gt; void doWork(T t) throws T // OK<br>{<br>try<br>{<br>do work<br>}<br>catch (Throwable realCause)<br>{<br>t.initCause(realCause);<br>throw t;<br>}<br>}<br>[/java]</p>
+<p>4）不能创建泛型数组。类型擦除后，List&lt;Object&gt;[] 和 List&lt;String&gt;[]是一样的，由于数组会检查每一项的类型，如果类型不一致，会抛出ArrayStoreException。擦除机制不能很好的处理，仍然会抛出异常，所以干脆就不允许。（注：创建泛型数组的方法：T[] t = (T[]) Array.newInstance(class,size);)</p>
+<p>5）不能实例化类型参数变量。new T()。不过可以通过Class.newInstance来创建。</p>
+<p>6）不能再static域使用类型参数。</p>
+<p>7）小心类型擦除后的冲突。</p>
+<h3 id="类型通配符">类型通配符</h3><p>java泛型支持通配符，可以单独使用一个“？”来表示任意类型，也可以使用extends关键词表示某一个类或者接口的子类型。还可以使用super关键词表示某一个类或者接口的父类型。</p>
+<p>一般情况下，泛型结构只参与“读”操作则限定上界（extends），如：</p>
+<p>[java]<br>public static &lt;E&gt; void read(List&lt;? super E&gt; list){<br>    …<br>}<br>[/java]</p>
+<p>编译器只能推断出是E类型的父类，不能确定E类型的父类到底是什么，只能在运行时确定。<br>当然你可以把它当做Object类来处理，需要时在转换成E类型，但这违背了泛型的初衷——避免强制类型转换。<br>如果使用extends，虽然也不能确定具体是什么类型，但它一定是一个确定的类型，比如read(Arrays.asList(“A’))调动该方法就可以确定是String。</p>
+<p>只参与“写”操作则限定下界（super），如：</p>
+<p>[java]<br>public static void write(List&lt;? extends Number&gt; list){<br>    …<br>}<br>[/java]</p>
+<p>编译器无法推断出泛型类型到底是什么，是Integer还是Double？在这种情况下，只有null可以write。因为null是一个万用类型，它可以是所有类的实例对象。如果使用super关键字，无论是123，还是1.23都是Number类型，都可以进行操作。</p>
+<p>如果既读又写，直接使用泛型类型，如List&lt;E&gt;。</p>
+<h3 id="协变与泛型">协变与泛型</h3><p>协变（covariance）,即用一个窄类型替换宽类型。相反，逆变（contravariance），则是用宽类型替代子类型。​<br>泛型不支持协变，数组支持协变。</p>
+<p>[java]<br>Number[] n = new Integer[10];<br>//error<br>List&lt;Number&gt; ln = new ArrayList&lt;Integer&gt;();<br>[/java]</p>
+<p>java为了保证运行期安全，必须保证参数类型是固定的，所以不允许一个泛型参数可以同时包含两种类型。<br>但可以使用通配符模拟协变。</p>
+<p>[java]<br>//correct<br>List&lt;? extends Number&gt; ln = new ArrayList&lt;Integer&gt;();<br>[/java]</p>
+<p>​表示允许Number的所有子类，包括自身作为泛型类型，但在运行期只能有一个具体类型。也就是通配符只在编码期有效，<br>运行期必须是一个确定的类型。</p>
+<p>java泛型也不支持逆变，但同样可以使用super关键字模拟逆变。</p>
+<p>[java]<br>//correct<br>List&lt;? super Integer&gt; ln = new ArrayList&lt;Number&gt;();<br>[/java]</p>
+<h3 id="泛型类型参数T,?和Object之间的区别">泛型类型参数T,?和Object之间的区别</h3><p>三者都可以容纳所有对象，但使用顺序应该是List&lt;T&gt;,List&lt;?&gt;,List&lt;Object&gt;。<br>List&lt;T&gt;表示集合中都是T类型，具体类型运行时确定；List&lt;?&gt;表示的是任意类型，与List&lt;T&gt;类似，<br>而List&lt;Object&gt;表示集合中的类型是Object类型.<br>List&lt;T&gt;可以进行读写操作，因为它是固定的类型，不需要转型。<br>List&lt;?&gt;是只读类型，可以且只支持删除操作，因为编译器不知道是什么类型，无法校验安全。而且List&lt;?&gt;读出的类型是Object类型，<br>需要主动转型，通常用于泛型方法的返回值。<br>List&lt;Object&gt;可以执行读写操作，但是执行写入操作时要向上转型，读出时要向下转型，而此时已经失去了泛型的意义。</p>
+<p><em>参考文献</em></p>
+<ol>
+<li>《Java核心技术》2.  《编写高质量代码——改善Java程序的151个建议》</li>
+</ol>
 
           
         
@@ -279,6 +260,14 @@ a = (a + b) / (c * <span class="keyword">d</span>);
             
               <a href="/blog/tags/Java/">
                 #Java
+              </a>
+            
+              <a href="/blog/tags/技术/">
+                #技术
+              </a>
+            
+              <a href="/blog/tags/马上有OFFER/">
+                #马上有OFFER
               </a>
             
           </div>
@@ -307,8 +296,8 @@ a = (a + b) / (c * <span class="keyword">d</span>);
           
           
             
-              <a class="post-title-link" href="/blog/2013/08/罗辑思维/">
-                罗辑思维
+              <a class="post-title-link" href="/blog/2014/02/书呆子/">
+                书呆子
               </a>
             
           
@@ -318,7 +307,7 @@ a = (a + b) / (c * <span class="keyword">d</span>);
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-08-09
+            发表于 2014-02-25
           
         </span>
 
@@ -341,8 +330,8 @@ a = (a + b) / (c * <span class="keyword">d</span>);
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/08/罗辑思维/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/罗辑思维/"></span>
+            <a href="/blog/2014/02/书呆子/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/02/书呆子/"></span>
             </a>
           </span>
           
@@ -358,24 +347,42 @@ a = (a + b) / (c * <span class="keyword">d</span>);
 
         
           
-            <p>2012年12月21日，传说中世界末日的那一天。一个叫《罗辑思维》的节目上线了。从此，每天早上打开微信就会有一个60秒语音的马桶伴侣，每周五还有我，一个叫罗振宇的胖子在镜头前唠叨“歪理邪说”。</p>
-<p>一晃8个月。如今《罗辑思维》视频光在优酷上就拥有超过3000万人次的观看量，我们的微信公众号上聚集了50万忠实用户。一颗小小的种子，正迎着互联网的轻风成长。</p>
-<p>我自知，大家爱的不是我，罗胖只是歪嘴肉身凡胎。更不是我的搭档，那个叫申音的小胡子。</p>
-<p><strong>大家爱的是罗辑思维里展现的那个魅力人格体，寄托着我们对知识、对自由、对未来、对独立的向往。</strong></p>
-<p>回到我和老申的初心，罗辑思维是一个要跨越十年的互联网实验，它不仅仅是一个脱口秀，一个自媒体。我们想要打造的是一个有灵魂的知识社群，一帮自由人的自由联合。</p>
-<p>现在是我们再向前迈出一步的时候了。</p>
-<p>茫茫人海中，罗辑思维想找到这样一帮朋友，十六个字概括：<strong>爱智求真、积极上进、自由阳光、人格健全。</strong><br>十万同道，这样的要求算不算高？这样的一群人如果真能通过互联网聚集在一起，究竟能发生什么？值得想象和期待。</p>
-<p>公元627年，一个叫玄奘的和尚出玉门关，陪伴他的只有古道西风瘦马。</p>
-<p>三藏法师只有目标和愿力，没有清晰明确的路线图。</p>
-<p>爱，就供养。不爱，就观望。</p>
-<p>凡新事业，必有它的投入和付出，罗辑思维也不例外。树木愈大，根基越深，为了罗辑思维能够持续地健康地走下去，我们需要大家的供养、资助。众人举炬，焰照前路。</p>
-<p>第一年，“罗辑思维朋友圈”诚求5000位发起会员，200元会费，两年会员资格。和我们一道同行。</p>
-<p>200元，也许只是半张演唱会门票，一顿美餐，或者4张电影票，但也可以用来供养一个事业。</p>
-<p>如果您有能力有意愿为罗辑思维贡献更多，我们还额外准备了500个铁杆会员的名额。1200元，2年资格之外，您还有义务为社群做更大的贡献。</p>
-<p>在这里，我和老申要做一个特别承诺：《罗辑思维》的常规视频、微信语音及文章永久免费，向所有热爱知识的朋友奉上，与会员权益无关。</p>
-<p>我承认，这也许是史上最无理的会员方案。没有高高在上的特权，没有清晰可见的权益回报，甚至还有主动参与的义务。但罗胖相信爱的愿力。</p>
-<p>8月9日到8月13日，我在桥这边等你，等你成为罗辑思维生命中的一部分，我们一起来做一个有意义的事业。</p>
-<p><em>转自罗辑思维的《史上最无理会员方案》一文</em></p>
+            <p><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=fd19498833adcbef05347e039c945fe0/0df431adcbef7609668de9d32cdda3cc7dd99ef3.jpg?referer=cd45dc59be315c601a825fdfda91&amp;x=.jpg" alt="书呆子"></p>
+<p>寒窗苦读几十载</p>
+<p>过关斩将或被斩无数次</p>
+<p>终于到了现在的水平和状态</p>
+<p>心中理想与梦想</p>
+<p>脑中独立与自由</p>
+<p>科技报国，实干兴家</p>
+<p>勤勤恳恳</p>
+<p>一心只读圣贤书</p>
+<p>虽至今还无所作为</p>
+<p>但日后的路长又宽</p>
+<p>在那些不懂你的世界的人看来<br>你就是书呆子</p>
+<p>不懂人情世故</p>
+<p>只是做些他们永远都不会明白的事</p>
+<p>你试图向他们解释</p>
+<p>可是你不是大师</p>
+<p>他们也不是好学学生</p>
+<p>于是他们给你“书呆子”的称呼</p>
+<p>你认为他们没见过世面<br>不懂这大千世界</p>
+<p>他们以他们的经验坚定着他们的看法</p>
+<p>你以你的学识和见识笃定你的道路</p>
+<p>谁对谁错</p>
+<p>不去管它</p>
+<p>实践去说</p>
+<p>事实去证明</p>
+<p>对你来说正确的做法是<br>一心只读圣贤书</p>
+<p>闲来去察人情世</p>
+<p>世间道理本相同</p>
+<p>下点功夫鸣惊人</p>
+<p>然而更关键的是</p>
+<p>去说明你的看法</p>
+<p>表达你的观点</p>
+<p>让他们碰撞</p>
+<p>擦出火花</p>
+<p>而不是一笑而过</p>
+<p>任其图说</p>
 
           
         
@@ -386,6 +393,484 @@ a = (a + b) / (c * <span class="keyword">d</span>);
       <div class="post-footer">
         
           <div class="post-tags">
+            
+              <a href="/blog/tags/札记/">
+                #札记
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2014/02/合并查找算法学习笔记/">
+                合并查找算法学习笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-02-25
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/MSE/">MSE</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2014/02/合并查找算法学习笔记/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/02/合并查找算法学习笔记/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h3 id="设计算法的步骤：">设计算法的步骤：</h3><p>一、对问题建模。</p>
+<p>二、找的一个可运行的算法解决这个问题。</p>
+<p>三、算法是否够快？内存占用是否够少？</p>
+<p>四、如果不是，找出原因。</p>
+<p>五、寻找优化的可能。</p>
+<p>六、迭代直到满意为止。</p>
+<h3 id="动态连接性问题（Dynamic_connectivity）">动态连接性问题（Dynamic connectivity）</h3><p>判断网络中任意两点之间的连接性。</p>
+<p><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=264720cf0d2442a7aa0efda0e178dc76/0eb30f2442a7d9337083fe3faf4bd11373f00156.jpg?referer=8e6cf5c848ed2e73a5feb31c6f4d&amp;x=.jpg" alt="动态连接问题"></p>
+<p>给定N个对象的集合，对这些对象有两中类型的操作：<br>1）Union：连接两个对象</p>
+<p>2）Find：是否存在一条连接给定两个对象的路径</p>
+<p>对这个问题建模：</p>
+<p>1）对对象建模：这里的对象可以是任何类型。如图片中的像素，网络中的计算机，社交网络中的好友，计算机芯片中的晶体管，集合中的元素等等。</p>
+<p>2）对连接建模：连接满足以下的性质：自反性（p与p连接），对称型（p与q连接，则q与p连接），传递性（如果p和q连接，q和r连接，则p和r连接）。</p>
+<p>我们还可以定义连接组件：最大的相连对象的集合。</p>
+<p>设计算法解决问题：</p>
+<p>设计有效的数据结构。要考虑到对象的数量N和操作的数量都可能很大。Find和Union操作可能是交叉进行的。</p>
+<p></p><p></p>
+<p>Quick-find算法：</p>
+<p>数据结构:int id[N]。</p>
+<p>如果p和q连接，当且仅当id[p] = id[q].</p>
+<p>Find：id[p] == id[q].</p>
+<p>Union:合并p和q，将所有id值等于id[p]都改为id[q].</p>
+<p>Quick-find算法分析：</p>
+<p>初始化时代价为O(N)，Find的代价是O(1)，Union的代价是O(N).<br>对于N个对象的N次Union的代价是O(N^2)。</p>
+<p>Quick-union算法：</p>
+<p>数据结构：int id[N],id[i]是i的父节点。<br>i的根节点为id[id[id[..id[i]..]]]，直到节点值不变为止。（确保无环）。</p>
+<p>Find：root(p) == root(q)</p>
+<p>Union:合并p和q，将p的根的id值设为q的根值。</p>
+<p>Quick-union算法分析：</p>
+<p>初始化时代价为O(N),union的代价为O(N)，find的代价为O(N)。</p>
+<p>对比Quick-find和Quick-union可知Quick-find的Union操作代价太高，树是扁平的，但是需要付出很大的代价。<br>Quick-union的树高度可能很高，find操作的代价太高。</p>
+<p>可以改进的方面：<br>1）降低树的高度。通过记录每个树的高度，合并时将小的树连接到大的树根上。<br>2）路径压缩。当计算完p的根时，将每一个检查过的节点指向p的根。</p>
+<p><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=ef7e52a58f1001e94a3c140a88350ad1/7dd98d1001e939016d8d967279ec54e737d196ea.jpg?referer=05e6275fdf54564ebc72d009d2a8&amp;x=.jpg" alt="几种Union-Find算法分析"><br>WQUPC（Weighted quick-union with path compression）算法的平摊分析【Hopcroft-Ulman,Tarjan】：<br>从空数据结构开始在N个对象上的任意序列的M次union-find操作的数组访问次数&lt;=c(N+MlgN)。<br>理论上WQUPC不是线性的，但是实践中它是线性的。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/问题与算法/">
+                #问题与算法
+              </a>
+            
+              <a href="/blog/tags/马上有OFFER/">
+                #马上有OFFER
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2014/01/我的第一堂MOOC课——机器学习基石/">
+                我的第一堂MOOC课——机器学习基石
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-01-23
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/MSE/">MSE</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2014/01/我的第一堂MOOC课——机器学习基石/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/我的第一堂MOOC课——机器学习基石/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h3 id="什么是MOOC">什么是MOOC</h3><p>大型开放式网络课程，即MOOC（massive open online courses）。2012年，美国的顶尖大学陆续设立网络学习平台，在网上提供免费课程，Coursera、Udacity、edX三大课程提供商的兴起，给更多学生提供了系统学习的可能。这三个大平台的课程全部针对高等教育，并且像真正的大学一样，有一套自己的学习和管理系统。</p>
+<p>详见果壳MOOC入门第一课：<a href="http://www.guokr.com/zone/MOOC/" target="_blank" rel="external">http://www.guokr.com/zone/MOOC/</a><br>网易公开课年终策划：<a href="http://open.163.com/2014/#/home" target="_blank" rel="external">http://open.163.com/2014/#/home</a></p>
+<h3 id="我的MOOC第一课">我的MOOC第一课</h3><p>在我的同学的影响下，我也注册了cousera上的国立台湾大学林轩田的《机器学习基石》课程。这门课时中文授课，但作业和讲义都是英文的。还记得第一次上课时做随堂测验题那种欣喜。这是一种非常好的方式来让学生跟上老师的讲课节奏。听了几讲，觉得林老师讲的非常生动，有条理，由浅入深，真正算是机器学习基石课程。</p>
+<p>这门课的首先介绍了什么是机器学习，通过最简单的PLA算法介绍了机器是如何学习的。其次介绍了机器为什么能够学习，主要从霍夫丁不等式开始推论，引出了机器学习最重要的理论基础VC bound 和VC维。然后通过介绍最简单的线性回归，逻辑线性回归算法展示了机器是如何学习的。最后介绍了过度拟合的危害及应对过度拟合的方法，引入了为提高机器学习能力的方法。</p>
+<p>课程的四次作业设计的也非常合理，从题目之间的设计可以看出老师的良苦用心。而且最令人感动的是林老师几乎回答论坛上的每一个问题。</p>
+<h3 id="我的感悟">我的感悟</h3><p>想MOOC这样的网络课程，如果不是自己真正的感兴趣，一般是很难坚持上完一门课的。因为没有传统学校中学分的要求，也没有老师的监督，全靠学生的自我控制力。如果你的时间很紧，很难坚持的上完一门课，因为它的优先级和重要性与你当前哪些“正事”是无法相比的。但我也相信，只要你坚持上完一门自己感兴趣的课程，你会收获到很多惊喜。</p>
+<p>最后是关于Honor Code的，每个人注册时都要同意并签署。如果有人在论坛中违反了Honor Code就会被其他同学发现，这种相互监督的方式更好的提高了在线课程的学习质量，也很好的体现了互联网的自治精神。不是为了及格或者学分去学习一门课程，而是自己主动去学习感兴趣的课程，自我完善，自我提升。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/札记/">
+                #札记
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2014/01/我们都是赶路人/">
+                我们都是赶路人
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-01-02
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/MSE/">MSE</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2014/01/我们都是赶路人/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/我们都是赶路人/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>新一年到来时在罗辑思维中看到蒋方舟的一篇文章《黑夜中也健步如飞的路》。讲的是关于梦想的事情。原文如下：</p>
+<p>大学四年，我听了无数次讲座和演讲。在所有这些演讲中，听众最多的，当然是那些创业成功者来做的演讲。演讲结束之后，有三个问题被问得最多：“第一，你觉得你成功的最大因素是什么？第二，你的公司去年的营业额是多少？第三，你们公司现在招人么？麻烦给一个发简历的邮箱吧。”</p>
+<p>而最有趣的是，所有这些以招聘和广告为目的的演讲，题目中一定包含着“梦想”两个字。</p>
+<p>从那时候开始，我开始对“梦想”这个词产生了怀疑。</p>
+<p>现在，当我打开电视，听到的最多的词也是梦想。一个又一个年轻人说：“音乐是我的生命，我不能没有它，所以我来了。”意思是：“我想红”。台下的评委问：“你的梦想是什么？”台上的选手说：“唱歌给更多的人听。”意思还是：“我想红。”</p>
+<p>成为明星是梦想、成为冠军是梦想，答对五个题目打败了四个人闯了三关也是梦想，甚至上电视三分钟就被速配了一个恋爱伴侣，晕晕乎乎就牵手下台也属于“梦想”。</p>
+<p>我们是多容易被词汇迷惑啊。自从有了“成功人士”这个称谓，我们对于“成功”的想象就是“白玉为堂金做马”；自从“梦想”这个词被滥用，它所指代的内容就是“有朝一日，大鸣大放，路人皆知”。</p>
+<p>如果马丁路德金活在当今中国，他会不会说：“我有一个梦想……不过跟大家都差不多……”</p>
+<p>罗胖新年寄语：<br>1，人人都想牛逼。<br>2，想牛逼，没啥不好意思。<br>3，把“想牛逼”装修成“有梦想”等等高大上的词汇，让明白人笑话。<br>4，放下虚荣、懒惰和妄念，赶路要紧。<br>5，2014，咱都多少往前走一段。</p>
+<p>而“赶路”一词，让我想起了元旦听了无数遍的胡德夫的《匆匆》：</p>
+<embed src="http://www.xiami.com/widget/0_381833/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent">
+
+<p>初看春花红，转眼已成冬，</p>
+<p>匆匆，匆匆，</p>
+<p>一年容易又到头，韶光逝去无影踪。</p>
+<p>人生本有尽，宇宙永无穷，</p>
+<p>匆匆，匆匆，</p>
+<p>种树为后人乘凉，要学我们老祖宗。</p>
+<p>人生啊，就像一条路，一会儿西，一会儿东，</p>
+<p>匆匆，匆匆。</p>
+<p>我们都是赶路人，珍惜光阴莫放松，</p>
+<p>匆匆，匆匆，</p>
+<p>莫等到了尽头，枉叹此行成空。</p>
+<p>人生啊，就像一条路，一会儿西，一会儿东，</p>
+<p>匆匆，匆匆。</p>
+<p>人生啊，就像一条路，一会儿西，一会儿东，</p>
+<p>匆匆，匆匆。</p>
+<p>我们都是赶路人，珍惜光阴莫放松！</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/札记/">
+                #札记
+              </a>
+            
+              <a href="/blog/tags/生活/">
+                #生活
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2013/12/高交会·深圳/">
+                高交会·深圳
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-12-29
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/MSE/">MSE</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/12/高交会·深圳/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/12/高交会·深圳/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h3 id="高交会">高交会</h3><p>高交会号称“中国科技第一展”，由中华人民共和国商务部、中华人民共和国科学技术部、中华人民共和国工业和信息化部、中华人民共和国国家发展和改革委员会、中华人民共和国教育部、中华人民共和国人力资源和社会保障部、中华人民共和国农业部、中华人民共和国国家知识产权局、中国科学院、中国工程院、深圳市人民政府主办，深圳市中国国际高新技术成果交易中心（深圳会展中心管理有限责任公司）承办，是中国规模最大、最具影响力的科技类展会。</p>
+<h3 id="高交会现场">高交会现场</h3><p>作为发展中心的高交会工作组的志愿者，我有幸参与了第十五届高交会。我也全程参与了高交会的筹备，展览，撤展等整个过程，受益良多，眼界大开。</p>
+<p>在筹备阶段我参加了一次工作小组的会议。会议主要是讨论筹备的进度及需要解决的问题。领导的处事风格是不仅告诉你他的选择，他还告诉你为什么做出这样的选择。另一方面就是领导额视野，一般的工作人员都是只顾自己负责的部分有没有完成，而没有顾及整个发展中心在整个展会中的位置。</p>
+<p>我们11月六日坐飞机到深圳展开布展工作。我们志愿者的主要任务就是打杂。工作小组最重要的任务就是融汇大屏幕的搭建和调试。融汇大屏由72块电视组成，搭架子，安装屏幕，插线都比较繁琐，也是工作的重中之重。对于第三次参加高交会布展的工作人员仍然需要大领导不断监督，提醒，才能把每一个细节都注意到。如对线路的保护，大屏幕稳定性等等。</p>
+<p><img src="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=39b7b0f07f1ed21b7dc92ee09d55acf9/a5c27d1ed21b0ef4a5f6b95cdfc451da81cb3e91.jpg?referer=11e06d030855b319c5eeb7457a70&amp;x=.jpg" alt="志愿者工作中"></p>
+<p><em>安装大屏幕中……</em></p>
+<p>作为中科院的组团单位，发展中心需要接待来参展的每一个单位的工作人员。因而就需要把工作都做到位，使得参展人员来了拿出电脑就可以直接使用，完成布展。</p>
+<p><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=dc6dececb68f8c54e7d3c52a0a125cc8/f2deb48f8c5494ee8323251b2ff5e0fe99257eaa.jpg?referer=e6f6cefaa586c91751146709ba68&amp;x=.jpg" alt="央视记者采访"></p>
+<p><em>原来央视记者采访也会NG很多次</em></p>
+<p><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=1a8fcf3bb1de9c82a265f98a5cbaf137/d009b3de9c82d158446872b3820a19d8bd3e42cd.jpg?referer=74d48c77d488d43fa9bea5c2aec3&amp;x=.jpg" alt="中科院专题馆"></p>
+<p><em>这个融汇大屏幕使我们工作的大头</em></p>
+<p>第一天上午，听说汪洋要来。当我从在四号馆转悠时就看到一大波人正在往中科院的五号馆走，我就知道是汪洋来了。跟紧人群，曾经一度被安保人员推开。不过汪洋40分钟的安排在中科院专题馆停留时间最长，可以留给我更多的拍照时间。只能看到有人在汇报工作，听不到他们在说什么。</p>
+<p><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=584a497c9058d109c0e3a9b7e163bd82/574e9258d109b3de199cce6acebf6c81800a4c94.jpg?referer=46d0dccffe039245f8a2d43fac8a&amp;x=.jpg" alt="汪洋来了"></p>
+<p><em>嗨，哥们，你挡着我了</em></p>
+<p>展览阶段的深圳会议展览中心可谓是人山人海，从第一天到第五天人都很多。不像是物博会，第二三天就需要动员学生来充当观众了。其中一号馆最大，最热闹，也最吸引人。</p>
+<p><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=0c18d4214b540923ae69637ba263a034/ca1349540923dd54d7e78d6ad309b3de9c82481f.jpg?referer=f3225822bb12c8fcede4c2fda8f5&amp;x=.jpg" alt="人山人海的一号馆"></p>
+<p>展览阶段还去五楼听了一个2013移动互联网智慧峰会，思维专家介绍了未来网络，宽带中国战略和移动支付等内容。</p>
+<p>最后一天下午开始撤展，拆大屏幕，打包装箱使我们的主要任务。装车都是请的搬运工人，即使这样，我们还是忙到了晚上12点才结束。今天晚上是通宵撤展，展会上所有的一切都要撤掉。</p>
+<h3 id="我在深圳">我在深圳</h3><p>这次行程有很多我人生中的第一次：第一次坐飞机，第一次到深圳，第一次参加如此大规模的展会，第一次见到国家级领导。</p>
+<p><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=b87cb7334e086e066ea83f4e32330ac9/a8014c086e061d950a9e1c3a79f40ad163d9cad3.jpg?referer=f2faa03b6963f624454a0d3336b1&amp;x=.jpg" alt="夜幕下的无锡"></p>
+<p><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=a82a5d246f224f4a5399731639cce16f/42166d224f4a20a45cf217c592529822730ed0c7.jpg?referer=f3812b18c45c10387d69faf210dd&amp;x=.jpg" alt="罗湖区"></p>
+<p><em>宾馆外的罗湖区</em></p>
+<p><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=cbecb52a952bd40746c7d3f84bb2ef6c/aa18972bd40735fa240565bb9c510fb30f24083e.jpg?referer=b145b7453b12b31b9e7bf91968d5&amp;x=.jpg" alt="何香凝艺术馆"></p>
+<p><em>何香凝艺术馆，</em></p>
+<p><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=effee3c8ad51f3dec7b2b961a4d58122/fcfaaf51f3deb48ffebc8adcf21f3a292cf578de.jpg?referer=42a63b2d97cad1c889acc817b8b4&amp;x=.jpg" alt="来深圳必去世界之窗"></p>
+<p><img src="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=477bd88d6e81800a6ae5890b810e42c7/cdbf6c81800a19d82a1da50731fa828ba61e4691.jpg?referer=11b7b0f07f1ed21b20de1bd5a28f&amp;x=.jpg" alt="亚冠的比赛不能不看"></p>
+<p><em>见证恒大夺冠</em></p>
+<p>在深圳的日子还是相当满意的，住在东门商业街附近，早餐晚餐都是自助。回来同学说我都胖了，脸变圆了。</p>
+<p><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=ddd894e6b11c8701d2b6b2e31744ef12/8ad4b31c8701a18b747d384d9c2f07082838fe1a.jpg?referer=9e89507822a4462327dd91523af8&amp;x=.jpg" alt="东门商业街"></p>
+<p>见了同学，参观了何香凝艺术馆，感受了大梅沙的沙滩和海浪。见证了东门的人流涌动，车水马龙。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/生活/">
+                #生活
+              </a>
             
               <a href="/blog/tags/读书·旅行/">
                 #读书·旅行
@@ -406,904 +891,12 @@ a = (a + b) / (c * <span class="keyword">d</span>);
 
 
   
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/07/人为什么要帮助他人/">
-                人为什么要帮助他人
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-07-12
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/07/人为什么要帮助他人/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/07/人为什么要帮助他人/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><em>本文是一篇论文阅读报告，这篇论文探讨了了人类利他行为的一些模式及利他行为与合作的关系，展示了如何通过设计一些有趣的实验来研究人的利他行为，揭示人类利他的本质。</em></p>
-<p><em>原始论文信息：Ernst Fehr &amp; Urs Fischbacher,The nature of human altruism,NATURE,VOL 425,23 OCTOBER 2003.</em></p>
-<p><strong>摘要</strong></p>
-<p>人利他和自利关乎一些人类的基本问题，如进化起源，社会关系，社会组织等。实验证据表明人类的利他行为是一种非常强大的力量且在动物界中是独特的。然而，个体之间的异质性及利他者和自利者之间的互动对于人类社会的运行是非常关键的。在特定的环境下，少数的利他者可以迫使多数的自利者合作；相反的，少数的利己主义者会导致多数的利他者背叛。现有的基于基因进化理论不能很好地解释人类利他的重要模式，这就使得结合基因文化共同进化理论和文化进化理论成为未来研究的方向。</p>
-<p><strong>1引言</strong></p>
-<p>人类社会在动物世界中是一个巨大的反常。人类社会基于劳动分工和大型组织中非基因相关个体之间的合作。为什么人类在这一方面会有如此大的不同？具有独特模式的利他行为是这一问题的答案。</p>
-<p>这篇论文首先介绍了人类利他行为中重复交互，声望形成及强互惠的相对重要性的实验证据。本文的利他是指行为学意义上的，即失去自己的一些经济利益而给予其他个体经济上的利益。基于血缘关系或同族关系的利他在本文中没有进行讨论，因为其他动物种类也有类似基于血缘的利他行为。</p>
-<p>这篇论文首先说明了自利者和强互惠者之间的互动对于理解人类合作是至关重要的。他们指出了在什么情况下自利者会导致合作的失败，在什么情况下强互惠者有能力保证广泛的合作。</p>
-<p>其次，这篇论文讨论了由于利他是有代价的而导致的人类利他的局限性。<br>最后，这篇论文介绍了各种利他形式的进化根源（这篇报告中未涉及）。</p>
-<p><strong>2 利他的近似模式</strong></p>
-<p>实际生活中的利他行为的动机是多方面的。因此，为了得到准确的关于人类利他行为动机的知识，只有通过实验来保证。</p>
-<p>这一部分首先讨论了一个将亲属之间的交互，重复交互，声望形成等因素排除的实验。其次，证明了未来的交互的可能性及个体声望的变化对利他行为的影响。在这些实验中，都是用真实的货币，有时使用的货币数量达到三个月的工资。实验对象不知道他们将要见到的人的身份信息，而且他们对于实验的有充分的了解。</p>
-<p><strong>2.1 利他惩罚</strong></p>
-<p>最后通牒游戏很好的说明了多数来自不同文化背景的人愿意损失一些自己的利益来惩罚那些导致不公平结果的行为。在这个游戏中两个人分一笔固定数目的钱。A提出分钱方案，B选择接受或拒绝A提出的分钱方案。如果B接受则按A提的方案分钱，否则，两个人将什么都得不到。实验的结果表明如果A给B的钱数少于25%，B拒绝的可能性就会非常高。这也说明B并不是传统经济学假设的理性人，因为理性人会接受任意钱数。B接不接受A的分钱方案取决于B认为A的分钱方案对于B来说是否公平。因此，一般情况下该游戏的分钱方案都是平分。</p>
-<p>最后通牒游戏中的拒绝可以认为是一种利他行为，因为大多数认为平分才是一个公平的结果。B拒绝A提出的方案对于B来说也是有代价的，而且也可以作为是对A不遵守社会规则的惩罚。所以，A会在将来的分钱方案中变的不那么贪婪。</p>
-<p>这篇论文的作者还做了一个共进行10轮的实验。在这个实验中，10个A会遇到不同的B。结果显示前一轮中被拒绝的A会在下一轮中增加7%的钱给B。</p>
-<p>在最后通牒游戏中，方案的提出者直接影响方案的响应者。然而，在实际的社会规范中最重要的是对违规者的惩罚，这种惩罚不是因为违规者对惩罚者做了什么，而是违规者对其他人做了什么。规范的执行涉及对违规者的惩罚，即惩罚者没有受到相关利益损害。为了研究这一问题，作者设计了一个第三方惩罚游戏。在这个游戏中有三个参与者：分配方，接受方，和第三方。分配方拥有100个金钱单位，接受方没有金钱单位，第三方有50个金钱单位。分配方可以随意地给接受方任意多的金钱单位。当第三方被告知分配方的分给接受方的钱后，他可以付出一定的金钱单位来惩罚分配者。第三方每花费一个金钱单位惩罚分配方，分配方将被减少三个金钱单位。因为惩罚需要付出代价，所以不会有自私的第三方会去惩罚。但是如果公平原则应用到这一情景，利他者就会惩罚那些不公平的分配方案。实验结果是55%的第三方会惩罚那些分配给接受方低于50个金钱单位的分配方。而且给的越少，惩罚越严重。此外，70%-80%的接受方期望第三方惩罚那些不公正的分配方。</p>
-<p><strong>2.2 利他奖励</strong></p>
-<p>研究利他奖励的典型实验是：有A和B两个人，每个人有10个金钱单位。首先A决定给B一定的金钱单位，然后B决定给A一定的金钱单位。实验者将转移的金钱单位翻倍，这样A、B两个人最好将所有的金钱单位都给对方：如果每个人将所有的金钱单位给对方，每个人将得到20。然而，一个自私自利者B不会给A任何金钱单位。所以一个自私者A预见到这种行为时也不会给B任何金钱单位。</p>
-<p>这个实验模仿了实际生活中的的大多数情景。在这些情境中，参与的双方最好交换物品和善行，当然也会有很大的作弊的诱惑。尽管可以作弊，但多于50%的B会给A相同数目或多于A给B的金钱单位。</p>
-<p>同利他惩罚一样，利他奖励在不同国家，不同人口分布特征，及2-3个月工资的情况下的结果都类似。</p>
-<p><strong>2.3 强互惠和多边合作</strong></p>
-<p>在一些情景下，如食物分享，合作狩猎和战争，涉及大型的组织和成千上万的个体。那么在涉及公共物品这些情境下，强互惠对合作的贡献有多大的贡献呢？根据定义，公共物品是指可以被任何成员消费的物品，而不管成员的贡献多少。因此，每一个成员都会有搭便车的想法。利他奖励在这个情景下就是如果一个个体期望的其他成员的贡献会增加，那么该个体也会增加贡献。</p>
-<p>在只进行一次公共物品的实验中，一般的个体会贡献40%-60%。尽管自私的个体会什么都不贡献。而且如果一个人对他人的贡献的期望越高，那么这个个体也会贡献的更多。但当实验进行多轮时，如10轮，个体的贡献就会越来越少，合作就很难持续下去了。</p>
-<p>这种结果的合理解释就是虽然群体中有大部分是强互惠者，但是也有一定数量的搭便车者。大量的强互惠者的存在使得每个个体平均的贡献会增加，但是由于有一定数目的搭便车者，使得无法达到一种较高水平合作均衡。最终导致合作的终止。为了维持这种n人的合作，必须要维护一种信念，即个体相信所有的或者绝大多数的成员都会合作。所有提供这样信念的机制必须给自私者合作的刺激。在重复的交互情形下对不合作者的惩罚和利他惩罚是两种比较可能的促使合作的机制。</p>
-<p><strong>2.4 重复交互和声望形成</strong></p>
-<p>在公共物品情景下，另一种保证合作实施的机制是利他行为的声望。如果一个人背叛了，如果其他人知道了这个人曾经背叛过，那么其他人就不会主动再帮助这个人。</p>
-<p>一些关于公共物品的实验表明人愿意做一些有益于他人的行为来提高自己的声望。当一个人可以通过慷慨的帮助他人来增加自己的声望，那么这个人会更加积极的帮助他人。</p>
-<p>论文作者做了一个实验来研究重复交互和声望效应对惩罚行为的影响。他们进行了一系列10人的最后通牒游戏，但有两个条件：一个是声望条件，一个是基准条件。在两个条件下，在十轮实验中每个分配者会匹配不同的接受者，分配者有10个金钱单位可以进行分配。在声望条件下，分配者被告知接受者过去的拒绝行为记录，而基准条件下则不告知。这就意味着在声望条件下响应者可以通过拒绝一些很高的出价成为一个谈判高手。响应者可以通过损失短期的收益来获得更多的收益（如果分配者了解响应者较难谈判的声望，分配者就会分给响应者更多的钱数）。</p>
-<p>在两种条件下，每一个接受者都有一个接受阀值，即愿意接受的最小数目。结果显示基准测试下的接受阀值是3个金钱单位，而一旦他们进入声望条件下，他们的接受阀值会增加到4个金钱单位。同样的，如果首先进行的是声望条件，当进入基准条件是实验者的平均的接受阀值也会减少。当他们从基准条件进入声望条件，大部分的接受者（82%，n=94）增加了他们的接受阀值，而少部分保持不变。</p>
-<p><strong>3人类利他的局限性</strong></p>
-<p>在匿名的一次交互中强互惠的个体会奖励和惩罚。而在重复的交互或者声望受到威胁的情况下，他们会增加奖励和惩罚。这说明利他和利己共同驱动他们这样做。利他导致他们在一次交互情形下合作和惩罚，自私导致他们在多次交互的情形下或者当增加声望成为可能的情形下增加奖励和惩罚。如果这一观点正确，我们会观察到随着利他行为代价的增加，利他行为会逐渐减少。在较高的代价下，个体必须放弃他们自己的利益来帮助他人，因此利他的行为会越来越少。</p>
-<p><strong>4 近似理论</strong></p>
-<p>利他奖励和惩罚显示人不仅仅是自私的，人也是利他的。一些学者提出了一些关于非自利的理论模型，这些模型在很多情景下可以很好地进行预测。这些理论形成了不公平厌恶和互惠公平等概念。他们预测，在囚徒困境中，实验对象更倾向于共同合作而不是单边的背叛，尽管单边背叛是使自我利益最大化的选择。这种预测被一些实验证据所证实。如果游戏者有这样的偏好，那么这个游戏就不是一个囚徒困境问题了，而是一个确定的游戏（共同背叛或合作是均衡状态）。然而，由于共同背叛也是均衡状态，结果就取决于一方对另一方采取行动的一种信念。</p>
-<p>最近的神经生物学合作的结果支持共同合作的观点。如果实验对象共同选择合作，大脑的奖励回路会被激活。此外，也有证据表明如果一方合作，一方背叛，大脑的多巴胺系统会有消极的反映。</p>
-<p>　　</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/07/每日一博93天总结/">
-                每日一博93天总结
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-07-12
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/07/每日一博93天总结/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/07/每日一博93天总结/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>每日一博进行了整整93天，回头统计自己发布的那些博文，有的是自己写的，有的是关键时刻临场凑的，更多的是转载。再看看自己博客的访问次数，几乎没有什么增长，发布的大部分博文都是0阅读。如果自己写的博文都没还有人看，那说明写的博文质量不高不能吸引读者，也有可能是自己的博客内容过于分散在搜索引擎排名靠后。</p>
-<p>坚持写了93天后，发现自己没什么想写的内容了，至少不能每天写一篇了。于是就有放弃每日一博计划的想法。一旦有了放弃的想法后，各种理由开始涌上心头，最终决定放弃了。虽然回头看自己坚持了93天还是很有成就感的。现在看来过高的要求的后果就是，很长一段时间我就没再发一篇博文。甚至是这篇总结也是在终止每日一博计划的一个月后才写完。这一个多月看了几本书，可以写读书笔记；有很多想法，可以写出来；但是最终没有写一篇，这也许就是过高要求没能实现后的结果。</p>
-<p>今后将不再刻意要求自己一定要发多少博文，而是追求博文的质量和阅读次数。没有发博文的标准，只要自己认为有要写博文写就可以了。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/06/端午/">
-                端午
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-06-10
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/06/端午/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/06/端午/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><strong>粽香飘曳四说端午</strong></p>
-<p>一说端午：端午的端是端正，人是天地之心、五行之端，所以，端为始。午是正中，“一纵一横为午”，纵横交错才正中，交错为阴阳争，所以，午时三刻推出午门斩首，是为整肃，端正。由此，阴阳交错立正，才是端午节的原意。粽子称角黍，黍是北方的黄米、南方的糯米；角，牛角，是祭器；角黍是阴阳争时的端正象征。</p>
-<p>再说端午：一，按照《周易•系辞》解释，五为数字中，五五相遇的数学是：天数二十五，地数三十，天地之数五十有五，变化而行鬼神，端午由此才是重要节日。这就深了。二，角黍即粽子，以箬竹叶包黍米，是阴包裹阳之象。按最早晋朝周处《风土记》记载，除包角黍，还要煮肥龟，皆以“阳内阴外之象赞时”。</p>
-<p>三说端午：古时端午前两日有扇市，到了买扇子、用扇子的时候了。从象征明月的圆扇，到诸葛亮用的白羽扇，再到折扇，“凉友招清风”，扇子其实是古时文人实用的一种诗意物件。如朱熹说，“动摇便是用，放下便是体”。总结此诗意，最令人赞叹的还是白居易：“盛夏不销雪，终年无尽风，引秋生出手，藏月入袖中。”</p>
-<p>四说端午：端是正，五字上下各一，中间是交错，天数五，地数五，五为交午，两个五相会，古人称今天午时为“天中节”。这一天各家门前要插艾虎蒲剑，“艾虎”是采艾蒿制成虎状，“蒲剑”是将菖蒲叶裁成剑状，要以雄黄涂耳鼻，小儿要系“长命缕”，富家还要以五毒塑形的“五毒饽饽”送友人，都为了辟邪。</p>
-<p><strong>端午的四个关键词</strong></p>
-<ol>
-<li>女儿节<br>端午节，家家漂亮装扮小闺女，石榴花插在发髻上，也称“女儿节”。“红杏单衫花满头，彩扇香囊不离手。”除了吃粽子，吃食还有樱桃、桑葚、荸荠、桃、杏及五毒饼、玫瑰饼。老北京中午也吃新蒜就过水面，街头叫卖：“供佛的哎桑葚来，大樱桃来，好蒲子、好艾子，江米儿小枣儿凉凉的大粽子来。”<p></p></li>
-<li><p>九子粽<br>按古人的记载，端午的粽子就有各种形状：“有角粽、锥粽、茭粽、筒粽、秤锤粽，又有九子粽。”“九子粽”是什么？是将九个小粽子串为一串。儿时母亲用硬纸叠成小粽子，每个以各色丝线缠绕，每串几个，最后是一个网兜独头蒜，每人蚊帐帐钩上都挂一串。</p>
-</li>
-<li><p>雄黄酒<br>端午辟毒用雄黄酒。雄黄被古人称“黄金石”，因“丹之雄”而命名。古人说它能杀百毒、辟百邪，佩在身上，鬼神不敢近；入山林，虎狼伏；涉川水，毒物都不敢伤。但此物有毒，所以，“雄黄酒”不是喝的，是从端一（五月初一）日起，用雄黄少许泡酒，在阳光下晒熟后，涂在小孩的额头与耳根上，以辟毒。</p>
-</li>
-<li><p>医草<br>采艾浸酒，饮之才可“祛邪”，艾草即有苦香的艾蒿。端午以蒲龙艾虎悬门户禳毒气，蒲草扎成龙、艾蒿扎为虎。艾蒿可治百病，故称“医草”，针灸燃之。艾是穷人用香草，雅士用兰，穷人用艾。美女称“少艾”，一般人不知道。孟子曰：“知好色则慕少艾”，《桃花扇》中则有“积得些财帛，聚了些娇艾”。</p>
-</li>
-</ol>
-<p><strong>南北粽子缤纷登场</strong></p>
-<p>又是一年端午时，大江南北飘粽香。粽子形状很多，品种各异，风味更是不同，主要分甜、咸两种。甜味有白水粽、赤豆粽、蚕豆粽、枣子粽、玫瑰粽、瓜仁粽、豆沙猪油粽、枣泥猪油粽等。咸味有：猪肉粽、火腿粽、香肠粽、虾仁粽、肉丁粽等，但以猪肉粽较多。</p>
-<ul>
-<li><p>北京地区<br>北京粽子是北方粽子的代表品种，其个头较小，为斜四角形。北郊农村，习惯吃大黄米粽，粘韧而清香，多以红枣、豆沙为馅。</p>
-</li>
-<li><p>广东地区<br>南方粽子的代表品种。个头大，外形别致，除鲜肉粽、豆沙粽外，还有用咸蛋黄做成的蛋黄粽，以及用鸡肉丁、鸭肉丁、叉烧肉、蛋黄、冬菇、绿豆蓉等调配为馅料的什锦粽。</p>
-</li>
-<li><p>闽南地区<br>闽南的粽子分碱粽、肉粽和豆粽。碱粽是在糯米中加入碱液蒸熟而成，兼具黏、软、滑的特色。肉粽的材料有卤肉、香菇、蛋黄、虾米、笋干等，以泉州钟楼肉粽店的肉粽最为出名。豆粽则盛行于泉州一带，用九月豆混合少许盐，配上糯米裹成，蒸熟后，豆香扑鼻。</p>
-</li>
-<li><p>湖南地区<br>湖南汩罗的烧肉粽，糯米必选上乘，猪肉择三层块头，先卤得又香又烂，再加上香菇、虾米、莲子及卤肉汤、白糖等，吃时蘸调蒜泥、芥辣、红辣酱、萝卜酸等多样佐料，香甜嫩滑，油润不腻。</p>
-</li>
-<li><p>杭州地区<br>杭州粽在外形、扎法上自成风格，其代表就是百年汇昌店的“塘栖粽”，主要特点是五花肉、绍兴酒、青竹叶、土灶头、铁锅子、老汤煮。</p>
-</li>
-<li><p>宁波地区<br>浙江宁波粽子为四角形，有碱水粽、赤豆粽、红枣粽等品种。其代表品种碱水粽，是在糯米中加入适量的碱水，用老黄箬叶裹扎。煮熟后糯米变成浅黄色，可蘸白糖吃，清香可口。</p>
-</li>
-</ul>
-<p></p><p><em>本文摘自联通手机新闻晚报2013.06.09周日版</em></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/06/觉不觉解很重要/">
-                觉不觉解很重要
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-06-09
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/06/觉不觉解很重要/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/06/觉不觉解很重要/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>境界一词原指疆界、景象，但自晋唐以降，译佛经者却给它赋予了一种特定的含义。佛教有所谓“六境”的说法，是指基于六根之官能与六尘之接触，然后由六识所产生的一种意识活动的状态。由此可知，在佛学中，所谓“境界”，主要指意识活动中之主观感受；由此而引申出的某方面的造诣的深浅称为境界的高低。在艺术和美学理论中，艺术境界，更与主观感受、创造有不可分的联系。冯友兰正是在综合上述各种含义的基础上，运用“境界”一词讲人生哲学的。所以，在冯友兰的人生哲学中，境界是指由人的主观觉悟和了解造成的精神状态。</p>
-<p>冯友兰认为，人生哲学的根本问题有两个：一是人之异于禽兽者即人之所以为人之理何在？二是人生之意义何在？他根据自己的哲学理论，回答了这两个问题，从而引出了人生四境界说。冯友兰认为，人之所以为人即人之异于禽兽者在于其有觉解，人生的意义就在觉解之中。有觉解是人之理，求觉解是人之性，能觉解者人之心。人生在世，必追求人之理，以成就一个理想的人格；欲成就一个理想的人格，便需尽心尽性。这实际上是一件事的两个方面，成就理想人格是人之理的要求，是做人的必需；而尽心尽性便能达到这个理想人格，是做人的方法，只有尽心尽性，力求觉解人之所以为人的道理，人生才有意义。</p>
-<p>对于每一个人来说，人生的意义并不相同。人生的意义是主观的，全在于他对人之理的理解，这种理解有程度深浅之别。人对于人生愈有觉解，则人生对于他，即愈有意义。</p>
-<p>为什么会如此？冯友兰解释道：一个事物的意义和一个事物的性质是不同的。事物的性质是客观的，你了解不了解，它都是那个样子；意义却不同，它不是本来就有的，不完全是客观的，而是随着人对事物的了解才有的，是在人与事物的关系中发生的，因而，是主观的。</p>
-<p>在确定了人生的意义在于各人对人生的不同的了解这个前提之后，冯友兰指出，人的了解可有最低程度的了解、一般的了解、深的了解（胜解）和最深的了解（殊胜解）几个层次，这几个层次的了解在人生方面表现为四种不同的人生境界，即自然境界、功利境界、道德境界、天地境界。这四种境界是一个从低级向高级的发展过程，境界高低完全取决于觉解程度的深浅，标志着人格完善的程度。</p>
-<p>以下是冯友兰《人生的境界》原文：</p>
-<p>哲学的任务是什么？我曾提出，按照中国哲学的传统，它的任务不是增加关于实际的积极的知识，而是提高人的精神境界。在这里更清楚地解释一下这个话的意思，似乎是恰当的。</p>
-<p>我在《新原人》一书中曾说，人与其他动物的不同，在于人做某事时，他了解他在做什么，并且自觉地在做。正是这种觉解，使他正在做的事对于他有了意义。他做各种事，有各种意义，各种意义合成一个整体，就构成他的人生境界。如此构成各人的人生境界，这是我的说法。不同的人可能做相同的事，但是各人的觉解程度不同，所做的事对于他们也就各有不同的意义。每个人各有自己的人生境界，与其他任何个人的都不完全相同。若是不管这些个人的差异，我们可以把各种不同的人生境界划分为四个等级。从最低的说起，它们是：自然境界，功利境界，道德境界，天地境界。</p>
-<p>一个人做事，可能只是顺着他的本能或其社会的风俗习惯。就像小孩和原始人那样，他做他所做的事，然而并无觉解，或不甚觉解。这样，他所做的事，对于他就没有意义，或很少意义。他的人生境界，就是我所说的自然境界。</p>
-<p>一个人可能意识到他自己，为自己而做各种事。这并不意味着他必然是不道德的人。他可以做些事，其后果有利于他人，其动机则是利已的。所以他所做的各种事，对于他，有功利的意义。他的人生境界，就是我所说的功利境界。</p>
-<p>还有的人，可能了解到社会的存在，他是社会的一员。这个社会是一个整体，他是这个整体的一部分。有这种觉解，他就为社会的利益做各种事，或如儒家所说，他做事是为了“正其义不谋其利”。他真正是有道德的人，他所做的都是符合严格的道德意义的道德行为。他所做的各种事都有道德的意义。所以他的人生境界，是我所说的道德境界。</p>
-<p>最后，一个人可能了解到超乎社会整体之上，还有一个更大的整体，即宇宙。他不仅是社会的一员，同时还是宇宙的一员。他是社会组织的公民，同时还是孟子所说的“天民”。有这种觉解，他就为宇宙的利益而做各种事。他了解他所做的事的意义，自觉他正在做他所做的事。这种觉解为他构成了最高的人生境界，就是我所说的天地境界。</p>
-<p>这四种人生境界之中，自然境界、功利境界的人，是人现在就是的人；道德境界、天地境界的人，是人应该成为的人。前两者是自然的产物，后两者是精神的创造。自然境界最低，往上是功利境界，再往上是道德境界，最后是天地境界。它们之所以如此，是由于自然境界，几乎不需要觉解；功利境界、道德境界，需要较多的觉解；天地境界则需要最多的觉解。道德境界有道德价值，天地境界有超道德价值。</p>
-<p>照中国哲学的传统，哲学的任务是帮助人达到道德境界和天地境界，特别是达到天地境界。天地境界又可以叫做哲学境界，因为只有通过哲学，获得对宇宙的某些了解，才能达到天地境界。但是道德境界，也是哲学的产物。道德认为，并不单纯是遵循道德律的行为；有道德的人也不单纯是养成某些道德习惯的人。他行动和生活，都必须觉解其中的道德原理，哲学的任务正是给予他这种觉解。</p>
-<p>生活于道德境界的人是贤人，生活于天地境界的人是圣人。哲学教人以怎样成为圣人的方法。我在第一章中指出，成为圣人就是达到人作为人的最高成就。这是哲学的崇高任务。</p>
-<p>在《理想国》中，柏拉图说，哲学家必须从感觉世界的“洞穴”上升到理智世界。哲学家到了理智世界，也就是到了天地境界。可是天地境界的人，其最高成就，是自己与宇宙同一，而在这个同一中，他也就超越了理智。</p>
-<p>中国哲学总是倾向于强调，为了成为圣人，并不需要做不同于平常的事。他不可能表演奇迹，也不需要表演奇迹。他做的都只是平常人所做的事，但是由于有高度的觉解，他所做的事对于他就有不同的意义。换句话说，他是在觉悟状态做他所做的事，别人是在无明状态做他们所做的事。禅宗有人说，觉字乃万妙之源。由觉产生的意义，构成了他的最高的人生境界。</p>
-<p>所以中国的圣人是既入世而又出世的，中国的哲学也是既入世而又出世的。随着未来的科学进步，我相信，宗教及其教条和迷信，必将让位于科学；可是人的对于超越人世的渴望，必将由未来的哲学来满足。未来的哲学很可能是既入世而又出世的。在这方面，中国哲学可能有所贡献。</p>
-<p><em>参考文献：人生的境界<a href="http://baike.baidu.com/view/1309927.htm" target="_blank" rel="external">http://baike.baidu.com/view/1309927.htm</a></em></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/06/我是知识分子吗/">
-                我是知识分子吗
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-06-08
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/06/我是知识分子吗/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/06/我是知识分子吗/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>人们通常认为，知识分子就是指那些脑力劳动者或智力劳动者。而法国哲学家萨特认为这一界定是不准确的。没有哪一种工作可以说是纯粹使用脑力或智力的；同样的，也没有哪一种工作是可以完全不用脑力或智力的。他认为那些“干预社会事务”而不是仅仅在象牙塔中关起门来做学问的知识人，才是知识分子。</p>
-<p>萨特注意到，在自己的专业技术工作中，获得知识的方法之普遍性与运用这种方法的特殊性构成一种深刻的矛盾。如果专家让自己适应这种矛盾，或者设法逃避这种矛盾，那么还不能说他们是知识分子。只有当他们之中的一些人变得意识到这一深刻矛盾，并正视这一矛盾，他们才能被称为知识分子。</p>
-<p>举一个例子。在美国，一个科学家由于他具有的专业技术，正在研制美国想在越南试用的新式武器。如果他意识到自己所学得的知识不应该被应用在这样的场合，这种知识的普遍性与它的实际运用是矛盾和冲突的，那么他就是一个知识分子。由于意识到这一根本矛盾，他内心就处于冲突之中：一方面，作为一个专业技术人员，他不可能不继续从事这种武器研制，这是专业的需要；另一方面，当他想到这种新式武器的用途时，又深感自己这样做是不对的，甚至是有罪的。于是他就有了一种“良心的不安”。在具体行动方面，这些科技人员体现出这种良心的不安。较多的情况是在请愿书上签名，谴责美国对越南的战争，同时仍然从事自己的武器研制工作。也就是说，在普遍知识和它的实际专门利用之间的矛盾并没有解决，而他自身内心的矛盾冲突却借这种谴责行动得到缓解和暂时摆脱。萨特说，这就是古典知识分子。</p>
-<p>而费耶阿本德认为，“从西方理性主义一产生，知识分子便把自己看成老师，把世界看成学校，把人民看成顺从的学生。这在柏拉图那里是很清楚的。同样的现象也在基督徒、理性主义者、法西斯主义者中间发生了”。</p>
-<p>专家在能源分配问题、生态问题、教育问题等的决策过程中，发挥着关键作用。但是，对这些问题进行决策根本不应该是他们的事情，而是这些问题直接涉及到的人（利益相关者）的事情。鉴于专家的意见常常带有偏见，是不可靠的，因此，需要有外部控制，而且，“在所有情况下，我们的忠告是，利用专家，但永远不要信任他们，当然，永远也不要完全依赖他们。”（《自由社会中的科学》）。</p>
-<p>知识分子在广义上说是一切创造、传播和应用文化的人（艺术、科学、宗教人士等）。但从狭义角度看并不是所有学术界人士或专业人士都是知识分子。按照科塞的看法，知识分子应该具有这些特征：一种摆脱眼前经验的能力、一种走出当前实际事物的欲望、一种献身于超越专业或本职工作的整个价值的精神。</p>
-<p>知识分子是为理念而生的人，而不是靠理念吃饭的人。知识分子对社会公认的观念和假设，往往持一种批评态度。他们是“另有想法”的人，是精神太平生活中的“捣乱分子”。</p>
-<p>而对于现在的知识分子来说，应该告别狂妄，走向谦虚。因为现在的世界是一个充斥着各种不确定性的世界，没有人能够准确判断未来的趋势。</p>
-<p><em>以上内容摘自中科院王大洲《自然辩证法与科技伦理》课件</em></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/06/罗振宇：这一代人的怕与爱/">
-                罗振宇：这一代人的怕与爱
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-06-07
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/06/罗振宇：这一代人的怕与爱/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/06/罗振宇：这一代人的怕与爱/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><strong>无组织 自由人的自由联合 各种各样的体验 爱</strong></p>
-<embed src="http://player.youku.com/player.php/sid/XNTY0MjEzNzQw/v.swf" allowfullscreen="true" quality="high" width="480" height="400" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash">
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/06/科学圈的那些事/">
-                科学圈的那些事
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-06-06
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/06/科学圈的那些事/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/06/科学圈的那些事/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>科学圈，学名为科学共同体。本文简要的罗列了科学共同体的基本特征和活动。想成为科学家的朋友找对自己的路！</p>
-<p><strong>科学共同体（scientific community）</strong></p>
-<p>定义：具有共同目标、共同的价值观念和共同行为规范的科学家群体。</p>
-<p>目标：知识的增长（“扩展正确无误的知识”——Robert Merton）</p>
-<p>激励机制：科学发现的优先权；成果—承认链条。</p>
-<p>“成果-同行承认”链条（默顿:《科学社会学》）：科学家的科学才能只能根据他们对科学贡献的大小来判断。科学体制内的最高价值是“独创性”，只有那些做出了独创性工作的人才能得到很高的评价。优先权之争就是对这种评价体制的反应。共同体的承认是科学体制的硬通货。作为一种文化资本，“承认”可以转换成其他资本形式。而科学承认的分配只能由其科学同行来控制。</p>
-<p><strong>科学共同体表现形式</strong></p>
-<ol>
-<li>学派：由具有共同学术思想的人们组成,有公认的学术权威为带头人.有的学派还有世代相继的师承关系,甚至有广泛的国际性.权威、有竞争力的集体、历史继承关系、党同伐异。例如，毕达格拉斯学派（自然哲学）、李比希学派（化学）、哥本哈根学派（量子力学）、芝加哥学派（经济学）、爱丁堡学派（科学社会学）。2.  无形学院：非正式的不具排他性的科学家小团体。以优秀科学家为中心，以学术思想为沟通为宗旨，以学术讨论、通信交流为形式，立足于自由联合的科学家非正式团体。在科学前沿，往往是由少数人的非正式交流系统的“无形学院”创造出新知识，然后由正式的交流系统来评价它、承认它、传播它。3.  学会：是受国家法律保护的职业科学家科学家团体，是科学劳动者的集团利益的代表，主要任务是学术交流。在现代国家里，各种学会是政府领导科学技术的智囊团和思想库，是促进社会科学事业发展的有组织的力量。例如，英国皇家学会（1660）。</li>
-</ol>
-<p><strong>科学共同体中的沟通机制</strong></p>
-<p>书信，书籍，非正式交流，学术会议， 学术刊物</p>
-<p><strong>三类科学</strong></p>
-<ol>
-<li><p>学院科学（academic）：在学术机构中从事的科研活动，又可以成为学术科学、公共科学、开放科学。</p>
-<p>目标：扩展知识（知识创新）</p>
-<p>规范：公开共享</p>
-<p>过程：自由探索</p>
-<p>行为：论文发表（在匿名审稿期刊上）以换取承认。</p>
-<p>升迁机制：publish or perish（要么发文，要么走人）</p><p></p>
-</li>
-<li><p>产业科学(industrial)：由产业实验室从事的研究开发活动，又可称为私人科学、保密科学。</p>
-<p>目标：新产品、新工艺、新服务（技术诀窍、专利等）。</p>
-<p>内容：以应用研究与开发为主，但也进行一些基础研究。</p>
-<p>规范：保密，不允许随意发表成果。简称PLACE（齐曼）：讲究知识的专有权（Proprietary），研究局域的问题（Local）， 服从权威的管理（Authoritarian）， 以实用目标为导向（Commissioned）， 被作为专门人才被聘用（Expert）。</p>
-</li>
-<li><p>政府科学(government)：由政府实验室从事的科研活动。基础研究，共性技术。领域包括军事研究，农业研究，其他大科学。</p>
-</li>
-</ol>
-<p></p><p><strong>三类科学家（Cotgrove and Box, 1970）</strong></p>
-<ol>
-<li>公共型科学家(public scientist)：为知识而知识，在公开和共享中得到满足。（居里夫人）2.  私人型科学家(private scientist)：满足于研究工作本身而不介意发表与否。（卡文迪许）3.  组织型科学家(organization scientist)：只是将科学看作一种令人羡慕的、可以维持生计的职业。</li>
-</ol>
-<p><strong>科学家与科学活动的匹配</strong></p>
-<p>公开型科学家几乎都进入了学院科学。他们通常热衷于发现自然的秘密，揭示自然界运行机制以及背后的原理。很看重同行承认，对其成果的实际应用则不大感兴趣。</p>
-<p>私人型科学家和组织型科学家几乎都进入了产业界和政府实验室。对研究工作的实际应用很感兴趣，喜欢解决实际问题，喜欢看到成果付诸应用。</p>
-<p><em>以上内容摘自中科院王大洲《自然辩证法与科技伦理》课件</em></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/06/科研选题指导/">
-                科研选题指导
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-06-05
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/06/科研选题指导/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/06/科研选题指导/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><strong>为什么科学研究始于问题</strong></p>
-<p>两点理由：<br>其一，从具体的研究进程看，人们总是以问题为框架有选择地搜集事实材料；与问题无关的材料通常引不起人们的注意。</p>
-<p>其二，从科学理论发展的机制看，只有发现了现有理论不能解决的问题时，人们才会想办法修正它、补充它，或者建立新理论替代它。</p>
-<p><strong>从问题到科学问题</strong></p>
-<p>科学问题：科学认识主体立足于特定的知识背景提出的需要解决而且可能加以解决的具有理论意义的矛盾现象。</p>
-<p>科学问题的基本结构：已知成分+未知成分；问题指向+研究目标+应答域</p>
-<p><strong>科学问题的来源</strong></p>
-<p>第一，科学理论与经验事实的矛盾</p>
-<p>第二，科学理论内部矛盾</p>
-<p>第三，理论之间的矛盾</p>
-<p>第四，社会需要、技术发展所提出的科学问题（现有理论不能满足现实需要）</p>
-<p><strong>科研选题的重要性</strong></p>
-<p>关系着：研究的方向、目标和内容</p>
-<p>影响着：研究的途径和方法</p>
-<p>决定着：研究成果的水平和价值</p>
-<p><strong>科研选题的步骤</strong></p>
-<p>第一步，进行文献调研和实际考察，充分了解前人的工作和现实的需要；</p>
-<p>第二步，对相关文献进行分析、比较，提出研究问题，确定研究方法；</p>
-<p>第三步，进行可行性论证：现实意义、理论意义、支撑条件、预期成果；</p>
-<p>第四步，同行评议，确定选题。</p>
-<p>关键点：有一个明确的科学问题</p>
-<p><strong>科研选题的基本原则</strong></p>
-<p>其一，需要性原则：社会需要/科学需要</p>
-<p>其二，创造性原则：理论、方法上的创新</p>
-<p>其三，科学性原则：有科学依据</p>
-<p>其四，可行性原则：与主客观条件相适应</p>
-<p><em>以上内容摘自中科院王大洲《自然辩证法与科技伦理》课件</em></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
 
           </div>
 
           
             <div class="pagination">
-              <a class="extend prev" rel="prev" href="/blog/page/4/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/blog/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/24/">24</a><a class="extend next" rel="next" href="/blog/page/6/">&raquo;</a>
+              <a class="extend prev" rel="prev" href="/blog/page/4/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/blog/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/39/">39</a><a class="extend next" rel="next" href="/blog/page/6/">&raquo;</a>
             </div>
           
         </div>
@@ -1337,17 +930,17 @@ a = (a + b) / (c * <span class="keyword">d</span>);
         </div>
 
         <div class="site-state-item site-state-categories">
-          
+          <a href="/blog/categories">
             <span class="site-state-item-count">9</span>
             <span class="site-state-item-name">分类</span>
-          
+          </a>
         </div>
 
         <div class="site-state-item site-state-tags">
-          
+          <a href="/blog/tags">
             <span class="site-state-item-count">20</span>
             <span class="site-state-item-name">标签</span>
-          
+          </a>
         </div>
 
       </div>

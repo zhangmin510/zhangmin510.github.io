@@ -21,13 +21,13 @@
 
 
 
-    <meta name="keywords" content="Hexo,next" />
+    <meta name="keywords" content="zhangmin.name,张敏,张敏的个人主页,张敏的博客,zhangmin.name's blog" />
 
 
 
 
 
-    <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.1" />
+    <link rel="shorticon icon" type="image/x-icon" href="http://www.zhangmin.name/images/favicon.png?v=0.4.1" />
 
 
 
@@ -67,10 +67,26 @@
       </li>
     
       
+      <li class="menu-item menu-item-categories">
+        <a href="/blog/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
       <li class="menu-item menu-item-archives">
         <a href="/blog/archives">
           <i class="menu-item-icon icon-archives"></i> <br />
           归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/blog/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
         </a>
       </li>
     
@@ -109,8 +125,8 @@
           
           
             
-              <a class="post-title-link" href="/blog/2013/06/Writing-easily-understood-sentence/">
-                Writing easily understood sentence
+              <a class="post-title-link" href="/blog/2013/12/如何识别一个未知文件的编码格式/">
+                如何识别一个未知文件的编码格式
               </a>
             
           
@@ -120,7 +136,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-06-04
+            发表于 2013-12-11
           
         </span>
 
@@ -129,7 +145,7 @@
             <span class="post-category">
               &nbsp; | &nbsp; 分类于
               
-                <a href="/blog/categories/MSE/">MSE</a>
+                <a href="/blog/categories/Java/">Java</a>
 
                 
                 
@@ -143,8 +159,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/06/Writing-easily-understood-sentence/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/06/Writing-easily-understood-sentence/"></span>
+            <a href="/blog/2013/12/如何识别一个未知文件的编码格式/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/12/如何识别一个未知文件的编码格式/"></span>
             </a>
           </span>
           
@@ -160,19 +176,113 @@
 
         
           
-            <p>Sperber and Wilson[1] proposed the relevance theory, which maintains that people understand natural language by attempting to extract the most information for the least processing cost. It follows, as a corollary of the theory, that, the closer a communication is to its intended meaning, the easier it is for a reader (or listener) to extract that meaning of the communication.If you want your communications to be easy to understand, then you should express them in a form that is close to their mental representations. They should be clear, so that extracting their meaning is easy, and they should be simple, so that their meaning is close to the canonical form in which they are represented.</p>
-<p>In the case of the London underground Emergency Notice, the communication is easy to understand because its English sentences are structured explicitly or implicitly as logical conditionals.</p>
-<p>_Press the alarm signal button to alert the driver.</p>
-<p>The driver will stop if any part of the train is in a station.</p>
-<p>If not, the train will continue to the next station,</p>
-<p>where help can more easily be given.</p>
-<p>There is a 50 pound penalty for improper use._</p>
-<p>These Emergency Notice is relatively easy to understand,because its expression is relatively close to its intended meaning. Moreover, it is coherent, because the consecutive sentences are logically connected both<br>with one another and with the reader’s likely pre-existing goals and beliefs about what to do in an emergency.</p>
-<p>Williams[2] emphasizes another way of achieving coherence: by placing old, familiar ideas at the beginning of sentences and new ideas at their end. In a succession of sentences, a new idea at the end of one sentence becomes an old idea that can be put at the beginning of the next sentence.The first three sentences of the Emergency Notice illustrate Williams’ advice.</p>
-<p>Reference:</p>
-<p>[1][Sperber, and Wilson, 1986] Daniel Sperber, and Deidre Wilson. Relevance. Blackwell, Oxford.</p>
-<p>[2][Williams, 1990, 1995] Joseph Williams. Style: Toward Clarity and Grace. University of Chicago Press.</p>
-<p>[3]Robert Kowalski:Artificial Intelligence and Human Thinking.Proceedings of the Twenty-Second International Joint Conference on Artificial Intelligence</p>
+            <p>识别一个未知文件的格式（英文专业术语为Codepage-detection）在诸多领域有应用，如搜索引擎，浏览器等。<br>对于Unicode编码的文件，在文件的开头有两个字节或者多个字节用于表示文件的编码格式及字节顺序。这几个字节不会出现在文件的内容中，只会影响文件被装进内存时的方式。UTF-8，UCS-2/UTF-16等编码格式可以通过文件开头的BOM（Byte Order Mark）来识别。常见BOM及对应编码格式如下所示：<br>FF FE  UCS-2LE or UTF-16LE<br>FE FF  UCS-2BE or UTF-16BE<br>EF BB BF  UTF-8<br>当然这个方法也不能保证识别的正确性，因为有的文件开头可能就会有相同的字节。况且大多数文件都没有BOM。</p>
+<p>由于所有其他的编码格式都兼容ASCII编码，所以如果一个文件的内容都是ASCII，就不能判断该文件的编码格式。如果一个文件既有ASCII编码的字符也有UTF-8编码的字符可以通过寻找UTF-8的字节序列来实现，如：<br>0xxxxxxx  ASCII &lt; 0x80 (128)<br>110xxxxx 10xxxxxx  2-byte &gt;= 0x80<br>1110xxxx 10xxxxxx 10xxxxxx  3-byte &gt;= 0x400<br>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx  4-byte &gt;= 0x10000</p>
+<p>在java中有几种工具可以进行文件编码的识别，如Mozilla jchardet（<a href="http://jchardet.sourceforge.net/）和IBM的ICU4j（http://site.icu-project.org/）。相比而言，后者的准确性更高。" target="_blank" rel="external">http://jchardet.sourceforge.net/）和IBM的ICU4j（http://site.icu-project.org/）。相比而言，后者的准确性更高。</a><br>下面是两个工具的使用示例：<br>[java]<br>/<em>*
+ </em></p>
+<ul>
+<li>ICUExample.java</li>
+<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>name.zhangmin.timediary<br><em>
+</em>/<br>package name.zhangmin.timediary.util;</li>
+</ul>
+<p>import java.io.BufferedInputStream;<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.FileNotFoundException;<br>import java.io.IOException;</p>
+<p>import com.ibm.icu.text.CharsetDetector;<br>import com.ibm.icu.text.CharsetMatch;</p>
+<p>/**</p>
+<ul>
+<li><p>@author ZhangMin.name<br><em>
+</em>/<br>public class ICUExample {</p>
+<p> /**</p>
+<ul>
+<li>@param args</li>
+<li><p>@throws IOException<br>*/<br>public static void main(String[] args) throws IOException {<br> String base = &quot;C:\Users\ZhangMin.name\Desktop\EncodeTest&quot;;<br> File[] f = new File(base).listFiles();<br> for(int i = 0 ; i &lt; f.length ; i ++){</p>
+<pre><code>System.out.<span class="keyword">println</span>(&amp;quot;Detcting <span class="keyword">file</span> &amp;quot; + f[i].getName());
+FileInputStream fis = <span class="keyword">new</span> FileInputStream(f[i]);
+BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(fis);
+<span class="keyword">byte</span>[] content =  <span class="keyword">new</span> <span class="keyword">byte</span>[(<span class="keyword">int</span>) f[i].length()];
+bis.<span class="keyword">read</span>(content);
+
+CharsetDetector detector = <span class="keyword">new</span> CharsetDetector();
+detector.setText(content);
+
+CharsetMatch cm = detector.detect();
+<span class="keyword">if</span>(cm != <span class="keyword">null</span>){
+    <span class="keyword">int</span> confidence = cm.getConfidence();
+    System.out.<span class="keyword">println</span>(&amp;quot;Charset: &amp;quot; + cm.getName() + &amp;quot;, confidence: &amp;quot;
+    + confidence + &amp;quot;%&amp;quot;);
+}
+</code></pre><p> }</p>
+<p>}<br>}</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>[/java]</p>
+<p>[java]<br>/<em>*
+ </em></p>
+<ul>
+<li>JchardetExample.java</li>
+<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>name.zhangmin.timediary<br><em>
+</em>/<br>package name.zhangmin.timediary.util;</li>
+</ul>
+<p>import java.io.BufferedInputStream;<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.IOException;<br>import org.mozilla.intl.chardet.<em> ;<br>/*</em></p>
+<ul>
+<li><p>@author ZhangMin.name<br><em>
+</em>/<br>public class JchardetExample {<br> public static boolean found = false;<br> /**</p>
+<ul>
+<li>@param args</li>
+<li><p>@throws IOException<br>*/<br>public static void main(String[] args) throws IOException {<br> String base = &quot;C:\Users\ZhangMin.name\Desktop\EncodeTest&quot;;<br> File[] f = new File(base).listFiles();<br> for(int i = 0 ; i &lt; f.length ; i ++){</p>
+<pre><code>System.out.<span class="keyword">println</span>(&amp;quot;Detcting <span class="keyword">file</span> &amp;quot; + f[i].getName());
+FileInputStream fis = <span class="keyword">new</span> FileInputStream(f[i]);
+BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(fis);
+<span class="comment">// Initalize the nsDetector() ;</span>
+nsDetector det = <span class="keyword">new</span> nsDetector(nsPSMDetector.ALL);
+<span class="comment">// Set an observer...</span>
+<span class="comment">// The Notify() will be called when a matching charset is found.</span>
+det.Init(<span class="keyword">new</span> nsICharsetDetectionObserver(){
+    <span class="keyword">public</span> <span class="keyword">void</span> Notify(String charset){
+        JchardetExample.found = <span class="keyword">true</span>;
+        System.out.<span class="keyword">println</span>(&amp;quot;CHARSET: &amp;quot; + charset);
+    }
+});
+
+<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];
+<span class="keyword">int</span> len;
+<span class="keyword">boolean</span> done = <span class="keyword">false</span>;
+<span class="keyword">boolean</span> isAscii = <span class="keyword">true</span>;
+
+<span class="keyword">while</span>((len = bis.<span class="keyword">read</span>(buf, <span class="number">0</span>, buf.length)) != -<span class="number">1</span>){
+    <span class="comment">// Check if the stream is only ascii.</span>
+    <span class="keyword">if</span>(isAscii){
+        isAscii = det.isAscii(buf, len);
+    }
+    <span class="comment">// DoIt if non-ascii and not done yet.</span>
+    <span class="keyword">if</span>(!isAscii &amp;amp;&amp;amp; !done){
+        done = det.DoIt(buf, len, <span class="keyword">false</span>);
+    }
+}
+det.DataEnd();
+
+<span class="keyword">if</span>(isAscii){
+    System.out.<span class="keyword">println</span>(&amp;quot;CHARSET: ASCII&amp;quot;);
+    JchardetExample.found = <span class="keyword">true</span>;
+}
+<span class="keyword">if</span>(!found){
+    String prob[] = det.getProbableCharsets();
+    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &amp;lt; prob.length ; j ++){
+        System.out.<span class="keyword">println</span>(&amp;quot;Probable Charset :&amp;quot; + prob[j]);
+    }
+}
+</code></pre><p> }</p>
+<p>}</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>}</p>
+<p>[/java]</p>
+<p><strong>参考文献：</strong><br><a href="http://stackoverflow.com/questions/1288899/java-text-file-encoding" target="_blank" rel="external">http://stackoverflow.com/questions/1288899/java-text-file-encoding</a><br><a href="http://codesnipers.com/?q=node/68" target="_blank" rel="external">http://codesnipers.com/?q=node/68</a><br><a href="http://jchardet.sourceforge.net/" target="_blank" rel="external">http://jchardet.sourceforge.net/</a><br><a href="http://site.icu-project.org/" target="_blank" rel="external">http://site.icu-project.org/</a><br><a href="http://site.icu-project.org/" target="_blank" rel="external">http://site.icu-project.org/</a></p>
 
           
         
@@ -184,441 +294,8 @@
         
           <div class="post-tags">
             
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/06/你不了解中国科学院大学/">
-                你不了解中国科学院大学
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-06-03
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/06/你不了解中国科学院大学/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/06/你不了解中国科学院大学/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>[caption width=”436” align=”alignnone”]<img src="http://www.ucas.ac.cn/images/logo.png" alt="中国科学院大学"> 国科大[/caption]</p>
-<p><strong>国科大简介</strong></p>
-<p>中国科学院不仅是我国规模最大、学科最全、实力最强的自然科学与高技术综合性国立科研机构，也是国家培养高级人才的重要基地。1978 年中国科学院率先在全国恢复研究生招生，并经国务院批准创办了我国第一所研究生院——中国科学技术大学研究生院（北京）。2000 年，经国务院学位委员会和教育部批准，更名为中国科学院研究生院。2012 年，经教育部和中编办批准，更名为中国科学院大学（以下简称“国科大”）。</p>
-<p>国科大是隶属于中国科学院的一所高等学校，既有教育管理功能，又是教学培养实体，拥有进行研究生培养的雄厚师资力量和优良教学设施，承担着为中国科学院科技创新提供人才资源保障和为国家现代化建设培养高级专门人才的重任。</p>
-<p>国科大是由设在北京的校部和分处全国各地的中国科学院各研究所共同构成的研究生教育培养实体，是一所没有围墙的大学。国科大的运行模式为：全校统一招生、统一教育管理、统一学位授予，实行校所融合的领导体制、校所融合的师资队伍、校所融合的管理制度、校所融合的培养体系。国科大校部和各地的研究生教育基地是集中开展研究生基础课程教学、学术交流、公共管理及营造校园文化氛围和进行综合素质教育的主要场所。各研究所作为中国科学院研究生教育的基本单元和培养实体，借助各自的专业特色和科研优势，在研究生的专业技能训练、科研能力提升和创新能力培养等方面发挥重要作用。目前国科大在学研究生达3.96 万余名，其中博士研究生占49%。</p>
-<p>在我国现有的13 个学科门类中，国科大拥有10 个学科门类，尤其在理学的数学、物理学、化学、天文学、地学、生物学，以及工学的力学、材料、电子与通信、自动控制、计算机科学技术、光学工程、机械工程、动力工程、电气工程、化学工程与技术、环境科学与工程、生物工程、核科学与技术以及农学、医学、管理学、哲学、心理学等专业领域具有明显的学科优势。全校共有博士学位授权一级学科点39 个，分布在教育学、理学、工学、农学、医学、管理学等6 个学科门类；硕士学位授权一级学科点53 个，分布在哲学、经济学、法学、教育学、文学、理学、工学、农学、医学、管理学等10 个学科门类，覆盖了54 个一级学科。此外，在工程硕士、工商管理硕士（MBA）、工程管理硕士、应用统计硕士、应用心理硕士、翻译硕士、农业推广硕士、药学硕士等学科领域招收和培养全日制专业学位研究生。</p>
-<p>国科大拥有一支知识结构合理、年龄结构优化、与国际接轨的高水平骨干教师队伍，以及一大批学术造诣深厚的学术带头人和导师队伍。全校有研究生指导教师11500 余名，其中院士330 余名、博士生导师5700 余名。这些导师都是活跃在科研第一线的杰出科学家，有处于国际学术前沿和国家战略需求的研究项目，不仅在学术领域成绩卓著，在培养研究生方面也有丰富经验。此外，还有大量国内外一流的科学家、教育家以及著名教授来校任教或进行学术交流。众多的科学大师、学术巨匠登台讲学，使得研究生“站在巨人肩膀上”的体验，成为近在眼前的现实。</p>
-<p>国科大面向科技前沿、面向世界，开放办学。这里与国内学术界联系密切，与国外学术界交流频繁。在这里可以与国内外一流科学家零距离交流，在这里可以获知世界科技各专业领域最前沿的研究状况和各种学术动态。由于导师都是活跃在科研一线的研究人员，有前沿性的研究课题，因此无论是培养理念、课程学习还是学生的研究选题明显地具有前沿性、高起点的特征。</p>
-<p>国科大具有海纳百川的胸怀。由于自己没有本科生，生源全部来自各个高校，因而聚集了来自全国各地的精英学子。他们带来了不同的理念、不同的观点，各有所长，各显其能。各种学术思想、各种学术观念、各种学术风格可以在这里交流、融合，形成了一种兼容并蓄、博采众长、生机勃勃、富有创造力和创新性的文化环境。</p>
-<p>国科大注重学生知识面的拓宽和创新实践能力的培养。研究生教学与科研实践紧密结合，在培养方面既注重“教”，又<br>注重“带”。在传授必要的基本知识的基础上，更多地将研究生看作有潜在创造能力的科研实践者，鼓励研究生主动地、广泛地吸收知识和进行创新性研究，注重将导师的科研方法、科研技巧、科研经验传授给研究生，通过实践环节提高研究生的科研能力和综合素质。研究生从一开始就可参与导师主持的科研项目，介入高水平的研究工作。</p>
-<p><strong>国科大采取独特的“两段式”教学模式：第一阶段集中在国科大校部或各教育基地进行课程学习，第二阶段在研究所进行论文研究和科研实践。在课程学习阶段实行学分制和“两长一短”的三学期制，学生在各个学期都可以自由跨学科、跨专业选课。前沿学术讲座、Seminar 专题讨论与人文、社会科学、艺术、美学教育相结合，开拓了研究生视野，活跃了学术思想。</strong></p>
-<p>中国科学院有一流的科研设施和良好的学习环境。研究生要掌握社会所需的真才实学，提高动手能力和科研水平，离不开科研条件，离不开科研设备，特别是对实验性较强的理工学科更是如此。中国科学院是国内科研实力最强、也是科研设施最好的科研单位，所拥有的大多数科研设备是国际上最先进的，其中不少在国内是独一无二的。良好的设备条件给研究生进行高水平的创造性研究提供了基础。</p>
-<p>国科大设有中国科学院院长奖学金、朱李月华奖学金、地奥奖学金等多种冠名奖学金，以及教育部的博士生学术新人奖、研究生国家奖学金等。研究生在学期间实行学业奖学金、研究助理、管理助理和教学助理制度。研究生在学期间有优厚的生活待遇，各种生活津贴一般可以满足日常的生活需要。</p>
-<p>国科大培养了我国的第一个理学博士、第一个工学博士、第一个女博士、第一个双学位博士。截至2012 年12 月，国科大已累计授予99700 余名研究生硕士、博士学位。</p>
-<p>国科大培养的学生以动手能力强、综合素质高而著称，深受海内外用人单位欢迎。毕业生主要分布在科研机构、高等院校、高新技术企业、大中型国有企业、国家和地方政府部门及各级社会机构，也有不少毕业生选择自主创业或到国外深造和工作。</p>
-<p>2014 年，全校有120 个研究所和14 个院系招收硕士学位研究生，有116 个研究所和13 个院系招收博士学位研究生，预计共招收硕士学位研究生7600 余名（其中含全日制专业学位硕士研究生1700 余名，少数民族高层次骨干人才计划200 余名）、博士学位研究生6000 余名。</p>
-<p>红日初升，其道大光。国科大将以务实求真的精神、海纳百川的胸怀、创新进取的风尚、激励竞争的氛围，为您提供良好的成才环境。加入中国科学院，您可能就是明天的大师、未来的巨匠！热忱地欢迎您报考国科大！</p>
-<p><strong>中国科学院大学与中国科学院各研究所的关系</strong></p>
-<p>中国科学院大学是由设在北京的校本部和分处全国各地的中科院所属100 余家科研院所共同构成的研究生教育实体。中国科学院大学以各研究所为依托，实行校所结合的办学模式。全校统一招生、统一教育管理、统一学位授予，实行校所融合的领导体制、校所融合的师资队伍、校所融合的管理制度、校所融合的培养体系。中国科学院大学是中国科学院研究生招生和培养的管理部门和教学实体，负责全校研究生的招生、学籍、教学、培养、学位等方面的统一管理，并组织实施全校研究生的基础课程教学，营造校园文化氛围和进行综合素质教育。中国科学院各研究院所是中国科学院的科研单位，同时也是中国科学院大学研究生招生和培养的基本单元，是中国科学院大学研究生教育体系的有机组成部分，负责本单位研究生招生、管理、培养、论文答辩等具体环节的组织和实施，在研究生的专业技能训练、科研能力提升和创新能力培养等方面发挥主要作用。</p>
-<p>就招生方面来说，中国科学院大学的招生实行统一管理、分级实施的模式。中国科学院大学招生办公室是全校招生管理部门，负责全校研究生招生的组织、管理和协调工作，包括全校招生规章制度、管理办法、招生简章的制定，以及全校招生计划的编制、进行全校性的招生宣传、组织京区考生的报名、考试工作，负责部分考试科目的统一命题，制定录取规定，协调全校的录取调剂等。各研究所是招生实施单位，负责本单位研究生招生的报名、录取等各环节的具体操作。因此，考生报考前既可向中国科学院大学招生办公室进行咨询，也可直接同各相关研究院所联系。</p>
-<p>分布在各地的教育基地是中国科学院大学教学和管理功能的延伸，负责组织和协调当地各研究所的研究生招生培养及在学研究生的基础课教学、学术交流和社会实践活动等，负责本地集中住宿学生相关服务和管理事务，协调当地各研究所跨学科联合培养研究生，促进新兴学科、交叉学科的发展，促进教育资源的共享。</p>
-<p>[caption width=”106” align=”alignnone”]<img src="http://www.ucas.ac.cn/images/b-logo.gif" alt="国科大"> 国科大[/caption]</p>
-<p><strong>以上内容摘自国科大2014年报考指南</strong></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/UCAS/">
-                #UCAS
-              </a>
-            
-              <a href="/blog/tags/国科大/">
-                #国科大
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/06/宋忠平-邱永峥-“说二战，看天下”/">
-                宋忠平 邱永峥  “说二战，看天下”
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-06-02
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/06/宋忠平-邱永峥-“说二战，看天下”/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/06/宋忠平-邱永峥-“说二战，看天下”/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><strong>嘉宾介绍</strong></p>
-<p>宋忠平：军事评论员，原搜狐《军情前哨站》节目军事顾问及嘉宾主持。做客多家电视媒体，包括中央电视台、凤凰卫视、广东卫视、深圳卫视、湖北卫视、东方卫视、四川卫视、贵州卫视、山西卫视、新疆卫视、吉林卫视、辽宁卫视、河南卫视、大连电视台、CNN、ABC、《德国镜报》、《朝日新闻》等，国际广播电台、北京地方广播电台，以及多家报刊、杂志等平面媒体的特约军事评论员、特邀节目嘉宾及专栏作者，著有多部时政、军事及应急救援等书籍及专业教材等十余部。</p>
-<p>邱永峥：人民日报直属环球时报首席记者。曾报道过缅甸果敢冲突，四赴巴基斯坦随巴军打击南瓦与北瓦济里斯坦的塔利班武装，三赴阿富汗采访塔利班武装头目，随驻坎大哈美军进行嵌入式战地采访，远赴也门采访阿拉伯半岛基地分支和拉登的保镖，第一时间登陆韩国延平岛报道双方炮战……最为知名的是其于2011年3月率先进入反对派控制下的利比亚东部地区，成为全球首个从班加西发出报道的华文媒体记者，目睹了利比亚战争的暴发，后三赴利比亚直至目暏卡扎菲被杀。利比亚战争使其成为各中央媒体报道的对象。叙利亚危机发生后，他三赴叙利亚进抵战事最激烈的霍姆斯进行深入报道。他是中囯大陆地区对战地釆访最多的记者之一。</p>
-<p><strong>书</strong></p>
-<p>《撒旦篇章：二战德军窃听实录》，此书最早于2011年在德国出版，一经出版便轰动了整个欧洲，在德国出版第一周便冲上《明镜周刊》排行榜冠军宝座，随后蝉联冠军达半年之久，并在短期内同时售出了英语、法语、西班牙语等十三国版权。欧洲整个地区对此书所披露的内容反响强烈，直至出版两年后的今天，此书在德国亚马逊仍然位居销售排行榜的前三名。</p>
-<p><strong>讲座感悟</strong></p>
-<p>中国需要高瞻远瞩，主动出击，明确表明自己在维护自己核心利益的立场。不应该总是被动的应对涉及自身利益的事件。</p>
-<p>要警惕日本，太平洋很大可以容得下中美两个大国，但是东海很小，容不下中日两个大国。对待日本，我们不是大狗看主人，而是打狗给主人看。日本只服比他强的国家，而且日本对二战的反思很不彻底，战犯的儿子都能当首相。</p>
-<p>现在国际社会的热点里中国越来越近，现在就在我们的周围发生。</p>
-<p>中国的和平崛起并不是不打仗，而是不打或不去发动第三次世界大战之类大规模的战争，至于小的冲突，中国应该敢于面对，去打小范围的战争。这是中国强大道路上所不可避免的。</p>
-<p>现在的战争，对于强势的一方，无法感受到战争的残酷，对他们来说更像是游戏。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/UCAS/">
-                #UCAS
-              </a>
-            
-              <a href="/blog/tags/国科大/">
-                #国科大
-              </a>
-            
-              <a href="/blog/tags/讲座/">
-                #讲座
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/06/六月你好/">
-                六月你好
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-06-01
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/06/六月你好/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/06/六月你好/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>今天起，做个幸福的人，六月新的开始，你准备好了没？</p>
-<p>六月的第一天是儿童节</p>
-<p>但愿你仍然保留着孩童般的好奇心去理解这个世界；</p>
-<p>但愿你仍然怀揣着儿时的梦想去践行你追梦的誓言；</p>
-<p>但愿你仍然坚定着孩子对美好未来世界到来的信念。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/05/推介-百度开放研究社区/">
-                推介:百度开放研究社区
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-05-31
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/05/推介-百度开放研究社区/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/推介-百度开放研究社区/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>想做云计算相关开发，可是没有真实集群？</p>
-<p>想做大数据挖掘，可是没有大数据？</p>
-<p>想用真实集群版的hadoop，mahout,hdfs,hbase，可是哪里有呢?</p>
-<p>来百度开发研究社区吧！</p>
-<p><img src="http://openresearch.baidu.com/r/cms/www/bd01/images/yj.jpg" alt="百度开发研究社区"></p>
-<p><strong>百度开发研究社区介绍</strong></p>
-<p>随着互联网的飞速发展，人类处于知识爆炸时代，包括生物、金融、互联网在内的多个领域都遇到了前所未有的数据挑战，现在的研究已经不能仅仅局限在实验室里就能完成的了。研究人员需要海量的真实的用户数据支撑他们的研究，同时更需要更多的计算资源去支撑这些海量数据的运算。但是对于高校来说无论是真实的数据集，还是海量数据的分析平台都很难获得。为了帮助科研人员解决当前的困境，百度校园创建了一个融汇技术资源的开放技术社区——百度开放研究技术社区，这个平台上提供了100G的百度真实的数据集以及由250台服务器组成的开放研究云平台，并利用网络社区没有地域限制、自由、灵活、快捷等特点，为科研人员提供一个互动交流的平台，让技术沟通和海量的数据分析变得简洁而高效。</p>
-<p><strong>社区三大特点之百度开放研究云平台</strong></p>
-<p>百度开放研究社区提供了百度开放研究云平台，该平台是由250台服务器组成，基于Hadoop分布式操作系统进行部署的。平台上有来自百度业务部门的100G真实的数据集。在今年5月份基于百度开放研究云平台，百度联合北京航空航天大学成功的举办了首届“中国云•移动互联网创新大奖赛”。现在百度开放云平台以及数据集正式对所有的研究人员开放，并在近期推出代码托管功能，届时您可以轻松的在社区上进行代码编译以及分布式运算。</p>
-<p>网站地址:<a href="http://openresearch.baidu.com/" target="_blank" rel="external">百度开放研究社区</a></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/UCAS/">
-                #UCAS
-              </a>
-            
-              <a href="/blog/tags/国科大/">
-                #国科大
+              <a href="/blog/tags/Java/">
+                #Java
               </a>
             
               <a href="/blog/tags/技术/">
@@ -651,8 +328,8 @@
           
           
             
-              <a class="post-title-link" href="/blog/2013/05/Speaking-on-Special-Occasions/">
-                Speaking on Special Occasions
+              <a class="post-title-link" href="/blog/2013/10/Java-JNI-学习代码示例/">
+                Java JNI 学习代码示例
               </a>
             
           
@@ -662,7 +339,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-05-30
+            发表于 2013-10-31
           
         </span>
 
@@ -671,7 +348,7 @@
             <span class="post-category">
               &nbsp; | &nbsp; 分类于
               
-                <a href="/blog/categories/MSE/">MSE</a>
+                <a href="/blog/categories/Java/">Java</a>
 
                 
                 
@@ -685,8 +362,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/05/Speaking-on-Special-Occasions/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/Speaking-on-Special-Occasions/"></span>
+            <a href="/blog/2013/10/Java-JNI-学习代码示例/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/Java-JNI-学习代码示例/"></span>
             </a>
           </span>
           
@@ -702,432 +379,96 @@
 
         
           
-            <p>Special occasions are the punctuation marks of day-to-day life,the high points that stand out above ordinary routine.Weddings,graduations,award ceremonies,retirement dinners,anniversaries,funerals - all are special occasions to the people who participate in them.The speeches in these occasions are part of the ceremonial aura that make the event.</p>
-<p><strong>Speeches of Introduction</strong></p>
-<p>A speech of introduction is an address that introduces the main speaker to the audience.If you present such an address,you need to accomplish three purpose:</p>
+            <p><strong>Java 本地方法声明及测试类</strong><br>[java]<br>package name.zhangmin.java.jni;</p>
+<p>/**</p>
 <ul>
-<li>Build enthusiasm for the upcoming speaker.</li>
-<li>Build enthusiasm for the  speaker’s topic.</li>
-<li>Establish a welcoming climate that will boost the speaker’s credibility.</li>
+<li>Basics of JNI</li>
+<li><p>@author ZhangMin.name<br><em>
+</em>/<br>public class JNIExample {<br> private POJO pj;<br> private POJO[] pjs;<br> private float f;<br> private boolean[] bs;</p>
+<p> public native void sayHello();<br> public static native POJO getPOJO(int i,double[] d,JObject obj,JObject[] objs);<br> public native int getData();<br> public native JObject[] getRefs();</p>
+<p> public static void main(String[] args) {</p>
+<pre><code><span class="type">JNIExample</span> exp = <span class="keyword">new</span> <span class="type">JNIExample</span><span class="literal">()</span>;
+
+exp.sayHello<span class="literal">()</span>;
+
+double<span class="literal">[]</span> d = {<span class="number">0.1</span>,<span class="number">0.2</span>};
+<span class="type">JObject</span> obj = <span class="keyword">new</span> <span class="type">JObject</span>(<span class="number">5</span>);
+<span class="type">JObject</span><span class="literal">[]</span> objs = {<span class="keyword">new</span> <span class="type">JObject</span>(<span class="number">1</span>),<span class="keyword">new</span> <span class="type">JObject</span>(<span class="number">2</span>)};
+<span class="type">POJO</span> pj = getPOJO(<span class="number">5</span>,d,obj,objs);
+<span class="type">System</span>.out.println(pj.toString<span class="literal">()</span>);
+
+<span class="type">System</span>.out.println(&amp;quot;<span class="type">Get</span> <span class="built_in">int</span> data:&amp;quot; + exp.getData<span class="literal">()</span>);
+
+<span class="type">JObject</span><span class="literal">[]</span> jos = exp.getRefs<span class="literal">()</span>;
+<span class="type">System</span>.out.println(jos[<span class="number">0</span>].toString<span class="literal">()</span>);
+</code></pre><p> }</p>
+<p> static{</p>
+<pre><code>System.loadLibrary<span class="comment">(&amp;quot;JavaNativeCode&amp;quot;)</span>;
+</code></pre><p> }</p>
+</li>
 </ul>
-<p>Your speech of introduction should:</p>
+<p>}<br>[/java]</p>
+<p><strong>Java native method C++实现</strong><br>[c]<br>// JavaNativeCode.cpp : 定义 DLL 应用程序的导出函数。<br>//<br>/*</p>
 <ul>
-<li>Be brief.</li>
-<li>Make sure your remarks are completely accurate.</li>
-<li>Adapt your remarks to the occasion.</li>
-<li>Adapt your remarks to the main speaker.</li>
-<li>Adapt your remarks to the audience.</li>
-<li>Try to create a sense of anticipation and drama.The speaker’s name comes as the climax of your introduction.</li>
+<li>JavaNativeCode implementation</li>
+<li>zhangmin@zhangmin.name<br>*/<h1 id="include_&quot;stdafx-h&quot;">include &quot;stdafx.h&quot;</h1></li>
 </ul>
-<p><strong>Speech of Presentation and Acceptance</strong></p>
-<p>Speeches of presentation are given when someone receives a gift,an award,or some other form of public recognition.The main objection of such a speech is to acknowledge the recipient’s achievement.In contrast,the purpose of an acceptance speech is to give thanks for a gift or an award.It should be brief,humble,and gracious.</p>
-<p><strong>Toast</strong></p>
-<p>Toasts can run from one or two sentences to several minutes.Regardless of length,they should be warm and sincere.When give a toast in a across-cultural situation,be sure to check in advance any special phrases or pronunciations associated with the toast.</p>
-<p><strong>Commemorative Speech</strong></p>
-<p>A commemorative speech is an address of praise or celebration.It should inspire the audience,and its success depends largely on how well the speaker puts into language the thought and feelings appropriate to the occasion.</p>
-<p><strong>The above content adapt from the book <em>The art of Public Speaking</em> written by Stephen E. Lucas</strong></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/public-speaking/">
-                #public speaking
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/05/My-Persuasive-Speech-Creation-Is-a-Remix/">
-                My Persuasive Speech:Creation Is a Remix
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-05-29
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/05/My-Persuasive-Speech-Creation-Is-a-Remix/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/My-Persuasive-Speech-Creation-Is-a-Remix/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><strong>Relating PowerPoint file to download:</strong><a href="http://www.zhangmin.name/blog/2013/05/my-persuasive-speechcreation-is-a-remix/creationisaremix/" target="_blank" rel="external">Creation Is a Remix</a></p>
-<p><strong>PREPARATION OUTLINE</strong></p>
-<p>Specific Purpose:To persuade my audience that creation is a remix.</p>
-<p>Central Idea: Remix—copy,transform,and combine—is the skill or technique use at any level of creation.</p>
-<p><strong>Introduction</strong></p>
-<p>I.Introduce the definition and origin of the word remix.</p>
-<p>II.The skills remix uses are copy,transform,and combine which are the same ones used at any level of creation.</p>
-<p>III. Everything we make is a remix of existing creations, our lives, and the lives of others</p>
-<p><strong>Body</strong></p>
-<p>I.Copying is the foundation of creation.</p>
-<p>  A.Creativity happens by applying ordinary tools of thought to existing materials.</p>
-<p>  B.We need copying to build a foundation of knowledge and understanding.</p>
-<p>II.transformation is time-consuming but it can eventually produce a breakthrough.</p>
-<p>   A.James Watt created a major improvement to the steam engine.</p>
-<p>   B.Thomas Edison improved the electric lamps.</p>
-<p> III.combination produces some of history’s biggest breakthroughs.</p>
-<p>   A.Henry Ford and The Ford Motor Company combined all available elements in 1908 to produce the the first mass market car, the Model T.</p>
-<p>   B.In 1991 Tim Berners-Lee created the World Wide Web .</p>
-<p><strong>Conclusion</strong></p>
-<p>I.Our genes and culture evolve the same way.</p>
-<p>II.Copy, transform and combine. It’s who we are, it’s how we live, and of course, it’s how we create.</p>
-<p><strong>Bibliography</strong></p>
-<p>Everything is a remix.<a href="http://www.everythingisaremix.info/" target="_blank" rel="external">http://www.everythingisaremix.info/</a></p>
-<p>Creation Myth:Xerox PARC, Apple, and the truth about innovation May 16, 2011 ANNALS OF BUSINESS,New Yorker</p>
-<p>Scott Berkun ,The Myths of Innovation, O’Reilly Media, first edition ,August 30, 2010</p>
-<p><strong>SPEECH MANUSCRIPT</strong></p>
-<p><em>Creation is a remix</em></p>
-<p>Remix.To combine or edit existing materials to produce something new.The term remix originally applied to music. It rose to prominence late last century during the heyday of hip-hop, the first musical form to incorporate sampling from existing recordings.Hip-hop singer take existing songs,chop it into pieces,and combine these pieces to a new song.But it is clearly that the new song is comprised of the old songs.Yet these techniques used in remix—copy, transform,and combine—are the same ones used at any level of creation and are basic elements of all creation.</p>
-<p>Creation requires influence. Everything we make is a remix of existing creations, our lives, and the lives of others.As Isaac Newton once said, we stand on the shoulders of giants—which is what he was doing when he adapted that saying from Bernard de Chartres.</p>
-<p>The act of creation is surrounded by a fog of myths. Myths that creativity comes via inspiration. That original creations break the mold, that they’re the products of geniuses. But creativity is not magic: it happens by applying ordinary tools of thought to existing materials.</p>
-<p>And the soil from which we grow our creations is something we scorn and misunderstand, even though it gives us so much and that is copying. Put simply, copying is how we learn. We can’t introduce anything new until we are fluent in the language of our domain, and we do that through emulation.Nobody starts out original. We need copying to build a foundation of knowledge and understanding. And after that things can get interesting.</p>
-<p>After we have grounded ourselves in the fundamentals through copying, it is then possible to create something new through transformation. Taking an idea and creating variations. This is time-consuming but it can eventually produce a breakthrough.</p>
-<p>James Watt created a major improvement to the steam engine because he was assigned to repair a Thomas Newcomen steam engine. He then spent twelve years developing his version.</p>
-<p>And Thomas Edison did not invent the light bulb—his first patent was “Improvement in Electric Lamps”—but he did produce the first commercially viable bulb after trying 6,000 different materials for the filament.</p>
-<p>These are all major advances, but they’re not original ideas so much as tipping points in a continuous line of invention by many different people.But the most dramatic results can happen when ideas are combined. By connecting ideas together creative leaps can be made, producing some of history’s biggest breakthroughs.</p>
-<p>Henry Ford and The Ford Motor Company did not invent the assembly line, interchangeable parts or even the automobile itself. But they combined all these elements in 1908 to produce the the first mass market car, the Model T.</p>
-<p>And the Internet slowly grew over several decades as networks and protocols merged. It finally hit critical mass in 1991 when Tim Berners-Lee added the World Wide Web.</p>
-<p>Also,the natural creation uses the same elements.The genes in our bodies can be traced back over three-and-a-half billion years to a single organism, Luca, the Last Universal Common Ancestor. As Luca reproduced, its genes copied and copied and copied and copied, sometimes with mistakes—they transformed. Over time this produced every one of the billions of species of life on earth. Some of these adopted sexual reproduction, combining the genes of individuals, and altogether, the best-adapted life forms prospered.</p>
-<p>And culture evolves in a similar way, but the elements are not genes, they are memes—ideas, behaviors, skills. Memes are copied, transformed, and combined.</p>
-<p>These are the basic elements of creativity: copy, transform, and combine. It’s who we are, it’s how we live, and of course, it’s how we create.</p>
-<p><strong>SPEAKING OUTLINE</strong></p>
-<p><strong>Introduction</strong></p>
-<p>——EYE CONTACT——</p>
-<p>I.The definition and origin of the word remix.</p>
-<p>II.The skills remix uses are copy,transform,and combine which are the same ones used at any level of creation.</p>
-<p>(Creation requires influence…coping…)</p>
-<p><strong>Body</strong></p>
-<p>——PAUSE——</p>
-<p>I.Copying is the foundation of creation.</p>
-<p>  A.apply ordinary tools of thought to existing materials.</p>
-<p>  B.build a foundation of knowledge and understanding.</p>
-<p>(After we have grounded ourselves….through coping…)</p>
-<p>II.transformation is time-consuming but it can eventually produce a breakthrough.</p>
-<p>  　A.James Watt .</p>
-<p>　　B.Thomas Edison .</p>
-<p>(But the most dramatic results can happen…)</p>
-<p> III.combination produces some of history’s biggest breakthroughs.</p>
-<p>   A.Henry Ford and The Ford Motor Company.</p>
-<p>   B.Tim Berners-Lee.</p>
-<p>(These are elements of creation…)</p>
-<p><strong>Conclusion</strong></p>
-<p>I.Our genes and culture evolve the same way.</p>
-<p>II.It’s who we are, it’s how we live, and of course, it’s how we create.</p>
-<p><strong>To be honest,the speech manuscript is a lower level remix of the transcript of the video Everything is a remix</strong></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/public-speaking/">
-                #public speaking
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/05/技术的竞争并不是一个优胜劣汰的过程/">
-                技术的竞争并不是一个优胜劣汰的过程
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-05-28
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/05/技术的竞争并不是一个优胜劣汰的过程/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/技术的竞争并不是一个优胜劣汰的过程/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>技术的竞争并不是一个优胜劣汰的过程，而是类似于达尔文的进化论——不是最优的，也不是最差的，而是最能适应社会的技术生存了下来。新的技术不是凭空出现的，也是在现有技术的基础上发展而来的。凭空出现的技术无法得到社会的认可，至多只能为未来技术的发展提供一种参考而已，更何况凭空出现却实用的技术少之又少。技术的发展也是路径依赖的，即由于受到已有技术的影响，新技术要想在竞争中获胜，必须要适应现有的技术或相关标准、规范。如果一种优秀的技术是最优的，但是并不能遵循已有的一些技术标准，那么这种技术很难最终获胜。所以说技术的竞争并不是一个优胜劣汰的过程，而是一个“适者生存”的过程。</p>
-<p>最典型的例子就是QWERTY键盘。现在几乎所有的人都在使用QWERTY键盘，但这种键盘的布局并不是最优的。如果使用QWERTY键盘，只有10%的英语单词能在手指不离开Home Row (ASDF的那一排)的情况下可以敲出来。但是如果使用一种叫做Dvorak的键盘布局，你可以在home row打出 60% 的单词（所有的元音都在home row）。这样就会减轻手指和相关肌肉的负担，减少劳损，同时加快打字速度。</p>
-<p>为什么要将键盘规范成现在这样的“QWERTY”键盘按键布局呢？这是因为最初，打字机的键盘是按照字母顺序排列的，而打字机是全机械结构的打字工具，因此如果打字速度过快，某些键的组合很容易出现卡键问题，于是克里斯托夫·拉森·肖尔斯（Christopher Latham Sholes）发明了QWERTY键盘布局，他将最常用的几个字母安置在相反方向，最大限度放慢敲键速度以避免卡键。肖尔斯在1868年申请专利，1873年使用此布局的第一台商用打字机成功投放市场。这就是为什么有今天键盘的排列方式。</p>
-<p>从这个例子就可以看出，一项优秀的技术并不一定最终能够获胜，而一个并不是很优秀的技术却因为最先在社会上普及而成为最终胜利者。适者生存规则同样是适用于技术之间的竞争。</p>
-<p>参考文献:</p>
-<p>1.百度百科 QWERTY键盘<a href="http://baike.baidu.com/view/295368.htm?fromId=277195" target="_blank" rel="external">http://baike.baidu.com/view/295368.htm?fromId=277195</a></p>
-<p>2.创新的迷思<a href="http://blog.sina.com.cn/s/blog_4caedc7a0102e7cz.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_4caedc7a0102e7cz.html</a></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/工程哲学/">
-                #工程哲学
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/05/Speaking-to-persuade/">
-                Speaking to persuade
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-05-27
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/05/Speaking-to-persuade/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/Speaking-to-persuade/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>Persuasion is the process of creating,reinforcing,or changing people’s beliefs or actions.When you speak to persuade,you act as an advocate.Your job is to get listeners to agree with you and ,perhaps,to act on that belief.Persuasive speaker need skills that take you from giving information to affecting your listeners’ attitude,beliefs,or actions.As with other kinds of public speaking,you are more likely to be effective at persuasion if you approach it systematically and with clear understanding of the methods available to you.</p>
-<p><strong>The Psychology of Persuasion</strong></p>
-<p>Persuasion is something a speaker does with an audience.Listeners do not sit passively and soak in everything a speaker has to say.Instead,they engage in the mental give-and-take with the speaker.They may respond positively at one point,negatively at another inside their minds.</p>
-<p>It means you must think of your persuasive speech as a kind of a mental dialogue with your audience.You must anticipate possible objections the audience will raise to your point of view and then answer those objections in your speech.You cannot covert skeptical listeners unless you deal directly with the reasons for their skepticism.</p>
-<p><strong>The Target Audience</strong></p>
-<p>Unfortunately,no matter how carefully you plot your speech,you will seldom be able to persuade all your audience.The target audience is the portion of the whole audience that you most wants to persuade.In most cases,the target audience will consist of people who are opposed to or neutral toward the speaker’s position.</p>
-<p><strong>Persuasive Speeches on Questions of Fact</strong></p>
-<p>The situation for a persuasive speech on a question of fact is partisan.The speaker acts as an advocate.His or her aim is not to be impartial but to present one view of the facts as persuasively as possible.</p>
-<p><strong>Persuasive Speeches on Questions of Value</strong></p>
-<p>Questions of value are not simply matters of personal opinion or whim.Instead they are claims that you must justify.For example,if you say,”Bicycle riding is the ideal form of land transportation “.Whenever you give a speech on a question of value,be sure to give special thought to the standards for you value judgement.The most common approach is to devote your first main point to establishing the standards for your value judgement and you second main point to applying those standards to the subject of your speech.</p>
-<p><strong>Persuasive Speeches on Questions of Policy</strong></p>
-<p>Questions of policy deals with specific courses of action.They always go beyond question of fact or value to decide whether something should or should not be done.</p>
-<p>There are two types of speeches on questions of policy:</p>
-<ol>
-<li>Speeches to gain passive agreement.You try to get your audience to agree with you that a certain policy is desirable,but you will not necessarily encourage the audience to do anything to enact the policy.</li>
-<li>Speeches to gain immediate action.You want to do more than get your listeners to nod their heads in agreement.If you want to motivate them to act you should make your recommendations as specific as possible.</li>
-</ol>
-<p>Effective organization is crucial when you seek to persuade listeners on a question of policy.There are four special patterns which are especially valuable for policy speeches:</p>
-<ol>
-<li>Problem-solution order.In the first of your main point, you demonstrate the need for a new policy by showing the extent and seriousness of the problem.In the second main point,you explain your plan for solving the problem.</li>
-<li>Problem-cause-solution order.A variation of the problem-solution order which produces a speech with three main points-the first identifying a problem,the second analyzing the causes of the problem,and the third presenting a solution to the problem.</li>
-<li>Comparative advantages order.When your audience already agrees that a problem exists,you can devote your speech to comparing the advantages and disadvantages of competing solutions.</li>
-<li>Motivated sequence.It is a tailor-made for policy speeches that seek immediate action.It has five steps that follow the psychology of persuasion:</li>
-</ol>
+<h1 id="include_&lt;iostream&gt;">include &lt;iostream&gt;</h1><p>using namespace std;<br>/*</p>
 <ul>
-<li>Attention.Gain attention.</li>
-<li>Need.Make the audience feel a need for a change.</li>
-<li>Satisfaction.Satisfy the need by providing a solution.</li>
-<li>Visualization.Intensify desire by visualizing the benefits of the solution.</li>
-<li>Action.Say exactly what you want listeners to do and how to do it.Then conclude with a final stirring appeal that reinforces their commitment to act.</li>
+<li>Class:     name_zhangmin_java_jni_JNIExample</li>
+<li>Method:    sayHello</li>
+<li>Signature: ()V<br><em>/<br>JNIEXPORT void JNICALL Java_name_zhangmin_java_jni_JNIExample_sayHello<br>(JNIEnv </em> env, jobject){<br>   jstring jstr;<br>   const char greeting[] = &quot; Hello JNI World!&quot;;<br>   jstr = env-&gt;NewStringUTF(greeting);<br>   cout&lt;&lt;&quot;From C++&quot;&lt;&lt;env-&gt;GetStringUTFChars(jstr,0)&lt;&lt;endl;<br>}</li>
 </ul>
-<p><strong>Methods of Persuasion</strong></p>
-<p>A speaker will be persuaded for one or more of following four reasons:</p>
-<ol>
-<li>Because they perceive the speaking as  having high credibility.</li>
-<li>Because they are won over by the speaker’s evidence.</li>
-<li>Because they are convinced by the speaker’s ideas or language.</li>
-<li>Because their emotions are touched by the speaker’s ideas or language.</li>
-</ol>
-<p>Let us look at each in turn.</p>
-<p>Credibility is affected by two factors:</p>
-<ol>
-<li>competence.how an audience regards a speaker’s intelligence,expertise,and knowledge of the subject.</li>
-<li>character.how an audience regards a speaker’s sincerity,trustworthiness,and concern for the well-being of the audience.</li>
-</ol>
-<p>To enhance you credibility you can explain your competence,establish common ground with your audience and deliver your speeches fluently,expressively,and with conviction.</p>
-<p>Evidence consists of supporting materials-examples,statistics,testimony-used to prove or disprove something.You should use specific,novel,and credible evidence.</p>
-<p>Reasoning is the process of drawing a conclusion on the basis of evidence.As a public speaker,you have two major concerns with respect to reasoning.First,you must make sure your own reasoning is sound.Second,you must try to get listeners to agree with your reasoning.There are four basic methods of reasoning:reasoning from specific instances,reasoning from principle,causal reasoning and analogical reasoning.</p>
-<p>When you reason from specific instances,you should follow the follow three basic guidelines:</p>
-<p>First,avoid generalizing too hastily.Make sure your sample of specific instance is large enough to justify you conclusion.</p>
-<p>Second,make sure the instances you present are fair,unbiased,and representative.</p>
-<p>Third,reinforce your argument with statistics or testimony.</p>
-<p>Emotional appeals are usually inappropriate in a persuasive speech on a question of fact.Here you should deal only in specific information and logic.On the other hand,if you want to move people to act a question of policy,emotional appeal are not only legitimate but perhaps necessary.You will need to appeal to your listeners’ hearts as well as to their heads.</p>
-<p>Even when trying to move listeners to action,however,you should never substitute emotional appeals for evidence and reasoning.You should always build your persuasive speech on a firm foundation of facts and logic.You need a good case based on reason and kindle the emotions of your audience.</p>
-<p><strong>The above content adapt from the book <em>The art of Public Speaking</em> written by Stephen E. Lucas</strong></p>
+<p>/*</p>
+<ul>
+<li>Class:     name_zhangmin_java_jni_JNIExample</li>
+<li>Method:    getPOJO</li>
+<li>Signature: (I[DLname/zhangmin/java/jni/JObject;[Lname/zhangmin/java/jni/JObject;)Lname/zhangmin/java/jni/POJO;<br><em>/<br>JNIEXPORT jobject JNICALL Java_name_zhangmin_java_jni_JNIExample_getPOJO<br>(JNIEnv </em> env, jclass jc, jint i, jdoubleArray da, jobject jo, jobjectArray joa){<br>   jclass pojo = env-&gt;FindClass(&quot;name/zhangmin/java/jni/POJO&quot;);<br>   //获取数组元素<br>   jobject ele = env-&gt;GetObjectArrayElement(joa,0);<br>   jclass jobj = env-&gt;GetObjectClass(jo);<br>   //调用对象的get方法<br>   jint id = env-&gt;CallIntMethod(ele,env-&gt;GetMethodID(jobj,&quot;getId&quot;,&quot;()I&quot;));<br>   //获取对象的属性<br>   jfieldID objID = env-&gt;GetFieldID(jobj,&quot;field&quot;,&quot;D&quot;);<br>   jdouble field = env-&gt;GetDoubleField(jo,objID);<br>   //创建一个jdoubleArray<br>   jdouble dd[2] = {1.2,3.4};<br>   jdoubleArray d = env-&gt;NewDoubleArray(2);<br>   env-&gt;SetDoubleArrayRegion(d,0,2,dd);<br>   //通过调用对象的构造器创建一个对象<br>   jobject ret = env-&gt;NewObject(pojo,<pre><code>env<span class="subst">-&amp;</span><span class="literal">gt</span>;GetMethodID(pojo,<span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;init<span class="subst">&amp;</span><span class="literal">gt</span>;<span class="subst">&amp;</span>quot;,<span class="subst">&amp;</span>quot;(I<span class="preprocessor">[</span>DLname/zhangmin/java/jni/JObject;)V<span class="subst">&amp;</span>quot;)
+,id,d,ele);
+</code></pre>   return ret;<br>}</li>
+</ul>
+<p>/*</p>
+<ul>
+<li>Class:     name_zhangmin_java_jni_JNIExample</li>
+<li>Method:    getData</li>
+<li>Signature: ()I<br><em>/<br>JNIEXPORT jint JNICALL Java_name_zhangmin_java_jni_JNIExample_getData<br>(JNIEnv </em>, jobject){<br>   jint i = 510;<br>   return i;<br>}</li>
+</ul>
+<p>/*</p>
+<ul>
+<li>Class:     name_zhangmin_java_jni_JNIExample</li>
+<li>Method:    getRefs</li>
+<li>Signature: ()[Lname/zhangmin/java/jni/JObject;<br><em>/<br>JNIEXPORT jobjectArray JNICALL Java_name_zhangmin_java_jni_JNIExample_getRefs<br>(JNIEnv </em> env, jobject jobj){<br>   //返回一个对象数组<br>   jclass jc = env-&gt;FindClass(&quot;name/zhangmin/java/jni/JObject&quot;);<br>   jobject jo = env-&gt;NewObject(jc,env-&gt;GetMethodID(jc,&quot;&lt;init&gt;&quot;,&quot;(I)V&quot;),100);<br>   jobjectArray joa = env-&gt;NewObjectArray(2,jc,NULL);<br>   env-&gt;SetObjectArrayElement(joa,0,jo);<br>   return joa;<br>}</li>
+</ul>
+<p>[/c]</p>
+<p><strong>POJO类</strong></p>
+<p>[java]<br>package name.zhangmin.java.jni;</p>
+<p>/**</p>
+<ul>
+<li>@author ZhangMin.name<br><em>
+</em>/<br>public class POJO {<br> private int i;<br> private double[] d;<br> private JObject obj;<br> private JObject[] objs;<br> public POJO(int i,double[] d,JObject obj){<pre><code><span class="keyword">this</span>.i = i;
+<span class="keyword">this</span>.d = d;
+<span class="keyword">this</span>.obj = obj;
+</code></pre> }<br> @Override<br> public String toString() {<pre><code><span class="keyword">return</span> <span class="built_in">i</span> + &amp;quot;,&amp;quot; + d<span class="matrix">[<span class="number">0</span>]</span> + &amp;quot;,&amp;quot; + obj.getId() ;
+</code></pre> }<br>}</li>
+</ul>
+<p>[/java]<br>[java]<br>/<em>*
+ </em></p>
+<ul>
+<li>JObject.java</li>
+<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>name.zhangmin.java<br><em>
+</em>/<br>package name.zhangmin.java.jni;</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>@author ZhangMin.name<br><em>
+</em>/<br>public class JObject {<br> private int id;<br> public double field;<br> public JObject(int id){<pre><code>this.<span class="property">id</span> = <span class="property">id</span>;
+</code></pre> }<br> public int getId() {<pre><code><span class="command">return</span> <span class="property">id</span>;
+</code></pre> }<br> public void setId(int id) {<pre><code>this.<span class="property">id</span> = <span class="property">id</span>;
+</code></pre> }<br> @Override<br> public String toString() {<pre><code><span class="command">return</span> <span class="property">id</span> + &amp;quot;,&amp;quot; + field;
+</code></pre> }<br>}</li>
+</ul>
+<p>[/java]</p>
 
           
         
@@ -1139,8 +480,12 @@
         
           <div class="post-tags">
             
-              <a href="/blog/tags/public-speaking/">
-                #public speaking
+              <a href="/blog/tags/Java/">
+                #Java
+              </a>
+            
+              <a href="/blog/tags/技术/">
+                #技术
               </a>
             
           </div>
@@ -1169,8 +514,8 @@
           
           
             
-              <a class="post-title-link" href="/blog/2013/05/一名大学毕业生的反思/">
-                一名大学毕业生的反思
+              <a class="post-title-link" href="/blog/2013/10/利用Java-Service-Wrapper将Java应用程序发布为Service/">
+                利用Java Service Wrapper将Java应用程序发布为Service
               </a>
             
           
@@ -1180,7 +525,334 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-05-26
+            发表于 2013-10-25
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/Java/">Java</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/10/利用Java-Service-Wrapper将Java应用程序发布为Service/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/利用Java-Service-Wrapper将Java应用程序发布为Service/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p><a href="http://wrapper.tanukisoftware.com/doc/english/download.jsp" target="_blank" rel="external">Java Service Wrapper</a> 主要用于包装其他java服务器端程序（比如tomcat，或者自己开发的java服务器程序），提供如下特性：</p>
+<ul>
+<li>作为windows服务或者unix守护进程运行；<em>   增强程序的可靠性，程序崩溃后的自动重启，比如内存溢出，虚拟机崩溃等造成JVM退出的监控和恢复运行（重新启动）；</em>   标准的，可独立使用的配置JVM参数的脚本；<em>   支持java应用程序重启JVM，比如应用程序修改了配置文件，或者重启系统避免内存溢出等问题；</em>   灵活的配置；<em>   简化应用程序的安装；</em>   记录日志。</li>
+</ul>
+<p>本文将以Java Service Wrapper的第四种集成方法WrapperJarApp。利用WrapperJarApp helper类来启动应用程序。该方法用于配置和运行可执行jar文件。</p>
+<h3 id="将所需文件放到应用目录下">将所需文件放到应用目录下</h3><p>下载windows平台下的Java Service Wrapper，将src/bin中的App.bat.in，InstallApp-NT.bat.in，和UninstallApp-NT.bat.in拷贝到你的AppDir目录的bin中，去掉这些文件的.in后缀。然后将src/conf下的wrapper.conf.in几conf下的wrapper-license.conf复制到AppDir的conf目录中。将你lib下的wrapper.dll，wrapper.jar及你自己的应用程序的jar包放到AppDir的lib目录下。最终的目录结构如下所示：<br>[java]<br>AppDir/bin<br>————App.bat<br>————InstallApp-NT.bat<br>————UninstallApp-NT.bat<br>————wrapper.exe<br>———/conf<br>————wrapper.conf<br>————wrapper-license.conf<br>———/lib<br>————App.jar<br>————wrapper.dll<br>————wrapper.jar<br>———/logs<br>[/java]</p>
+<h3 id="修改配置文件wrapper-conf">修改配置文件wrapper.conf</h3><p>[java]<br>wrapper.java.command=javaw<br>wrapper.java.mainclass=org.tanukisoftware.wrapper.WrapperJarApp<br>wrapper.java.classpath.1=../lib/wrapper.jar<br>wrapper.java.classpath.2=../lib/*<br>wrapper.app.parameter.1=../lib/App.jar<br>wrapper.name=App<br>wrapper.displayname=MyAppService<br>wrapper.description=MyAppService<br>[/java]</p>
+<h3 id="启动App和安装，卸载App_Service">启动App和安装，卸载App Service</h3><p>点击App.bat启动App。点击InstallApp-NT.bat 安装到windows service，UninstallApp-NT.bat 删除windows service。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/Java/">
+                #Java
+              </a>
+            
+              <a href="/blog/tags/技术/">
+                #技术
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2013/10/Spring-OSGi中如何获取ApplicationContext/">
+                Spring OSGi中如何获取ApplicationContext
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-10-22
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/Java/">Java</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/10/Spring-OSGi中如何获取ApplicationContext/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/Spring-OSGi中如何获取ApplicationContext/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h3 id="Application_Context的创建">Application Context的创建</h3><p>Spring OSGi提供org.springframework.osgi.extender这个Bundle来为每个支持Spring功能的Bundle初始化一个Application Context。当extender Bundle启动后，它会为那些状态为ACTIVE并且支持Spring的Bundle创建application context。也就是说，这个Bundle通过监听bundle启动事件来完成Application Context的创建。Extender bundle创建application context是异步的，通过不同的线程启动每个Bundle。这样可以保证启动平台快速并且Bundles之间的服务引用不会引起死锁。如果 application context创建失败，bundle会是ACTIVE状态，但是这时将没有服务导出。<br>这和Application context销毁相反，Application context销毁是同步的，通过同一个线程。</p>
+<h3 id="如何判断Application_Context创建创建成功">如何判断Application Context创建创建成功</h3><p>当Application Context创建成功后，这个对象会被注册为一个服务。这个服务接口是 org.springframework.context.ApplicationContext。并且这个服务带有一个服务属性：org.springframework.context.service.name，对应的值为Bundle的symbolic name，这个值在Manifest文件中定义。注册这个服务主要目的是更容易测试管理。通过引用这个服务调用getBean()或类似的方法是不推荐的。建议的方式的将需要的Bean发布成一个服务，然后需要这个服务的Bundle引用它。</p>
+<h3 id="如何在Bundle中获得OSGi的BundleContext">如何在Bundle中获得OSGi的BundleContext</h3><p>Application context创建成功后会包含一个类型为BundleContext，名字为bundleContext的Bean。你可以在配制文件注入这个Bean。此外，你还可以通过实现org.springframework.osgi.context.BundleContextAware接口来获取。</p>
+<p>当一个bundle停止了，它发布的服务将会从服务注册表里删除，它的状态变成RESOLVED，它将释放所有资源，停止所有线程，但是导出的Packages对其他bundle继续有效。所有资源加载通过org.springframework.core.io.ResourceLoader并且通过它关将资源加入到application context。</p>
+<h3 id="如何在一个Bundle中获取Spring_Extender创建的ApplicationContext">如何在一个Bundle中获取Spring Extender创建的ApplicationContext</h3><p>1.通过实现ApplicationContextAware接口</p>
+<p>Spring中提供一些Aware相关接口，像是BeanFactoryAware、ApplicationContextAware、ResourceLoaderAware、ServletContextAware等等。这些Aware接口的Bean在被初始之后，可以取得一些相对应的资源，例如实现BeanFactoryAware的Bean在初始化后，Spring容器将会注入BeanFactory的实例，而实作ApplicationContextAware的Bean，在Bean被初始后，将会被注入 ApplicationContext的实例等等。<br>[java]<br> public class SomeBean implements ApplicationContextAware{<br>      private ApplicationContext context;<br>      …<br>      public void setApplicationContext(ApplicationContext     applicationcontext) throws BeansException {<br>         this.context= applicationcontext;<br>      }<br>   }<br>[/java]</p>
+<p>2.通过OSGi Service</p>
+<p>[java]<br>public static ApplicationContext getApplicationContext(final BundleContext bundleContext) {<br>        final String filter = &quot;(org.springframework.context.service.name=&quot; + bundleContext.getBundle().getSymbolicName() + &quot;)&quot;;<br>        final ServiceReference[] applicationContextRefs;<br>        final ApplicationContext applicationContext;<br>        try {<br>            applicationContextRefs = bundleContext.getServiceReferences(ApplicationContext.class.getName(), filter);<br>        } catch (final InvalidSyntaxException e) {/&gt;<br>            throw new RuntimeException(e);<br>        }<br>        if(applicationContextRefs.length != 1) {<br>            return null;<br>        }<br>        applicationContext = (ApplicationContext) bundleContext.getService(applicationContextRefs[0]);<br>       return applicationContext;<br>}<br>[/java]</p>
+<h3 id="参考">参考</h3><p>1.<a href="http://www.cnblogs.com/ygyinx/archive/2012/10/27/osgi_application_context.html" target="_blank" rel="external">Spring DM Application Context</a></p>
+<p>2.<a href="http://tech-tauk.blogspot.com/2009/10/ways-to-get-spring-applicationcontext.html" target="_blank" rel="external">Ways to get Spring ApplicationContext -In Spring DM</a></p>
+<p>3.<a href="http://mindpipe.blogspot.com/2011/03/spring-osgi-how-to-get.html" target="_blank" rel="external">Spring OSGi - how to get ApplicationContext for a bundle</a></p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/Java/">
+                #Java
+              </a>
+            
+              <a href="/blog/tags/OSGi/">
+                #OSGi
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2013/10/如何长胖，终于被我找到了/">
+                如何长胖，终于被我找到了
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-10-08
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/分享/">分享</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/10/如何长胖，终于被我找到了/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/如何长胖，终于被我找到了/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p><em>本文转自人人网，作者：杜涛</em></p>
+<p>一直想长胖，自己的身板实在是太瘦了。前些天一直在按照You Are Your Own Gym上的健身方法增重。下面是我在人人网发现的一篇关于如何长胖的文章，特转载分享。下面是原文：</p>
+<p>只要配合良好的生活作息与饮食控制，再配合中医师的药物调理，无病消瘦的瘦人，也能长胖成人见人爱的胖娃娃喔！本文超详细15种增肥方法教瘦人如何增肥长胖！</p>
+<h3 id="1-调理脾胃功能">1.调理脾胃功能</h3><p>消瘦者脾胃(消化)功能多半不好，不是食欲不振，就是消化吸收功能不良，所以吃再多东西身体也不长肉。因此想增肥的人必须先补脾健胃才行</p>
+<p>此外，在调理脾胃的同时，必须避免摄取有损脾胃功能的酸冷食物（包括山渣、柠檬、橘子、醋、生菜、泡菜等）、难消化的高纤蔬菜（比如韭菜、芹菜等）、以及高油脂食物都不宜多吃（如巧克力、油炸食物等）！可以补脾健胃的的食物则包括莲子、山药、扁豆、紫米、红枣、猪肚、薏仁等，其中最具代表性的食物是四神猪肚(小肠)、山药排骨等。</p>
+<p>中医学说「瘦者多火」，亦即干瘦者多属阴虚的热性体质，此火是指阴虚所引起的虚火，所以饮食上要以「滋阴清热」为主，应该避免摄取燥热、辛辣等容易助火散气的食物，比如葱、蒜、辣椒、虾、蟹等食物。此类患者特征就是舌头很红、舌苔少、解便小粒而干结，这是脾虚不能生津液所引起的。西医所说的胃液、胰液、唾液等消化液，全都属于中医的「津液」，消化液不足就很难将吃进肚子里的食物进行消化吸收与利用，此类患者吃大量的食物只会带给肠胃更大的负担，更别想要长肉。针对此症，中医采用补脾阴的法来治疗，一帖50元的四神，有补脾阴虚的良效；而猪肚、猪肠则含有酵素成分，可以辅助药力，发挥开胃、助吸收的功能。此外，一般错误印象以为高油脂食物（如巧克力、油炸食物等）最易增胖，事实上，脾胃虚弱者对油脂的消化力很差，所以容易堆积在消化道里，既无法消化也无法吸收，只会增加脾胃的负担，使脾胃更加虚弱。所以想调理好脾胃健康，应完全戒除摄取此类食品，多吃一些可以健脾健胃的食物，来强健脾胃系统，如此长胖才易见成效喔！</p>
+<h3 id="2-三餐定时，餐前一小时忌食零食">2.三餐定时，餐前一小时忌食零食</h3><p>三餐应定时，让肠胃养成正常运作习惯，而且餐前一个小时避免零食，以免影响食欲、影响正餐的摄取量，就算是增肥，也应以三餐为主要的营养及热量摄取来源才对。若是为了加强增肥的效果，可以斟酌在三餐的空档多加两餐，至于加餐的食物内容，则以油脂量少、蛋白质与淀粉含量高的食物为佳，像是口味清淡的核果类与天然谷物，少吃垃圾食物，以免增肥不成反而增加肠胃的负担！</p>
+<h3 id="3-合理分配三餐的摄取比例">3.合理分配三餐的摄取比例</h3><p>早餐很重要，因为早餐是承接昨天晚餐后的第一餐，所以饮食摄取比例不应该只是随便应付而已，原则上，三餐的份量比重应该是差不多的，其分布比例应该是：</p>
+<p>早餐占全天摄取总热量的25 ~30％；</p>
+<p>午餐占全天摄取总热量的30 ~35％；</p>
+<p>晚餐占全天摄取总热量的25 ~30％。</p>
+<h3 id="4-三餐种类丰富多样，摄取均衡营养">4.三餐种类丰富多样，摄取均衡营养</h3><p>要能确保摄取均衡的营养素，最好的方法是以米饭为主食，如此就能搭配鱼、肉、菜、豆类等五大类食物，所以这样的饮食习惯绝对优于西式饮食，喜欢只吃三明治、汉堡的人要赶快改正你的饮食习惯喔。</p>
+<h3 id="5-适度增加脂肪摄取量">5.适度增加脂肪摄取量</h3><p>前面说到「瘦者多火」，所以多吃油炸食物非但无法得到人体需要的脂肪，反而会火上加火，而且会妨碍胃酸分泌，造成肠胃的负担。</p>
+<p>奶油、五花肉都是不错的选择，只要不会引起腹泻或是腹胀气等消化不良的症状，就是适合妳的摄取量，想增胖的水水应小心摄取。</p>
+<h3 id="6-多摄取矿物质「锌」">6.多摄取矿物质「锌」</h3><p>矿物质「锌」可以促进荷尔蒙分泌、促进人体发育、增强性器官功能，而且它能刺激我们的味觉器官，让饭吃起来更有味道。</p>
+<p>「锌」广泛存在于奶类、瘦肉、牡蛎、蛤唎、香菇、南瓜子、豆类、核桃等食物之中。其中，牡蛎除了锌之外，还有能助丰胸的荷尔蒙促进物质，瘦弱者可以多多食用！</p>
+<h3 id="7-用餐当中不要喝汤或饮料">7.用餐当中不要喝汤或饮料</h3><p>汤或饮料会稀释胃酸，破坏肠胃的消化能力，亦会造成腹胀，进而影响进食的份量。想增胖者如有此习惯，应尽快戒除此恶习，以免肠胃越吃越虚弱！</p>
+<h3 id="8-专心进食">8.专心进食</h3><p>一心多用的进食法，常会让人不自觉吃得过多、或是草草了事，因此降低消化器官的活动能力，导致消化液分泌不足，增加肠胃器官的负担，想增胖者应专心进食才行！</p>
+<h3 id="9-餐后少量甜食">9.餐后少量甜食</h3><p>饭后甜点会刺激胰岛素分泌，将刚刚吃的正餐快速转化为脂肪，所以想增胖者可以从今天起，饭后来一碗红豆汤吧！</p>
+<h3 id="10-不摄取过量宵夜">10.不摄取过量宵夜</h3><p>一般错误的观念认为吃宵夜可以长肉，事实上过量的宵夜只会耗损脾胃功能，让消化功能越来越差。建议想增胖的人，可以在睡前半小时喝杯加糖的热牛奶，它有刺激胰岛素分泌的功用，加速蛋白质与糖分转化为脂肪，而且不会造成肠胃的负担，想增胖的人可以试试！</p>
+<h3 id="11-冬天进补养肉最快">11.冬天进补养肉最快</h3><p>冬天因为热量消耗大，所以特别容易饥饿，而且人体容易自发性的储存皮下脂肪，胃口大开加上吸收特好，只要加强进补，想增胖的瘦弱者大多能达到目的。但是千万别大吃大喝，反而让肠胃过劳，如此达不到养肉的目的，反而伤了元气就不好了！</p>
+<h3 id="12-不吃冰冷寒凉食物">12.不吃冰冷寒凉食物</h3><p>「瘦者多火」，所以特别嗜食冰冷的食物，但是冰冷的食物进入人体后会引起肠胃紧急收缩，食物积滞不化，容易造成胃胀、胃痛，脾胃虚弱者还可能腹泻。所以喜欢冰冷食物者，应尽快戒除此恶习，免得时日一久，末梢循环会出现障碍，手脚冰冷、早衰等其它慢性病会慢慢出现。逞一食口欲之快，损失的可是自己的健康喔！</p>
+<h3 id="13-睡眠充足">13.睡眠充足</h3><p>想长肉或长高一定要充分把握睡眠时段，因为充足的睡眠可以提高体内脂肪与蛋白质的合成与利用。因此，有熬夜习惯的人，若想长胖，得先调整生理时钟早早入睡，让身体睡饱有助身体长肉喔！</p>
+<h3 id="14-适度运动">14.适度运动</h3><p>适度的运动可以加强身体的新陈代谢，必且促进食欲，让妳的胃口大开；但是瘦小的人多半脾虚多火，脾虚不能生津液，太过剧烈的运动会加重津液不足的现象，让妳口渴及火气大，反而会完全没有食欲。所以想增胖的人应进行适度的运动就好，千万别以为剧烈运动才会让妳有食欲，这是错误的观念喔！</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/生活/">
+                #生活
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2013/10/国庆环太湖骑行之旅/">
+                国庆环太湖骑行之旅
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-10-08
           
         </span>
 
@@ -1203,8 +875,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/05/一名大学毕业生的反思/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/一名大学毕业生的反思/"></span>
+            <a href="/blog/2013/10/国庆环太湖骑行之旅/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/国庆环太湖骑行之旅/"></span>
             </a>
           </span>
           
@@ -1220,51 +892,48 @@
 
         
           
-            <p><strong>本文转自百度百科<a href="http://baike.baidu.com/view/5028818.htm" target="_blank" rel="external">一名大学毕业生的反思</a></strong></p>
-<p>五年多以前，我进入了全国重点名牌大学：武汉大学读书。我抱着最理想的热情，以为从此走上了一条报效祖国，报效父母的人生坦途，以为我的人生即将要大展宏图！</p>
-<p>三年以前，抱着对“我的大学”最大的疑惑和不解，我辞去了分团委副书记的职务，开始认真地大量阅读和思考我的人生，我的大学，我的未来。试图找到对周围一切我无法理解问题的解决方案。这一次的决定，也意味着我放弃了原来一直抱有的，通过“从政”来为国家民族做贡献的“远大理想”。</p>
-<p>一年半以前，我自以为已经看清了中国大学的本质，不愿意再继续自欺欺人地“学”下去，主动放弃了学校保研的名额，退出了用青春和热血换取一纸毫无真实内容和分量文凭的游戏，退出了中国虚伪可笑的“精英学历社会”。决心进入企业，踏踏实实地从事“实业”，站到中国经济第一线，为国家和社会以及自己作真实的努力和贡献。因为我不想用镀金的“文凭”和“文化”来糊弄我自己，也糊弄其他人。</p>
-<p>今天，在毕业工作一年多后，在我的工作和能力已经得到老板和同事的肯定，马上就要派我出国任职的时候，我却辞职了。我不想违心地接受这个光荣，我决心到远在大山中的一所规模很小的，志在探索中国新教育模式的私立学堂，试图通过投身中国最缺乏，最需要的教育，来实现我人生最大的价值：为我热爱的中国，为中国的孩子和未来，也为我自己，做一点真正有意义的事情，而不是日复一日地在无望的等待中浪费掉自己的生命。</p>
-<p>因为，中国真正缺的不是钱，我缺的也不是钱。中国缺文化，缺教育。我也一样！</p>
-<p>周围的人都认为我疯了，鬼迷心窍了。放弃了中国人从小就灌输的，从小就追求的“最正宗”、“最正确”、“最理所当然”的道路的确令人不解。我也在认真地思考我这样做的理由。在这里，把自己对家人和朋友质疑的回答写出来。你们也可以自己评析：到底是我疯了，还是这个社会疯了</p>
-<p><strong>一、精神缺乏、游戏成风、学生忙着贴金、老师忙着项目——你认识这样的大学么</strong></p>
-<p>当我从那古朴典雅的建筑旁走过，再深入到自己的学习环境和学校其他地方后，我发现这个地方与我之前在书中读到的宁静的大学校园不同，这里各色人等纷纷扰扰，大小汽车进进出出，随处可见各式各样的商业海报或者广告，草坪上遛狗的大妈悠然自得。那种在中小学可以听到的琅琅书声在大学里却寥寥无几，大学怎么竟然不如小学这些大学生们都不读书么我很困惑。</p>
-<p>在正式开始上课之后，我更加见识了大学里很多人是怎么样上课的：早晨上课铃响了之后有很多人穿着拖鞋边吃早点慢悠悠地晃进教室，吃完早点后看看上面的老师，讲得没意思，于是爬着再补一觉。有的学生干脆一睡不起，大学里有句话是这样流传的：“一觉醒来一看表十点了，继续睡到十一点半，起来连早点、中饭一起吃了。” 晚上十一点后，应该是夜深人静、正值休息的时候，如果你此时走进大学里的男生寝室，你绝对可以看到他们的夜生活才“刚刚开始”，打游戏、玩麻将或者是看武侠小说，好不热闹。鲜见一起读书、共同讨论人生智慧的场景，相反可以看到很多的大学生去网吧包夜，或者在寝室联机打游戏，他们的日常交流沟通内容就是游戏，以至于很多学生迫不得已，为了和同寝室的哥们“打成一片”而“学习”打游戏。游戏已经成为了大学里男生的主要“学习内容”，而且不少人发奋用功地学习了四年。</p>
-<p>当我第一次在高我一级的学长寝室楼里看到凌乱的宿舍，散发着异味，一抬头就会看到一个蓬松的脑袋和迷离的眼神，我的灵魂被震撼了！我的心中真的不敢相信，这就是武汉大学的学生空洞的眼神昭示着灵魂的无知和内心的空虚，在终日游戏的日子里打发自己的青春岁月！这是大学生么这些人就是“为中华之崛起”而努力学习的新一代？我的内心里有一个强烈的声音告诉我：我绝对不要成为这个样子！</p>
-<p>我的一个同学，从大一到大四，四年的时间，除了考试和教室见个面，其他时间全部在寝室打游戏或者看武侠，反正大学里也没有人管。后来因为挂科太多被学院劝退，家长过来求情延缓时间，但于事无补，游戏照打不误，直到大四时无法毕业。另外一个同学，也是因为打游戏挂科太多被劝退，母亲来到学院跪在学院领导面前说：“我自己在家里吃剩的菜叶在供他读书，求你们给他一次机会吧！”当时我听到学院领导讲到这样的事情的时候，我的内心很受震撼。父母吃菜叶供孩子在城市里打游戏，混日子？还要求情“给机会”？给他继续游戏的机会吗？都说可怜父母心，我想起我辛勤劳作的父母，我想起那千百万把孩子送进大学的天下父母，他们都以为自己的子女在大学里“努力学习”，辛苦地赚钱，无私地供养儿女“上学”，让他们解除“后顾之忧”，不用担心生活的问题。殊不知如今大学校园里，有多少人是在游戏人生。用我在西安电子科技大学一位同学的话来说：“如果他的妈妈来在大学住一个星期，就一定会让他退学回去”。因为在中国“上大学”，可能是人生中一段最轻松愉快的时光了。大家可以游戏，看电视，逃课，武侠小说，这是很多大学男生的全部生活。女生呢？看韩剧，不少女大学生的主要学习内容就是看韩剧等各种连续剧，感情剧，一部接着一部。你能想象这就是“我的大学”么？很不幸的，这一切都是真实的，而且就发生在武大这样的名牌重点大学里。这些人考上大学的时候都是家里的骄傲、很多同学眼羡的对象，可是为什么他们在风华正茂的青春时代里，行为如此令人费解？当时的自己不得而知。当然，并不是所有的学生都这样混日子，大学里还是有很多人依然比较用功地学习，但是他们也一样困惑：让他们努力学习的原因主要是“恐惧”和压力：怕找不到好工作，怕考不上研究生。大家都听说就业很困难，武大每年找不到工作的毕业生都很多，因此不敢“放纵”自己。但是很少有学生努力学习是因为追求智慧，追求真理，为国为民而学。这些用功的学生虽然没有“游戏人生”，但是却生活在沉重的压抑心理状态下，思维往往呆滞，慢慢地走上一条被大学生们嘲笑的“越学越傻”的“傻博士”道路。实际上，每年大学里自杀的大学生，往往不是“不用功”的“坏学生”，而是这种心理严重压抑，用功学习的“好学生”。他们一样，从一进大学开始就碰到很多无法解决的困惑，同时被灌输着一些所谓“正确的发展方向”，他们只是愿意服从这些“权威结论”，以自我的压抑而不是以心灵的呼唤来“学习”，这难道就真的比“玩游戏”“看影碟”更好吗？大学的学习到底是要达到什么目的？大学生们为何都迷失了自己的理想。</p>
-<p>首先是专业的学习让人迷惑：很多老师照本宣科，大学里面真正关注教学、关心学生，有上课水平的老师越来越少了，不知道老师都在忙些什么。</p>
-<p>老师的本职工作应该是传业授道解惑，可是有的老师一个学期学生也见不了几次，派他的研究生来上课。后来我才明白原来他们都在忙着自己的项目和课题。大一的时候，我们通信工程专业有个博导带物理，学生的评价是这样：“还博导呢，都博成个啥了？讲得稀里糊涂，还经常不来上课。”。大学选用的教材令人费解，明明有很好的全国通用教材，比如高等数学的同济五版，却偏偏要选用自己学校编的教材，艰难晦涩，连选用的习题都是历年研究生考试的数一类，可能是编排教材的老师想提前让我们进行考研准备吧？ 后来才知道学校选用这种“自编教材”的原因，是老师们因为要“评职称”。需要“科研成果”，就东拼西凑的乱编一些“教材”来“完成任务”，这种放到书店里根本没有人会要的垃圾教材，他们就利用自己教学的权利，发给大学生们上课用。据说老师们也很可怜，每年都要完成所谓的“科研成果”，要写论文，出书来完成任务，否则就可能降职。有些老师没办法就自己花钱在外面找刊物发表文章，这种可以不花钱出教材，让学生买单的事情也很容易理解了。</p>
-<p>大学里的学生生涯，除了要求学生的专业学习之外，鲜有启迪心灵的声音，更重要的是缺乏指导大学生人生发展与定位的课程，能够让大学生明白自己为什么学，为什么活的课程。我自己学习的专业是电子信息科学类，和很多同学一样，我在必修的公选课如高等数学等认真学习，但是我在每天的专业学习之外内心十分彷徨，我不知道这个专业适合不适合自己，不知道这个专业意味着什么？不知道这个专业的社会发展方向和主流是什么？也不明白这个专业培养的目的是什么样的人才要求？我不知道该怎样进行大学的学习，更不知道前面的路在那里。我该怎样去一步步实现自己的理想？我碰到过很多的大学生也是如此。他们对于自己所选择的专业了解甚少。其实我觉得老师也根本不了解这些专业到底要做什么，后来知道大学里的管理人员，看专业叫什么名字容易吸引学生，就改个名字。看什么专业热门好找工作，就赶快“上马”一个专业，拼凑一些“课程”出来糊弄人就完事了。很多学生只是为了就业的方便而“选择专业”，但是当他们真正想去定位自己的时候，就反而陷入了“专业思维”而不能自拔。多数人只是为了一份工作而读一个热门的专业，却忘了去关注自己的兴趣、爱好，甚至综合能力的培养和理想的思考。</p>
-<p>《大学重建》让我开始了解大学的起源、存在的意义，那就是大学应该是一个社会的良知和思想发动器，大学应该为这个社会培养具有正义、勇气和智慧的学子，在他们走上社会之后能够有能力去逐步改善这个社会中不好的东西，促进社会的发展，并不断致力于人类物质社会的改造，以及科学、艺术文学等精神文明的探索和提升。 我听到了一些激动内心的声音，也似乎抓住了一些东西，但是我的内心依然彷徨，方向不明确，理想似乎越发遥远，而不知如何下手。同时，为什么我们的大学会是这个样子？为什么这么多的学生缺乏精神思考而且没有老师指引？除了在一些讲座上偶尔能够听到一些激动内心的声音外，为什么大学里的老师讲完课就像是打工混日子，无趣无内容，讲完就走人？为什么大学老师从来不与学生探讨人生智慧？为什么我们这么多的大学生对此熟视无睹？这些问题我不得而知，而我自己也在从事学生干部工作的道路上，碰到了更多的困惑。</p>
-<p><strong>二、为什么要辞去团委副书记？</strong></p>
-<p>大一时我参加学生会新闻部，然后做部长，和一群志气相投的朋友激扬文字，度过一段难忘的日子。在大二下学期的时候，成功竞选为分团委副书记兼学生会主席团成员。然而在半年后，我就毅然辞去了这个光鲜的职务，你可能会很惊讶，我不是有“总理的梦想”么？为什么要辞去呢？这可是走上“官员之路”的正途呀？在我最开始做学生会一个小小的部委时候，我只是抱着开阔眼界、锻炼自己的想法。到了后来做部长，在我的本职工作之外，我开始思考我做的事情作用在那里？到底能够做哪些有价值的事情去服务同学？大学里的学生有很多的问题需要引导帮助，就像我自己内心就有很多的困惑需要解答，学生会做得这么多活动能够解决了么？</p>
-<p>没有。从我进学生会开始，我就抱着相机在各种各样的活动跑着，班团会、运动会、文艺比赛等等，在开始我很兴奋，因为生活很充实，活动的确还比较丰富多彩。</p>
-<p>但是慢慢的，我的内心开始不明白，我发现这些活动组织了、举办了、精彩了、笑过了，却没有更多的智慧启迪，似乎只是一个“政绩”的记录。那些游戏的大学生继续游戏，我内心对于理想的迷惘更没有在这些活动中得到解答。于是我开始不明白，为什么要花很大力气很多精力组织这一些形式上的活动，而不去关注学生真正的问题、做学生和大学里真正应该做的工作？那个时候我还是学生会的新闻部部长，在面临换届的时候我想过退出，我的内心已经隐约地告诉我这个地方不适合自己。但内心那个朦胧的梦想让我思考：如果我的“地位”更高一些，“权力”更大一些，如果自己可以领导团委和学生会，是不是就可以去做一些真正有意义有价值的事情了？自己也可以通过这个机会锻炼自己，以明确自己的方向。有很多的学生干部就是这样一步步走上从政之路的。于是我开始努力“提升自己”：凭借自己比较不错的实力和老师的信赖，我成功地竞选为学院的分团委副书记，这可能是学生中地位最高的“官”了。<br>我的内心鼓足了干劲，我要做出一些真正对学生有帮助的事情。可是当真正坐到了这个位置时候，我才发现我是多么的天真：各种各样的活动，不是我们能够“安排”的，我们只是按照“上面老师”布置的既定程式和内容去走，想要改变其形式上的作用几乎不可能；学院的老师有自己的安排，校团委的领导有自己的想法，一切都要达到一个目的：活动要精彩，形式要多样!可是没有一个人去思考这样的活动带来的实际意义在哪里。我发现自己更加没有个人的“自主权”，必须要面对更多的无聊会议，要去组织很多无意义的活动，这些会议、这些活动大多数对于服务学生或者实现自己的理想都根本没有什么作用，更没有办法去解决我所碰到的诸如沉迷网络游戏、缺乏精神风貌的现状，我甚至还失去了思考和学习提高的时间和空间。</p>
-<p>我的内心不明白：为什么我们不能针对性地去解决学生中切实存在的各种问题？为什么不在他们沉迷网络与游戏时加以规劝和引导，甚至采取一些强硬的措施？难道非得等到他们挂课后给予处分、开除学籍么？更有甚者，与其他学院的一些学生干部打交道后，我发现大学学生会里面的学生干部，有不少本人就是“游戏大学”的优等生，但是他们却因为和辅导员老师关系不错而成为学生干部，来帮助老师“管理学生”。这样的学生干部能够引领学生走向哪里？同时，这些人似乎非常自信自己是一个“精英团体”，个个都感觉良好。学生干部中开始有很多的饭局来“拉进”彼此的关系，喝酒甚至吸烟，所谓的“烟搭桥，酒开路”这样的话，我第一次就是从学生会主席的口里听到的，我很困惑，这是在读大学的有志青年学子么？这就是要引领国家未来的“精英集团”嘛？我们国家就缺这样的“人才”吗？<br>当面对着这样的现状的时候，我的内心开始痛苦：我可以选择若无其事尽自己最大的努力做下去，反正都已经做到了这个地步，熬一两年就会有各种优秀的荣誉、保研的机会，通过这个平台可以一步步走上从政之路。但是，我也开始明白了，无论我将来的“地位”有多高，“权力”有多大，我都无法实现自己的理想，我是一个人在与一个庞大的，堕落的，只关心物质利益和为自己捞好处的集团体系作对。我如果想当上“总理”或者其他能够有决策权的位置，就必须跟他们一样混下去，否则早早就会被这个体制踢开。但我真的希望这样么？如果我把宝贵的时间都花在了一些根本不能起到实际作用的事情上，来收获一些所谓的荣誉和好处，我内心的困惑将怎么办？我之后的道路该怎样继续？难道这就是我的理想？</p>
-<p>在经历了深入的思考后，任职半年我就毅然申请辞去这一职务。当时学院的老师很惊讶我的举动，在明确我执意要辞后，非常好心地建议我可以挂名不做事，这样在大四时候就可以获得保研的机会。我不愿意占这个便宜，告诉老师，既然要走就走个彻底，不需要挂名，我的内心不喜欢这样的方式。</p>
-<p>于是，我很高兴地脱离了很多无聊的“学生工作”，回到了没有会议，没有那么多我看不懂活动的自由日子。自己读书、听讲座、听武大的“周末艺苑”，让自己的内心自由自在地成长。我努力去重新定位自己的理想，因为我发现从政似乎不适合自己。剩下来的选择还有两个，一个就是大家都很热衷的，也是很传统的“实业救国”之路，我可以去帮助我们国家成为一个经济强国，也帮助自己成为一个“经济英雄”，做“李百万” 另外一条就是冷板凳的“学术之路”：考研，攻博，成为一个学者。我很敬佩经济学家林毅夫先生，当年作为热血青年，做为一个台湾军官，由于反对蒋家王朝的政治腐败，他“叛逃”到大陆。他当然可以享受“义士”级的待遇，在我国的“党政军”系统里快速地升职。但是，他当时叛逃台湾，绝对不是为了谋取物质利益，而是为了心中的热血理想。我想他后来离开政治圈子，走上学者之路，是不是跟我一样，发现在中国“从政”不能解决“为人民服务”的理想，只好去研究学问，去当学者。否则如果他叛逃的目的，仅仅是想当一个学者的话，当时的台湾条件更好，所以一定有他的难言之隐。他现在已经成为了世界经济学界最好的学者之一，还被提名诺贝尔经济学奖。<br>到底哪条路更有意义和价值呢？我努力去大量阅读，努力去思考，去发现各种线索和事实来帮助我决定，去解决我内心所有的困惑。<br>三、读懂“大学”，我发现“做学问”在大学也是一条走不通的死路。<br>我真的能够专专心心去做一个学者吗？像林毅夫那样？在不断地阅读和思考中，我对于大学的认识也越来越多，我也开始明白为什么这个曾经安静和充满追求智慧风气的象牙塔越来越千奇百怪。商业中逐利的浮躁气息充斥着整个校园，学术与商业的挂钩和教师职称评定的畸形化，使得大学校园里越来越多的老师不重视教学而忙于自己的项目，忙于发表论文。因为有了论文，有了项目，才会有职称和金钱，才会有房子、车子和各种名誉，这样的老师那里有时间去传业授道解惑呢？但是现在的大学校园里，基本上都是这样的老师。因为“理想型”的老师注定要被现实“淘汰”。别的学校不了解，但是全国有名的易中天，在武大的时候却因为个性独特，不愿流俗而被排挤，出走厦门大学。后来是学生们敬仰的武大四大名嘴之一的哲学教授赵林也要离开武大，引起学生轰动。后来据说校长看民意沸腾，才执意挽留赵林老师，勉强留了下来。但是根子上的问题并没有解决，因为我最近又听说专注学问的知名哲学教授邓晓芒要去华工。一个文科教授，却要离开以文科著名历史悠久的名牌大学，宁愿去一所工科大学任职，武大到底怎么了？珞珈山还是个做学问的地方吗？四大名嘴的尚重生教授也说：当年与他一起留校任教的早期很多有才华的老师，都离开武汉大学了。而且很多离开了大学，离开了学界。难道在中国，学者之路也同“从政”之路一样，是一条不可行的“梦幻之路”？中国之大，放得下一张安静的书桌吗？我很不安地探讨自己从事“学问之路”的可能性。越来越多地发现：所谓的“名牌大学”里，真正的学问根本没有地位。</p>
-<p>老师不关心学问和学习。在这样的大学里，缺乏真正传道授业解惑的老师。因为老师在大学里其实是“弱势群体”，他们被一群根本不懂教育的教育官员们“管理”着，迫于生存压力，为了职称，为了提级，为了饭碗等等，不得不向畸形的评定机制屈服。能够独立思考和具有独立人格的老师，可能根本就不见容于这个教育官僚体制。连知名的教授如赵林，邓晓芒都不得不屈服于“体制”，连四大名嘴尚重生都不断地抱怨无法发挥所长，我一个小小的后生，真的能在“学问”的路上实现理想吗？很多博士生导师会派自己的研究生替代自己给本科生上课，自己忙项目，当老板，追逐金钱和权力地位，这与“官场”和“商场”又有什么不同呢？真正的不同，就是这里更虚伪，贴了一张“教育”的皮，所以更害人。</p>
-<p>大学的领导不关心学问。他们不关心教师，仅仅是把教师当做打工仔。他们也不关心学生，不理会学生的愿望和要求。很多管学生的“大学领导”在学生面前高高在上，一副“官员”的样子。他们也不关心自己的毕业生到底受不受社会的欢迎，不关心学科的设计是不是符合教育和社会的要求。他们只关心“如何保住位置”，“如何捞取好处”，如何“买卖文凭”，如何与社会上的官员们“交易”。学校的老师告诉我：武汉大学授予了很多官员“特聘教授”的头衔拉拢他们，还送出大量的“博士学位”给各级官员，仅仅因为他们是有实权的“官员”，学校愿意“证明”他们“很有学问”，让他们捞一笔“学问资本”。这些都是公开的秘密。大家都知道前几个月武汉大学的两个校领导被抓，其中一个还是享有“国家荣誉”的获奖“杰出领导”，这暴露了大学一系列问题的冰山一角，据说出事以后，很多有实权的“大学领导”们都惶惶不安，生怕有一天查到自己头上来。我相信这不是武汉大学一家的事情，可能其他大学更腐败。可是，我关心的是：这说明了什么？这样的大学，难道真的有“大学精神”吗？真的是一个我要做学问的地方吗？</p>
-<p><strong>1.我缺钱么？我们的社会缺钱么？我的人生需要去做一件没人需要的事情吗？</strong></p>
-<p>现在我们的国家里，大家都在努力创造着物质的财富，每一个城市里可以看到很多忙忙碌碌的人，每个人都在辛苦的追逐着。特别是我在深圳工作，这个节奏很快的城市就是金钱驱动的城市。每一次，我坐公交车的时候，我都会留意下那些等车的和街上走过的人们，很多人的脸上都写着焦虑和疲惫。大家都在追求金钱以为会带来幸福，可是为什么都这么不快乐？望着车外的人们，我就问我自己：会不会有一天我也会变成跟他们一样？我问自己追求的幸福是什么？是更多的物质财富，不是，我想幸福于我而言，是一个健康的身体，一份开心有价值的工作并能保障物质生活，一个和睦的家庭。并能把这个幸福的圈子尽自己最大的能力去推广，那么我实业的梦想能够带给自己幸福和更多的人幸福么？</p>
-<p>再看看我们的国家，改革开放三十年了，中国已经诞生了很多的企业，华为、联想、等等，人们已经创造积累了很多的物质财富，物质生活也越来越优越。而我们却越来越齐心协力地追求金钱，我们创造了很高的GDP，但同时我们面临着越来越多的社会问题：工业的发展带来了很多的环境污染，大都市白领的生理和心理健康每况日下，都市女性白领越来越多的人不能走进婚姻的殿堂，越来越多的高校毕业的大学生找不到工作，都市人在物质富足的表象里精神匮乏，借以酒吧、网络游戏、聚餐等打发时间，青少年儿童以及高校大学生自杀比率升高，流行文化越来越庸俗甚至恶俗化，以及我在大学所碰到的种种困惑，为什么会有这样的问题？怎样去解决？靠追求金钱可以么？<br>而这些问题却很实在地关乎我们每一个人的幸福，我们这个社会的整体幸福。但这一切，靠钱都不能解决，是要靠文化，靠智慧。如果金钱可以解决，那我们可以用钱买来生理和心理健康，可以买来家庭的幸福和谐，可以买来优秀的文化，我当然应该多赚钱。可惜这一切都买不来。</p>
-<p><strong>2． 为什么说中国缺乏真正的教育？</strong></p>
-<p>靠文化，靠智慧，人才能够得到幸福，国家才会真正强大。为什么一定要去做教育？答案是只有教育才能从根本上改变一个国家的素质，而我们目前的中国缺乏真正的教育，为什么这么说？看看教育和社会的现状以及我们传统文化的断层现象我们就可以明白。</p>
-<p>我们的小学、中学乃至大学教育都在教学生不断地考试，关注考分，然而，做了那么多的试卷，考了那么多的试，拿了学士、硕士、博士文凭就能解决人生和幸福的问题吗？看一看现在的大学生面貌，有多少人不过是在混一张文凭而已，还自欺欺人地以为：这张文凭会给自己带来一份不错的工作和钱途，可能么？那么多经过高考的学生，走进大学为什么就失去了青年人本来应该有的朝气和活力？为什么他们沉迷网络游戏、在无聊中打发着自己最宝贵的年华？为什么那么多的人找不到工作呆在家里成为“啃老一族？”还有工作之后很多成为“月光一族”？我们最终都要走上社会，我们最终都要独立地去面对生活和生存，我们最终都要为人父母，我们最终都要赡养自己的父母，真正关乎我们人生幸福的问题，诸如怎样去强身健体，怎样去规划人生方向，怎样去处理婚姻问题，怎样去教育孩子，我们的教育有去关注或者启发我们去思考这些问题吗？难道我们的教育就是要在学校里培养一群考试的机器，然后出来成为一个工作的机器？老了成为一个等死的废物吗？</p>
-<p>那么什么是真正的教育？德国二百年前的教育宣言曾经如此说道：教育的目的，不是培养人们适应传统的世界，不是着眼于实用性的知识和技能，而要去唤醒学生的力量，培养他们自我学习的主动性，抽象的归纳力和理解力，以便使他们在目前无法预料的种种未来局势中，自我做出有意义的选择。教育是以人为最高的目的，接受教育是人的最高价值的体现。</p>
-<p>问一问亲爱的朋友们，在中国目前的小学、中学和大学校园里，有这样的教育么？没有，中国太缺乏真正的教育、缺乏真正的大学了！同时我们回过头来看看中国传统的知识分子是怎样做的，宋朝一代大儒张载曾如此说过：为天地立心，为生民立命，为往圣继绝学，为万世开太平！从此以后，这句话成为了中国知识分子的共识，而现在，我们的社会中有多少这样的学者？我们的大学里有多少这样的教授和博导？我们可以看到为各种利益集团说话的所谓“专家”，可以看到为了金钱奔波在官场和商场的教授和博导。</p>
-<p>现在我们的社会很多人都在一味地追求金钱作为人生最高目标，从让我们痛恨的房地产商到现在的医院，从老师到卖奶粉的，很多人都忘了自己本职工作的职业道德，一味地拜金。缺乏文化和责任的富人们给我们的社会带来了越来越高的交易成本和越来越多的危害。我们可曾知道美国的清洁工人的工资可以达到年薪五六万，但是他们的房子只需要三十万左右的美金？而我们国内的老百姓却需要耗费两代甚至三代人的积蓄去买一套房子，就因为一些人昧着良心攫取高额利润，而让多少大学生一毕业就要面临这个严峻的人生大事，房子真的值那么多钱么？孟子曾经告诉过我们：上下交征利，国危矣。三鹿奶粉、各地不断的儿童血铅案例已经用血的事实不断地印证着这句话，而我们的社会还需要多少这样的例子来唤醒大家：如果仅为了钱而忘记了道德，昧了良知，我们的社会将走向何方？　在这么一个逐利的社会里，究竟还有多少中国人会静下心来学习和传承我们博大精神的传统文化？《老子》、《论语》、《大学》、《金刚经》、《资治通鉴》等等，这些经典的遗产我们继承了么？我们该怎样把这些东西交给我们的下一代，如果不能交给，如果不能完成五千年里中国文化的传承，我们何以有颜面自称为中国人？</p>
-<p>曾经有句话是这样说的，一个国家破亡而文化存在的民族，一定可以恢复国家（比如以色列），但一个文化破亡了的民族，无一例外地彻底从历史舞台上消失了，比如古巴比伦等。而正是由于这些精髓的传统文化丢失，我们的社会才变得越来越千奇百怪。</p>
-<p>学校缺乏真正的教育导致了社会上很多人盲目逐利、精神空虚、各种社会问题层出不穷，传统文化精髓遗失，后面两者又反过来影响着学校的教育，如此的恶性循环会把我们带向哪里？我们的后代将会生存在一个什么样的社会里？<br>究竟是这个社会在疯狂地走向一个危险的境地，还是我是一个疯子在危言耸听？</p>
-<p><strong>3．为中华之崛起做教育</strong></p>
-<p>考虑到如此的地步，我对于自己做实业的想法又发生了深深的怀疑，我对于自己，对于这个社会的生存发展产生了深深地担忧。一百多年前，梁启超先生曾写下《少年中国说》，一百多年后的今天，我们仍然面临着同样的问题，而且更加严重。只有从教育上去入手，培养优秀和有良知的公民及社会领袖，我们才有希望去改变我们社会中丑恶的一面，才能传承我们的文化，我们的子孙后代才会健康、幸福地生存在这块土地上，才能自豪地说：我是一个中国人！<br>因此我决定走进大山，去一个小小的私立学校做一名普通老师，学习中国博大精深的传统文化，习武修身，传播智慧。为我热爱的这个国家，为中国的孩子和未来，也为自己，去做一些真正有价值的事情！因为唯有文化方能立国，唯有真正的教育才能树人！唯有智慧方能让一个人拥有真正的幸福，让一个社会真正的和谐，让一个国家真正的强大！</p>
-<p>注：没有想到文章受到这么多人的关注，在此说明下——由于体制内教育的失败，我不可能加入任何一所官办的应试学校来实现自己做真正教育的理想，而选择了在大山里的这所私立精英学堂（别误会，不是农村支教，那样我再努力也只是为体制培养几个低级打工仔），不提学堂名字的原因，是因为避免有人说我是商业炒作（毕竟是私立的），玷污了这个神圣的教育理想。同时，这所学堂目前因为超前的教育理念，虽然规模不大，但影响力已波及全国，她必将成为中国未来先进教育的一个范例，因此我也不想借名生辉，借学堂出名。我更愿意贡献自己的一份力量，通过自己踏实的努力来让学堂因我而更荣耀而非相反。希望大家理解。</p>
-<p>另外，我开始新的工作才两个月。在这里，我第一次尝到了“挫折”的感觉，相对于我一贯的“顺风顺水”，我在这里明显感到了自身能力的不足和思想的浅薄。相比一起工作的，跟我同年毕业的同事和朋友，我感到了实实在在的差异，我需要有更多的努力来提高和完善自己。但是，这反而让我更加高兴，更加认定了自己选择的正确：这是一个可以让我不断提高的地方，这是一个可以让我实现自己理想的地方，去实现自己的教育强国之梦——去不断提高自己和需要我帮助提高的人。</p>
-<p>写这篇文章目的有两个：</p>
-<ol>
-<li>能够唤醒大学里沉睡的一部分人去思考自己的人生而非随波逐流、人云亦云，自助者天助之。</li>
-<li>引起更多的人对于教育的关注和反思，因为这关系着我们每一个人的幸福。我们不能因为老师、大学和社会对我们不负责任就放任自流，相反正因为学校和社会没有为我们负责，我们更要加倍地为自己负责，更要认真地思考和选择自己人生。如若能达到此两者，足矣，谢谢各位</li>
-</ol>
+            <blockquote>
+<p>年轻时请远行，行万里路；如果不能远行，就读万卷书。</p>
+</blockquote>
+<p>先来看看我的路线图，全程300公里左右。途径江苏苏州，浙江湖州，无锡宜兴，江苏常州，无锡。全程秋高气爽，颇适合骑车旅行。</p>
+<p>[caption id=”attachment_1942” align=”alignnone” width=”697”]<a href="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=f6dbfc5ad01b0ef468e8985bedff20e7/7c1ed21b0ef41bd5ff775c8053da81cb39db3d99.jpg?referer=2b288b11b119ebc4996f43a97b78&amp;x=.jpg" target="_blank" rel="external"><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=f6dbfc5ad01b0ef468e8985bedff20e7/7c1ed21b0ef41bd5ff775c8053da81cb39db3d99.jpg?referer=2b288b11b119ebc4996f43a97b78&amp;x=.jpg" alt="环太湖骑行路线"></a> 环太湖骑行路线[/caption]</p>
+<p>下面是我制作的google map路线图：</p>
+<iframe src="http://mapsengine.google.com/map/embed?mid=zpuGZvDq_nrg.kYJAe33rfEmI" width="640" height="480"></iframe>
+
+<p>无法显示的请点击链接：<a href="https://mapsengine.google.com/map/edit?mid=zpuGZvDq_nrg.kYJAe33rfEmI" target="_blank" rel="external">https://mapsengine.google.com/map/edit?mid=zpuGZvDq_nrg.kYJAe33rfEmI</a></p>
+<h3 id="出发">出发</h3><p>10月2日早上九点多出发。10月1日晚上和同学们玩杀人游戏玩到11点多，到寝室收拾了一下，在网上大致查了一下路线图就睡觉了。这样看来这也算是一次说走就走的旅行了。</p>
+<p>从青年公社出发，顺着菱湖大道走了一会儿就进入s320。一路上遇到很多骑行的人，有环太湖的，也有去上海的。</p>
+<p>[caption id=”attachment_1946” align=”alignnone” width=”1836”]<a href="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=3d18cbd4f403738dda4a0c278320c16c/4b90f603738da977bd0b325fb251f8198618e39a.jpg?referer=e73ee394f503918f8ec608fa4d78&amp;x=.jpg" target="_blank" rel="external"><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=3d18cbd4f403738dda4a0c278320c16c/4b90f603738da977bd0b325fb251f8198618e39a.jpg?referer=e73ee394f503918f8ec608fa4d78&amp;x=.jpg" alt="锵锵三人行"></a> 锵锵三人行[/caption]</p>
+<p>中午在路边的快餐店吃了饭，稍事休息一会儿就继续出发。下了s230上x205，随后就上了环太湖大道，右手边就是太湖，现在真正有了环太湖骑行的感觉了。</p>
+<p>[caption id=”attachment_1947” align=”alignnone” width=”3264”]<a href="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=cb01166fd60735fa95f04ebcae6a7e8e/962bd40735fae6cd1b901f150db30f2442a70f99.jpg?referer=c96eb856b11bb051d63386186978&amp;x=.jpg" target="_blank" rel="external"><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=cb01166fd60735fa95f04ebcae6a7e8e/962bd40735fae6cd1b901f150db30f2442a70f99.jpg?referer=c96eb856b11bb051d63386186978&amp;x=.jpg" alt="茫茫太湖"></a> 茫茫太湖[/caption]</p>
+<p>骑车到这里，暖风袭袭，吹在身上，好舒适惬意的感觉。</p>
+<p>[caption id=”attachment_1948” align=”alignnone” width=”3264”]<a href="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=cfc97647938fa0ec7bc7640816ac28d3/f603918fa0ec08fafc24a7d35bee3d6d55fbda9a.jpg?referer=9982827f59b5c9ea3be436d32678&amp;x=.jpg" target="_blank" rel="external"><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=cfc97647938fa0ec7bc7640816ac28d3/f603918fa0ec08fafc24a7d35bee3d6d55fbda9a.jpg?referer=9982827f59b5c9ea3be436d32678&amp;x=.jpg" alt="这里很是舒服，暖风袭袭"></a> 这里很是舒服，暖风袭袭[/caption]</p>
+<p>下午五点多到了东山镇，骑车找住的地方，然后去吃饭。吃饭前在东山镇里转悠，小镇里也有类似北京胡同的小巷，我们就在小巷中骑行，感受这里居民们的生活。偶尔遇到死路，掉头继续骑行。</p>
+<p>骑车路过很多江南的村庄，发现江南最具特色的景色就是这小桥流水人家了。</p>
+<p>[caption id=”attachment_1949” align=”alignnone” width=”3264”]<a href="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=84296860ba99a9013f355b332dae7b46/e824b899a9014c08f51f9cd1087b02087bf4f49a.jpg?referer=e0d28b02f01fbe094549f6243478&amp;x=.jpg" target="_blank" rel="external"><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=84296860ba99a9013f355b332dae7b46/e824b899a9014c08f51f9cd1087b02087bf4f49a.jpg?referer=e0d28b02f01fbe094549f6243478&amp;x=.jpgg" alt="小桥流水人家"></a> 小桥流水人家[/caption]</p>
+<p>吃完饭补给完回到住处看电视，今天有恒大和日本柏太阳神的比赛。看到最后真有种如解说员所说的中国球迷前所未有的幸福的感觉。该是埃尔克森进的球跑都跑不掉，最后还是进。最后三位前锋的配合也是相当的精彩。</p>
+<p>第二天早上八九点出发。路过太湖苏州湾大桥，下桥的冲刺时右手边车流涌动，左手边是浩瀚的太湖水，真有种速度与激情的感觉。</p>
+<p>[caption id=”attachment_1950” align=”alignnone” width=”3264”]<a href="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=de2e8a9560d9f2d3241124ea99d7fb2e/0bd162d9f2d3572cb40529a88813632763d0c3db.jpg?referer=4e229a08530fd9f9f90061592db9&amp;x=.jpg" target="_blank" rel="external"><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=de2e8a9560d9f2d3241124ea99d7fb2e/0bd162d9f2d3572cb40529a88813632763d0c3db.jpg?referer=4e229a08530fd9f9f90061592db9&amp;x=.jpg" alt="太湖苏州湾大桥"></a> 太湖苏州湾大桥[/caption]</p>
+<p>这是太湖旁边专供自行车骑行的道路旁边的雕塑。</p>
+<p>[caption id=”attachment_1951” align=”alignnone” width=”3264”]<a href="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8ff42a20014f78f0840b9af6490a7b68/aa64034f78f0f736dbdaf8750855b319ebc41399.jpg?referer=9d3d39ddab014c08402c1d955d78&amp;x=.jpg" target="_blank" rel="external"><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8ff42a20014f78f0840b9af6490a7b68/aa64034f78f0f736dbdaf8750855b319ebc41399.jpg?referer=9d3d39ddab014c08402c1d955d78&amp;x=.jpg" alt="骑行环太湖"></a> 骑行环太湖[/caption]</p>
+<p>环湖路上有很多卖太湖蟹的店，有很多食客前来品尝。</p>
+<p>[caption id=”attachment_1952” align=”alignnone” width=”3264”]<a href="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=7400075c347adab439d01b46bbefc221/8718367adab44aeda26a0a90b11c8701a18bfb9a.jpg?referer=d5f7bc2957fbb2fb6d3c6d224578&amp;x=.jpg" target="_blank" rel="external"><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=7400075c347adab439d01b46bbefc221/8718367adab44aeda26a0a90b11c8701a18bfb9a.jpg?referer=d5f7bc2957fbb2fb6d3c6d224578&amp;x=.jpg" alt="太湖蟹"></a> 太湖蟹[/caption]</p>
+<p>在路上遇到一个吉安特的自行车队，其中一位队员用鼓励的语气对我说，“小帅哥，加油，跟上我们！”。我也瞬间有了精神，开始加速，无奈腿疼，最终还是一个人慢慢的骑了。</p>
+<p>第一天下午我的右腿就有些疼，晚上休息了一下好了些。但今天还是疼，骑到这里真是到了力竭的地步了。我已经远远的拉到后面了，从此我成了我们三个小伙伴中的“关键角色”。</p>
+<p>[caption id=”attachment_1953” align=”alignnone” width=”3264”]<a href="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=27c60745a38b87d65442ab1a37335905/8601a18b87d6277f0af5874c2a381f30e824fcdb.jpg?referer=b47ec6670bf79052b608730e3cb9&amp;x=.jpg" target="_blank" rel="external"><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=27c60745a38b87d65442ab1a37335905/8601a18b87d6277f0af5874c2a381f30e824fcdb.jpg?referer=b47ec6670bf79052b608730e3cb9&amp;x=.jpg" alt="“力竭于此”"></a> “力竭于此”[/caption]</p>
+<p>由于我在小伙伴中间这个“决定性作用”，我们晚上六点才到湖州，在湖州一个商业区附近住。周围的商店、饭馆和小店个个人满为患，生意红火至极……</p>
+<p>[caption id=”attachment_1954” align=”alignnone” width=”3264”]<a href="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=dd247998d300baa1be2c47be772bc82f/f9dcd100baa1cd113092c654bb12c8fcc3ce2d99.jpg?referer=9b2a49d1d343ad4bff3973f08b77&amp;x=.jpg" target="_blank" rel="external"><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=dd247998d300baa1be2c47be772bc82f/f9dcd100baa1cd113092c654bb12c8fcc3ce2d99.jpg?referer=9b2a49d1d343ad4bff3973f08b77&amp;x=.jpg" alt="湖州"></a> 湖州[/caption]</p>
+<p>第二天骑完我的腿更疼了，小身板儿要扛不住了。走路开始一瘸一拐了，上楼梯更是困难。晚上三人边喝啤酒，边吃吃花生，边看《狙击精英之重装上阵》。</p>
+<p>第三天出发后不久，我拉的就更远了。小伙伴让我打车到长兴县然后坐车回去吧。我想了想，都走了一半了还是坚持着骑着回去吧。经过我的再三说服下，小伙伴们答应我一个人慢慢骑，他们今晚赶回无锡。</p>
+<p>[caption id=”attachment_1955” align=”alignnone” width=”1836”]<a href="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=0f7f51520b24ab18e416e13205c197f0/d1160924ab18972b891eb4bee4cd7b899e510a99.jpg?referer=17897747718da9771738b31b7678&amp;x=.jpg" target="_blank" rel="external"><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=0f7f51520b24ab18e416e13205c197f0/d1160924ab18972b891eb4bee4cd7b899e510a99.jpg?referer=17897747718da9771738b31b7678&amp;x=.jpg" alt="江苏界"></a> 江苏界[/caption]</p>
+<p>后面的路我就慢慢的骑，这一天我慢慢悠悠骑了50多公里。在洑东镇找了家旅馆住宿。房间在三楼，上楼梯时我真是横着扶着楼梯爬上去的。</p>
+<p>第四天早上起来，发现腿还是没好。只不过今天左腿疼，右腿好些了。按照这个顺序下来，明天左腿就好了。不过要赶回无锡还有七八十公里路程。</p>
+<p>路上又遇到了一个车队，前面一辆车，后面一辆车，中间是骑行队员。又有队员鼓励我，“小帅哥加油！”。但是无奈腿疼，相加快速度也加快不了了，只能慢慢骑。一路上我也慢慢的总结出了休息的方法：只要将两腿升直了，再按摩按摩，再把座椅调低，这样就可以借着右腿和大腿的力量来连续骑行个几公里了。</p>
+<p>到了无锡界，遇到一位驴友，问我是不是环太湖，认不认识路，还好心的给我指路。</p>
+<p>[caption id=”attachment_1956” align=”alignnone” width=”1836”]<a href="http://h.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=e22132bf41166d223c771591761878ca/b3fb43166d224f4a977ec6670bf790529922d1db.jpg?referer=8d5d6914372ac65c3e1252431fb9&amp;x=.jpg" target="_blank" rel="external"><img src="http://h.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=e22132bf41166d223c771591761878ca/b3fb43166d224f4a977ec6670bf790529922d1db.jpg?referer=8d5d6914372ac65c3e1252431fb9&amp;x=.jpg" alt="无锡界"></a> 无锡界[/caption]</p>
+<p>无锡的环太湖公路一个上坡又一个上坡，到后来我上坡基本靠推，下坡基本靠溜。路上遇到的驴友还是很多，反方向的也很多。</p>
+<p>[caption id=”attachment_1957” align=”alignnone” width=”3264”]<a href="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=34c53e4d6963f624185d3906b77f9ac5/bf096b63f6246b60cae90700e9f81a4c500fa2db.jpg?referer=679e2d705b82b2b7fe880df40eb9&amp;x=.jpg" target="_blank" rel="external"><img src="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=34c53e4d6963f624185d3906b77f9ac5/bf096b63f6246b60cae90700e9f81a4c500fa2db.jpg?referer=679e2d705b82b2b7fe880df40eb9&amp;x=.jpg" alt="一只小船"></a> 一只小船[/caption]<br>[caption id=”attachment_1958” align=”alignnone” width=”3264”]<a href="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8eec2f877b310a55c024def1877e3294/aec379310a55b319921e370141a98226cefc17da.jpg?referer=17dc9dd1087b020855de0bd151b9&amp;x=.jpg" target="_blank" rel="external"><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8eec2f877b310a55c024def1877e3294/aec379310a55b319921e370141a98226cefc17da.jpg?referer=17dc9dd1087b020855de0bd151b9&amp;x=.jpg" alt="环太湖公路"></a> 环太湖公路[/caption]</p>
+<h3 id="终点">终点</h3><p>晚上六点多进入市区，感受了一下无锡的夜生活。然后顺着菱湖大道回到了青年公社。回寝室很是兴奋，高兴，完全没有累的感觉。虽然腿疼，背部肌肉疼，斜方肌也疼，手臂也晒伤了。这个感觉真可以用一句话形容：痛并快乐着。</p>
 
           
         
@@ -1276,12 +945,12 @@
         
           <div class="post-tags">
             
-              <a href="/blog/tags/UCAS/">
-                #UCAS
+              <a href="/blog/tags/生活/">
+                #生活
               </a>
             
-              <a href="/blog/tags/国科大/">
-                #国科大
+              <a href="/blog/tags/读书·旅行/">
+                #读书·旅行
               </a>
             
           </div>
@@ -1304,7 +973,7 @@
 
           
             <div class="pagination">
-              <a class="extend prev" rel="prev" href="/blog/page/5/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/blog/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/24/">24</a><a class="extend next" rel="next" href="/blog/page/7/">&raquo;</a>
+              <a class="extend prev" rel="prev" href="/blog/page/5/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/blog/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/39/">39</a><a class="extend next" rel="next" href="/blog/page/7/">&raquo;</a>
             </div>
           
         </div>
@@ -1338,17 +1007,17 @@
         </div>
 
         <div class="site-state-item site-state-categories">
-          
+          <a href="/blog/categories">
             <span class="site-state-item-count">9</span>
             <span class="site-state-item-name">分类</span>
-          
+          </a>
         </div>
 
         <div class="site-state-item site-state-tags">
-          
+          <a href="/blog/tags">
             <span class="site-state-item-count">20</span>
             <span class="site-state-item-name">标签</span>
-          
+          </a>
         </div>
 
       </div>

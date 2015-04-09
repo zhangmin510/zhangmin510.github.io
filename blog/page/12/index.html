@@ -21,13 +21,13 @@
 
 
 
-    <meta name="keywords" content="Hexo,next" />
+    <meta name="keywords" content="zhangmin.name,张敏,张敏的个人主页,张敏的博客,zhangmin.name's blog" />
 
 
 
 
 
-    <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.1" />
+    <link rel="shorticon icon" type="image/x-icon" href="http://www.zhangmin.name/images/favicon.png?v=0.4.1" />
 
 
 
@@ -67,10 +67,26 @@
       </li>
     
       
+      <li class="menu-item menu-item-categories">
+        <a href="/blog/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
       <li class="menu-item menu-item-archives">
         <a href="/blog/archives">
           <i class="menu-item-icon icon-archives"></i> <br />
           归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/blog/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
         </a>
       </li>
     
@@ -109,8 +125,8 @@
           
           
             
-              <a class="post-title-link" href="/blog/2013/04/Dynamo和BigTable的对比分析/">
-                Dynamo和BigTable的对比分析
+              <a class="post-title-link" href="/blog/2013/05/Using-visual-aids/">
+                Using visual aids
               </a>
             
           
@@ -120,7 +136,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-04-04
+            发表于 2013-05-19
           
         </span>
 
@@ -143,8 +159,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/04/Dynamo和BigTable的对比分析/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/04/Dynamo和BigTable的对比分析/"></span>
+            <a href="/blog/2013/05/Using-visual-aids/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/Using-visual-aids/"></span>
             </a>
           </span>
           
@@ -160,232 +176,35 @@
 
         
           
-            <p>本文将从实现这些系统的关键技术，如数据划分、数据一致性与可用性、负载均衡、容错控制，来对比分析Google的BigTable和Amazon的Dynamo。</p>
-<p><strong>数据划分</strong></p>
-<p>Dynamo采用一致性哈希的方式对数据进行划分。这种数据划分方式在数据存入时就将数据均匀地映射到系统的存储单元中，从而最大限度地避免系统单点存储的数据量过大的问题。同时，一致性哈希算法也为系统带来了良好的扩展性。</p>
-<p>BigTable使用顺序分裂的方式进行数据划分。这种划分方式可以有效地利用系统资源，并能提供很好的扩展性。与使用哈希方式不同的是，顺序分裂的数据与存储节点并不存在直接映射的关系，需要有一个节点管理这些映射关系，这也使得整个系统的扩展性限制于这个管理节点的能力。</p>
-<p><strong>数据一致性和可用性</strong></p>
-<p>Dynamo和BigTable都采用副本冗余的方式来保证数据的高可用性。但是由于个系统采用不同的管理方式，它们的实现方式是不同的。Dynamo在整个哈希环上通过gossip机制进行通讯来完成副本的异步复制。BigTable则采用日志的方式来保证服务节点内存中的数据的可用性。</p>
-<p><strong>负载均衡</strong></p>
-<p>Dynamo采用了虚拟节点技术，通过虚拟化的手段将节点的服务能力单元化，将访问将访问压力较大的虚拟节点映射到服务能力较强的物理节点，达到访问压力的均衡。访问压力的均衡同时伴随着数据的均衡。为了最小化数据均衡过程中数据迁移的开销，Dynamo 同样采用虚拟化技术，量化节点的存储能力，将虚拟后的存储节点相对均匀地分散到集群哈希环上，避免数据均衡过程中全环的数据移动。</p>
-<p>与Dynamo不同的是，BigTable 通过主控节点来监控各个子表服务器上的访问负载状态，利用主控节点调度管理子表服务器的分裂和迁移将访问压力均匀地分散到各个子表服务器上。由于BigTable 采用分布式文件系统作为数据的底层存储，因而访问压力均衡过程中并不涉及到存储数据的迁移操作，以一种巧妙的方式避免了数据均衡的问题。</p>
-<p><strong>容错控制</strong></p>
-<p>Dynamo通过各节点之间定期进行通信来了解节点的活动状态，从而侦测是否有失效存在。如果出现失效状态，，由于哈希方式的数据划分策略，使得系统中各个节点既作为存储节点也作为服务节点，服务迁移的过程伴随着大量的数据迁移，因而系统必须认真应对各种失效状态，以使失效恢复过程中尽量避免大规模存储数据迁移带来的系统开销。</p>
-<p>BigTable通过分布式锁服务chubby来跟踪主控节点和子表节点的服务状态。如果出现失效状态，主控节点将停止失效的节点，并将相关服务转移到其他节点。服务的迁移并不涉及存储数据的移动，不会引入额外的系统开销，因而也就无需区分各种失效状态。这种依赖于底层分布式文件系统的共享存储方式，简化了系统的失效恢复。</p>
-<p>上述差异归纳如下表所示。</p>
-<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/04/dynamoVsBigtable.jpg" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/04/dynamoVsBigtable.jpg" alt="dynamoVsBigtable"></a></p>
-<p>参考文献</p>
-<p>1.郭斯杰，贾鸿飞，熊劲，互联网海量数据存储和处理技术综述，《信息技术快报》第7卷第5期</p>
-<p>2.大数据101：非结构化数据分析</p>
-<p><a href="http://www.intel.cn/content/www/cn/zh/big-data/unstructured-data-analytics-paper.html" target="_blank" rel="external">http://www.intel.cn/content/www/cn/zh/big-data/unstructured-data-analytics-paper.html</a></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/04/《白鹿原》读后感/">
-                《白鹿原》读后感
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-04-03
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/学习笔记/">学习笔记</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/04/《白鹿原》读后感/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/04/《白鹿原》读后感/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>《白鹿原》是陈忠实的代表作。这部长达近50万字的长篇小说，是陈忠实历时六年艰辛创作完成的。小说以陕西关中平原上素有“仁义村”之称的白鹿村为背景，细腻地反映出白姓和鹿姓两大家族祖孙三代的恩怨纷争。全书浓缩着深沉的民族历史内涵，有令人震撼的真实感和厚重的史诗风格。<br>在从清末民初到建国之初的半个世纪里，一阵阵狂风掠过了白鹿原上空，而每一次的变动都震荡着它的内在结构：打乱了再恢复，恢复了再打乱。在这里，人物的命运是纵线，百回千转，社会历史的演进是横面，愈拓愈宽，传统文化的兴衰则是全书的精神主体，以至人、社会历史、文化精神三者之间相互激荡，相互作用，共同推进了作品的时空，在我们眼前铺开了一轴恢宏的、动态的、极富纵深感的关于我们民族灵魂的现实主义的画卷。<br>这是一部渭河平原50年变迁的雄奇史诗，一轴中国农村斑斓多彩，触目惊心的长幅画卷。主人公六娶六丧，神秘的序曲预示着不祥。一个家庭两代子孙，为争夺白鹿原的统治代代争斗不已，上演了一幕幕惊心动魄的话剧；巧取风水地，恶施美人计，孝子为匪，亲翁杀媳，兄弟相煎，情人反目……大革命，日寇入侵，三年内战，白鹿原翻云覆雨，王旗变幻，家仇国恨，交错缠结，冤冤相报代代不已……古老的土地在新生的阵痛中颤栗。<br>(以上内容摘自<a href="http://baike.baidu.com/view/120582.htm" title="白鹿原 百科百科" target="_blank" rel="external">百度百科 白鹿原</a>）</p>
-<p>读完小说，使我想起了我小时候在农村的日子。放羊，拉着骡车送农家肥，挖土豆，用骡子和毛驴耕地。春种秋收，农村的生活安逸而有规律。一家人和一家人很清静，大家都经常相互走动，串门，没有大城市的孤独和寂寞，也没有大城市的冷漠和陌生。</p>
-<p>同时也是我感受到命运的不确定性，即使最强，最厉害的人也无法掌握命运，只能顺着时代潮流向前探索。你不知道你的命运会把你带到哪里，你能做的就是忘掉过去的痛苦与无奈，努力过好今天的每一分，每一秒。与社会潮流格格不入也罢，潮流的弄潮儿也好，你做你认为对的事情，你做满足你的心的事。错了可以悔改，对了就向前。黑娃，做长工，与别人的小妾偷情，又为了爱情而结婚。尽管他们的爱情不被接受，但是他们两个是幸福的。欲望，使人成功也使人堕落。没有经历过欲望考验的人是不确定的，他们不知道自己真正想要的是什么。面对欲望的诱惑，他们惶然无措，以往的条条框框似乎瞬间就不存在了，从此堕入欲望的深渊。直到有一天面对死亡时，才幡然醒悟。知道什么是属于自己的欲望，什么不是自己的欲望。</p>
-<p>人要出去走走，如果你不出去走走，你以为整个被窝就是你的世界。你的思想，你的行为方式，似乎永远都没有变化。新的世界，新的思想，新的未来，年轻的你不能错过！</p>
-<p>也许我将永远不会主动的去参与政治，尤其是中国的政治。每一个政客走的路注定是一条不归路。错了就错了，对了就对了。没有悔改或重新选择的机会。我更喜欢商业，风风雨雨，起起伏伏，好不痛快！</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/读书·旅行/">
-                #读书·旅行
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/04/Supporting-your-ideas/">
-                Supporting your ideas
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-04-02
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/04/Supporting-your-ideas/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/04/Supporting-your-ideas/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>Good speeches are not composed of hot air and generalizations.They need strong supporting material to answer the three questions listeners always ask of a speaker:”What do you mean?””Why should I believe you?””So what”.The skillful use of supporting materials often makes the difference between a poor speech and a good one.In this article,we focus on three basic kinds of supporting material-examples,statistics,and testimony-and on general principles for using them effectively and responsibly.<br><strong>Examples</strong><br>One social psychologist has concluded that “most people are more deeply influenced by one clear,vivid,personal example than by an abundance of statistical.”Examples are so important that many experienced speakers consider them “the very life of the speech”.In addition to clarifying,personalizing,and reinforcing a speaker’s ideas,they often appeal pwoerfully to our emotions.<br>There are three kinds of examples,including brief examples,extended examples and hypothetical examples.</p>
+            <p>As the old saying tells us,one picture can be worth a thousand words.People find a speaker’s message more interesting,grasp it more easily,ant retain it longer when it is presented visually as well as verbally.When used properly,visual aids enhance almost every aspect of a speech.In this article I will look at the major kinds of visual aids and how to prepare and present them most effectively.</p>
+<p><strong>Kinds of Visual Aids</strong></p>
 <ul>
-<li>Brief examples-also called specific instance-may be referred to in passing to illustrate a point.</li>
-<li>Extended examples are often called narratives,illustrations,or anecdotes.</li>
-<li><p>Hypothetical examples are ones that describe an imaginary situation<br>Tips for using examples:</p>
-</li>
-<li><p>Make examples vivid and richly textured.</p>
-</li>
-<li>Reinforce examples with statistics or testimony.<br><strong>Statistics</strong><br>We live in an age of statistics.Day in and day out we are bombarded with a staggering array of numbers.According to Lord Kelvin,the 19th-century physicist,”When you can measure what you are speaking about,and express in numbers,you know something about it.But when you cannot measure it,when you cannot express it in numbers,you knowledge is …meager and unsatisfactory.”It is widely shared belief that makes statistics,when used properly,such an effective way to clarify and support ideas.<br>Like brief examples,statistics are often cited in passing to clarify or strengthen a speaker’s point.Statistics can also be used in combination to show the magnitude or seriousness of an issue.</li>
+<li>Object and models.</li>
+<li>Photographs and drawings.Make sure they are large enough for the audience to see without straining.*   Graphs.Such as line graph,pie graph,and bar graph.Line graph often use to show statistical trends and patterns.Pie graph is best suited for illustrating simple distribution patterns,because it dramatize relationships among the parts of a whole.While bar graph is good way to show comparisons among two or more items.</li>
+<li>Charts.It is especially useful for summarizing large blocks of information.</li>
+<li>Video.Make sure the video is not too long and is cued to start exactly where you want it and blend smoothly into your speech.</li>
+<li>The speaker.Doing a demonstration well requires special practice to coordinate your actions with your words and to maintain eye contact with the audience.</li>
+<li>Powerpoint.Rather than putting everything you say on screen for the audience,you need to choose which aspects of your speech need to illstrate.</li>
 </ul>
-<p>Tips for using statistics:</p>
+<p><strong>Tips for Preparing Visual Aids</strong></p>
 <ul>
-<li>Use representative statistics.</li>
-<li>Identify the source of statistics.</li>
-<li>Use statistics from reliable sources.</li>
-<li>Round off complicated statistics.</li>
-<li>Explain statistics.Statistics do not speak for themselves,They need to interpreted and related to your listeners.</li>
-<li>Use visual aids to clarify statistics.<br><strong>Testimony</strong><br>We are often influenced by the testimony of other people.Just as you are likely to be swayed by your friend’s recommendation about which class to take,so audience tend to respect the opinions of people who have special knowledge or experience on the topic at hand.By quoting or paraphrasing such people,you can give your ideas greater strength and impact.The two major kinds of testimony are expert testimony and peer testimony.<br>Citing the views of people who are experts-people who are acknowledged authorities in their field- is a good way to lend credibility to yours speeches.It shows that you are not just mouthing your own opinions,but that your position is supported by people who are knowledgeable about the topic.Another type of testimony often used in speeches is peer testimony-opinion of people like ourselves;not prominent figures,but ordinary citizens who have firsthand experience on the topic.This is kind of testimony is expecially valuable because it gives a more personal viewpoint on issues than can be gained from expert testimony.</li>
+<li>Keep visual aids simple.</li>
+<li>Make sure visual aids are large enough.</li>
+<li>Use fonts that are easy to read.</li>
+<li>Use color effectively.</li>
 </ul>
-<p>Tip for using testimony:</p>
+<p><strong>Tips for Presenting the Visual Aids</strong></p>
 <ul>
-<li>Decide whether to quote or paraphrase.</li>
-<li>Quote or paraphrase accurately.</li>
-<li>Use testimony form qualified sources.</li>
-<li>Use testimony from unbiased sources.</li>
-<li>Identify the people you quote or paraphrase.<br><em>Note:The above content adapt form the book The Art of Public Speaking by Stephen E. Lucas</em></li>
+<li>Display visual aids where listeners can see them.</li>
+<li>Explain visual aids.</li>
+<li>Avoid passing visual aids among the audience.</li>
+<li>Display visual aids only while discussing them.</li>
+<li>Talk to the audience,not to your visual aids.</li>
+<li>Practice with your visual aids.</li>
+<li>Check the room and equipment.</li>
+<li>Develop a backup plan.</li>
 </ul>
+<p><strong>The above content adapt from the book <em>The art of Public Speaking</em> written by Stephen E. Lucas</strong></p>
 
           
         
@@ -427,8 +246,8 @@
           
           
             
-              <a class="post-title-link" href="/blog/2013/04/How-to-avoid-plagiarising-in-your-speech/">
-                How to avoid plagiarising in your speech
+              <a class="post-title-link" href="/blog/2013/05/公众科学日：走马观正负电子对撞机/">
+                公众科学日：走马观正负电子对撞机
               </a>
             
           
@@ -438,7 +257,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-04-01
+            发表于 2013-05-18
           
         </span>
 
@@ -461,8 +280,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/04/How-to-avoid-plagiarising-in-your-speech/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/04/How-to-avoid-plagiarising-in-your-speech/"></span>
+            <a href="/blog/2013/05/公众科学日：走马观正负电子对撞机/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/公众科学日：走马观正负电子对撞机/"></span>
             </a>
           </span>
           
@@ -478,8 +297,342 @@
 
         
           
-            <p>“Plagiarism” comes from plagiarius,the Latin word for kidnapper.To plagiarize means to present another person’s language or ideas as your own——to give the impression you have written or thought something yourself when you have actually taken it from someone else.If you are caught palgiarizing,you stand to forfeit your good name or to damage you career.It is worth your while,then,to make sure you know what plagiarism is and how to avoid it.<br>There are three kind of plagiarism:global plagiarism,patchwork plagiarism,and incremental plagiarism.<br>Global plagiarism is stealing entirely from another source and passing it off as your own.The most blatant——and unforgivable——kind of plagiarism,it is grossly unethical.Global plagiarism usually occurs because a speaker puts off until the last minute.The best way to avoid this,of course,is not to leave your speech until the last minute.<br>Unlike global plagiarism,in which a person pirates an entire content from a single source,patchwork plagiarism occurs when a person cuts and pastes from two or three sources,without giving credit and without doing any additional research.As with global plagiarism,one key to averting patchwork plagiarism is to start working on your speech as soon as possible.The longer you work on it,the more apt you are to come up with your own approach.It is also vital to consult a large number of sources in your speech.<br>In global plagiarism and patchwork plagiarism,the entire speech is cribbed more or less verbatim from a single source or a few sources.But plagiarism can exist even when the speech as a whole is not pirated.This is called incremental plagiarism.It occurs when the speaker fails to give credit for particular parts——increments——of the speech that are borrowed from other people.The most important of these increments are quotations and paraphrases.Whenever you quote someone directly,you must attribute the words to that person.When you paraphrase an author,you restate or summarize his or her ideas in your own words.Even though you do not quote directly,you still appropriate the structure of other’s ideas or a fair amount of other’s language.Thus you need to give him credit——just as if you were repeating other’s words verbatim.There are two ways to guard against incremental plagiarism.The first is to be careful when taking research notes to distinguish among direct quotations,paraphrased material,and your own comments.The second way to avoid incremental plagiarism is to err on the side of caution.In other words,when in doubt,cite your source.</p>
-<p><em>Note:The above content adapt from the book The art of Public Speaking writing by Stephen E. Lucas</em></p>
+            <p>高能所于2013年5月18日举办第九届公众科学日，主题为“微观世界探秘之旅”。本次活动高能所将向公众免费开放北京正负电子对撞机国家实验室、核探测与核电子学国家重点实验室、中科院核分析重点实验室、同步辐射大厅、计算中心等，实现科研工作与公众的零距离接触；同时还将通过主题展板等形式向公众介绍高能所承担的国家重大科技基础设施以及其他研发成果。</p>
+<p><img src="http://www.ihep.cas.cn/kxcb/kpzt/kxr_2013/gdtp/201305/W020130514583646095613.jpg" alt="参观路线图"></p>
+<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_091439.jpg" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_091439-620x348.jpg" alt="IMG_20130518_091439"></a></p>
+<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_092208.jpg" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_092208-620x348.jpg" alt="IMG_20130518_092208"></a></p>
+<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_094324.jpg" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_094324-620x348.jpg" alt="IMG_20130518_094324"></a><br><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_093008.jpg" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/05/IMG_20130518_093008.jpg" alt="IMG_20130518_093008"></a></p>
+<p>详细内容参见：<a href="http://www.ihep.cas.cn/kxcb/kpzt/kxr_2013/" target="_blank" rel="external">高能所第九届公众科学日</a></p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/UCAS/">
+                #UCAS
+              </a>
+            
+              <a href="/blog/tags/国科大/">
+                #国科大
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2013/05/YOURLS改造总结/">
+                YOURLS改造总结
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-05-17
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/MSE/">MSE</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/05/YOURLS改造总结/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/YOURLS改造总结/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>这是大规模web性能优化的小组作业是对一个系统进行改造，以实现性能的改进。在项目的立项阶段主要是找一个应用可以利用memcachedb进行改造。经过memcachedb调研后知道memcachedb适合需要频繁读写的小数据的场景。例如数字类服务就像点击数，需要频繁写入小数据的例如评论系统，需要记录用户状态的例如在线人数以及在线用户等等。最后找到了YOURLS这个短网址程序，是基于PHP和MySQL开发的。先开始我认为可以将mysql数据库直接替换成memcachedb，经过研读源代码，发现这样不太现实，基本需要重写大半部分的核心代码。进一步分析代码后，发现YOURLS是可以基于plugin进行扩展，而且也有一个类似的APC缓存插件，所以我们决定使用插件改造这个系统。<br>在实现阶段，主要就是编写插件函数将短网址和长网址之间的映射保存到memcachedb中，这样可以减少大量的数据库读写。同时还要对链接的点击次数，在一定的时间内将点击次数先写到缓存中，时间过后再统一写到数据库中。另外，还要将日志的记录也要写入到缓存。可以确认，缓存后，响应时间会大幅度下降。<br>改造完后的第一个感觉就是YOURLS设计的很巧妙，plugin机制可以让开发者不修改核心的代码就可以修改应用程序的大部分功能,非常灵活多变。这也是我将来在应用开发过程中需要学习的。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/技术/">
+                #技术
+              </a>
+            
+              <a href="/blog/tags/札记/">
+                #札记
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2013/05/一些想法/">
+                一些想法
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-05-16
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/MSE/">MSE</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/05/一些想法/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/一些想法/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>最近有部电影《致我们终将逝去的青春》特别火，勾起了大家对青春的种种怀念。青春的悸动和张扬，爱情的美好与感伤，现实的无奈与苍凉。然而，正如马尔克斯在《百年孤独》中所说的：“无论走到哪里，都应该记住过去都是假的，回忆是一条没有尽头的路，以往的春天不复存在，就连那坚韧而有狂乱的爱情归根结底也不过是一种转瞬即逝的现实。”有时候我觉得我很享受现在的研究生生活，这也许是我们最后的校园时光。在象牙塔中的生活是自由的：你可以选择你想学习的课程，了解你感兴趣的研究方向，做你感兴趣的事。每个月900元的补助也可以保证你过的很舒服。这样的生活确实需要倍加珍惜。<br>说到每个月900元的补助，我意识到，我认为这种意识很重要，我在花纳税人的钱，花的是国家和社会的钱。我的学习不仅要对自己，对父母负责，更要对国家和社会负责。说到国家和社会，虽然存在很多问题，但是我相信我们年轻的足够的聪明和智慧去解决，我相信未来会把它变得更好。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/札记/">
+                #札记
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2013/05/Preparation-Outline-and-Speaking-Outline-Example/">
+                Preparation Outline and Speaking Outline Example
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-05-14
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/MSE/">MSE</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/05/Preparation-Outline-and-Speaking-Outline-Example/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/Preparation-Outline-and-Speaking-Outline-Example/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p><strong>PREPARATION OUTLINE</strong></p>
+<p>Specific Purpose:To inform my audience about the brief history of Internet.</p>
+<p>Central Idea: Although the Internet has developed for only about 60 years,it brings the great change to the whole world.</p>
+<p><strong>Introduction</strong></p>
+<p>I.Daily uses of the Internet.</p>
+<p>II.Do you ever wonder how the Internet got started.</p>
+<p>III.Simple explain of the Internet is network of networks.</p>
+<p>IV.Today, I would like to share the brief history of the Internet and its future developing trends.</p>
+<p><strong>Body</strong></p>
+<p>I.Three developing milestones in the history of the Internet.</p>
+<p>  A.Origin of the Internet.</p>
+<p>  B.In 1973, the U.S. Defense Advanced Research Projects Agency initiated a research program to investigate techniques and technologies for interlinking packet networks of various kinds.</p>
+<p>  C.In 1991, Tim Berners-Lee creates the World Wide Web.</p>
+<p>II.Future developing trends of the Internet.</p>
+<p>  A.The future Internet is expected to seamlessly link together not just networks and people but a staggering array of devices.</p>
+<p>  B.The future Internet will include various new applications.</p>
+<p><strong>Conclusion</strong></p>
+<p>I.As we have seen,although the development time of the Internet is short,it brings great change to this world.</p>
+<p>II.The Internet will continue to make differences to this world.</p>
+<p><strong>Bibliography</strong></p>
+<p>1.Barry M. Leiner, Vinton G. Cerf, David D. Clark,et al,Brief History of the Internet,Newsletter,ACM SIGCOMM Computer Communication Review archive Volume 39 Issue 5, October 2009 Pages 22-31.</p>
+<p>2.Internet <a href="http://en.wikipedia.org/wiki/Internet" target="_blank" rel="external">http://en.wikipedia.org/wiki/Internet</a>.</p>
+<p>3.History of the Internet , <a href="http://en.wikipedia.org/wiki/" target="_blank" rel="external">http://en.wikipedia.org/wiki/</a> History_of _the _Internet</p>
+<p><strong>SPEAKING OUTLINE</strong></p>
+<p><strong>Introduction</strong></p>
+<p>——EYE CONTACT——</p>
+<p>I.Daily uses of the Internet.</p>
+<p>II.Do you ever wonder how the Internet got started.</p>
+<p>——PAUSE——</p>
+<p>III.Today, the brief history of the Internet and its future developing trends.</p>
+<p>( Let get started with the origin of the Internet…)</p>
+<p><strong>Body</strong></p>
+<p>I.Three developing milestones in the history of the Internet.</p>
+<p>  A.Origin of the Internet.</p>
+<p>  B.In 1973, the U.S. Defense Advanced Research Projects Agency initiated a research program.</p>
+<p>  C.In 1991, Tim Berners-Lee creates the World Wide Web.</p>
+<p>(Now we have reviewed some memorable milestones of the Internet…<br>you may wonder…)</p>
+<p>II.Future developing trends of the Internet.</p>
+<p>  A.seamlessly link together a staggering array of devices.</p>
+<p>  B.include various new applications.</p>
+<p>——PAUSE——</p>
+<p><strong>Conclusion</strong></p>
+<p>I.As we have seen,although the development time of the Internet is short,it brings great change to this world.</p>
+<p>II.The Internet will continue to make differences to this world.</p>
 
           
         
@@ -521,8 +674,8 @@
           
           
             
-              <a class="post-title-link" href="/blog/2013/03/Speaking-Confidently/">
-                Speaking Confidently
+              <a class="post-title-link" href="/blog/2013/05/在什么情况下科学与非科学的划界问题不在那么重要/">
+                在什么情况下科学与非科学的划界问题不在那么重要
               </a>
             
           
@@ -532,7 +685,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2013-03-31
+            发表于 2013-05-13
           
         </span>
 
@@ -555,8 +708,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/blog/2013/03/Speaking-Confidently/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/03/Speaking-Confidently/"></span>
+            <a href="/blog/2013/05/在什么情况下科学与非科学的划界问题不在那么重要/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/在什么情况下科学与非科学的划界问题不在那么重要/"></span>
             </a>
           </span>
           
@@ -572,27 +725,11 @@
 
         
           
-            <p>If you are like most people,you are nervous about the prospect of giving a speech in public.Stage fright is a global phenomenon that cuts across language,culture,and national borders.What the American comedian Jerry Seinfeld said in jest sometimes seems literally true:”Given a choice,at a funeral most of us would rather be the one in the coffin than the one giving the eulogy.”<br>Stage fright is such a common occurence that even some of the greatest public speakers in history have suffered from it,including Mahatma Gandhi,Abraham Lincoln,and Winston Churchill.The famous Roman orator Cicero said,”I turn pale at the outset of a speech and quake in every limb and in my soul.Actually,most people tend to be anxious before doing something important in public.The ones who succeed have learned to use their nervousness to their advantage.Even most experienced speakers have stage fright before taking the floor,but their nervousness is a healthy sign that tey are getting “psyched up” for a good effort.In other words,it is perfectly normal——even desirable——to be nervous at the start of a speech.<br>Rather than trying to eliminate every trace of stage fright,you should aim at transforming it from a negagive force into what one expert calls positive nervouseness——“a zesty,enthusiasitic,lively feeling with a slight edge to it …It’s still nervouseness,but it feels different.You’re no longer victimized by it;instead,you’re vitalized by it.You’re in control of it.<br>Here are a number of time-tested ways you can turn your nervouseness from a negative force into a positive one.</p>
-<ul>
-<li>Acquire speaking experience.For most people,the biggest part of stage fright is fear of the unknown.Learning to give a speech is not much different from learning any other skill——it proceeds by trial and error.As time goes on,your fears about public speaking will grandually recede until they are replaced by only a healthy nervousness before you rise to speak.</li>
-<li>Prepare,prepare,prepare.Pick speech topics you truly care about——and then to prepare yours speeches so thoroughly that you cannot help but be successful.One professional speech consultant estimates that preparation can reduce stage fright by up to 75 percent.</li>
-<li>Think positively.Confidence is mostly the well-known power of positive thinking.If you think you can do it,you usually can.On the other hand,if you predict disaster and doom,that is almost always what you will get.</li>
-<li>Use the power of visualization.The key to visualizatioin is creating a vivid mental blueprint in which you see yourself succeeding in your speech.</li>
-<li>Know that most nervouseness is not visible.Only a fraction of the turmoil you feel inside is visible on the outside.</li>
-<li>Don’t expect perfection.Remember that audience does not know what the speaker plans to say,they only hear what the speaker does say.</li>
-<li><p>Additional tips.They include:</p>
-<ul>
-<li>Be at your best physically and mentally.</li>
-<li>As you are waiting to speak,quietly tighten and relax your leg muscles,or squeeze your hands together and then release them.</li>
-<li>Take a couple slow,deep breaths before you start to speak.</li>
-<li>Work especially hard on your introduction.</li>
-<li>Make eye contact with members of your audience.</li>
-<li>Concentrate on communicating with your audience rather than on worrying about your stage fright.</li>
-<li>Use visual aids.<br><strong><span style="color: #ff0000;">The best part about confidence is that it nurtures itself.After you score your first triumph,you will be that much more confident the next time,And as you become a more confident public speaker,you will likely become more confident in other areas of your life as well.</span></strong></li>
-</ul>
-</li>
-</ul>
-<p><em>Note:The above content adapt from the book The art of Public Speaking writing by Stephen E. Lucas</em></p>
+            <p>关于科学与非科学的划界问题是如此的重要，过去是，现在也是，将来也可能是。1616年，哥白尼的日心说理论被天主教教会所禁止，因为被认为是伪科学。直到1820年，天主教会才解禁了哥白尼的理论使之成为科学，因为教会认为事实已经证明了哥白尼日心说。同样的，1949年苏共中央宣布孟德尔遗传学是伪科学，并在集中营中处死了孟德尔遗传学的拥护者。虽然事后孟德尔遗传学被恢复了声誉，但是党仍然决定什么是科学，可以发表，什么是伪科学，应该惩处。西方的新自由派势力集团也会对他们所认为的伪科学行使否定言论自由的权利。</p>
+<p>上述这些例子说明科学已经走上了神坛，被政治或者军事力量所提倡，所保护，所利用。科学已经不再是与其他意识形态拥有平等地位的科学了，科学被国家所支持，因而获得了高于一般意识形态的地位。正如费耶阿本德在他的《自由社会的科学》一书中所说的：“科学的优越性不是研究和论证的结果，而是政治、制度甚至军事压力的结果。”</p>
+<p>因为科学的力量是如此强大，人们不能再自由的选择支持某些意识形态，或进行某些研究，而要受到科学的限制。如果照此发展下去，科学可能成为一种宗教，压制其他的意识形态，甚至阻碍社会的发展。</p>
+<p>如果有这样一种社会，在这个社会中,科学走下神坛，科学和其他意识形态自由竞争,国家不再支持科学，而在各种意识形态中保持中立时,每个人可以自由选择自己所支持的意识形态。那么关于科学与非科学的划界问题就不会那么重要了。当非科学的意识形态，实践，理论获得了与科学公平竞争的机会和地位，它们就可以成为科学的竞争对手，就可以揭露科学的重大缺陷，这样也会更好的促进科学的发展。</p>
+<p>科学确实取得了很多的成果，但是这些成果的取得都受益于非科学和宗教神话。科学不能独立于其他意识形态而存在和发展。如果没有炼金术，炼丹术，化学甚至不会开始发展；如果不是受益于草药学，女巫的生理学，江湖郎中，医学也不可能发展到现在这样的程度。正因为科学和所认为的非科学有如此紧密的关系，所以科学可以回归到其本来的地位，与其他意识形态共同发展。</p>
 
           
         
@@ -604,601 +741,8 @@
         
           <div class="post-tags">
             
-              <a href="/blog/tags/public-speaking/">
-                #public speaking
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/03/Strom-Tutorial/">
-                Strom Tutorial
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-03-30
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/03/Strom-Tutorial/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/03/Strom-Tutorial/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>本教程你将学到如何创建storm topology及如何将topology部署到storm集群。Java将是主要使用的语言，但有一些示例使用Python，用以说明storm的多语言特性。<br><strong>预备内容</strong><br>本教程将使用<a href="https://github.com/nathanmarz/storm-starter" title="storm starter" target="_blank" rel="external">storm-starter</a>项目，建议克隆该项目并了解该项目的最新情况。阅读<a href="http://www.zhangmin.name/blog/?p=997" title="配置storm环境" target="_blank" rel="external">如何配置开发环境和创建新的storm项目</a>正确配置你的开发环境。</p>
-<p><strong>Storm集群的组成</strong><br>一个storm集群与hadoop集群在表面上相似，然而在hadoop上运行MapReduce jobs，在storm上运行topology。Jobs和topology是不同的。一个关键的不同之处就是一个MapReduce job最终会结束，而一个topology会不停地处理消息（直到你主动的停止它）。<br>Storm集群中有两种类型的节点：master节点和worker节点。Master节点运行一个叫守护进程叫Nimbus，该进程与hadoop的JobTracker相似.Nimbus 负责在集群分发代码，分配任务到机器，监控任务的执行。</p>
-<p>每一个worker节点运行一个守护进程叫Supervisor,监控Nimbus分配给本机worker的任务，按照需要开始和停止worker进程。每一个worker进程执行topology的一个子集，一个运行的topology包括多个worker进程且分布在多个机器上。</p>
-<p>所有Nimbus和Supervisor之间的协作通过ZooKeeper集群完成。另外，Nimbus和Supervisor守护进程能够快速重启且是无状态的。所有的状态信息保存在ZooKeeper中或本地磁盘上。这意味着你可以kill -9杀死Nimbus和Supervisor进程，但是它们很快重启就像什么都没发生一样。这一设计使得storm非常稳定。</p>
-<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/storm-cluster.png" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/storm-cluster.png" alt="storm-cluster"></a></p>
-<p><strong>Topology </strong></p>
-<p>在storm上进行实时计算，你需要创建topology。一个topology是计算的表示方式。Topology中每一个节点包含处理逻辑，节点之间的连接表示数据将如何传输。运行一个topology的非常简单。首先，将所有的代码及依赖的库打包为一个jar文件，然后运行以下命令：</p>
-<p>[java]storm jar all-my-code.jar backtype.storm.MyTopology arg1 arg2[/java]</p>
-<p>该命令运行类backtype.storm.MyTopology，参数是arg1,arg2。该类的函数定义了topology。Storm jar命令负责连接到Nimbus，并上传jar文件。</p>
-<p>因为topology定义是Thrift结构，Nimbus是Thrift服务，你可以利用任意语言创建和提交topology，以上的命令用于部署基于JVM的语言。参考 在集群上运行topology 获取更多信息。</p>
-<p><strong>流</strong></p>
-<p>Storm的核心抽象是流。流是无限的元组序列。Storm提供操作原语，以一种分布式的方式处理和变换流。例如，将twitter流转换为话题流。Storm提供基本的流变换原语包括spout和bolt。可以实现spout和bolt提供接口实现应用逻辑。</p>
-<p>Spout和bolt打包为一个topology，一种更高层次的抽象。用于在storm集群上执行。一个topology是流变换或处理的一张图。图中每个节点代表spout或bolt，边代表bolt订阅了那些流。当一个spout或bolt将元组转换为流后，它将产生的流发送到所有订阅了该流的bolt。节点之间的边表示数据的传递路线。例如如果spoutA和boltB之间有一个连接，同样，spoutA和boltC之间也有一个连接，boltB和boltC之间有一个连接。然后，每一次spoutA发送一个元组，它将发送该元组到boltB和boltC。所有boltB的输出都将发送到boltC。</p>
-<p>Storm topology的每个节点都是并行执行的，可以在你的代码中设置并行度。然后storm将产生相应数量的线程在整个集群中执行。</p>
-<p>一个topology将永远运行，或者你可以停止它。Storm将自动分配执行失败的任务。另外，storm确保没有数据丢失，即使是机器宕机或消息被放弃。</p>
-<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/topology.png" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/topology.png" alt="topology"></a></p>
-<p><strong>数据模型</strong></p>
-<p>Storm的数据模型就是元组（Tuple），一个元组就是一系列命名的值，每一个值可以是任何类型的对象。Storm创造性的支持原始数据类型，字符串，字节数组作为元组的值。如果使用其他类型的数据对象，只需要实现相应类型的Serializer.</p>
-<p>每一个节点必须声明要输出的元组的字段（域），例如下面的bolt声明发送2个含有域double和triple的元组。</p>
-<p>[java]public class DoubleAndTripleBolt extends BaseRichBolt {<br>    private OutputCollectorBase _collector;<br>   @Override<br>    public void prepare(Map conf, TopologyContext context, OutputCollectorBase collector) {<br>       _collector = collector;<br>    }<br>    @Override<br>    public void execute(Tuple input) {<br>        int val = input.getInteger(0);<br>        _collector.emit(input, new Values(val<em>2, val</em>3));<br>        _collector.ack(input);<br>    }<br>   @Override<br>    public void declareOutputFields(OutputFieldsDeclarer declarer) {<br>        declarer.declare(new Fields(&quot;double&quot;, &quot;triple&quot;));<br>    }<br>}[/java]</p>
-<p>declareOutputFields 函数声明输出域包含[“double”,“triple”]。其余的部分将在后面介绍。</p>
-<p><strong>一个简单的Topology</strong></p>
-<p>让我们先来看一个简单的topology来理解这一概念及如何使用代码进行表示。我们来看一个来自storm-starter项目的ExclamationTopology的定义。</p>
-<p>[java]TopologyBuilder builder = new TopologyBuilder();<br>builder.setSpout(&quot;words&quot;, new TestWordSpout(), 10);<br>builder.setBolt(&quot;exclaim1&quot;, new ExclamationBolt(), 3)<br>        .shuffleGrouping(&quot;words&quot;);<br>builder.setBolt(&quot;exclaim2&quot;, new ExclamationBolt(), 2)<br>        .shuffleGrouping(&quot;exclaim1&quot;);<br>builder.setBolt(&quot;exclaim2&quot;, new ExclamationBolt(), 5)<br>            .shuffleGrouping(&quot;words&quot;)<br>            .shuffleGrouping(&quot;exclaim1&quot;);<br>[/java]</p>
-<p>这个topology包含一个spout和两个bolt。Spout发送单词words。每个bolt追加字符串”!!!”。节点被排成一列。Spout发送到第一个bolt，然后再由第一个bolt发送到第二个bolt。如果spout发送元素[“bob”]和[“john”]，那么第二个bolt将发送words [“bob!!!!!”]和[“john!!!!!”]。</p>
-<p>这段代码用setSpout和setBolt方法定义节点。这些方法将用户指定的id，一个包含处理逻辑的对象，代码处理的并行度作为参数。在这个示例中，spout的参数id是words，bolt的用户指定id是exclaim1和exclaim2.</p>
-<p>包含处理逻辑的对象实现了spout的IRichSpout接口及bolt的接口IRichBolt。最后一个参数是代码执行的并行度，是可选的。并行度表示在集群上有多少线程执行该任务。如果你忽略它，storm的默认值为每个节点一个线程。</p>
-<p>setBolt返回一个InputDeclarer对象用于定义bolt的输入。这里组件“exclaim”声明它将以随机分组的方式读取所有exclaim1发送到元组。</p>
-<p>随机分组的意思是元组将从输入任务随机分发到bolt任务。有很多的方法在组件之间对数据流进行分组。后面将会进一步阐释。</p>
-<p>如果你想组件exclaim2读取由组件words和exclaim1发送的所有元组，你可以这样定义exclaim2：</p>
-<p>[java]builder.setBolt(&quot;exclaim2&quot;, new ExclamationBolt(), 5)<br>            .shuffleGrouping(&quot;words&quot;)<br>            .shuffleGrouping(&quot;exclaim1&quot;);[/java]</p>
-<p>由此可见，输入声明可以以链式的方式指定bolt的多个数据源。</p>
-<p>让我们深入spout和bolt来看一下它们的实现。Spout负责向topology发送新消息，TestWordSpout随机的每100ms从字符串元组[“nathan”, “mike”, “jackson”, “golda”, “bertels”]选择一个元素作为一个元组进行发送。nextTuple的实现如下：</p>
-<p>[java]public void nextTuple() {<br>    Utils.sleep(100);<br>    final String[] words = new String[] {&quot;nathan&quot;, &quot;mike&quot;, &quot;jackson&quot;, &quot;golda&quot;, &quot;bertels&quot;};<br>    final Random rand = new Random();<br>    final String word = words[rand.nextInt(words.length)];<br>    _collector.emit(new Values(word));<br>}[/java]</p>
-<p>ExclamationBolt向输入追加字符串“!!!”，下面我们看一下ExclamationBolt的实现 ：</p>
-<p>[java]public static class ExclamationBolt implements IRichBolt {<br>    OutputCollector _collector;<br>    public void prepare(Map conf, TopologyContext context, OutputCollector collector) {<br>        _collector = collector;<br>    }<br>    public void execute(Tuple tuple) {<br>        _collector.emit(tuple, new Values(tuple.getString(0) + &quot;!!!&quot;));<br>        _collector.ack(tuple);<br>    }<br>   public void cleanup() {<br>    }<br>   public void declareOutputFields(OutputFieldsDeclarer declarer) {<br>        declarer.declare(new Fields(&quot;word&quot;));<br>    }<br>    public Map getComponentConfiguration() {<br>        return null;<br>    }<br>}[/java]</p>
-<p>Prepare函数给bolt提供一个OutputCollector用于从Bolt发送元组。元组可以在任何时候发送。在prepare，execute，或者cleanup方法中，甚至在其他异步线程中。该prepare函数简单的保存OutputCollector实例，以便在随后的execute方法中使用。</p>
-<p>Execute方法接受从一个bolt发送来的元组。ExclamationBolt获取元组的第一个域的值，并发送另一个元组，该元组的域的值是被添加“!!!”后的新值。</p>
-<p>如果一个bolt的实现订阅了多个输入流，可以利用Tuple.getSourceConponent方法获得该Tuple的源。</p>
-<p>另外，输入元组被当做第一个参数传送给emit。最后要对输入元组进行确认。这是storm保证没有数据丢失的可靠性API中的一部分，后面讲详细介绍。</p>
-<p>当bolt被关闭时，需要清理打开的资源时会调用cleanup方法。在集群上能保证该方法会被调用。例如，如果一台机器正在运行，就没有办法调用该方法。一般情况下，会在本地模式运行topology时才会调用cleanup方法。你可以运行或停止任何topology而且没有资源的泄漏。</p>
-<p>declareOutputFields方法声明ExclamationBolt发送一个名称为word的一元元组。</p>
-<p>getComponentConfiguration方法允许你配置该模块将如何运行。将在<a href="http://www.zhangmin.name/blog/?p=1003" title="storm配置" target="_blank" rel="external">配置</a>一节中详细介绍。</p>
-<p>像cleanup和getComponentConfiguration一般不在bolt的实现中，你可以更简便地利用基类定义bolt。ExclamationBolt可以通过继承BaseRichBolt方便地实现，如：</p>
-<p>[java]public static class ExclamationBolt extends BaseRichBolt {<br>    OutputCollector _collector;<br>    public void prepare(Map conf, TopologyContext context, OutputCollector collector) {<br>        _collector = collector;<br>    }<br>    public void execute(Tuple tuple) {<br>        _collector.emit(tuple, new Values(tuple.getString(0) + &quot;!!!&quot;));<br>        _collector.ack(tuple);<br>    }<br>    public void declareOutputFields(OutputFieldsDeclarer declarer) {<br>        declarer.declare(new Fields(&quot;word&quot;));<br>    }<br>}[/java]</p>
-<p><strong>在本地运行ExclamationTopology</strong></p>
-<p>Storm中有两种模式：本地模式和分布式模式。在本地模式下，storm完全在进程中模拟执行，用线程模拟工作节点。本地模式用于测试和开发topology。当你运行storm-starter项目里的一个topology时，它们将在本地模式下运行。你可以监控每个模块发送的消息。在本地模式一节将详细介绍。</p>
-<p>在分布式模式下，storm在集群上运行。当你把一个topology提交到主节点master，你还需要提交所有相关的代码，master将会负责在集群上分发代码及分配worker执行topology。如果worker失败，master会重新分配该topology。在生产集群上运行topology一节有详细的介绍。</p>
-<p>在本地模式下运行topology的代码如下：</p>
-<p>[java]Config conf = new Config();<br>conf.setDebug(true);<br>conf.setNumWorkers(2);</p>
-<p>LocalCluster cluster = new LocalCluster();<br>cluster.submitTopology(&quot;test&quot;, conf, builder.createTopology());<br>Utils.sleep(10000);<br>cluster.killTopology(&quot;test&quot;);<br>cluster.shutdown();[/java]</p>
-<p>首先，上述代码通过创建LocalCluster定义进程内的集群，向该虚拟集群提交topology与向分布式集群提交相同。用方法submitTopology向LocalCluster提交topology，参数是要运行的topology的id，topology的配置信息等。</p>
-<p>配置类用于配置topology运行的各个方面。这里有两个配置信息：</p>
-<p>TOPOLOGY_WORKERS（用setNumberWorkers指定）。在集群上分配多少进程运行topology。Topology中的每一个模块将在线程中执行。指定模块的线程数量通过setBolt和setSpout设定。这些线程存在于worker进程中，每个worker进程中有若干线程执行topology的各个模块。例如，在你的模块中配置了300个线程，配置50个worker进程。每个worker进程中将执行6个线程。每一个线程可能输入不同的模块。可以通过设置storm topology的每个模块的并行度来调整性能，包括每个进程中有多少线程及多少进程。</p>
-<p>TOPOLOGY_DEBUGE （通过setDebug设定）。当设置为真时，storm将记录每个模块每一条发送消息的日志。在本地模式下测试topology将会非常有用。当然，在真实集群上，你需要关闭它。</p>
-<p>当然，还有很多的配置方面配置topology，可以查看Javadoc的Config获得更多配置信息。</p>
-<p><strong>流分组</strong></p>
-<p>流分组告诉topology如何在两个模块之间发送元组。注意，spout和bolt在集群上以多任务的方式并行执行。如果想了解一个topology在任务级如何运行，可以看下面的例子。</p>
-<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/topology-tasks.png" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/topology-tasks.png" alt="topology-tasks"></a></p>
-<p>Bolt A的一个任务发送一个元组到Bolt B的那个任务呢？</p>
-<p>流分组回答了这一问题。通过告诉storm如何在任务集合之间发送元组。在深入流分组之前，我们先来研究一下storm-starter的另一个topology。WordCountTopology从流和spout读取语句，然后经过WordCountBolt处理后，输出所有的单词及每个单词的计数。</p>
-<p>[java]TopologyBuilder builder = new TopologyBuilder();<br>builder.setSpout(&quot;sentences&quot;, new RandomSentenceSpout(), 5);<br>builder.setBolt(&quot;split&quot;, new SplitSentence(), 8)<br>        .shuffleGrouping(&quot;sentences&quot;);<br>builder.setBolt(&quot;count&quot;, new WordCount(), 12)<br>        .fieldsGrouping(&quot;split&quot;, new Fields(&quot;word&quot;));[/java]</p>
-<p>SplitSentence将它接受的句子里的每一个单词生成一个元组，WordCount在内存中保存一个Map&lt;Word,Count&gt;。当WordCount收到一个单词更新单词的计数，并生成一个新的&lt;Word,Count&gt;。这里有不同种类的流分组。</p>
-<p>最简单的流分组就是随机分组，将元组随机地发送到一个任务。在WordCountTopology中，随机分组将元组从一个RandomSentenceSpout发送到SplitSentence bolt，它将在所有的SplitSentence bolt中均匀分发元组。</p>
-<p>一个更有意思的分组就是域分组，该分组方式用于从SplitSentence bolt到一个WordCount bolt。必须严格保证WordCout bolt相同的单词又如同一个任务进行处理。否则，多于一个任务处理该单词，每个将生成错误的计数。因为每一个都没有完整的信息。域分组将域相同的额元组交由一个相同的任务进行处理。</p>
-<p>由于WordCount利用域分组订阅了SplitSentence的输出流，相同的单词将有同一个任务处理，最后改该bolt将输出正确的结果。</p>
-<p>域分组是完全流合并和流聚集的基础，同样也是其他应用的基础。域分组是用模哈希实现的，还有其他类型的分组，详见 <a href="http://www.zhangmin.name/blog/?p=1001" title="storm 概念" target="_blank" rel="external">概念</a> 一节。</p>
-<p><strong>用其他语言定义bolt</strong></p>
-<p>Bolt可以用任意的语言进行定义，通过使用其他语言定义bolt将以子进程的方式执行，storm通过基于JSON的标准输入输出协议与之通信。通信协议只需要100行的适配器库，storm已经提供了的库包括Ruby，Python和Fancy。这里是WordCountTopology里的SplitSentence bolt的定义：</p>
-<p>[java]public static class SplitSentence extends ShellBolt implements IRichBolt {<br>    public SplitSentence() {<br>        super(&quot;python&quot;, &quot;splitsentence.py&quot;);<br>    }<br>    public void declareOutputFields(OutputFieldsDeclarer declarer) {<br>        declarer.declare(new Fields(&quot;word&quot;));<br>    }<br>}[/java]</p>
-<p>SplitSentence覆盖了ShellBolt并声明了用Python编写的处理类。下面是splitsentence.py的是实现：</p>
-<p>[java]import storm<br>class SplitSentenceBolt(storm.BasicBolt):<br>    def process(self, tup):<br>        words = tup.values[0].split(&quot; &quot;)<br>        for word in words:<br>          storm.emit([word])<br>SplitSentenceBolt().run()[/java]</p>
-<p>关于如何用其他语言编写Spout和Bolt及如何创建topology详见如何在storm中定义非JVM语言。</p>
-<p><strong>保证消息处理</strong></p>
-<p>详见 保证消息处理一节。</p>
-<p><strong>事务Topology</strong></p>
-<p>Storm保证消息在topology至少被处理一次，一个明显的问题就是storm是如何计数的，会不会过度计数。Storm的一个特性就是事务topology，可以确保精确一次的消息语义。详见<a href="http://www.zhangmin.name/blog/?p=1001" title="storm 原理" target="_blank" rel="external">原理</a>一节。</p>
-<p><strong>分布式RPC</strong></p>
-<p>详见具体的章节</p>
-<p><strong>总结</strong></p>
-<p>本教程宏观的介绍了storm的开发，测试，部署storm topology的方法，其余的文档将详细介绍storm的各个方面。</p>
-<p><em>本文翻译自<a href="https://github.com/nathanmarz/storm/wiki/Tutorial" target="_blank" rel="external">https://github.com/nathanmarz/storm/wiki/Tutorial</a></em></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/storm/">
-                #storm
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/03/Storm-Topology的生命周期/">
-                Storm Topology的生命周期
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-03-29
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/03/Storm-Topology的生命周期/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/03/Storm-Topology的生命周期/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>本文将详细介绍topology的生命周期，从运行 storm jar命令把topology上传到Nimbus，到Supervisor启动和停止worker，再到worker和task的设置和运行。另外，本文还将介绍Nimbus如何监控topology及topology是如何被杀死的。</p>
-<p>首先，关于topology需要注意一下两点：</p>
-<p>1.实际运行的topology与用户提交的topology是不同的。实际运行的topology中包含隐式的流及一个acker bolt用于实现和管理storm的确认框架（保证消息处理）。隐式的topology是由system_topology!函数实现的。</p>
-<p>2.System_topology！在两处使用：1）当Nimbus为topology创建任务时。2）当worker中需要知道如何路由消息时。</p>
-<p><strong>启动topology</strong></p>
-<p>1.storm jar设置特定参数并运行提交的类，storm jar将设置storm jar的环境变量，以便StormSubmitter使用。</p>
-<p>2.当你的代码使用StormSubmitter.submitTopology，StormSubmitter执行以下步骤：</p>
-<ul>
-<li>首先，如果还没有上传jar，则上传。</li>
-<li>Jar文件的上传通过Nimbus的Thrift接口。</li>
-<li>beginFileUpload返回Nimbus接受的路径。</li>
-<li>uploadChunk一次上传15kb的数据。</li>
-<li>完成上传将调用finishUpload。</li>
-<li>然后，StormSubmitter会调用submitTopology方法。</li>
-<li>Topology的设置将通过JSON进行序列化（JSON可以使使用其他语言开发更容易）。以Thrift调用submitTopology将以Nimbus的接收路径为参数。<br>3.Nimbus收到topology的提交。</li>
-</ul>
-<p>4.Nimbus标准化topology的配置（标准化的目的是使每一个单独的实例都有相同的序列化注册接口，这对序列化正确运行很重要）。</p>
-<p>5.Nimbus设置topology的静止状态。</p>
-<ul>
-<li>因为jar和配置太大，不能存入ZooKeeper，将保存在本地文件系统中。Jar和Config将被复制到{nimbus local dir}/stormdist/{topology id}。</li>
-<li>Setup-storm-static 将task-&gt;component写入ZK</li>
-<li><p>Setup-heartbeats 在ZK中创建ZK路径使task可以正常心跳。<br>6.Nimbus调用mk-assignment 分配任务到机器。任务分配包括：</p>
-</li>
-<li><p>master-code-dir：supervisor从Nimbus下载正确的jars/config</p>
-</li>
-<li>task-&gt;node+port:Map从taskid到worker（worker有node+port标示）。</li>
-<li>Node-&gt;host:Map&lt;nodeid,hostname&gt;worker获取需要的通信的其他worker的信息。Nodeid用于标示supervisor。所以一台机器可以运行多个supervisor，设置supervisor的工作由集成的Mesos完成。</li>
-<li>Task-&gt;start-time-secs：包括Nimbus开始启动task Map&lt;taskid,timestamp&gt;用于Nimbus对topology的监控。当初次启动任务时，任务会有一个较长的超时值（改时间通过nimbus.task.launch.secs设置）。<br>7.topology分配后，其状态是deactivated模式。Start-storm将向Zookeeper写入数据使集群知道topology是active并且可以发送元组。</li>
-</ul>
-<p>8.TODO cluster-state diagram</p>
-<p>9.Supervisor在后台运行一下两个函数：</p>
-<ul>
-<li>synchronize-supervisor每10s调用一次：当Zookeeper中assignment改变时从Nimbus下载代码，向本地写数据。该节点将开始运行。写的数据Map&lt;port-&gt;localAssignment&gt;LocalAssignment包含topology id及worker的taskid list。</li>
-<li><p>sync-process 从LFS读取synchronize-supervisor写的数据，比较正在节点上运行的信息，可以启动和停止worker进程使之同步。<br>10.通过mk-worker启动worker进程。</p>
-</li>
-<li><p>Worker连接到其他worker并启动一个线程监控变化。所以当worker陪重新分配，worker会重新连接到新的worker地址。</p>
-</li>
-<li>监控worker的active状态，并将状态写入storm-active-atom变量，该变量有task使用，以决定是否在spout上调用nextTuple.worker启动task线程。<br>11.Mk-task设置任务。Task设置路由函数，参数为输入流，输出元组，返回发送元组的taskid列表。Task设置spout和bolt的特定配置。</li>
-</ul>
-<p><strong>Topology的监控</strong></p>
-<p>Nimbus在topology的整个生命周期执行监控，在timer线程计划运行重复的task以检查topology。</p>
-<p>Nimbus的行为用FSM描述。</p>
-<p>每nimbus.monitor.freq.secs 出发monitor事件，通过reassign-transitions调用reassigntopology.reassign-topology</p>
-<p>调用mk-assignment 与topology第一次分配及更新topology调用的函数mk-assignment一样。</p>
-<p>Mk-assignment检查心跳信息，如果必要重新分配worker。在ZK中任何分配状态信息的修改将触发supervisor铜鼓及启动或停止worker。</p>
-<p><strong>杀死Topology</strong></p>
-<p>Storm kill与Nimbus的Thrift接口的功能相同。</p>
-<p>Nimbus接收到命令，应用kill transition（该transition改变topology的状态为killed，并计划移除事件。通过在未来运行等待时间后进行清理。</p>
-<p>等待时间默认为topology的消息超时时间，但可以通过storm kill -w 标志覆盖。这将使得topology在等待时间后状态变为deactivated。这可以是worker在关闭前继续完成正在进行的工作。</p>
-<p>改变topology的状态保证kill协议是容错的（防止Nimbus崩溃）如果topology在启动时状态就为killed，Nimbus会安排remove事件在等待时间后执行。</p>
-<p>移除ZK中topology的分配信息及静止信息。</p>
-<p>单独的消息管理命令do-cleanup执行，该命令将清除心跳目录及本地保存的jar/config目录。</p>
-<p><em>本文翻译自<a href="https://github.com/nathanmarz/storm/wiki/Lifecycle-of-a-topology" target="_blank" rel="external">https://github.com/nathanmarz/storm/wiki/Lifecycle-of-a-topology</a></em></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/storm/">
-                #storm
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/03/Self-introduction-Speech/">
-                Self-introduction Speech
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-03-28
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/原创/">原创</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/03/Self-introduction-Speech/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/03/Self-introduction-Speech/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>Good afternoon,everyone.I’m very glad and also nervous to give my self-introduction speech.First of all, I’d like to talk about my name.My name is ZhangMin.Hearing this name,you may remember that you hava a classmate or schoolmate whose name was same as mine.If you haven’t had one yet,don’t worry,you will eventually have one.You may wonder how many people have the name ZhangMin in China.Let me tell you,the number is 250,000.Trouble arise when get such a popular name.I don’t remember how many times my gender was mistakenly written and how difficult to select a id for my social network account.Also,Questions are asked when people know where I come from.For example,Do you see the beautiful grassland?Can you speak Mongolian?How about your horseback experience?When all the answers were negative,I even start to doubt whether I’m a Inner Mongolian.There is a joke about the misunderstanding of life in Inner Mongolia.It says:<br>People live in Inner Mongolia ride the horse to work.They stop at the crossrode waiting for the traffic light to turn green.When it turns green, they galloped off at full speed.<br>This is me,name after a popular name and as one of the Inner Mongolian who have no horseback experience till now.Thank you all.</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/public-speaking/">
-                #public speaking
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/03/创新性工程的特点/">
-                创新性工程的特点
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-03-27
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/03/创新性工程的特点/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/03/创新性工程的特点/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>创新性工程就是需要大量研究及创新的工程活动。创新性工程是相对于常规性工程而言的。所谓的常规性工程就是已经有大量工程经验的积累，甚至已经标准化了的工程活动。创新性工程有以下几个特点：<br>        <li>第一个特点就是需要大量的前期研究。由于创新性工程是具有开创性质的，是人类首次完成的工程活动，所以会面临很多难题。需要投入相应的科研力量进行研究或调研，攻克工程技术难题。例如青藏铁路的修建。青藏铁路经过四十多年的准备，攻克了最难的冻土问题，低温缺氧环境下的施工问题等。</li><br>       <li> 第二个特点就是施工过程中大量的不确定性。由于工程活动所具有的的当时当地性，在不同的时间和地点施工会遇到完全不同的问题和情况。相对于常规工程的可预见性，创新性工程的施工过程需要大量的创新活动才能完成预期的工程目标。例如在青藏铁路的施工过程中，面对严酷的自然环境，如低温缺氧、常年的冻土、频发的地震，工程师们需要不断的创新，却解决诸如低温缺氧环境下如何保证工人的生命安全及如何配置混凝土的成分使之能够在冷冻之前凝固，冻土所导致的夏天铁轨沉降，以及如何避开地震频发地段等问题。除了施工过程中的不确定性，还要考虑工程建成后对周围环境所产生的影响问题。例如，由于青藏高原生态环境的脆弱性，在工程建设中需要最小化工程对环境的恶劣影响；青藏铁路的修建要避开珍稀物种的栖息地，要为藏羚羊的迁徙留出专用通道，工程中的废水经过严格的过滤和净化才能拍出等。</li></p>
-<pre><code><span class="tag">&lt;<span class="title">li</span>&gt;</span> 第三个特点是创新性工程是知识生产的过程。创新性工程前期大量的研究工作及施工过程中难题的解决，都会积累大量的知识、经验，可以供将来的工程活动参考和借鉴。<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-
-<span class="tag">&lt;<span class="title">li</span>&gt;</span> 第四个特点是创新性工程完工后需要高于常规性工程要求的维护工作。例如青藏铁路全线通车后，需要对铁路沿线的环境指标进行监控，以保证铁路线能够安全、持久地运行。<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-</code></pre>
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/03/文艺复兴艺术的奇异风采/">
-                文艺复兴艺术的奇异风采
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-03-26
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/03/文艺复兴艺术的奇异风采/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/03/文艺复兴艺术的奇异风采/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>今天晚上去听北京大学丁宁教授的讲座《文艺复兴艺术的奇异色彩》。讲座讲述了乔托，多纳泰罗，达芬奇，米开朗琪罗，拉斐尔等艺术巨匠及他们的伟大作品，展现了文艺复兴时期艺术的奇异风采。<br>文艺复兴之前的绘画体现的是神性，而文艺复兴时期逐渐从神性到人性。从圣经故事中的虚拟的人物，到达芬奇老师的以达芬奇为原型的雕塑，再到后来的米开朗琪罗的《大卫》。从表现神到表现人，一个公民，一个要为国家献身的实实在在的人，体现了文艺复兴时期的人本主义。<br>讲座中提到为什么我们欣赏不了伟大作品的伟大之处，那是因为我们缺乏相关的艺术的历史，不了解伟大作品前后的艺术发展现状。如果有相关的作品作对比，我们就会领略到伟大作品的伟大之处。例如，多纳泰罗的《大卫》，雕塑所表现的的人物生理特征的准确程度，他的微笑，他所要表现的热爱自由和追求自由的思想等。<br>最奇异的当然要属达芬奇的名作《蒙娜丽莎》的故事，关于画中所隐含故事的各种猜想。《蒙娜丽莎》这幅名作到美国，到日本展出的精彩故事。拉斐尔与女友的秘密恋情，当然更劲爆的是达芬奇可能是同性恋。因为在达芬奇的《蒙娜丽莎》的眼睛中发现了LS的签名，L代表达芬奇，而S就是达芬奇的助手。<br>这些艺术巨匠对自己作品的独特签名方式，画中所表现的场景与画家的关系，及各种后人对这些签名方式的猜想和假设，无不展现出奇异迷人的色彩。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/明德/">
-                #明德
+              <a href="/blog/tags/工程哲学/">
+                #工程哲学
               </a>
             
           </div>
@@ -1221,7 +765,7 @@
 
           
             <div class="pagination">
-              <a class="extend prev" rel="prev" href="/blog/page/11/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/blog/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/24/">24</a><a class="extend next" rel="next" href="/blog/page/13/">&raquo;</a>
+              <a class="extend prev" rel="prev" href="/blog/page/11/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/blog/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/39/">39</a><a class="extend next" rel="next" href="/blog/page/13/">&raquo;</a>
             </div>
           
         </div>
@@ -1255,17 +799,17 @@
         </div>
 
         <div class="site-state-item site-state-categories">
-          
+          <a href="/blog/categories">
             <span class="site-state-item-count">9</span>
             <span class="site-state-item-name">分类</span>
-          
+          </a>
         </div>
 
         <div class="site-state-item site-state-tags">
-          
+          <a href="/blog/tags">
             <span class="site-state-item-count">20</span>
             <span class="site-state-item-name">标签</span>
-          
+          </a>
         </div>
 
       </div>

@@ -1,0 +1,1074 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-next">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/blog/css/main.css?v=0.4.1"/>
+
+
+    <meta name="description" content="ZhangMin.name's Blog" />
+
+
+
+
+    <meta name="keywords" content="zhangmin.name,张敏,张敏的个人主页,张敏的博客,zhangmin.name's blog" />
+
+
+
+
+
+    <link rel="shorticon icon" type="image/x-icon" href="http://www.zhangmin.name/images/favicon.png?v=0.4.1" />
+
+
+
+
+  <title> 归档 // ZhangMin.name </title>
+</head>
+
+<body>
+  <div class="container one-column  page-archive ">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/blog/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">ZhangMin.name</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+    
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/blog/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/blog/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/blog/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-readings">
+        <a href="/blog/readings">
+          <i class="menu-item-icon icon-readings"></i> <br />
+          读书单
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+
+  <span class="archive-move-on"></span>
+
+  <span class="archive-page-counter">
+    
+    
+     
+    
+    太棒了! 目前共计 234 篇日志。 继续努力。
+  </span>
+
+  
+
+    
+    
+    
+
+    
+      
+      <div class="collection-title">
+        <h2 class="archive-year motion-element" id="archive-year-2013">2013</h2>
+      </div>
+    
+    
+
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Storm配置
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-03-15
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/MSE/">MSE</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/03/Storm配置/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/03/Storm配置/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p>每一个配置默认值保存在default.ymal中，可以通过覆盖这些配置文件来修改配置信息。在Nimbus和Supervisor的classpath中。最后，你可以定义特定topology的配置，使用StormSubmitter与你的代码一起提交。然而，特定topology的配置只能覆盖有TOPOLOGY前缀的配置属性。<br>Storm 0.7.0及以后的版本支持单个bolt和spout的配置，可以覆盖的配置有：</p>
+<p>“topology.debug”<br>“topology.max.spout.pending”<br>“topology.max.task.parallelism”<br>“topology.kryo.register”: 这一个与其他的略有不同，因为序列化在topology中的所有模块都是可用的。</p>
+<p>Java API提供两种配置方法：<br>内部的：覆盖getComponentConfiguration。在任意spout或bolt返回特定模块的配置Map。<br>外部的：TopologyBuilder的setSpout返回的对象有方法addConfiguration及addConfigurations配置特定的配置项。<br>配置的优先级如下:<br>Default.ymal &lt; storm.ymal &lt; topology specific config &lt; internal &lt; external component config.</p>
+<p>注：以上内容翻译自<a href="https://github.com/nathanmarz/storm/wiki/Configuration" target="_blank" rel="external">https://github.com/nathanmarz/storm/wiki/Configuration</a></p>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/storm/">
+                #storm
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/2013/03/配置storm开发环境/">配置storm开发环境</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/2013/03/Storm概念/">Storm概念</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+
+    
+    
+    
+
+    
+    
+
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Storm概念
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-03-14
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/MSE/">MSE</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/03/Storm概念/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/03/Storm概念/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p><strong>流</strong></p>
+<p>流(stream)是storm的核心抽象。流是无限的元组序列以分布式的方式进行处理。流由模式定义，所谓模式就是流中元组的域的名称。默认情况下，元组可以包含integer，long，short，byte，string，double，float，boolean及byte array。当然也可以自定义Serializer来支持自定义类型或数据对象。声明流时会指定一个id，由于单流的spout和bolt非常常见，OutputFieldsDeclarer提供了便捷的方法声明一个指定id的单流。在这种情况下，流的默认id是“default”。</p>
+<p><strong>Spout</strong></p>
+<p>Spout:<span style="font-family: 宋体;">流计算的数据源。一般情况下，</span><span style="font-family: 'Times New Roman';">spout</span><span style="font-family: 宋体;">从队列代理读取数据，但是</span><span style="font-family: 'Times New Roman';">spout</span><span style="font-family: 宋体;">也可以产生自己的数据流，或者从</span><span style="font-family: 'Times New Roman';">twitter</span><span style="font-family: 宋体;">的流</span><span style="font-family: 'Times New Roman';">API</span><span style="font-family: 宋体;">读取。</span><span style="font-family: 'Times New Roman';">Spout</span><span style="font-family: 宋体;">实现了很多队列系统。</span></p>
+<p>Spout可以是可靠的也可以是非可靠的。一个可靠地spout重新处理一个失败的元组，而不可靠的spout只负责发送，不管元组是否被成功进行处理。Spout可以发送一个或多个流，可以通过OutputFieldsDeclarer的declareStream声明流，利用SpoutOutputCollector的emit方法发送元组，并制定流将如何发送。Spout的主要方法是nextTuple,nextTuple发送一个元组到 topology或简单的返回。如果没有新的元组需要发送，必须保证nextTuple不会阻塞任何spout的实现。因为storm会在同一个线程调用spout的所有方法。另一个主要的方法是ack和fail。这两个方法将在storm检测到元组被成功发送到topology及失败时分别调用。Ack和fail只能由可靠的spout调用。</p>
+<p><strong>Bolt</strong></p>
+<p>Bolt<span style="font-family: 宋体;">：处理任意数据的输入流并产生任意数据的输出流。大多数逻辑计算都通过</span><span style="font-family: 'Times New Roman';">bolt</span><span style="font-family: 宋体;">进行处理。如函数过滤器，流合并，流聚集，数据库连接等。</span></p>
+<p><strong>Topology</strong></p>
+<p>Topology<span style="font-family: 宋体;">：是</span><span style="font-family: 'Times New Roman';">spout</span><span style="font-family: 宋体;">和</span><span style="font-family: 'Times New Roman';">bolt</span><span style="font-family: 宋体;">的网络。网络中的每条边代表一个</span><span style="font-family: 'Times New Roman';">bolt</span><span style="font-family: 宋体;">订阅了其他的</span><span style="font-family: 'Times New Roman';">bolt</span><span style="font-family: 宋体;">或</span><span style="font-family: 'Times New Roman';">spout</span><span style="font-family: 宋体;">的输出流。一个</span><span style="font-family: 'Times New Roman';">topology</span><span style="font-family: 宋体;">是任意复杂的多阶段流计算。部署后，就不能确定</span><span style="font-family: 'Times New Roman';">topology</span><span style="font-family: 宋体;">在那个节点运行。</span></p>
+<p><strong>流分组</strong></p>
+<p>定义一个topology需要指定每一个bolt的输入信息是什么，流分组定义流是如何在众多bolt任务之间被分割的。通过事先CustomStreamGrouping接口可以自定义流分组方式。Storm的内置流分组方式有：<br>All Grouping 全分组：流被复制发送到所有bolt任务，要小心使用该分组方式。<br>Global Grouping 全局分组：整个流将由一个bolt任务处理，特别的，将由最小id的bolt处理。<br>None Grouping 不分组：这个分组方式表示不关心分组的方式。现在，此方式或与随机分组方式相同。但最终storm将在相同的线程执行使用该分组方式的bolt。<br>Direct Grouping 直接分组：这是一个比较特别的分组方式，元组的消费者将决定消费者的那个任务接受该元组。直接分组方式只能用于声明为直接流的流。发送到直接流的元组必须用emitDirect方法发送元组。通过提供TopologyContext或跟踪emit方法的输出，可以得到一个bolt的消费者的id。（给方法返回元组发送到任务的id）<br>Local or Shuffle Grouping 本地分组或随机分组：如果目标bolt有一个或多个任务，在相同worker进程，元组将只为那些进程的任务进行随机分组。否则，该分组方式与随机分组类似。</p>
+<p><strong>可靠性</strong></p>
+<p>Storm通过追踪有每一个spout触发的元组树，并决定什么时候元组树成功的完成处理。每一个topology都有一个消息超时属性。如果流在该时间内spout没能完成处理，则storm会重新发送并处理该元组。为了充分利用storm的可靠性，必须告诉storm当新的边添加到元组树及何时完成处理独立元组。这可以通过OutputCollector对象实现。通过emit方法制定发送到的流，通过ack发送确认信息。</p>
+<p><strong>任务</strong></p>
+<p>每一个spout和bolt可以在集群上执行多个任务，每一个任务对应一个线程。流分组决定如何在两个任务集合之间发送元组。你可以设置每一个spout和bolt的并行度，通过TopoloBuilder的setSpout和setBolt方法。</p>
+<p><strong>Worker </strong></p>
+<p>Topology 在一个或多个工作者进程内执行。每一个工作者进程是一个物理的JVM并执行topology集合的一部分。</p>
+<p><em>注：以上内容翻译自<a href="https://github.com/nathanmarz/storm/wiki/Concepts" target="_blank" rel="external">https://github.com/nathanmarz/storm/wiki/Concepts</a></em></p>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/storm/">
+                #storm
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/2013/03/Storm配置/">Storm配置</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/2013/03/Storm原理/">Storm原理</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+
+    
+    
+    
+
+    
+    
+
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Storm原理
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-03-13
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/MSE/">MSE</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/03/Storm原理/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/03/Storm原理/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p>过去的十年见证了数据处理的变革。MapReduce，hadoop及相关技术使得海量数据存储和处理成为可能。不幸的是，这些系统都不是实时处理系统。而且也没有提供实时处理的功能。没有方法能够将hadoop转变为一个实时处理系统。实时处理在根本上不同于批处理。然而，在很多领域存在实时大数据处理的需求。在整个数据处理生态系统中，怎能没有一种hadoop-style的实时处理系统呢？Storm弥补了这一遗憾。<br>在storm之前，你需要手动建立一系列的队列网络或worker网络进行实时处理。Worker处理队列中的消息，更新数据库，向其他队列发送消息进行进一步的处理。不幸的是，这种做法存在以下的缺陷或限制：<br>复杂低效的（Tedious）。花费了大量开发时间用于配置向那些队列发送消息，部署workers，部署中间队列，而实时处理的逻辑只占代码的很少一部分。<br>脆弱的（Brittle）。几乎没有容错机制，开发人员负责保证队列和worker运行的正确性。<br>扩展性。当一个worker或者队列处理消息量过大时，你需要手动分割数据并交给其他worker或队列进行处理。需要更新和配置其他worker，使它们知道从哪里获得数据，向哪里发送数据，而这又增加了出错的可能性。尽管队列或者worker可以处理海量的数据，但消息的实时处理才是真正的核心。关键问题是：如何才能不丢失数据，如何扩展到处理海量数据且易于使用和操作？<br>Storm解决了以上的问题。<br>为什么storm如此重要呢？Storm提供了一个实时处理的原子操作集合，如同MapReduce极大地简化了并行批处理。Storm的原语极大地简化了并行实时计算。Storm的关键特性如下：<br>广泛的应用领域。Storm可以处理消息，更新数据库，连续查询数据流，数据流处理结果的输出，并行密集查询，storm的原语集合满足了大部分使用用例。<br>可扩展。Storm可以处理海量的数据，要想扩展topology，只需要增加topology的并行度。Storm利用zookeeper管理集群，使得storm易于扩展。<br>易于管理。不同于hadoop，因为其难于管理而臭名昭著。易于管理是storm的目标。<br>保证数据处理，高可靠性。一个实时系统必须保证数据的实时处理。一个不可靠的系统很难有广泛的应用。Storm确保每一条消息都被及时处理。这是storm与其他系统如S4最大的不同。<br>容错。如果计算执行过程中有错误，如果需要，storm将重新分配任务。Storm确保计算一直运行。（除非你主动杀死它）。<br>多重编程语言支持。健壮，可扩展的实时处理系统不应该被限于单一平台，storm的topology和处理组件可以用任意语言定义，使得storm可以被任何人使用。</p>
+<p>本文翻译自：<a href="https://github.com/nathanmarz/storm/wiki/Rationale" target="_blank" rel="external">https://github.com/nathanmarz/storm/wiki/Rationale</a></p>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/storm/">
+                #storm
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/2013/03/Storm概念/">Storm概念</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/2013/03/创建一个新的storm项目/">创建一个新的storm项目</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+
+    
+    
+    
+
+    
+    
+
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              创建一个新的storm项目
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-03-12
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/MSE/">MSE</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/03/创建一个新的storm项目/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/03/创建一个新的storm项目/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p><strong>主要步骤包括：</strong></p>
+<ol>
+<li>将storm jars添加到classpath</li>
+<li>如果使用multilang，添加multilang目录到classpath<br><strong>添加storm jars 到classpath</strong></li>
+</ol>
+<p>建议使用maven。Storm-starter使用Leinigen建立依赖。<br>如果在Eclipse中设置classpath，创建一个新的java项目，将src/jvm作为源文件路径，确保所有在lib中的jars和lib/dev中的jars文件都添加到了Reference Libraries.</p>
+<p><strong>如果使用multilang，添加multilang目录到classpath</strong></p>
+<p>如果使用其他语言来实现spout和bolt，这些实现安放到了项目的multilang/resources目录下，为了使storm在本地模式找到这些文件。Resources目录要添加到classpath中。在Eclipse中，你可以添加multilang作为一个源文件夹。你还需要添加multilang/resources作为源文件夹。<br>你可以通过运行WordCountTopology.java来检测是否配置成功。如果配置成功你将看到在控制台上不断地有消息在发送。</p>
+<p>以上内容翻译自：<a href="https://github.com/nathanmarz/storm/wiki/Creating-a-new-Storm-project" target="_blank" rel="external">https://github.com/nathanmarz/storm/wiki/Creating-a-new-Storm-project</a></p>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/storm/">
+                #storm
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/2013/03/Storm原理/">Storm原理</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/2013/03/每日一博/">每日一博</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+
+    
+    
+    
+
+    
+    
+
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              每日一博
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-03-11
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/MSE/">MSE</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2013/03/每日一博/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/03/每日一博/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p>我要每天写一篇博文！</p>
+<p>上次袁岳老师来中科院演讲时讲到他每一天都写一篇博文，从2006年开始一直至今。暂且不论每天构思写作内容的挑战，单单是每天写一篇就是一个非常大的挑战。想想无论你今天多忙，多累，心中总是有一个信念在驱使你写出你的故事，写出你的思考。日复一日，年复一年。</p>
+<p>我想最初的日子肯定是最艰难的，也是最有挑战的。生活中应该有挑战，而且应该充满挑战，这样人生才有意义，人才算没白活。</p>
+<p>如果你不发出你的声音，世界甚至不知道你的存在。如果你不发出你的声音，人们会以他们的方式去理解你的行为，而这与你的动机和目的却是南辕北辙。所以你要去说明，去解释，达到真正的沟通。</p>
+<p>不要在意人们对你的看法，因为人们没时间去看你写的东西，也不会去注意你的博文，除非你的文章满足了他们某方面的需求。所以你要做的就是写出你的想法，表达你的愿望，提出你的意见，践行你的诺言。</p>
+<p>至于自己写些什么内容，现在的想法是写自己的学习到的专业知识，写自己的读书笔记，写自己的总结体会，写自己关心问题的解决方案，写自己生活中丰富多彩的内容。最重要的是要注重原创，要尊重知识产权。</p>
+<p>如果有哪位读者在茫茫互联网世界中碰巧看到我的文章，还希望你多拍拍砖。</p>
+<p>我要每天写一篇博文！</p>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/2013/03/创建一个新的storm项目/">创建一个新的storm项目</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/2013/02/storm简介/">storm简介</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+
+          </div>
+
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview">
+          站点概览
+        </li>
+      </ul>
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/blog/images/default_avatar.jpg" alt="zhangmin.name" />
+        <p class="site-author-name">zhangmin.name</p>
+      </div>
+      <p class="site-description motion-element">ZhangMin.name's Blog</p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <a href="/blog/archives">
+            <span class="site-state-item-count">234</span>
+            <span class="site-state-item-name">日志</span>
+          </a>
+        </div>
+
+        <div class="site-state-item site-state-categories">
+          <a href="/blog/categories">
+            <span class="site-state-item-count">9</span>
+            <span class="site-state-item-name">分类</span>
+          </a>
+        </div>
+
+        <div class="site-state-item site-state-tags">
+          <a href="/blog/tags">
+            <span class="site-state-item-count">20</span>
+            <span class="site-state-item-name">标签</span>
+          </a>
+        </div>
+
+      </div>
+
+      
+
+      <div class="links-of-author motion-element">
+        
+          
+            <span class="links-of-author-item">
+              <a href="https://github.com/zhangmin510" target="_blank">GitHub</a>
+            </span>
+          
+            <span class="links-of-author-item">
+              <a href="http://weibo.com/302585340" target="_blank">Weibo</a>
+            </span>
+          
+        
+      </div>
+
+      
+      
+        <div class="cc-license motion-element">
+          <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+            <img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+          </a>
+        </div>
+      
+
+    </div>
+
+    
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          
+          
+            <p class="post-toc-empty">此文章未包含目录</p>
+          
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2010 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">zhangmin.name</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    <script type="text/javascript">
+      postMotionOptions = {stagger: 100, drag: true};
+    </script>
+  
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+    <script type="text/javascript" id="motion.page.archive">
+      $('.archive-year').velocity('transition.slideLeftIn');
+    </script>
+  
+
+
+  
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhangmin"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+  
+</body>
+</html>

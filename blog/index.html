@@ -21,13 +21,13 @@
 
 
 
-    <meta name="keywords" content="Hexo,next" />
+    <meta name="keywords" content="zhangmin.name,张敏,张敏的个人主页,张敏的博客,zhangmin.name's blog" />
 
 
 
 
 
-    <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.1" />
+    <link rel="shorticon icon" type="image/x-icon" href="http://www.zhangmin.name/images/favicon.png?v=0.4.1" />
 
 
 
@@ -67,10 +67,26 @@
       </li>
     
       
+      <li class="menu-item menu-item-categories">
+        <a href="/blog/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
       <li class="menu-item menu-item-archives">
         <a href="/blog/archives">
           <i class="menu-item-icon icon-archives"></i> <br />
           归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/blog/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
         </a>
       </li>
     
@@ -164,14 +180,12 @@
 <p>避免做重复的事，这是每个程序员都应该去做的事。</p>
 <h1 id="无聊的任务">无聊的任务</h1><p>一个已经用PowerDesigner设计好的数据库，还要去补充数据库表结构的详细文档。讨厌为了文档而文档的文档撰写工作。这是一个无聊，无趣，浪费生命的工作。</p>
 <h1 id="偷懒">偷懒</h1><p>能不能导出？这是我的第一个想法。但是PowerDesigner只导出SQL语句。无奈，文档需要更详细的内容。项目文件能不能直接用文本打开？用记事本打开，可以。而且我看到了程序员都喜欢看到的格式XML。剩下的工作就是解析XML，提取关于数据库表的内容，转成CSV文件，然后在复制粘贴到WORD中。</p>
-<h1 id="Show_Time">Show Time</h1><p>不修改文档只解析，用SAX就好了。</p>
-<h2 id="分析">分析</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;c:Tables&#62;&#10;&#60;o:Table Id=&#34;o83&#34;&#62;&#10;&#60;a:ObjectID&#62;11195183-1EF0-4FDB-BC9F-5F45A42D3200&#60;/a:ObjectID&#62;&#10;&#60;a:Name&#62;&#29992;&#25143;&#34920;&#60;/a:Name&#62;&#10;&#60;a:Code&#62;TBL_USER&#60;/a:Code&#62;&#10;&#60;a:CreationDate&#62;1407122337&#60;/a:CreationDate&#62;&#10;&#60;a:Creator&#62;Administrator&#60;/a:Creator&#62;&#10;&#60;a:ModificationDate&#62;1422326992&#60;/a:ModificationDate&#62;&#10;&#60;a:Modifier&#62;Administrator&#60;/a:Modifier&#62;&#10;&#60;a:Comment&#62;&#29992;&#25143;&#34920;&#60;/a:Comment&#62;&#10;&#60;a:TotalSavingCurrency/&#62;&#10;&#60;c:Columns&#62;&#10;&#60;o:Column Id=&#34;o112&#34;&#62;&#10;&#60;a:ObjectID&#62;46BD538A-51A2-4ED0-83DA-4840413F2993&#60;/a:ObjectID&#62;&#10;&#60;a:Name&#62;&#29992;&#25143;&#32534;&#21495;&#60;/a:Name&#62;&#10;&#60;a:Code&#62;U_ID&#60;/a:Code&#62;&#10;&#60;a:CreationDate&#62;1407122416&#60;/a:CreationDate&#62;&#10;&#60;a:Creator&#62;Administrator&#60;/a:Creator&#62;&#10;&#60;a:ModificationDate&#62;1421802615&#60;/a:ModificationDate&#62;&#10;&#60;a:Modifier&#62;Administrator&#60;/a:Modifier&#62;&#10;&#60;a:DataType&#62;int&#60;/a:DataType&#62;&#10;&#60;a:Mandatory&#62;1&#60;/a:Mandatory&#62;&#10;&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o113&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o114&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o115&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o116&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o117&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o118&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o119&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o120&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o121&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o122&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o123&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;/c:Columns&#62;&#10;&#60;c:Keys&#62;...&#60;/c:Keys&#62;&#10;&#60;c:PrimaryKey&#62;...&#60;/c:PrimaryKey&#62;&#10;&#60;/o:Table&#62;</span><br></pre></td></tr></table></figure>
-<p>对于如此工整，完美，结构化的数据，一定是程序的最爱。Java SAX解析主要代码如下：</p>
-<h2 id="解析">解析</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class PDMHandler extends DefaultHandler&#123;&#10;&#9;private List&#60;Table&#62; tables = null;&#10;&#9;private Table table = null;&#10;&#9;private List&#60;Column&#62; columns = null;&#10;&#9;private Column column = null;&#10;&#9;&#10;&#9;private boolean inTables = false;&#10;&#9;private boolean inTable = false;&#10;&#9;private boolean inColumns = false;&#10;&#9;private boolean inColumn = false;&#10;&#9;&#10;&#9;private String cur = null;&#10;&#9;&#10;&#9;public List&#60;Table&#62; getTables(InputStream is) throws Exception &#123;&#10;&#9;&#9;SAXParserFactory factory = SAXParserFactory.newInstance();&#10;&#9;&#9;SAXParser parser = factory.newSAXParser();&#10;&#9;&#9;PDMHandler handler = new PDMHandler();&#10;&#9;&#9;parser.parse(is, handler);&#10;&#9;&#9;return handler.getTables();&#10;&#9;&#125;&#10;&#9;&#10;&#9;public List&#60;Table&#62; getTables() &#123;&#10;&#9;&#9;return tables;&#10;&#9;&#125;&#10;&#10;&#9;@Override&#10;&#9;public void startDocument() throws SAXException &#123;&#10;&#9;&#9;System.out.println(&#34;Start parsing...&#34;);&#10;&#9;&#9;this.tables = new ArrayList&#60;Table&#62;();&#10;&#9;&#125;&#10;&#9;&#10;&#9;@Override&#10;&#9;public void endDocument() throws SAXException &#123;&#10;&#9;&#9;System.out.println(&#34;Parsing finished.&#34;);&#10;&#9;&#125;&#10;&#9;&#10;&#9;@Override&#10;&#9;public void startElement(String uri, String localName, String qName,&#10;&#9;&#9;&#9;Attributes attributes) throws SAXException &#123;&#10;&#9;&#9;if (&#34;c:Tables&#34;.equals(qName)) inTables = true;&#10;&#9;&#9;&#10;&#9;&#9;if (inTables) &#123;&#10;&#9;&#9;&#9;if (&#34;o:Table&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;&#9;inTable = true;&#10;&#9;&#9;&#9;&#9;table = new Table();&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#10;&#9;&#9;&#9;if (inTable) &#123;&#10;&#9;&#9;&#9;&#9;if (&#34;c:Columns&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;&#9;&#9;inColumns = true;&#10;&#9;&#9;&#9;&#9;&#9;columns = new ArrayList&#60;Column&#62;();&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#9;&#10;&#9;&#9;&#9;&#9;if (inColumns) &#123;&#10;&#9;&#9;&#9;&#9;&#9;if (&#34;o:Column&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;&#9;&#9;&#9;inColumn = true;&#10;&#9;&#9;&#9;&#9;&#9;&#9;column = new Column();&#10;&#9;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#125;&#10;&#9;&#9;cur = qName;&#10;&#9;&#125;&#10;&#9;&#10;&#9;@Override&#10;&#9;public void characters(char[] ch, int start, int length)&#10;&#9;&#9;&#9;throws SAXException &#123;&#10;&#9;&#9;String content = new String(ch, start, length);&#10;&#9;&#9;//&#60;a:code&#62;Name&#60;/a:code&#62; &#10;&#9;&#9;//First visit value is Name, second visit value is LF(10)&#10;&#9;&#9;boolean first = (int) content.charAt(0) != 10;&#10;&#9;&#9;if (inColumn) &#123;&#10;&#9;&#9;&#9;if (first) &#123;&#10;&#9;&#9;&#9;&#9;if (&#34;a:Name&#34;.equals(cur)) column.setName(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Code&#34;.equals(cur)) column.setDataItem(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:DataType&#34;.equals(cur)) column.setType(&#34;\&#34;&#34; + content + &#34;\&#34;&#34;);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Length&#34;.equals(cur)) column.setLength(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Comment&#34;.equals(cur)) column.setComment(content);&#10;&#9;&#9;&#9;&#9;else &#123; &#125;&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#10;&#9;&#9;&#125;  else if (inTable)&#123;&#10;&#9;&#9;&#9;if (first) &#123;&#10;&#9;&#9;&#9;&#9;if (&#34;a:Name&#34;.equals(cur)) table.setTableName(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Code&#34;.equals(cur)) table.setTableCode(content);&#10;&#9;&#9;&#9;&#9;else &#123; &#125;&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#10;&#9;&#9;&#125; else &#123; &#125;&#10;&#9;&#125;&#10;&#9;&#10;&#9;@Override&#10;&#9;public void endElement(String uri, String localName, String qName)&#10;&#9;&#9;&#9;throws SAXException &#123;&#10;&#9;&#9;if (&#34;o:Column&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;inColumn = false;&#10;&#9;&#9;&#9;if (inColumns) columns.add(column);&#10;&#9;&#9;&#125;&#10;&#9;&#9;if (&#34;c:Columns&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;inColumns = false;&#10;&#9;&#9;&#9;inTable = false;&#10;&#9;&#9;&#9;table.setColumns(columns);&#10;&#9;&#9;&#9;tables.add(table);&#10;&#9;&#9;&#125;&#10;&#9;&#9;if (&#34;c:Tables&#34;.equals(qName)) inTables = false;&#10;&#9;&#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>最后对格式稍加处理，就可以得到CSV文件，可以非常方便的复制粘贴到WORD中。</p>
-<h2 id="转换">转换</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#29992;&#25143;&#34920;(TBL_USER)&#10;1,&#29992;&#25143;&#32534;&#21495;,U_ID,&#34;int&#34;,,,&#10;2,&#29992;&#25143;&#21517;,U_NAME,&#34;varchar(20)&#34;,20,,&#10;3,&#29992;&#25143;&#23494;&#30721;,U_PWD,&#34;varchar(20)&#34;,20,,&#10;4,&#26426;&#26500;&#20195;&#30721;,ORG_CODE,&#34;varchar(50)&#34;,50,,&#10;5,&#21592;&#24037;&#24037;&#21495;,U_NUM,&#34;varchar(20)&#34;,20,,&#10;6,&#29366;&#24577;,U_STATUS,&#34;varchar(2)&#34;,2,,&#10;7,&#26368;&#21518;&#30331;&#24405;&#26102;&#38388;,U_LAST_LOGIN_TIME,&#34;datetime&#34;,,,&#10;8,&#21019;&#24314;&#20154;,U_CREATER,&#34;int&#34;,,,&#10;9,&#21019;&#24314;&#26102;&#38388;,U_CREATE_TIME,&#34;datetime&#34;,,,&#10;10,&#22791;&#27880;,U_REMARK,&#34;varchar(200)&#34;,200,,&#10;11,&#26368;&#21518;&#23494;&#30721;&#26356;&#26032;&#26102;&#38388;,U_LAST_UPDATE_PWD_TIME,&#34;datetime&#34;,,,&#10;12,&#31163;&#32844;&#26085;&#26399;,U_DEL_TIME,&#34;date&#34;,,,</span><br></pre></td></tr></table></figure>
-<h1 id="Further_and_beyond">Further and beyond</h1><p>写代码的过程中感觉到用java写这段简单的文本处理程序是比较费力的。如果用一些脚本语言如Python或者基于JVM的Groovy，会更方便、更快捷，更高效的。</p>
-
+<h1 id="Show_Time">Show Time</h1><p>不修改文档只解析，用SAX就好了。<br>
+            <div class="post-more-link text-center">
+              <a class="btn" href="/blog/2015/01/2015-01-29-第一次像个程序员/#more">
+                阅读全文 &raquo;
+              </a>
+            </div>
           
         
       </div>
@@ -784,520 +798,12 @@
 
 
   
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/08/Java对象创建初始化顺序/">
-                Java对象创建初始化顺序
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-08-26
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/08/Java对象创建初始化顺序/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/Java对象创建初始化顺序/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>Java对象初始化关乎程序的安全运行，所以理解Java的初始化过程非常必要。Java中对象的初始化和创建是捆绑在一起的，两者不能分离。Java尽力保证所有变量在使用前都能够得到恰当的初始化。与C++一样，Java也通过构造器确保初始化。构造器是一种特殊类型的方法，它没有返回值。这与返回值为空的方法是不同的，虽然是空的返回值，但它仍然可以返回其他内容。构造器不返回任何东西。即使是用new表达式创建对象，也是new表达式返回新对象的引用，构造器没有返回任何东西。</p>
-<p>本文将从一个实例分析Java中对象创建的初始化顺序。</p>
-<p>假设有一个Horse的类，其对象的创建过程一般如下：</p>
-<ol>
-<li>当首次创建类型为Horse的对象时（构造器可以看成是静态方法）或者Horse的静态方法、静态域首次被访问时，Java解释器会查找类路径，定位Horse.class文件。如果有Horse继承自某一个类，还要查找并加载相应类的Class文件。</li>
-<li>载入Horse.class（即创建一个Class对象，如果有基类还要载入基类的Class），有关静态初始化的所有动作都会执行。静态初始化只在Class对象首次加载的时候进行一次。</li>
-<li>当用new Horse(）创建对象时，首先在堆上分配足够的存储空间。如果有父类，先执行父类的变量初始化和构造器。</li>
-<li>这块存储空间清零，自动将所有基本类型数据设置为默认值，引用为null。</li>
-<li>执行所有出现于字段定义处的初始化动作。</li>
-<li>执行构造器。</li>
-</ol>
-<p>在初始化过程中要注意两点：一是基本类型会有一个默认的初始值。这种自动初始化是无法阻止的。<br>二是非静态程序初始化块也会在构造函数之前执行。且在每次对象创建时都会执行。（常用语匿名内部类的初始化）。</p>
-<p>下面是一个实列，Horse类继承了Animal类，具体代码如下所示。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package name.zhangmin.java;&#10;public class Animal &#123;&#10; private int i = 9;&#10; protected int j;&#10; static &#123;&#10; System.out.println(&#38;quot;Animal&#39;s static block&#38;quot;);&#10; &#125;&#10; &#123;&#10; System.out.println(&#38;quot;Animal&#39;s non-static block&#38;quot;);&#10; &#125;&#10; Animal() &#123;&#10; System.out.println(&#38;quot;Animal&#39;s constructor&#38;quot;);&#10; System.out.println(&#38;quot;i = &#38;quot; + i + &#38;quot;, j = &#38;quot; + j);&#10; &#125;&#10; static int printInit(String s) &#123;&#10; System.out.println(s);&#10; return 16;&#10; &#125;&#10; private static int x1 = printInit(&#38;quot;static Animal.x1 initialized&#38;quot;);&#10;&#125;&#8203;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package name.zhangmin.java;&#10;public class Horse extends Animal &#123;&#10; private int k = printInit(&#38;quot;Horse.k initialized&#38;quot;);&#10; Horse() &#123;&#10; System.out.println(&#38;quot;Horse&#39;s constructor&#38;quot;);&#10; System.out.println(&#38;quot;k = &#38;quot; + k + &#38;quot;, j = &#38;quot; + j);&#10; &#125;&#10; public static void main(String[] args) &#123;&#10; System.out.println(&#38;quot;Horse&#39;s Main&#38;quot;);&#10; Horse h = new Horse();&#10; System.out.println(&#38;quot;Creating another Horse&#38;quot;);&#10; new Horse();&#10; &#125;&#10; static int x2 = printInit(&#38;quot;static Horse.x2 initialized&#38;quot;);&#10; &#123;&#10; System.out.println(&#38;quot;Horse&#39;s non-static block&#38;quot;);&#10; &#125;&#10; static &#123;&#10; System.out.println(&#38;quot;Horse&#39;s static block&#38;quot;);&#10; &#125;&#10;&#125;&#8203;</span><br></pre></td></tr></table></figure>
-<p>上述代码的运行结果如下所示：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Animal&#39;s static block&#10;static Animal.x1 initialized&#10;static Horse.x2 initialized&#10;Horse&#39;s static block&#10;Horse&#39;s Main&#10;Animal&#39;s non-static block&#10;Animal&#39;s constructor&#10;i = 9, j = 0&#10;Horse.k initialized&#10;Horse&#39;s non-static block&#10;Horse&#39;s constructor&#10;k = 16, j = 0&#10;Creating another Horse&#10;Animal&#39;s non-static block&#10;Animal&#39;s constructor&#10;i = 9, j = 0&#10;Horse.k initialized&#10;Horse&#39;s non-static block&#10;Horse&#39;s constructor&#10;k = 16, j = 0&#8203;</span><br></pre></td></tr></table></figure>
-<p>首先会执行Animal的静态域，静态块的初始化。执行的顺序就是域或块声明的顺序。执行完父类静态域的初始化后执行Horse的静态域初始化。类加载完成后，开始执行对象的创建过程。在这个过程中先执行父类Animal的非静态域或者块的初始化，然后是父类的构造器，之后才是子类Horse的非静态域或块的初始化，构造器。</p>
-<p>当第二次创建Horse对象时我们可以看到只执行父类非静态域或者块的初始化，父类Animal构造器，之后才是子类的非静态域，构造器。</p>
-<p>从上述的初始化过程可知，Java尽力保证了每个变量、对象在使用前能够正确的初始化。类的静态域只初始化一次，而非静态域则在每次对象创建时都进行初始化。如果有继承关系，要先完成父类的初始化和构造函数后才执行子类的初始化和构造函数。</p>
-<p><em>参考资料：《Java编程思想》第五章初始化与清理</em></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-              <a href="/blog/tags/马上有OFFER/">
-                #马上有OFFER
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/08/标准的软件面试准备过程/">
-                标准的软件面试准备过程
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-08-07
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/原创/">原创</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/08/标准的软件面试准备过程/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/标准的软件面试准备过程/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <blockquote>
-<p>要把基本的都掌握了后，再去准备比较难得问题：如动态规划。而且要是工业上经常用的知识，其余你知道就行了。</p>
-</blockquote>
-<h3 id="行为面试">行为面试</h3><p>行为面试存在的作用就是：面试官想认识你，了解你，也是你让你放松下来。回答问题时不要自大，内容要具体，举出具体的示例。但也只是要点即可。不可以侃侃而谈。</p>
-<p>准备的话就可以问自己一下的问题：</p>
-<p>最有挑战的事？<br>学到的东西？<br>最有趣的事？<br>最难的bug？<br>最喜欢的事？<br>与组员的冲突？</p>
-<p>回答这种类型的问题的方式一般为：S（situation）A（action）R（response）Issue1 Issue2 etc. 即开始描述你所处的情境，解释你采取了什么行动，最后解释结果是什么。如果面试官愿意，你可以继续讲存在的其他问题。</p>
-<p>在行为面试时问好的问题很重要，下面是几个例子可供参考：</p>
-<p>真实的问题：一天多长时间编码？每周开几次会？项目组测试人员和开发人员的比列？交互是如何进行的？</p>
-<p>启发性问题：你们使用了X技术，如果遇到其他问题会怎么样？</p>
-<p>学习型问题：我对可扩展性很感兴趣，我可以从哪里进一步学到相关知识</p>
-<h3 id="五步准备法">五步准备法</h3><p>1.试着自己解决问题。认真地尝试，如果解决了，要考虑时间空间复杂度，及是否还有改进的可能。</p>
-<p>2.在纸上写下自己的代码。没有编译器的自动补全，纠错，警告，你的代码会变成什么样？</p>
-<p>3.测试你的代码。</p>
-<p>4.将你的代码输入电脑，测试已有的用例和一些儿新的用例。</p>
-<p>5.列一份你犯的错误清单，分析你最常犯的错误，并尝试改正。</p>
-<p>如果遇到了一个我知道的问题我该怎么办？当然是告诉你的面试官，这是正确的做法，也是聪明的做法。诚信在职场还是非常有份量的。<br>你不一定做出所有的面试题目，如果你被问到的问题越来越难，这说明面试官只是在履行他的职责而已。他要测试你解决问题的能力及遇到难题时的应对策略。遇到难题，你要尽力解决，只有你的面试官说可以了，你才可以停止，否则，你就应该继续努力。</p>
-<h4 id="我必须掌握的">我必须掌握的</h4><p>数据结构：列表，二叉树，Tries，栈，队列，向量，哈希表。</p>
-<p>算法：BFS，DFS，二分搜索，归并排序，快速排序，树插入，查找等。</p>
-<p>概念：位操作，单体模式，工厂模式，内存（堆栈），递归，大O分析法。</p>
-<p>要知道如何实现，以及时间空间复杂度分析，并且实现地越熟练越好。</p>
-<h4 id="五步法示例">五步法示例</h4><p>向你的面试官提问，消除题目相关的歧义。问好的问题，如：数据类型是什么？数据量多大，即输入多大？解决问题前的假设是什么？用户是谁？</p>
-<p>设计算法。这个过程中要说出自己的思路，要考虑时空复杂度。如果数据量很大时该怎么办？会不会引起其它的问题？折中是什么？有没有提供特殊的信息可以帮助进行算法设计？</p>
-<p>写出伪代码。要告诉你的面试官你写的是伪代码。</p>
-<p>不紧不慢的写出代码。大胆的使用数据结构，节省你写代码的白纸空间。</p>
-<p>测试程序，修正错误。特殊情况：0， 空，最大值，负数；用户操作错误：用户输入null或者负数；一般情形：正常的用例。如果有错误，我是如何应对的？要停下来想清楚，不要去乱试，随意改动代码。</p>
-<h3 id="创建一个算法的五种方法">创建一个算法的五种方法</h3><p>这些只是最基本的方法，去柔和它们，实践它们，你就可以解决大部分编程问题了。</p>
-<h4 id="方法一：举例">方法一：举例</h4><p>举些儿具体的例子，看你如何处理他们，能不能因此得到一个一般的规则。</p>
-<p>例如：给定一个时间如5:10分，计算分针和时针之间的角度。画一个表盘，想象时针和分针的运动。分钟数和从12点的角度的关系：360 <em> minutes / 60。小时数和从12点的角度的关系：360 </em> (hour % 12) / 12 + 360 <em> (minutes / 60) </em> (1 / 12)。相减即可。</p>
-<h4 id="方法二：模式匹配">方法二：模式匹配</h4><p>将现在的问题与已经知道的方法进行匹配，如果相似，进行一些修改就可以了。</p>
-<p>例如：找一个旋转的有序数组中的最小值？找最小的值的方法。不好，没有利用有序这个事实。二分查找，找到第一个违反升序的元素就是最小值。</p>
-<h4 id="方法三：简化与泛化">方法三：简化与泛化</h4><p>简化条件来尝试解答，如果有答案，返回原有的问题看能不能解决。</p>
-<p>例子：一个字符串是由一本杂志中的单词组成的。那么，如何确定一个字符串是由一个给定的杂志产生的呢？先简化，如果是字符怎么办？使用字符的基数排序，创建一个数组，统计这个字符串中出现的字符的个数。然后我们在杂志中寻找这些字符是否都在就可以了。那么回到原来的问题，如果是单词该怎么办？一样的思路，使用一个Map来统计每个单词的数量不就可以了么。</p>
-<h4 id="方法四：使用基本情况构建算法">方法四：使用基本情况构建算法</h4><p>一个元素时如何解决，两个元素呢，三个，四个……通常这种方法会导致一个递归的算法。</p>
-<p>例子：产生一个字符串的所有排列。考虑字符串abcdef。基本情况{a} -&gt; {a}；{ab}-&gt;{ab}{ba}；{abc}-&gt;merge(c, ab) = cab, acb, abc；merge(c, ba) = cba,bca,bac先产生s[1..n- 1],然后将s[n]插入每个可能的位置。</p>
-<h4 id="方法五：数据结构头脑风暴">方法五：数据结构头脑风暴</h4><p>尝试使用每一种数据结构来解决。</p>
-<p>例子：随机产生的数被存储到一个可以扩展的数组，如何跟踪中位数？<br>列表：列表不适合访问和排序。</p>
-<p>数组：已经有数组了，能维持数组有序，但代价有点大。</p>
-<p>二叉树：二叉树适用排序，如果树是平衡的，可能根节点就是，到那时如果是偶数个元素，则是中间两个元素的平均值。</p>
-<p>堆：适合排序和保持最大或者最小值，如果有两个堆，可以跟踪较大的一半和较小的一半。较大的一半保存在最小堆。这样我们就有可能的中位数在根节点，如果两个堆大小不一样可以从中一个取下一个，放到另一个堆中。</p>
-<h3 id="面向对象设计">面向对象设计</h3><p>你的目标是什么？<br>你的核心对象是什么？<br>每一个对象之间的联系是什么样的？<br>对象之间如何交互？<br>有没有比较难的算法？</p>
-<p>设计过程中多考虑 各种权衡，多交流。</p>
-<h3 id="扩展性问题">扩展性问题</h3><p>先解决小规模数据时的问题。再考虑大数据量时如何处理。然后考虑把原来的解决方案转化到大数据量时的情况。可能遇到的问题是内存耗尽，你需要分割文件放到不同的机器上，通常使用哈希来进行分配。你的数据量决定你需要多少台机器。一个机器如何知道另一台机器可以访问，或者有相关数据；各个机器之间的数据会不会不同步；在不同机器之间通信的代价是什么等等。</p>
-<h3 id="测试类问题">测试类问题</h3><h4 id="如何测试日常的物品？">如何测试日常的物品？</h4><p>如何测试一支笔？<br>问清这个物品是什么？是什么样的笔，小孩用的，宇航员用的，还是普通的笔。</p>
-<p>谁在用它？使用人的特质。</p>
-<p>意料之外的使用？会不会被小孩吃到嘴里。</p>
-<p>极端情形有哪些？在低温条件下。</p>
-<p>坏了能不能很好的恢复？</p>
-<p>测试的用例是什么？</p>
-<h4 id="如何测试一个软件？">如何测试一个软件？</h4><p>测试一个邮箱客户端？</p>
-<p>问问题消除歧义，确定要测试的到底是什么？</p>
-<p>谁是用户？</p>
-<p>功能集合是什么？</p>
-<p>异常使用情形是什么？</p>
-<p>失败了会怎么样，能不能友好的结束？</p>
-<p>什么可以自动化测试，什么需要手动测试？</p>
-<h4 id="测试一个方法">测试一个方法</h4><p>测试一个排序函数。</p>
-<p>消除歧义。升序，降序，时空复杂度，什么样的数据类型。<br>需要测什么。结果，内存消耗。<br>期望的用例。一个没有排序的数组。<br>极端的情况。空值，大树组，已经排序的等等。</p>
-<h3 id="十大面试准备误区">十大面试准备误区</h3><p>1.在电脑上练习<br>2.不去排练行为面试问题<br>3.不进行模拟面试<br>4.试着记忆答案<br>5.话太多<br>6.话太少<br>7.仓促的回答<br>8.不进行调试（大脑中调试）<br>9.草率的写代码<br>10.放弃</p>
-<h3 id="肢体语言助你一臂之力">肢体语言助你一臂之力</h3><p><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=ab1e980e9145d688a702b2a194f90c23/fd039245d688d43fef77c0cf7e1ed21b0ef43b34.jpg?referer=930ecf69004f78f0d91caec385ea&amp;x=.jpg" alt="面试肢体语言"></p>
-<p>【译者：华华甜品，原文来源：lifehack.org，原文标题：Getting ahead in business with body language】</p>
-<h3 id="参考资料">参考资料</h3><ol>
-<li><em>The Google Resume</em> Gayle Laakmann McDowell2.  <em>CRACKING THE CODING INTERVIEW -150 Programming Interview Questions and Solutions</em> GAYLE LAAKMANN</li>
-</ol>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/马上有OFFER/">
-                #马上有OFFER
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/08/准备一份对得起自己的简历/">
-                准备一份对得起自己的简历
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-08-06
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/原创/">原创</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/08/准备一份对得起自己的简历/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/准备一份对得起自己的简历/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>简历的作用就是要凸显出你相关方面的能力，而这些能力可以向招聘者证明你就是他要找的人。<br>简历中所有内容的核心就是：说服招聘者：“我就是你们想找的人！”。</p>
-<h3 id="六个优秀简历的标志">六个优秀简历的标志</h3><p>1.成就定位</p>
-<p>你的简历中的内容应该集中体现你做了什么，而不是你应该做的。写的是做的具体的事情，而不是你所负责的内容。<br>证明你是一个做事的人。当你在简历中使用“贡献”，“参加”时，这可能是个好兆头。</p>
-<p>2.可以量化的结果</p>
-<p>用数字说话。量化的结果可以帮助招聘人员了解你做的事，及其做的效果。量化的结果对招聘人员会很有吸引力。</p>
-<p>3.简历的目的性要强</p>
-<p>根据应聘的职位进行简历内容的调整。不要想着一份简历走遍天下，除非你找的职位都是一样的。</p>
-<p>4.内容通俗易懂</p>
-<p>语言要通俗易懂，避免使用生僻的专业词汇。要使一般人都能够领略简历中的要点。</p>
-<p>5.简洁</p>
-<p>避免有任何的语法错误和常识性的错误。排版合理，段落的内容不要太多。有关简历的设计可以参考博文<a href="http://www.zhangmin.name/blog/2014/05/%E6%87%82%E7%82%B9%E8%AE%BE%E8%AE%A1%E5%8F%8A%E5%9C%A8%E7%AE%80%E5%8E%86%E8%AE%BE%E8%AE%A1%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" target="_blank" rel="external">懂点设计及在简历设计中的应用</a>,简单几个原则就可以使你的简历变的简洁，设计友好。</p>
-<p>6.良好的结构，清晰</p>
-<p>一般的简历包括教育，工作经验，项目，专业技能，奖励等，你可以根据具体需求进行组合。下面的内容讨论这些内容。</p>
-<h3 id="简历的结构">简历的结构</h3><p>一般简历都采用时间顺序，但你也可以使用功能顺序。使用功能顺序多是因为工作的职位不能体现你的成就，或者有工作间隔。<br>但在阅“历”无数的招聘者哪里，什么都一清二楚。所以一般还是使用反向时间顺序，最近优先。</p>
-<p>标准的简历结构：工作经验，教育，总结，技能，项目，背景，期望的职位等等。</p>
-<p>对于没有工作经验的学生来说教育应该放到第一个部分。内容包括学位，学校，专业，成绩，你认为重要的活动，相关课程。<br>奖励也可以放到教育经历下面，如果你认为单独列出很浪费空间的话，或者没有必要进行格外的强调。<br>一般高中经历没有必要写，只要写到大学就可以了。当然除非你是新生，或者向一个校友求职想增强联系，或者有非常好的表现时，也可以写。</p>
-<p>对于工作经验这一项，一般内容包括工作单位，职位名称，时间，具体的组，突出你的成就，用数字说话。没有工作的学生可以写自己的项目经验作为替代。</p>
-<p>对于技能一般包括语言，技术。要进行分类。不要写明显的技能，如Office，Windows使用之类的。​当然只有技术类的工作需要这一项。</p>
-<p>另外，如果你想找一份与已有工作经验或者项目经历不同的领域的工作，你可以加一项“求职目标”来进行说明。除此之外，没必要写这一项。</p>
-<h3 id="精简简历">精简简历</h3><p>没有多少年工作经验的人简历一页就够了，当然一般情况下是如此。精简的简历无非就是删掉无关的内容。<br>最后要确保留下的内容能够区分与他人的不同，帮助说服招聘者你就是他要找的人。<br>浏览简历上的每句话，不断的大声问自己它可以说服招聘人员来面试你吗？若果没有好的答案，你最好删掉它。​</p>
-<h3 id="参考资料">参考资料</h3><p>《The Google Resume》 Gayle Laakmann McDowell</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/马上有OFFER/">
-                #马上有OFFER
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/07/真伪球迷的2014巴西世界杯/">
-                真伪球迷的2014巴西世界杯
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-07-23
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/07/真伪球迷的2014巴西世界杯/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/07/真伪球迷的2014巴西世界杯/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=78d85ae138292df593c3ac108c0a2d5d/f11f3a292df5e0fe751316cf5e6034a85fdf72f1.jpg?referer=9308cdf7cb3d70cf15ed9e3dbeaf&amp;x=.jpg" alt="2014 巴西世界杯"></p>
-<h3 id="真伪球迷">真伪球迷</h3><p>我算是真正的伪球迷，只关心比赛。塞外的新闻一概不看，球员历史也不看。只看在世界杯赛场上的表现。<br>我所有关于足球的记忆只有中国队和世界杯，可是最悲剧的莫过于中国队进不了世界杯。<br>记得最早看世界杯是2006年，当时仅有的印象就是罗纳尔多了。<br>2010年世界杯是在大学时，当时支持巴西队，喜欢卡卡。可是巴西不给力，很快就淘汰了。记得早上起来看西班牙和荷兰的决赛，加时赛伊涅斯塔绝杀荷兰。</p>
-<h3 id="我的2014世界杯">我的2014世界杯</h3><h4 id="揭幕战">揭幕战</h4><p>3点多起来看巴西世界杯揭幕战，巴西对阵克罗地亚。刚开始马塞洛的乌龙球给比赛增加了不少乐趣。大家猜的不错，第一个进球终究是巴西的。随后内马尔被黄牌警告，但是很快内马尔扳平了比分。下半场，巴西的点球，内马尔梅开二度。克罗地亚现在已经是明显处于劣势，最后奥斯卡的捅射，彻底锁定了胜局。全场比分3比1，相当的精彩。巴西队进了四个球！</p>
-<h4 id="错过的复仇之战">错过的复仇之战</h4><p>看了一场比赛，墨西哥对阵喀麦隆，墨西哥一个球员的两个好球都没裁判吹了越位。看完上半场就睡觉了。晚上两点的50的闹钟响了，朦胧中听到。可是在当时，睡眠的功用远远大于看一场球带来的，遂睡去。但是就没想这可是上届世界杯冠亚军的比赛。</p>
-<p>早上起来看新闻，才知道荷兰大胜西班牙，报了上届世界杯的仇。范佩西的鱼跃射门，罗本的进球，卡西利亚斯的失误。如此精彩的一场比赛我居然错过了，可惜可惜。</p>
-<h4 id="欧洲中国队英格兰">欧洲中国队英格兰</h4><p>早上看英格兰和意大利，英格兰果然又是悲剧了。接下来又看了科特迪瓦和日本的比赛，又是一个逆转，这届世界杯好多逆转。德罗巴不愧时科特迪瓦的精神偶像。上场后立马改变了场上的局势，扳平，反超比分。</p>
-<h4 id="悲情的C罗">悲情的C罗</h4><p>德国狂虐葡萄牙，葡萄牙丢球又丢人，受伤的受伤，英雄c罗也只能望洋兴叹。毕竟足球不是一个人的足球。</p>
-<h4 id="黑马哥斯达黎加和不靠谱的意大利人">黑马哥斯达黎加和不靠谱的意大利人</h4><p>0点开看意大利和哥斯达的比赛，最终意大利零比一告负，造成了英格兰的航班返航，自己还得努力争出线名额。意大利整场比赛总是那两个点，中场总是被断球，前场总是越位。</p>
-<h4 id="再顽强的伊朗，终究不敌梅球王的一脚绝杀">再顽强的伊朗，终究不敌梅球王的一脚绝杀</h4><p>伊朗队踢得确实顽强，曾经一度有超越阿根廷的可能，天意弄人，最后一两分钟，梅西进球了。我看到抱头无奈的伊朗后卫，对于他们来说坚持了整整九十分钟，他们打得都非常好，可是最后一两分钟却丢球了。这就是悲剧，当你眼看着就要成功时，却失败了。正因为如此，这场比赛才会长留于记忆深处。对于球迷来说，我感觉到整栋楼都震动了一下。仿佛云雨之欢最后的一刻，男人们最想要的快感。世界杯如男人，因为这就是一场男人的盛宴。</p>
-<h4 id="战术荷兰">战术荷兰</h4><p>荷兰和智力的比赛，最后时刻，荷兰队的年轻球员连进两球。荷兰队的战术是成功的。</p>
-<h4 id="第一场淘汰赛">第一场淘汰赛</h4><p>巴西对阵智力看的真是揪心，1比1常规时间，0比0加时赛，直到点球大战才3比2赢了对手。赢得真是危险，可以说是悬崖边上的胜利。</p>
-<p>我看到了十号内马尔这个小伙子，92年的年轻球员的抗压能力真是强，最后一个点球罚的如此淡定。</p>
-<h4 id="英雄斯内德">英雄斯内德</h4><p>本以为荷兰就要回家了，结果斯内德的射门挽救了荷兰队，而罗本创造的点球，则把墨西哥对送回了家。真是一场精彩的比赛。墨西哥离进八强破纪录只有十五分钟的时间，可是就在这十五分钟，他们输了。这就是足球的魅力之处，让无数球迷激动，流泪的原因。</p>
-<h4 id="没有啥感情的法国">没有啥感情的法国</h4><p>法国的比赛就不看了，没看几场比赛，没啥感情。德国的太早了，明早就废了。休整，看阿根廷和瑞士的比赛。</p>
-<h4 id="进球使人清醒">进球使人清醒</h4><p>先看了德国对阵法国。感觉两队势均力敌。但总有输赢，因此德国赢了。<br>定闹钟，看巴西对阵哥伦比亚。幸亏进球快，不然就要睡着了。看完球的早上拉住窗帘补觉，睡醒后不觉太累。</p>
-<h4 id="和小伙伴一起看球">和小伙伴一起看球</h4><p>阿根廷对阵比利的比赛，和田总，波妹，勇哥一块看球。看点却各不同，他人盼“弱队”胜，我盼强队胜。又看了荷兰和哥斯达黎加的比赛，本以为也像巴西对阵哥伦比亚，也是上半场进球，最终2比1，可是竟然打平，点球大战决出胜负。哥斯达黎加虽然练过点球，终究是开天辟地第一次参加四分之一决赛，终究遗憾离开。</p>
-<p>至今为止，四强产生，都是传统强队，巴西，德国，荷兰，阿根廷。现在选择倾向于那个球队，还真是困难。只是希望比赛一如既往的精彩。毕竟哪个队夺冠，和我的关系其实也没多大关系。只求世界杯给我带来时光的美好，不必感叹蹉跎光阴。</p>
-<h4 id="巴西被虐！">巴西被虐！</h4><p>当四点的闹钟响时，我没有及时的起床。再等意识到时，已经是四点半了，打开电视，发现比分是五比零，第一反应是看错了。看了一会儿发现真是这个比分。真是不可思议，居然被德国虐成这样。基本就可以去睡觉了。但是心里还是妄想巴西能够扳回来。至少再进几个球。最终七比一，巴西由奥斯卡打进安慰球。老天如此不公，在巴西，东道主，半决赛，这样悬殊的，令人震惊的比分！<br>正所谓越想得到的，越得不到，反而会意想不到的失去。</p>
-<h4 id="无聊的半决赛，斯内德英雄变“鬼雄”">无聊的半决赛，斯内德英雄变“鬼雄”</h4><p>去勇哥寝室看世界杯第二场半决赛。看之前就有一种预感，不会很快进球的。果不如然，到九十分钟仍然没有结束比赛的意思。阿根廷有个机会，只是头球力道较小，被守门员没收。到这时，真像解说所说，不希望那一队被绝杀。因为两队都踢得不错，就让点球大战决出胜负吧。</p>
-<p>荷兰的第一个点球由弗拉尔主罚，但就阿根廷的守门员罗梅罗扑出了。阿根廷第一个梅西稳稳的罚进。第三个斯内德又被扑出。结束了，两个点球被扑出。阿根廷胜出，和德国争夺冠军。荷兰和巴西争第三。</p>
-<h4 id="最无聊的三四名比赛">最无聊的三四名比赛</h4><p>晚上睡着后，中途就没听到闹钟响。早上虽然没熬夜，但是依然睡到九点多十点。才起来看新闻，巴西零比三输了。幸亏没看，看完心情更差。巴西是要彻底完了，没了内马尔，踢的和中国队一个水平！</p>
-<h4 id="《大话世界杯》《翻转巴西》">《大话世界杯》《翻转巴西》</h4><p>中午看《大话世界杯》，又看直播。两位巴西球迷灯叔颜晓华和黄健翔痛斥巴西队的表现，令人失望之极，连中国队都不如。两个年纪大的球迷，对什么大多都是感慨，对昔日精彩足球的追忆，以及经历过太多后对复杂世界的深刻理解。没有了年轻人的狂热激情，只有对人生终极的思考。</p>
-<p>看《翻转巴西》，巴西女神带着王涛看比赛，游巴西。体验现在真实的巴西是什么养的。</p>
-<h4 id="英雄末路，战车赢得大力神杯">英雄末路，战车赢得大力神杯</h4><p>凌晨三点世界杯决赛，到底是一个王朝还是一代球王？睡不着，躺在床上看书。还是睡不着，看视频。很长时间过去后，终于到两点四十了，看看手机，准备看决赛。起来洗把脸，漱口。</p>
-<p>刚开始阿根廷踢的非常好，伊瓜因有个单刀的机会，可是来的太突然，没有把握住。后来德国也有很有威胁的射门，上半场零比零。下半场也差不多，双方各有机会，只不过德国控球率占绝对的优势。</p>
-<p>加时，上半场很快结束。下半场113分钟，格策一球绝杀阿根廷。一个王朝，24年后德国再次夺冠。梅西得了金球奖，可是闷闷不乐，遗憾，伤心，苦涩的微笑。大力神杯，那么近，那么远。</p>
-<p>当德国捧起大力神杯时，我真希望时梅西举起奖杯。梅西没有了迪玛利亚这个好搭档，终究还是不能夺冠。其他队友都有很好的机会，可是都浪费了。</p>
-<p>六点，睡觉。这个过程居然和四年前的南非世界杯非常相像，也是一百三十多分钟，伊涅斯塔的一球绝杀荷兰。一个月的狂欢结束，下一个轮回开始。</p>
-<h4 id="汉字的神奇预测是不是能助中国队一臂之力？！">汉字的神奇预测是不是能助中国队一臂之力？！</h4><p>世界杯四强的排名顺序还真应验了网友的预测：</p>
-<p><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=a78e60e36f224f4a5399731639cce16f/42166d224f4a20a453562a0292529822730ed0ae.jpg?referer=fc2516dfc45c10387d69faf21064&amp;x=.jpg" alt="2014巴西世界杯四强结果"></p>
-<h4 id="属于我所在时代的球王">属于我所在时代的球王</h4><p>球王贝利，一代传奇马拉多纳，忧郁王子巴乔，和我又有什么关系。在属于我的时代中，内马尔，梅西，c罗，J罗才是对我有意义的。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/生活/">
-                #生活
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
 
           </div>
 
           
             <div class="pagination">
-              <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/24/">24</a><a class="extend next" rel="next" href="/blog/page/2/">&raquo;</a>
+              <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/39/">39</a><a class="extend next" rel="next" href="/blog/page/2/">&raquo;</a>
             </div>
           
         </div>
@@ -1331,17 +837,17 @@
         </div>
 
         <div class="site-state-item site-state-categories">
-          
+          <a href="/blog/categories">
             <span class="site-state-item-count">9</span>
             <span class="site-state-item-name">分类</span>
-          
+          </a>
         </div>
 
         <div class="site-state-item site-state-tags">
-          
+          <a href="/blog/tags">
             <span class="site-state-item-count">20</span>
             <span class="site-state-item-name">标签</span>
-          
+          </a>
         </div>
 
       </div>

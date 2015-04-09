@@ -21,13 +21,13 @@
 
 
 
-    <meta name="keywords" content="Hexo,next" />
+    <meta name="keywords" content="zhangmin.name,张敏,张敏的个人主页,张敏的博客,zhangmin.name's blog" />
 
 
 
 
 
-    <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.1" />
+    <link rel="shorticon icon" type="image/x-icon" href="http://www.zhangmin.name/images/favicon.png?v=0.4.1" />
 
 
 
@@ -67,10 +67,26 @@
       </li>
     
       
+      <li class="menu-item menu-item-categories">
+        <a href="/blog/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
       <li class="menu-item menu-item-archives">
         <a href="/blog/archives">
           <i class="menu-item-icon icon-archives"></i> <br />
           归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/blog/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
         </a>
       </li>
     
@@ -97,6 +113,514 @@
 
           <div id="posts" class="posts-expand">
             
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2014/08/Java对象创建初始化顺序/">
+                Java对象创建初始化顺序
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-08-26
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/Java/">Java</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2014/08/Java对象创建初始化顺序/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/Java对象创建初始化顺序/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>Java对象初始化关乎程序的安全运行，所以理解Java的初始化过程非常必要。Java中对象的初始化和创建是捆绑在一起的，两者不能分离。Java尽力保证所有变量在使用前都能够得到恰当的初始化。与C++一样，Java也通过构造器确保初始化。构造器是一种特殊类型的方法，它没有返回值。这与返回值为空的方法是不同的，虽然是空的返回值，但它仍然可以返回其他内容。构造器不返回任何东西。即使是用new表达式创建对象，也是new表达式返回新对象的引用，构造器没有返回任何东西。</p>
+<p>本文将从一个实例分析Java中对象创建的初始化顺序。</p>
+<p>假设有一个Horse的类，其对象的创建过程一般如下：</p>
+<ol>
+<li>当首次创建类型为Horse的对象时（构造器可以看成是静态方法）或者Horse的静态方法、静态域首次被访问时，Java解释器会查找类路径，定位Horse.class文件。如果有Horse继承自某一个类，还要查找并加载相应类的Class文件。</li>
+<li>载入Horse.class（即创建一个Class对象，如果有基类还要载入基类的Class），有关静态初始化的所有动作都会执行。静态初始化只在Class对象首次加载的时候进行一次。</li>
+<li>当用new Horse(）创建对象时，首先在堆上分配足够的存储空间。如果有父类，先执行父类的变量初始化和构造器。</li>
+<li>这块存储空间清零，自动将所有基本类型数据设置为默认值，引用为null。</li>
+<li>执行所有出现于字段定义处的初始化动作。</li>
+<li>执行构造器。</li>
+</ol>
+<p>在初始化过程中要注意两点：一是基本类型会有一个默认的初始值。这种自动初始化是无法阻止的。<br>二是非静态程序初始化块也会在构造函数之前执行。且在每次对象创建时都会执行。（常用语匿名内部类的初始化）。</p>
+<p>下面是一个实列，Horse类继承了Animal类，具体代码如下所示。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package name.zhangmin.java;&#10;public class Animal &#123;&#10; private int i = 9;&#10; protected int j;&#10; static &#123;&#10; System.out.println(&#38;quot;Animal&#39;s static block&#38;quot;);&#10; &#125;&#10; &#123;&#10; System.out.println(&#38;quot;Animal&#39;s non-static block&#38;quot;);&#10; &#125;&#10; Animal() &#123;&#10; System.out.println(&#38;quot;Animal&#39;s constructor&#38;quot;);&#10; System.out.println(&#38;quot;i = &#38;quot; + i + &#38;quot;, j = &#38;quot; + j);&#10; &#125;&#10; static int printInit(String s) &#123;&#10; System.out.println(s);&#10; return 16;&#10; &#125;&#10; private static int x1 = printInit(&#38;quot;static Animal.x1 initialized&#38;quot;);&#10;&#125;&#8203;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package name.zhangmin.java;&#10;public class Horse extends Animal &#123;&#10; private int k = printInit(&#38;quot;Horse.k initialized&#38;quot;);&#10; Horse() &#123;&#10; System.out.println(&#38;quot;Horse&#39;s constructor&#38;quot;);&#10; System.out.println(&#38;quot;k = &#38;quot; + k + &#38;quot;, j = &#38;quot; + j);&#10; &#125;&#10; public static void main(String[] args) &#123;&#10; System.out.println(&#38;quot;Horse&#39;s Main&#38;quot;);&#10; Horse h = new Horse();&#10; System.out.println(&#38;quot;Creating another Horse&#38;quot;);&#10; new Horse();&#10; &#125;&#10; static int x2 = printInit(&#38;quot;static Horse.x2 initialized&#38;quot;);&#10; &#123;&#10; System.out.println(&#38;quot;Horse&#39;s non-static block&#38;quot;);&#10; &#125;&#10; static &#123;&#10; System.out.println(&#38;quot;Horse&#39;s static block&#38;quot;);&#10; &#125;&#10;&#125;&#8203;</span><br></pre></td></tr></table></figure>
+<p>上述代码的运行结果如下所示：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Animal&#39;s static block&#10;static Animal.x1 initialized&#10;static Horse.x2 initialized&#10;Horse&#39;s static block&#10;Horse&#39;s Main&#10;Animal&#39;s non-static block&#10;Animal&#39;s constructor&#10;i = 9, j = 0&#10;Horse.k initialized&#10;Horse&#39;s non-static block&#10;Horse&#39;s constructor&#10;k = 16, j = 0&#10;Creating another Horse&#10;Animal&#39;s non-static block&#10;Animal&#39;s constructor&#10;i = 9, j = 0&#10;Horse.k initialized&#10;Horse&#39;s non-static block&#10;Horse&#39;s constructor&#10;k = 16, j = 0&#8203;</span><br></pre></td></tr></table></figure>
+<p>首先会执行Animal的静态域，静态块的初始化。执行的顺序就是域或块声明的顺序。执行完父类静态域的初始化后执行Horse的静态域初始化。类加载完成后，开始执行对象的创建过程。在这个过程中先执行父类Animal的非静态域或者块的初始化，然后是父类的构造器，之后才是子类Horse的非静态域或块的初始化，构造器。</p>
+<p>当第二次创建Horse对象时我们可以看到只执行父类非静态域或者块的初始化，父类Animal构造器，之后才是子类的非静态域，构造器。</p>
+<p>从上述的初始化过程可知，Java尽力保证了每个变量、对象在使用前能够正确的初始化。类的静态域只初始化一次，而非静态域则在每次对象创建时都进行初始化。如果有继承关系，要先完成父类的初始化和构造函数后才执行子类的初始化和构造函数。</p>
+<p><em>参考资料：《Java编程思想》第五章初始化与清理</em></p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/Java/">
+                #Java
+              </a>
+            
+              <a href="/blog/tags/马上有OFFER/">
+                #马上有OFFER
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2014/08/标准的软件面试准备过程/">
+                标准的软件面试准备过程
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-08-07
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/原创/">原创</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2014/08/标准的软件面试准备过程/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/标准的软件面试准备过程/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <blockquote>
+<p>要把基本的都掌握了后，再去准备比较难得问题：如动态规划。而且要是工业上经常用的知识，其余你知道就行了。</p>
+</blockquote>
+<h3 id="行为面试">行为面试</h3><p>行为面试存在的作用就是：面试官想认识你，了解你，也是你让你放松下来。回答问题时不要自大，内容要具体，举出具体的示例。但也只是要点即可。不可以侃侃而谈。</p>
+<p>准备的话就可以问自己一下的问题：</p>
+<p>最有挑战的事？<br>学到的东西？<br>最有趣的事？<br>最难的bug？<br>最喜欢的事？<br>与组员的冲突？</p>
+<p>回答这种类型的问题的方式一般为：S（situation）A（action）R（response）Issue1 Issue2 etc. 即开始描述你所处的情境，解释你采取了什么行动，最后解释结果是什么。如果面试官愿意，你可以继续讲存在的其他问题。</p>
+<p>在行为面试时问好的问题很重要，下面是几个例子可供参考：</p>
+<p>真实的问题：一天多长时间编码？每周开几次会？项目组测试人员和开发人员的比列？交互是如何进行的？</p>
+<p>启发性问题：你们使用了X技术，如果遇到其他问题会怎么样？</p>
+<p>学习型问题：我对可扩展性很感兴趣，我可以从哪里进一步学到相关知识</p>
+<h3 id="五步准备法">五步准备法</h3><p>1.试着自己解决问题。认真地尝试，如果解决了，要考虑时间空间复杂度，及是否还有改进的可能。</p>
+<p>2.在纸上写下自己的代码。没有编译器的自动补全，纠错，警告，你的代码会变成什么样？</p>
+<p>3.测试你的代码。</p>
+<p>4.将你的代码输入电脑，测试已有的用例和一些儿新的用例。</p>
+<p>5.列一份你犯的错误清单，分析你最常犯的错误，并尝试改正。</p>
+<p>如果遇到了一个我知道的问题我该怎么办？当然是告诉你的面试官，这是正确的做法，也是聪明的做法。诚信在职场还是非常有份量的。<br>你不一定做出所有的面试题目，如果你被问到的问题越来越难，这说明面试官只是在履行他的职责而已。他要测试你解决问题的能力及遇到难题时的应对策略。遇到难题，你要尽力解决，只有你的面试官说可以了，你才可以停止，否则，你就应该继续努力。</p>
+<h4 id="我必须掌握的">我必须掌握的</h4><p>数据结构：列表，二叉树，Tries，栈，队列，向量，哈希表。</p>
+<p>算法：BFS，DFS，二分搜索，归并排序，快速排序，树插入，查找等。</p>
+<p>概念：位操作，单体模式，工厂模式，内存（堆栈），递归，大O分析法。</p>
+<p>要知道如何实现，以及时间空间复杂度分析，并且实现地越熟练越好。</p>
+<h4 id="五步法示例">五步法示例</h4><p>向你的面试官提问，消除题目相关的歧义。问好的问题，如：数据类型是什么？数据量多大，即输入多大？解决问题前的假设是什么？用户是谁？</p>
+<p>设计算法。这个过程中要说出自己的思路，要考虑时空复杂度。如果数据量很大时该怎么办？会不会引起其它的问题？折中是什么？有没有提供特殊的信息可以帮助进行算法设计？</p>
+<p>写出伪代码。要告诉你的面试官你写的是伪代码。</p>
+<p>不紧不慢的写出代码。大胆的使用数据结构，节省你写代码的白纸空间。</p>
+<p>测试程序，修正错误。特殊情况：0， 空，最大值，负数；用户操作错误：用户输入null或者负数；一般情形：正常的用例。如果有错误，我是如何应对的？要停下来想清楚，不要去乱试，随意改动代码。</p>
+<h3 id="创建一个算法的五种方法">创建一个算法的五种方法</h3><p>这些只是最基本的方法，去柔和它们，实践它们，你就可以解决大部分编程问题了。</p>
+<h4 id="方法一：举例">方法一：举例</h4><p>举些儿具体的例子，看你如何处理他们，能不能因此得到一个一般的规则。</p>
+<p>例如：给定一个时间如5:10分，计算分针和时针之间的角度。画一个表盘，想象时针和分针的运动。分钟数和从12点的角度的关系：360 <em> minutes / 60。小时数和从12点的角度的关系：360 </em> (hour % 12) / 12 + 360 <em> (minutes / 60) </em> (1 / 12)。相减即可。</p>
+<h4 id="方法二：模式匹配">方法二：模式匹配</h4><p>将现在的问题与已经知道的方法进行匹配，如果相似，进行一些修改就可以了。</p>
+<p>例如：找一个旋转的有序数组中的最小值？找最小的值的方法。不好，没有利用有序这个事实。二分查找，找到第一个违反升序的元素就是最小值。</p>
+<h4 id="方法三：简化与泛化">方法三：简化与泛化</h4><p>简化条件来尝试解答，如果有答案，返回原有的问题看能不能解决。</p>
+<p>例子：一个字符串是由一本杂志中的单词组成的。那么，如何确定一个字符串是由一个给定的杂志产生的呢？先简化，如果是字符怎么办？使用字符的基数排序，创建一个数组，统计这个字符串中出现的字符的个数。然后我们在杂志中寻找这些字符是否都在就可以了。那么回到原来的问题，如果是单词该怎么办？一样的思路，使用一个Map来统计每个单词的数量不就可以了么。</p>
+<h4 id="方法四：使用基本情况构建算法">方法四：使用基本情况构建算法</h4><p>一个元素时如何解决，两个元素呢，三个，四个……通常这种方法会导致一个递归的算法。</p>
+<p>例子：产生一个字符串的所有排列。考虑字符串abcdef。基本情况{a} -&gt; {a}；{ab}-&gt;{ab}{ba}；{abc}-&gt;merge(c, ab) = cab, acb, abc；merge(c, ba) = cba,bca,bac先产生s[1..n- 1],然后将s[n]插入每个可能的位置。</p>
+<h4 id="方法五：数据结构头脑风暴">方法五：数据结构头脑风暴</h4><p>尝试使用每一种数据结构来解决。</p>
+<p>例子：随机产生的数被存储到一个可以扩展的数组，如何跟踪中位数？<br>列表：列表不适合访问和排序。</p>
+<p>数组：已经有数组了，能维持数组有序，但代价有点大。</p>
+<p>二叉树：二叉树适用排序，如果树是平衡的，可能根节点就是，到那时如果是偶数个元素，则是中间两个元素的平均值。</p>
+<p>堆：适合排序和保持最大或者最小值，如果有两个堆，可以跟踪较大的一半和较小的一半。较大的一半保存在最小堆。这样我们就有可能的中位数在根节点，如果两个堆大小不一样可以从中一个取下一个，放到另一个堆中。</p>
+<h3 id="面向对象设计">面向对象设计</h3><p>你的目标是什么？<br>你的核心对象是什么？<br>每一个对象之间的联系是什么样的？<br>对象之间如何交互？<br>有没有比较难的算法？</p>
+<p>设计过程中多考虑 各种权衡，多交流。</p>
+<h3 id="扩展性问题">扩展性问题</h3><p>先解决小规模数据时的问题。再考虑大数据量时如何处理。然后考虑把原来的解决方案转化到大数据量时的情况。可能遇到的问题是内存耗尽，你需要分割文件放到不同的机器上，通常使用哈希来进行分配。你的数据量决定你需要多少台机器。一个机器如何知道另一台机器可以访问，或者有相关数据；各个机器之间的数据会不会不同步；在不同机器之间通信的代价是什么等等。</p>
+<h3 id="测试类问题">测试类问题</h3><h4 id="如何测试日常的物品？">如何测试日常的物品？</h4><p>如何测试一支笔？<br>问清这个物品是什么？是什么样的笔，小孩用的，宇航员用的，还是普通的笔。</p>
+<p>谁在用它？使用人的特质。</p>
+<p>意料之外的使用？会不会被小孩吃到嘴里。</p>
+<p>极端情形有哪些？在低温条件下。</p>
+<p>坏了能不能很好的恢复？</p>
+<p>测试的用例是什么？</p>
+<h4 id="如何测试一个软件？">如何测试一个软件？</h4><p>测试一个邮箱客户端？</p>
+<p>问问题消除歧义，确定要测试的到底是什么？</p>
+<p>谁是用户？</p>
+<p>功能集合是什么？</p>
+<p>异常使用情形是什么？</p>
+<p>失败了会怎么样，能不能友好的结束？</p>
+<p>什么可以自动化测试，什么需要手动测试？</p>
+<h4 id="测试一个方法">测试一个方法</h4><p>测试一个排序函数。</p>
+<p>消除歧义。升序，降序，时空复杂度，什么样的数据类型。<br>需要测什么。结果，内存消耗。<br>期望的用例。一个没有排序的数组。<br>极端的情况。空值，大树组，已经排序的等等。</p>
+<h3 id="十大面试准备误区">十大面试准备误区</h3><p>1.在电脑上练习<br>2.不去排练行为面试问题<br>3.不进行模拟面试<br>4.试着记忆答案<br>5.话太多<br>6.话太少<br>7.仓促的回答<br>8.不进行调试（大脑中调试）<br>9.草率的写代码<br>10.放弃</p>
+<h3 id="肢体语言助你一臂之力">肢体语言助你一臂之力</h3><p><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=ab1e980e9145d688a702b2a194f90c23/fd039245d688d43fef77c0cf7e1ed21b0ef43b34.jpg?referer=930ecf69004f78f0d91caec385ea&amp;x=.jpg" alt="面试肢体语言"></p>
+<p>【译者：华华甜品，原文来源：lifehack.org，原文标题：Getting ahead in business with body language】</p>
+<h3 id="参考资料">参考资料</h3><ol>
+<li><em>The Google Resume</em> Gayle Laakmann McDowell2.  <em>CRACKING THE CODING INTERVIEW -150 Programming Interview Questions and Solutions</em> GAYLE LAAKMANN</li>
+</ol>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/马上有OFFER/">
+                #马上有OFFER
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2014/08/准备一份对得起自己的简历/">
+                准备一份对得起自己的简历
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-08-06
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/原创/">原创</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2014/08/准备一份对得起自己的简历/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/准备一份对得起自己的简历/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>简历的作用就是要凸显出你相关方面的能力，而这些能力可以向招聘者证明你就是他要找的人。<br>简历中所有内容的核心就是：说服招聘者：“我就是你们想找的人！”。</p>
+<h3 id="六个优秀简历的标志">六个优秀简历的标志</h3><p>1.成就定位</p>
+<p>你的简历中的内容应该集中体现你做了什么，而不是你应该做的。写的是做的具体的事情，而不是你所负责的内容。<br>证明你是一个做事的人。当你在简历中使用“贡献”，“参加”时，这可能是个好兆头。</p>
+<p>2.可以量化的结果</p>
+<p>用数字说话。量化的结果可以帮助招聘人员了解你做的事，及其做的效果。量化的结果对招聘人员会很有吸引力。</p>
+<p>3.简历的目的性要强</p>
+<p>根据应聘的职位进行简历内容的调整。不要想着一份简历走遍天下，除非你找的职位都是一样的。</p>
+<p>4.内容通俗易懂</p>
+<p>语言要通俗易懂，避免使用生僻的专业词汇。要使一般人都能够领略简历中的要点。</p>
+<p>5.简洁</p>
+<p>避免有任何的语法错误和常识性的错误。排版合理，段落的内容不要太多。有关简历的设计可以参考博文<a href="http://www.zhangmin.name/blog/2014/05/%E6%87%82%E7%82%B9%E8%AE%BE%E8%AE%A1%E5%8F%8A%E5%9C%A8%E7%AE%80%E5%8E%86%E8%AE%BE%E8%AE%A1%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" target="_blank" rel="external">懂点设计及在简历设计中的应用</a>,简单几个原则就可以使你的简历变的简洁，设计友好。</p>
+<p>6.良好的结构，清晰</p>
+<p>一般的简历包括教育，工作经验，项目，专业技能，奖励等，你可以根据具体需求进行组合。下面的内容讨论这些内容。</p>
+<h3 id="简历的结构">简历的结构</h3><p>一般简历都采用时间顺序，但你也可以使用功能顺序。使用功能顺序多是因为工作的职位不能体现你的成就，或者有工作间隔。<br>但在阅“历”无数的招聘者哪里，什么都一清二楚。所以一般还是使用反向时间顺序，最近优先。</p>
+<p>标准的简历结构：工作经验，教育，总结，技能，项目，背景，期望的职位等等。</p>
+<p>对于没有工作经验的学生来说教育应该放到第一个部分。内容包括学位，学校，专业，成绩，你认为重要的活动，相关课程。<br>奖励也可以放到教育经历下面，如果你认为单独列出很浪费空间的话，或者没有必要进行格外的强调。<br>一般高中经历没有必要写，只要写到大学就可以了。当然除非你是新生，或者向一个校友求职想增强联系，或者有非常好的表现时，也可以写。</p>
+<p>对于工作经验这一项，一般内容包括工作单位，职位名称，时间，具体的组，突出你的成就，用数字说话。没有工作的学生可以写自己的项目经验作为替代。</p>
+<p>对于技能一般包括语言，技术。要进行分类。不要写明显的技能，如Office，Windows使用之类的。​当然只有技术类的工作需要这一项。</p>
+<p>另外，如果你想找一份与已有工作经验或者项目经历不同的领域的工作，你可以加一项“求职目标”来进行说明。除此之外，没必要写这一项。</p>
+<h3 id="精简简历">精简简历</h3><p>没有多少年工作经验的人简历一页就够了，当然一般情况下是如此。精简的简历无非就是删掉无关的内容。<br>最后要确保留下的内容能够区分与他人的不同，帮助说服招聘者你就是他要找的人。<br>浏览简历上的每句话，不断的大声问自己它可以说服招聘人员来面试你吗？若果没有好的答案，你最好删掉它。​</p>
+<h3 id="参考资料">参考资料</h3><p>《The Google Resume》 Gayle Laakmann McDowell</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/马上有OFFER/">
+                #马上有OFFER
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/blog/2014/07/真伪球迷的2014巴西世界杯/">
+                真伪球迷的2014巴西世界杯
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-07-23
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/MSE/">MSE</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2014/07/真伪球迷的2014巴西世界杯/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/07/真伪球迷的2014巴西世界杯/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=78d85ae138292df593c3ac108c0a2d5d/f11f3a292df5e0fe751316cf5e6034a85fdf72f1.jpg?referer=9308cdf7cb3d70cf15ed9e3dbeaf&amp;x=.jpg" alt="2014 巴西世界杯"></p>
+<h3 id="真伪球迷">真伪球迷</h3><p>我算是真正的伪球迷，只关心比赛。塞外的新闻一概不看，球员历史也不看。只看在世界杯赛场上的表现。<br>我所有关于足球的记忆只有中国队和世界杯，可是最悲剧的莫过于中国队进不了世界杯。<br>记得最早看世界杯是2006年，当时仅有的印象就是罗纳尔多了。<br>2010年世界杯是在大学时，当时支持巴西队，喜欢卡卡。可是巴西不给力，很快就淘汰了。记得早上起来看西班牙和荷兰的决赛，加时赛伊涅斯塔绝杀荷兰。</p>
+<h3 id="我的2014世界杯">我的2014世界杯</h3><h4 id="揭幕战">揭幕战</h4><p>3点多起来看巴西世界杯揭幕战，巴西对阵克罗地亚。刚开始马塞洛的乌龙球给比赛增加了不少乐趣。大家猜的不错，第一个进球终究是巴西的。随后内马尔被黄牌警告，但是很快内马尔扳平了比分。下半场，巴西的点球，内马尔梅开二度。克罗地亚现在已经是明显处于劣势，最后奥斯卡的捅射，彻底锁定了胜局。全场比分3比1，相当的精彩。巴西队进了四个球！</p>
+<h4 id="错过的复仇之战">错过的复仇之战</h4><p>看了一场比赛，墨西哥对阵喀麦隆，墨西哥一个球员的两个好球都没裁判吹了越位。看完上半场就睡觉了。晚上两点的50的闹钟响了，朦胧中听到。可是在当时，睡眠的功用远远大于看一场球带来的，遂睡去。但是就没想这可是上届世界杯冠亚军的比赛。</p>
+<p>早上起来看新闻，才知道荷兰大胜西班牙，报了上届世界杯的仇。范佩西的鱼跃射门，罗本的进球，卡西利亚斯的失误。如此精彩的一场比赛我居然错过了，可惜可惜。</p>
+<h4 id="欧洲中国队英格兰">欧洲中国队英格兰</h4><p>早上看英格兰和意大利，英格兰果然又是悲剧了。接下来又看了科特迪瓦和日本的比赛，又是一个逆转，这届世界杯好多逆转。德罗巴不愧时科特迪瓦的精神偶像。上场后立马改变了场上的局势，扳平，反超比分。</p>
+<h4 id="悲情的C罗">悲情的C罗</h4><p>德国狂虐葡萄牙，葡萄牙丢球又丢人，受伤的受伤，英雄c罗也只能望洋兴叹。毕竟足球不是一个人的足球。</p>
+<h4 id="黑马哥斯达黎加和不靠谱的意大利人">黑马哥斯达黎加和不靠谱的意大利人</h4><p>0点开看意大利和哥斯达的比赛，最终意大利零比一告负，造成了英格兰的航班返航，自己还得努力争出线名额。意大利整场比赛总是那两个点，中场总是被断球，前场总是越位。</p>
+<h4 id="再顽强的伊朗，终究不敌梅球王的一脚绝杀">再顽强的伊朗，终究不敌梅球王的一脚绝杀</h4><p>伊朗队踢得确实顽强，曾经一度有超越阿根廷的可能，天意弄人，最后一两分钟，梅西进球了。我看到抱头无奈的伊朗后卫，对于他们来说坚持了整整九十分钟，他们打得都非常好，可是最后一两分钟却丢球了。这就是悲剧，当你眼看着就要成功时，却失败了。正因为如此，这场比赛才会长留于记忆深处。对于球迷来说，我感觉到整栋楼都震动了一下。仿佛云雨之欢最后的一刻，男人们最想要的快感。世界杯如男人，因为这就是一场男人的盛宴。</p>
+<h4 id="战术荷兰">战术荷兰</h4><p>荷兰和智力的比赛，最后时刻，荷兰队的年轻球员连进两球。荷兰队的战术是成功的。</p>
+<h4 id="第一场淘汰赛">第一场淘汰赛</h4><p>巴西对阵智力看的真是揪心，1比1常规时间，0比0加时赛，直到点球大战才3比2赢了对手。赢得真是危险，可以说是悬崖边上的胜利。</p>
+<p>我看到了十号内马尔这个小伙子，92年的年轻球员的抗压能力真是强，最后一个点球罚的如此淡定。</p>
+<h4 id="英雄斯内德">英雄斯内德</h4><p>本以为荷兰就要回家了，结果斯内德的射门挽救了荷兰队，而罗本创造的点球，则把墨西哥对送回了家。真是一场精彩的比赛。墨西哥离进八强破纪录只有十五分钟的时间，可是就在这十五分钟，他们输了。这就是足球的魅力之处，让无数球迷激动，流泪的原因。</p>
+<h4 id="没有啥感情的法国">没有啥感情的法国</h4><p>法国的比赛就不看了，没看几场比赛，没啥感情。德国的太早了，明早就废了。休整，看阿根廷和瑞士的比赛。</p>
+<h4 id="进球使人清醒">进球使人清醒</h4><p>先看了德国对阵法国。感觉两队势均力敌。但总有输赢，因此德国赢了。<br>定闹钟，看巴西对阵哥伦比亚。幸亏进球快，不然就要睡着了。看完球的早上拉住窗帘补觉，睡醒后不觉太累。</p>
+<h4 id="和小伙伴一起看球">和小伙伴一起看球</h4><p>阿根廷对阵比利的比赛，和田总，波妹，勇哥一块看球。看点却各不同，他人盼“弱队”胜，我盼强队胜。又看了荷兰和哥斯达黎加的比赛，本以为也像巴西对阵哥伦比亚，也是上半场进球，最终2比1，可是竟然打平，点球大战决出胜负。哥斯达黎加虽然练过点球，终究是开天辟地第一次参加四分之一决赛，终究遗憾离开。</p>
+<p>至今为止，四强产生，都是传统强队，巴西，德国，荷兰，阿根廷。现在选择倾向于那个球队，还真是困难。只是希望比赛一如既往的精彩。毕竟哪个队夺冠，和我的关系其实也没多大关系。只求世界杯给我带来时光的美好，不必感叹蹉跎光阴。</p>
+<h4 id="巴西被虐！">巴西被虐！</h4><p>当四点的闹钟响时，我没有及时的起床。再等意识到时，已经是四点半了，打开电视，发现比分是五比零，第一反应是看错了。看了一会儿发现真是这个比分。真是不可思议，居然被德国虐成这样。基本就可以去睡觉了。但是心里还是妄想巴西能够扳回来。至少再进几个球。最终七比一，巴西由奥斯卡打进安慰球。老天如此不公，在巴西，东道主，半决赛，这样悬殊的，令人震惊的比分！<br>正所谓越想得到的，越得不到，反而会意想不到的失去。</p>
+<h4 id="无聊的半决赛，斯内德英雄变“鬼雄”">无聊的半决赛，斯内德英雄变“鬼雄”</h4><p>去勇哥寝室看世界杯第二场半决赛。看之前就有一种预感，不会很快进球的。果不如然，到九十分钟仍然没有结束比赛的意思。阿根廷有个机会，只是头球力道较小，被守门员没收。到这时，真像解说所说，不希望那一队被绝杀。因为两队都踢得不错，就让点球大战决出胜负吧。</p>
+<p>荷兰的第一个点球由弗拉尔主罚，但就阿根廷的守门员罗梅罗扑出了。阿根廷第一个梅西稳稳的罚进。第三个斯内德又被扑出。结束了，两个点球被扑出。阿根廷胜出，和德国争夺冠军。荷兰和巴西争第三。</p>
+<h4 id="最无聊的三四名比赛">最无聊的三四名比赛</h4><p>晚上睡着后，中途就没听到闹钟响。早上虽然没熬夜，但是依然睡到九点多十点。才起来看新闻，巴西零比三输了。幸亏没看，看完心情更差。巴西是要彻底完了，没了内马尔，踢的和中国队一个水平！</p>
+<h4 id="《大话世界杯》《翻转巴西》">《大话世界杯》《翻转巴西》</h4><p>中午看《大话世界杯》，又看直播。两位巴西球迷灯叔颜晓华和黄健翔痛斥巴西队的表现，令人失望之极，连中国队都不如。两个年纪大的球迷，对什么大多都是感慨，对昔日精彩足球的追忆，以及经历过太多后对复杂世界的深刻理解。没有了年轻人的狂热激情，只有对人生终极的思考。</p>
+<p>看《翻转巴西》，巴西女神带着王涛看比赛，游巴西。体验现在真实的巴西是什么养的。</p>
+<h4 id="英雄末路，战车赢得大力神杯">英雄末路，战车赢得大力神杯</h4><p>凌晨三点世界杯决赛，到底是一个王朝还是一代球王？睡不着，躺在床上看书。还是睡不着，看视频。很长时间过去后，终于到两点四十了，看看手机，准备看决赛。起来洗把脸，漱口。</p>
+<p>刚开始阿根廷踢的非常好，伊瓜因有个单刀的机会，可是来的太突然，没有把握住。后来德国也有很有威胁的射门，上半场零比零。下半场也差不多，双方各有机会，只不过德国控球率占绝对的优势。</p>
+<p>加时，上半场很快结束。下半场113分钟，格策一球绝杀阿根廷。一个王朝，24年后德国再次夺冠。梅西得了金球奖，可是闷闷不乐，遗憾，伤心，苦涩的微笑。大力神杯，那么近，那么远。</p>
+<p>当德国捧起大力神杯时，我真希望时梅西举起奖杯。梅西没有了迪玛利亚这个好搭档，终究还是不能夺冠。其他队友都有很好的机会，可是都浪费了。</p>
+<p>六点，睡觉。这个过程居然和四年前的南非世界杯非常相像，也是一百三十多分钟，伊涅斯塔的一球绝杀荷兰。一个月的狂欢结束，下一个轮回开始。</p>
+<h4 id="汉字的神奇预测是不是能助中国队一臂之力？！">汉字的神奇预测是不是能助中国队一臂之力？！</h4><p>世界杯四强的排名顺序还真应验了网友的预测：</p>
+<p><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=a78e60e36f224f4a5399731639cce16f/42166d224f4a20a453562a0292529822730ed0ae.jpg?referer=fc2516dfc45c10387d69faf21064&amp;x=.jpg" alt="2014巴西世界杯四强结果"></p>
+<h4 id="属于我所在时代的球王">属于我所在时代的球王</h4><p>球王贝利，一代传奇马拉多纳，忧郁王子巴乔，和我又有什么关系。在属于我的时代中，内马尔，梅西，c罗，J罗才是对我有意义的。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/生活/">
+                #生活
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
   
     
 
@@ -341,1046 +865,12 @@
 
 
   
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/07/OSGi-Event-Admin-Service/">
-                OSGi Event Admin Service
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-07-03
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/07/OSGi-Event-Admin-Service/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/07/OSGi-Event-Admin-Service/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>Event Admin是OSGi中用于bundles之间通信的手段,是处理事件的一种通用机制。采用的是pub/sub架构。</p>
-<h3 id="发布订阅模型">发布订阅模型</h3><p>发布订阅模型应满足的需求：</p>
-<p>1. 发布者不应该拥有订阅者的信息。<br>2. 新的发布者或者新的订阅者的动态增加或者删除不能影响这个发布订阅系统<br>3. 订阅者不应该阻塞发布者。</p>
-<p>在发布订阅模型需要一个中间人来解耦发布者和订阅者。在Event Admin Service中这个中间人就是EventAdmin。</p>
-<p>Event Admin service使用Topic来定义分发通道，类似于JMS。发布者发送事件到Topic，订阅者从Topic中接受信息。向Topic发送事件的发布者可以是多个，从Topic接受的订阅者也可以是多个。也就是说是一种多对多的关系。</p>
-<p>下面是示例代码：</p>
-<p>[java]<br>SimpleSubscriber subscriber = new SimpleSubscriber();<br>Dictionary dict = new Properties();<br>dict.put(EventConstants.EVENT_TOPIC,<br>&quot;manning/osgi/LoginEvent&quot;);<br>context.registerService(EventHandler.class.getName(),<br>subscriber, dict);​<br>[/java]<br>[java]<br>public class SimpleSubscriber implements EventHandler {<br>public void handleEvent(Event event) {<br>System.out.println(&quot;Received event on topic = &quot; +<br>event.getTopic());<br>for (String propertyName :<br>event.getPropertyNames()) {<br>System.out.println(&quot;\t&quot; + propertyName + &quot; = &quot; +<br>event.getProperty(propertyName));<br>​}<br>}<br>}<br>[/java]</p>
-<h3 id="Topic">Topic</h3><p>Topic一般使用类似于java的包名的命名方法，只不过使用右斜杠替换点号。</p>
-<p>如果使用”manning/osgi/TravelAgent/*”，则会匹配四层的事件，如<br>“manning/osgi/TravelAgent/CarEvent”<br>“manning/osgi/TravelAgent/HotelEvent”<br>“manning/osgi/TravelAgent/FlightEvent”<br>但不会匹配<br>​”manning/osgi/TravelAgent/HotelEvent/USA”<br>“manning/osgi/TravelAgent”<br>因为它们一个是五层一个是四层。</p>
-<p>一个空的或者不存在的EVENT_TOPIC表示不接受任何事件，一个通配符”*”表示接收所有事件。</p>
-<p>指定多个订阅者接收多种事件的方法是使用Sring[]。</p>
-<p>[java]<br>Dictionary dict = new Properties();<br>dict.put(EventConstants.EVENT_TOPIC,<br>new String [] {&quot;manning/osgi/TravelAgent/CarEvent&quot;,<br>&quot;manning/osgi/TravelAgent/HotelEvent&quot;,<br>&quot;manning/osgi/TravelAgent/FlightEvent&quot;});<br>context.registerService(EventHandler.class.getName(),<br>subscriber, dict);<br>[/java]​</p>
-<h3 id="Event">Event</h3><p>Event对象包含Topic名和时间相关的属性信息。自定义事件对象必须继承Event。关于事件的常量最好放到一个Property对象中，而不是写在代码中。</p>
-<h4 id="OSGi框架的事件">OSGi框架的事件</h4><p>框架变化：包括启动类路径变化，包刷新，异常，被停止等等。<br>bundle变化：包括安装，更新，卸载。<br>服务变化：服务注册，修改，删除。</p>
-<p>这些事件可以通过bundle context进行监听。事件会按照注册的顺序进行发送。<br>[java]<br>public void start(BundleContext bundleContext) throws Exception {<br>BundleListener bundleListener = // …<br>bundleContext.addBundleListener(bundleListener);<br>// …<br>}<br>[/java]​</p>
-<p>[java]<br>public class MyBundleListener implements BundleListener {<br>public void bundleChanged(BundleEvent bundleEvent) {<br>if (bundleEvent.getType() == BundleEvent.INSTALLED) {<br>// …<br>}<br>}<br>}<br>[/java]​</p>
-<p>BundleEvent 包含一个Bundle类的实例，可以通过这个类来获取bundle的任何内容。</p>
-<h3 id="事件处理">事件处理</h3><p>EventAdmin的post方法异步发送事件，是非阻塞的；而send则是同步发送事件，是阻塞的。</p>
-<p>要注意EvenHandler的handleEvent方法要尽快返回，而且该方法有可能被阻塞。</p>
-<p>事件的传递顺序也受发布者发布方式的影响。如果是多线程发送，则无法保证事件的顺序。</p>
-<p>如果handleEvent抛出一个异常，该异常并不会传递到发布者，EventAdmin会处理下一个订阅者。</p>
-<p>EventAdmin在发送事件时会将所有可用的订阅者做一份拷贝，这就避免了订阅者收到在它存在之前的事件。同时，EventAdmin也会确保订阅者仍然注册并愿意接收事件。</p>
-<p>由于发布者和订阅者的解耦，要特别注意发生死锁的情况。</p>
-<h3 id="事件过滤">事件过滤</h3><p>使用EVENT_FILTERE来进行事件过滤。</p>
-<p>[java]<br>Dictionary payload = new Properties();<br>payload.put(&quot;price&quot;, 80);<br>Event event =<br>new Event(&quot;manning/osgi/TravelAgent/HotelEvent&quot;, payload);<br>admin.postEvent(event);<br>[/java]<br>[java]<br>Dictionary dict = new Properties();<br>dict.put(EventConstants.EVENT_TOPIC,<br>&quot;manning/osgi/TravelAgent/HotelEvent&quot;);<br>dict.put(EventConstants.EVENT_FILTER, &quot;(price&lt;100)&quot;);<br>context.registerService(EventHandler.class.getName(),<br>travelAgentEventHandler, dict);<br>[/java]​</p>
-<h3 id="Event_Admin的缺点">Event Admin的缺点</h3><p>​1. 事件丢失</p>
-<p>如果Event Admin突然挂掉，事件就会丢失。解决的办法是可以通过配置让Event Admin对事件进行持久化存储。</p>
-<ol>
-<li>过滤能力有限</li>
-</ol>
-<p>基于LDAP的过滤机制很难实现复杂的事件过滤。解决的方法是通过插入复杂事件处理引擎来实现。<br>另一个问题是对于大型系统事件的关联属性可能很多，处理起来会非常复杂，而且有可能导致事件内容过大。解决的办法是直接发送<br>java 对象，然后再接收端进行相应的处理。<br>另一个缺点是服务保证订阅者接受事件的顺序。解决的方法是扩展EventAdmin。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-              <a href="/blog/tags/OSGi/">
-                #OSGi
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/06/Java并发编程入门/">
-                Java并发编程入门
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-06-13
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/06/Java并发编程入门/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/Java并发编程入门/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>并发编程可以大大提高程序的执行速度。但是当并发执行的任务彼此开始产生互相干涉时，实际的并发问题就会接踵而至。因此，理解并发不经可以帮你写出优秀的并发程序，而且可以解开为什么那些明显正确的程序却展示出不正确的行为。只有当你自己变的多疑而自信，才能用java编写出可靠地多线程代码。</p>
-<h3 id="并发的多面性">并发的多面性</h3><p>并发编程令人困惑的主要原因：使用并发是需要解决问题有多个，而实现并发的方式也有很多种，并且在这两者之间没有明显的映射关系。</p>
-<p>并发解决的问题有两个，一个是更快的执行，另一个是设计可管理性。</p>
-<p>并发通常是提高运行在单处理器上的程序的性能。尽管并发的开销大（需要上下文切换），但是并发依然具有优势，这是因为如果程序中某个任务因为改程序控制范围之外的某些条件（I/O)就会阻塞，而当阻塞时，并发程序仍然可以继续执行，而顺序性程序就需要等待了。事实上，如果没有阻塞，在单处理器上开发并发程序并没有意义。</p>
-<p>提高并发的一个最常见示例：事件驱动编程。产生具有可响应的用户界面。</p>
-<h3 id="并发的实现方式">并发的实现方式</h3><p>实现并发最直接的方式就是使用操作系统的进程。进程是运行在自己的地址空间的自包容程序。操作系统负责进程之间的调度。Java所使用的多线程并发系统会共享诸如内存和I/O这样的资源，因此编写多线程程序最基本的困难在于协调不同任务之间对这些资源的使用，以使得这些资源不会同时被多任务访问。</p>
-<p>Java在顺序性语言基础上提供对线程的支持。线程机制是在执行程序表示的单一进程中创建任务。Java的线程机制是抢占式的，这表示调度机制会周期性的中断线程，将上下文切换到另一个线程，从而每一个线程都提供时间片，是的每个线程都分配到数量合理的时间去驱动它的任务。当然你也可以创建协作式多线程，每个任务都会自动放弃控制，这要求程序员要有意识的在每个任务插入某种让步语句。</p>
-<p>理论上使用顺序性程序可以完成所有的任务，因为处理器在任意时刻只执行一项工作。但是并发可以简化程序的开发。并发的复杂性代价，想比并发对程序设计，资源负载均衡以及用户方便的改进相比，就显得微不足道了。</p>
-<p>如果你发的程序需要大量的并发，就可以考虑使用Erlang这样的语言来开发这一部分。Erlang是一种函数型语言，每个函数调用不会产生任何副作用。语言提供任务之间彼此通信的安全机制。</p>
-<h3 id="监视器（Monitor)的概念">监视器（Monitor)的概念</h3><p>锁和条件能够解决线程同步问题，但是它们不是面向对象的。研究者们提出了监视器的概念，有如下几个特性：<br>1. 一个监视器就是一个只有private方法的类。<br>2. 每一个类的对象都有一个锁。<br>3. 所有的方法都可以使用对象的锁来进行同步。<br>4. 锁可以有其他附属的条件。</p>
-<p>Java中只使用了部分监视器的概念，如每个对象都有锁和条件；如果一个方法使用synchronized关键词，那么它就是监视器方法；条件变量的访问是通过调用wait(),notify(),notifyAll()来实现。</p>
-<h3 id="基本的线程机制">基本的线程机制</h3><p>并发编程可以使我们将程序划分成多个分离的、独立运行的任务。通过使用多线程机制，这些独立任务中的每一个都将由执行线程来驱动。一个线程就是在进程中的单一顺序控制流，因此单个进程可以拥有多个并发执行的任务。</p>
-<p>线程一大好处就是可以使你不必知道它是运行在一个还是多个CPU上。所以，使用线程是一种建立透明的、可扩展的程序的方法。如果程序运行的太慢，为机器增加一个CPU能够很容易的加快程序的运行速度。多任务和多线程往往是使用多处理器的最合理的方式。</p>
-<h4 id="定义任务">定义任务</h4><p>可以使用Runnable接口来描述任务，任务的run()方法通常是某种形式的循环，使得任务一直运行下去直到不再需要。如果希望完成任务是能够返回一个值，可以用Callable接口来实现。</p>
-<h4 id="运行任务">运行任务</h4><p>运行任务有以下几种方式：</p>
-<ol>
-<li>直接运行，接在main()线程中运行。</li>
-<li>使用Thread运行。在使用Thread类时，每个Thread都注册了自己，因此在其任务退出其run()并死亡之前，垃圾回收器无法清除它。</li>
-<li>使用Executor运行。Executor将为你管理Thread对象，从而简化并发编程。Executor在客户端和人物之间提供了一个中间层，从而允许你管理异步任务，而无需显示管理线程的生命周期。ExecutorService是具有生命周期的Executor，它知道如何恰当切换上下文来执行Runnable对象。<br>CachedThreadPool:创建新线程时如果有旧线程可用就是用旧线程，否则才去创建新线程。如果一个线程60s都没有被使用将会被移除。<br>FixedThreadPool：固定线程数量的线程池，一次性执行代价高昂的线程分配。总是保证有指定数量的线程来运行任务。其他任务将保存在队列中。如果有线程失败，则会创建新线程替换。<br>SingleThreadPool：保证顺序执行的只有一个线程的线程池，并维护自己的悬挂任务队列。如果有线程失败，则会创建新线程替换。</li>
-</ol>
-<p>要执行的任务与驱动它的线程之间有一个差异。因为你对Thread没有任何控制权。你创建一个任务，并通过某种方式将一个线程附着到任务上，以使的这个线程可以驱动任务。</p>
-<h3 id="共享受限资源">共享受限资源</h3><p>解决线程时的一个基本问题是：你永远都不知道一个线程在何时再运行。防止资源使用冲突的方法就是加锁。基本上所有并发模式在解决线程冲突问题时，都采用的是序列化访问共享资源。</p>
-<p>Java提供关键字synchronized为防止资源冲突提供内置的支持。当执行到synchronized保护的代码时，它先检查锁是否可用，然后获取锁，执行完代码后释放锁。</p>
-<p>synchronized可以在一个方法上使用，也可以在代码块上使用。在使用synchronized时一定要注意把变量设为private，否则synchronized就无法限制其他任务访问该变量。synchronized有对象锁，即对当前对象或者其他对象的方法进行保护。但要确保所有任务都在同一个对象上同步。synchronized也有类锁，即对类的静态方法防止并发访问。<br>同步代码块儿。相对于同步整个方法，时间性能更好。</p>
-<p>除了使用关键词synchronized，也可以使用显式的Lock锁。Lock对象必须被显式的创建，锁定和释放。虽然对吗缺乏优雅性，到那时对于某些特定问题，它更灵活。所以一般情况下还是使用synchronized来进行同步控制。</p>
-<p>一些特殊情况下，你可以使用原子类。如AtomicInteger,AtomicLong,AtomicReference等。这些类具有机器级别的原子性。对于常规编程来说很少派上用场，但是对于性能调优就有用武之地了。</p>
-<p>你也可以使用线程本地存储。线程本地存储是一种自动化机制，可以使用相同的变量的每个不同线程都创建不同的存储。</p>
-<p><strong>什么时候使用同步（Brian原则）</strong></p>
-<blockquote>
-<p>如果你正在写一个变量，它可能接下来被另一个线程读取，坐着正在读取上一次已经被另一个线程写过的变量，那么你不许使用同步，并且，读写线程都必须使用相同的监视器锁。</p>
-</blockquote>
-<h4 id="原子性和易变性">原子性和易变性</h4><p>依赖于原子性来解决同步问题是非常危险的，如果你是一个并发专家，或者你得到了这样专家的帮助，你才应该使用原子性来替代同步。</p>
-<blockquote>
-<p>Goetz测试：如果你可以编写用于现代微处理器的高性能JVM，那么你就有资格去考虑是否可以避免同步。</p>
-</blockquote>
-<p>原子性可以应用于除long和double的其他简单操作（如赋值，返回操作，但自增自减不是原子操作）。这是因为对于读取和写入long和double这样的64位会被当做两个32位操作来执行，这就是产生了一个读取和写入的上下文切换，从而导致不同任务可以看到不正确的结果。如果对于long和double使用volatile关键词，就会获得原子性。</p>
-<p>因此原子操作可由线程机制保证其不可中断，专家级的程序员可以利用这一点来编写无锁的代码，这些代码不需要同步。一般而言，尝试着移除同步是一种不成熟优化的信号，并且会带来大量的麻烦。</p>
-<p>在多处理器系统上，相对于单处理器而言，可视性问题比原子性问题多的多。一个任务做出了修改，即使在不中断的意义上是原子性的，对其他任务也可能是不可视的，因此不同的任务就有应用状态的不同视图。另外一个方面同步机制强制在处理器系统中一个任务作出的修改必须在应用中是可视的。volatile确保了应用中的可视性。如果你将一个变量声明为volatile的，那么只要对这个变量修改，那么所有的读操作都可以看到这个修改。<br>一个任务的所作的任何修改对于这个任务都是可视的，因此如果它只需要在这个任务内部可视，就没有必要使用volatile关键字。</p>
-<p>要注意的是，当一个域的值依赖于它之前的值时（++操作），volatile就无法工作了。另外，如果某个域受到其他域的值的限制，也无法工作。</p>
-<p>使用volatile而不是synchronized唯一安全的情况是类中只有一个可变的域。通常使用synchronized是最安全的做法。</p>
-<h3 id="终结任务">终结任务</h3><p>首先介绍一下线程的状态：<br>1. 新建。线程被创建时，短暂处于这一状态，获取了必须的系统资源并且初始化也完成了。<br>2. 就绪。只要调度器给分配时间片，线程就可以运行。<br>3. 阻塞。线程能够运行，但是由于某个条件阻止了它的运行。此时，线程调度器将忽略线程，不会分配给线程任何时间片。直到线程重新进入就绪状态才能够运行。<br>4. 死亡。不再能够被调度的状态。任务死亡的方式可以是run()方法返回，也可以是被中断。</p>
-<p>进入阻塞状态的可能原因有：</p>
-<ol>
-<li>通过sleep。指定时间内阻塞。</li>
-<li>wait()。直到线程得到notify()或notifyAll消息，才会就绪。</li>
-<li>任务等待输入或者输出完成。</li>
-<li>任务试图调用其他同步控制方法，但对象锁不可用。</li>
-</ol>
-<p>终结一个任务你可以通过一个变量cancel来控制，但是如果你的任务需要更加突然的终止，你就可能需要用到下面的方法。</p>
-<p>使用Thread的interrupt方法。这个方法设置线程的中断状态。如果线程已经被阻塞，或者试图执行一个阻塞操作，那么设置这个状态将抛出InterruptedException。当抛出异常或者任务调用interrupted时，中断状态被复位。<br>Thread.interrupted()提供了离开run()循环而不抛出异常的第二种方式。<br>调用interrupt就必须持有Thread对象，一般尽量使用Executor来执行所有操作。<br>interrupted可以中断互斥所导致的阻塞调用（f-&gt;g-&gt;f)。</p>
-<p>调用submit返回的Future&lt;?&gt;可以用于中断任务，调用其cancel方法就可以。这是中断由Executor启动的单个线程的方法。</p>
-<p>sleep阻塞可以中断，但是对于获取synchronized锁导致的阻塞和I/O阻塞则是不可中断的。一个有效的解决方案是关闭任务在其上阻塞的底层资源。</p>
-<h3 id="线程之间的协作">线程之间的协作</h3><p>当任务之间协作时，关键问题是这些任务之间的握手，而实现握手的方法仍然是互斥。在这种情况下，互斥能够保证只有一个任务可以响应某一个信号，这样就根除了任何可能的竞态条件。在互斥的基础上，我们添加一种途经，可以将自身挂起，直到某些外部条件发生变化，表示是时候让这个任务向前开动为止。</p>
-<p>wait()使你可以等待某一个条件的变化，而改变这个条件超出了当前方法的控制能力。只有在notify()或者notifyAll()发生时，才会被唤醒.</p>
-<p>wait()会释放对象锁，这意味着另一个任务可以获得对象锁，并调用该对象的其他同步方法。而sleep()和yield()则不会释放锁。<br>wait(),notify(),notifyAll()这些方法是在Object中的,但是只能在同步方法，或者同步控制 语句块中调用，否则在运行时会抛出<br>IllegalMonitorStateException。</p>
-<h4 id="如何使用wait()">如何使用wait()</h4><p>必须使用一个while循环包围wait()。因为：<br>1. 可能有多个任务出于相同的原因等待同一个锁，而第一个唤醒的任务可能改变这种情况。<br>2. 在这个任务从其wait()唤醒的时刻，可能有其他任务已经做出了改变，从而使该任务暂时不能执行。<br>3. 也有可能有其他任务出于不同的原因等待对象的锁。<br>总之，就是要检查所有感兴趣的特定条件，并在条件不满足时返回到wait()中。</p>
-<p>代码模板<br>[java]<br>synchronized (sharedMonitor) {<br>    while (someCondition) {<br>        wait();<br>    }<br>}<br>[/java]</p>
-<h4 id="如何使用notify()">如何使用notify()</h4><p>使用notify而不是notifyAll是一种优化。使用notify时，在众多等待同一个锁的任务中，只有一个任务唤醒，因此如果你想使用notify，你必须保证被唤醒的是恰当的任务。另外，你还要保证所有的任务都等待相同的条件才能使用notify。最后，上述的条件必须在子类中也是起作用的。<br>如果有任意一条不满足，那么你就必须使用notifyAll。需要注意的是，当notifyAll因为某个特定的锁而被调用时，只有等待这个锁的任务才会被唤醒。</p>
-<h3 id="死锁">死锁</h3><p>当某个任务等待另一个任务，而后者又在等待其他任务，以此类推，最后形成一种循环等待的状态，这种状态就是死锁。</p>
-<p>形成死锁的四个必备条件：</p>
-<ol>
-<li>互斥条件。资源不能共享。</li>
-<li>至少有个任务持有一个其他任务需要的资源，同时在等待另一个资源。</li>
-<li>资源任务不能被强占。</li>
-<li>循环等待。</li>
-</ol>
-<p>只要破坏一个条件就可以解除死锁。</p>
-<h3 id="类库中的并发构件">类库中的并发构件</h3><ul>
-<li>BlockingQueue。从空队列移除和往满队列添加都将被阻塞。相关的有ArrayBlockingQueue，PriorityBlockingQueue。</li>
-<li>线程安全的集合。ConcurrentHashMap, ConcurrentSkipListMap, ConcurrentSkipListSet，ConcurrentLinkedQueue等。Copy Write Array 通过维护一个副本来保证线程安全。</li>
-<li>CountDownLatch。用来同步一个或者多个任务，强制它们等待直到其他任务执行的操作完成。典型用法是将一个程序分为n个独立的任务，当每个任务完成时，都会在这个锁存器上调用countDown()。等待被解决的任务在这个锁存器上调用await()，将自己阻塞，直至锁存器技术结束。CountDownLatch只触发一次，计数值不能重置。如果需要重置，可以选择CyclicBarrier。</li>
-<li>CyclicBarrier。当你希望创建一组任务，它们并行的工作，然后再进行下一个工作之前等待，直至所有任务都完成。</li>
-<li>DelayQueue。无界的BlockingQueue，用于放置实现了Delayed接口的对象，其中的对象只有在其到期时才能从队列中取走。</li>
-<li>Semaphore。允许n个任务同时访问某一共享资源。</li>
-<li>Exchanger。在两个任务之间交换对象的栅栏。当这些任务进入栅栏时，他们各自拥有一个对象，当它们离开时，他们都拥有之前由对象持有的对象。典型的应用场景是：一个任务创建对象，这些对象的生产代价高昂，而另一个任务消费这些对象。</li>
-</ul>
-<h3 id="参考资料">参考资料</h3><p>《编程思想》<br>《Java核心技术》</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-              <a href="/blog/tags/马上有OFFER/">
-                #马上有OFFER
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/06/back-of-the-envelope估算技术/">
-                back-of-the-envelope估算技术
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-06-05
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/原创/">原创</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/06/back-of-the-envelope估算技术/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/back-of-the-envelope估算技术/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>back-of-the-envelope指的是一个粗略的，不精确的计算，但可以被用作对某个观点的支持或论据。简单的说，是介于猜测和铁证之间的一个概念。常用在数学，物理，及某些工程领域中。</p>
-<h3 id="基本的技巧">基本的技巧</h3><p>两种估算方法总比一种好，可以相互验证。<br>估算的快速检查<br>规则1：和的单位和被加数，加数的单位是一致的。<br>规则2：乘法的单位是乘数或者被乘数单位的乘积。<br>常识。</p>
-<h3 id="经验法则">经验法则</h3><p>1.72法则（Rule of 72）</p>
-<p>假设你将一笔钱以年利率r投资y年，如果r*y=72，那么你的钱会大致翻倍。</p>
-<p>2.利特尔法则（Little’s Law）</p>
-<p>排队论认为，在任何一个有进有出的系统中，留在系统中对象的数量等于平均离开率乘以对象在系统的平均停留时间。</p>
-<p>使用Little’s law对多用户系统的响应时间进行建模：<br>假设有n个用户，平均思考时间为z，连接到任意的一个系统的响应时间为r。<br>每一个用户的状态只有两个：思考和等待响应。因此，系统中总的服务数量为n，即负载为n。假设系统的吞吐率（单位时间的服务数）为x。<br>根据Little’s law可得：n = x * (z + r), r = n/x - z；</p>
-<h3 id="安全因素（Safety_Factors)">安全因素（Safety Factors)</h3><p>一个好的工程师应该承认自己知识的有限性。使用一个较大的安全系数来弥补我们的无知及我们容易犯的错误。（employing a huge<br>safety factor to compensate for ignorance).<br>同样的，在估计大小，花费，计划时，我们应该保守的使用2到4倍与正常值来弥补我们对自己的无知。</p>
-<p>一个典型的例子就是John Roebling 在建造Brooklyn Bridge时，他知道自己知识的限度，知道不能完整、准确的建模，所以他使用了六倍的安全系数。至今为止，他的桥仍然矗立在纽约的东河，连接着曼哈顿与布鲁克林。</p>
-<h3 id="面试中的估算题">面试中的估算题</h3><p>1.一辆学校班车里面能​​​​​​​​装多少个高尔夫球​</p>
-<p>大一个高尔夫球大致直径为5厘米，体积大致为125立方厘米。一辆校车的长度为10米，宽和高都为2米，则体积为40立方米。则可以装下的高尔夫球数为<br>40 * 10^6/ 125 约为30万个。考虑到球可以挤压，最终约为40万左右。</p>
-<p>2.全世界有多少个钢琴调音师？</p>
-<p>美国共有3亿人口，按三口之家计算，全美国共有1亿个家庭，如果一半家庭即5000万个家庭属于富裕阶层，拥有钢琴比例按10％,这个比例可能有点偏高，但在推算大致比例时是允许的.那么就有500万个家庭拥有钢琴，这样全美国就有500万架钢琴。 如果每架钢琴一年调音一次，一个调音师一年调音1000架次的话，那么全美国调音师的数量就是500万除以1000，等于5000人。世界人口有60多亿，是美国的20倍，但调音师应该不足美国的20倍。大体推算一下可知，美国的调音师数量约占全世界的1/4，全世界的调音师应该有2万人。</p>
-<p>​<br>3.擦遍西雅图所有窗户能挣多少钱</p>
-<p>假如西雅图有1万栋建筑物，每栋建筑物有600个窗户，擦一个窗户需要5分钟，收费标准为每小时20美元，那么一共可以挣1000万美元。</p>
-<p>4.美国有多少个加油站​</p>
-<p>看看该国有多少人口，一般一个家庭拥有多少辆汽车或者多少个家庭拥有一辆车，一般人凭日常常识就知道大概；然后算一算一辆车加油的频率，或者考虑多少人口、多少街区需要一个加油站，最后能得出答案。不一定正确，只要你足够自信、运用一套逻辑推导的方法、能自圆其说，就成功了。咨询公司招人也常用这一招儿，他们最需要的就是这种人才——能把一个“难题”用一堆复杂而逻辑严密的、每一步推论看起来都正确无比的报告解答开。​</p>
-<p>5.2的64次方是多少<br>2^10 ~1,000 一千<br>2^20 ~1,000,000 一百万<br>2^30 ~1,000,000,000 十亿<br>2^64 ~10^18*10=10 ^19​</p>
-<p>6.一万亿个数排序需要多少时间</p>
-<p>归并排序，O(nlogn)， 2GHz处理器。秒2*10^9约20亿次运算，大约3000秒。10^12log10^12 ~ 4乘以10^13<br>最后结果为2000s。<br>​</p>
-<h3 id="更多资料">更多资料</h3><p><a href="http://www.vendian.org/envelope/" target="_blank" rel="external">A view from the back of the envelope</a></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/马上有OFFER/">
-                #马上有OFFER
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/06/一个问题的解决之路/">
-                一个问题的解决之路
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-06-04
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/学习笔记/">学习笔记</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/06/一个问题的解决之路/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/一个问题的解决之路/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h3 id="问题定义">问题定义</h3><p>输入：N个浮点数组成的一个向量<br>输出：求和值最大的连续的子向量<br>约束条件：当所有向量元素都是负数时，定义最大和子向量为零向量。</p>
-<p>问题分析：<br>如果所有的向量元素都是正数，则结果输出就是整个输入向量。<br>如果所有的向量元素都是负数，则结果输出是零向量。<br>如果既有正数又有负数，则需要进行搜索。</p>
-<h3 id="暴力解法">暴力解法</h3><p>遍历所有的连续子向量，找出其中和最大的子向量。</p>
-<p>[java]<br>    public float algorithm1(float[] x) {<br>        float max = 0, sum;<br>        for (int i = 0; i &lt; x.length; i++) {<br>            for (int j = i; j &lt; x.length; j++) {<br>                sum = 0;<br>                for (int k = i; k &lt;= j; k++) {<br>                    sum += x[k];<br>                }<br>                max = Math.max(sum, max);<br>            }<br>        }<br>        return max;<br>    }<br>[/java]</p>
-<p>该算法最外层的循环执行N次，中间的循环最多执行N次，最里层的循环执行小于N次。<br>因此此算法的复杂度为O(n^3)。</p>
-<h3 id="一个较好的解法">一个较好的解法</h3><p>在暴力算法中，计算x[i..j]之间的和需要i-j+1次加法运算。可以通过优化使计算代价为常数。这样就会得到一个<br>O(n^2)的算法。</p>
-<p>可以看出x[i..j]的和与x[i..j-1]之间是有关系的，即sum[i,j] = sum[i,j-1] + input[j]。</p>
-<p>[java]<br>    public float algorithm21(float[] x) {<br>        float max = 0, sum;<br>        for (int i = 0; i &lt; x.length; i++) {<br>            // sum[i,j] = sum[i,j-1] + input[j]<br>            sum = 0;<br>            for (int j = i; j &lt; x.length; j++) {<br>                sum += x[j];<br>                max = Math.max(sum, max);<br>            }<br>        }<br>        return max;<br>    }<br>[/java]</p>
-<p>还可以使用一个累积数组cumarr,cumarr[i]代表x[0..i]之间元素的和。这样Sum[i..j] = cumarr[j]-cumarr[i-1].</p>
-<p>[java]<br> public float algorithm22(float[] x) {<br>        float max = 0, sum;<br>        //cumarr[i] = sum of values x[0..i]<br>        float[] cumarr = new float[x.length + 1];<br>        assert cumarr[0] == 0 : &quot;cumarr[0] is not 0&quot;;<br>        for (int i = 0; i &lt; x.length; i++)<br>            cumarr[i + 1] = cumarr[i] + x[i];<br>        for (int i = 0; i &lt; x.length; i++) {<br>            for (int j = i; j &lt; x.length; j++) {<br>                sum = cumarr[j + 1] - cumarr[i];<br>                max = Math.max(sum, max);<br>            }<br>        }<br>        return max;<br>    }<br>[/java]</p>
-<h3 id="一个更好的解法">一个更好的解法</h3><p>回顾上面的几个算法，解决问题的思路是检查所有子向量的和。因为n维向量的子向量的个数为n^2。所以按照这个思路得到的解法的复杂度都是O(n^2)。可以换一种思路，用分治的思想来解决这个问题。分治算法的思想很简单：</p>
-<blockquote>
-<p>将一个大小为n的问题分为两个大小接近或者等于n/2的问题并递归的解决它们，最后将两个子问题的解合并成为整个问题的解。</p>
-</blockquote>
-<p><img src="http://h.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=684484ea99504fc2a65fb000d5e6962c/b8389b504fc2d562c25fd80fe51190ef77c66cf8.jpg?referer=2bebbdd81bd8bc3e9f1f32facc96&amp;x=.jpg" alt="分治解法"><br>最后的结果可能有三种情况：<br>最大和向量是子问题a的解ma；<br>最大和向量是子问题b的解mb；<br>最大和向量是子问题a,b合并后的解mc。</p>
-<p>[java]<br>    public float algorithm3(float[] x) {<br>        return algorithm3(x, 0, x.length - 1);<br>    }<br>    private float algorithm3(float[] x, int lo, int hi) {<br>        // handle small vectors<br>        if (lo &gt; hi) return 0;   // zero elements<br>        if (lo == hi) return x[lo] &gt; 0 ? x[lo] : 0; // one elements<br>        int mid = lo + (hi - lo) / 2;<br>        float lmax = algorithm3(x, lo, mid);<br>        float rmax = algorithm3(x, mid + 1, hi);<br>        float cmax = Math.max(lmax, rmax);<br>        float sum = lmax = 0;<br>        // find max crossing to left<br>        for (int i = mid; i &gt;= lo; i—) {<br>            sum += x[i];<br>            lmax = Math.max(sum, lmax);<br>        }<br>        rmax = sum = 0;<br>        // find max crossing to right<br>        for (int i = mid + 1; i &lt;= hi; i++) {<br>            sum += x[i];<br>            rmax = Math.max(sum, rmax);<br>        }<br>        return Math.max(cmax, lmax + rmax);</p>
-<pre><code>}
-</code></pre><p>[/java]</p>
-<p>该算法在递归的O(logn)层做O(n)的工作，所以算法的复杂度为O(nlogn)。<br>更精确的表示方式为：T(n)=2T(n/2)+O(n)，推导后的结果为O(nlogn)。<br>该算法可以通过返回最大和子向量结束信息将复杂度降到O(n)。</p>
-<h3 id="最好的解法">最好的解法</h3><p>我们能不能通过只扫描一遍数组，并记录当前最大和子向量，就可以得到问题的解呢？<br>如果我们已经解决了问题x[0..i-1]，我们如何扩展到问题x[0..i]呢？<br>我们可以使用类似于分治算法的思路：x[0..i]的最大和子向量要么是在问题x[0..i-1]中，要么子向量包括第i个元素。<br><img src="http://h.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=7f5eecd2b8a1cd1101b672258929b9c1/d000baa1cd11728bc09284c0cafcc3cec2fd2c90.jpg?referer=4f17ec91af4bd1135dda83028c8e&amp;x=.jpg" alt="扫描算法"><br>我们将x[0..i-1]的解保存到maxsofar变量中，将扩展到第i个元素的解保存在变量maxextendinghere中。如果重新计算maxextendinghere将会是算法的复杂度为O(n^2)。我们可以使用问题x[0..i-1]的解来得到maxextendinghere.此算法最关键的部分就是maxextendingere，初始时maxextendinghere保存着到i-1的最大子向量的和。接下来的赋值语句将这个解扩展到了位置i。<br>[java]<br>    public float algorithm4(float[] x) {<br>        float maxsofar = 0;<br>        float maxendinghere = 0;<br>        for (int i = 0; i &lt; x.length; i++) {<br>            maxendinghere = Math.max(maxendinghere + x[i], 0);<br>            maxsofar= Math.max(maxendinghere, maxsofar);<br>        }<br>        return maxsofar;<br>    }<br>[/java]</p>
-<h3 id="四种类型的算法运行时间比较表">四种类型的算法运行时间比较表</h3><p><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=1f5f5e27e2fe9925cf0c695504932fe2/2cf5e0fe9925bc317916477a5cdf8db1ca13708c.jpg?referer=ec4b031d39c79f3dd6f6d000b082&amp;x=.jpg" alt="运行时间图"></p>
-<h3 id="算法设计技术">算法设计技术</h3><p>在整个算法的设计过程中我们可以看到如下的设计技术：<br>1. 保存状态来避免重复计算。使用额外的空间保存计算结果，如cumarr数组及maxsofar和maxextendinghere。<br>2. 将预处理信息保存到数据结构中提高计算效率。如cumarr数组的应用。<br>3. 分治算法。大事化小，小事化了。<br>4. 扫描算法。我们如何将问题x[0..i-1]的解扩展到问题x[0..i]。<br>5. 累积素组。cumarr保存了前i个数的和，这样可以方便解决有关范围的问题。<br>6. 复杂度下限。当我们可以把一个算法优化到复杂度的下限，我们就可以安心睡觉了。</p>
-<h3 id="参考资料">参考资料</h3><p>Jon Bentley.Programming Pearls.Column 8.</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/问题与算法/">
-                #问题与算法
-              </a>
-            
-              <a href="/blog/tags/马上有OFFER/">
-                #马上有OFFER
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/05/Java程序内存使用估计/">
-                Java程序内存使用估计
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-05-18
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/05/Java程序内存使用估计/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/05/Java程序内存使用估计/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>虽然Java最显著的优点就是其内存管理系统，但对于一个追求完美的程序员来说，理解程序的内存需求是非常必要的。需要注意的是，由于各个Java版本的实现可能不同，所以这里使用典型的64位内存模型，在这个模型中每个指针大小为8 byte。在分析过程中只需要把复杂的类型分解到基本类型，然后将每一项的大小进行相加就可以得到最后占用内存的大小。另外，由于方法的动态调用比较复杂，涉及到栈的操作和堆内存的分配，所以本文不考虑方法调用占用的内存，只考虑静态的内存占用大小。</p>
-<h3 id="Java基本类型占用内存大小">Java基本类型占用内存大小</h3><p>boolean byte 1<br>char 2<br>int float 4<br>long double 8</p>
-<h3 id="Java对象占用内存大小">Java对象占用内存大小</h3><p>对象由对象头，类属性字段，实例属性字段及方法。对象头包含类的引用，垃圾回收信息及同步信息。对象头一般占用16 byte，引用为8 byte。每个对象都是8 byte的整数倍，所以要有一个填充。如果类中包含内部类，还要包括指向内部类的指针大小为8 byte。</p>
-<p>Java中数组实现为对象。包括数组的长度。所以一个数组的头信息包括16 byte对象头信息，4 byte 数组长度变量 及4 byte 填充，共24 byte。<br>一维数组(N为数组大小）：<br>char[] 2N + 24<br>int[] 4N + 24<br>double[] 8N + 24</p>
-<p>二维数组是数组的数组，每一个数组都是一个对象。对于一个double[M][N]数组，包括二维数组的头信息24 bytes加上8M bytes（指向行数组的引用）加上16M bytes(行数组对象的头部信息）加8MN bytes的数组内容的引用。<br>总的大小为23M + 8NM + 24 bytes ~ 8NM bytes。</p>
-<p>char[][] 2MN<br>int[][] 4MN<br>double[][] 8MN<br>对象数组只计算对象引用的大小即8 byte。</p>
-<p>Java中String对象占用内存大小分析示例</p>
-<p><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=503b32b2324e251fe6f7e4fd97bdb82a/960a304e251f95cac0c7023ecb177f3e67095203.jpg?referer=436975ae0b24ab18b901d4079e01&amp;x=.jpg" alt="Java String 对象"></p>
-<p>String对象总的内存大小为40 + 24 + 2N bytes。其中24 + 2N bytes是value数组的开销。String代表的字符串代为value[offset] 到value[offset + count - 1]之间的字符（包括端点）。对于String的常用操作都是subString，由于String是不可变的，一般value数组在各个String对象之间共享。使用subString时只需要40bytes，因为value数组可以共享。这样可以提高内存使用率。也就是说对于一个较长的字符串，创建子字符串只需要常数时间和常数空间。这种时空复杂度和字符串长度无关的设计对于字符处理算法是非常有效的。<br><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=913c29fce9f81a4c2232eccce7111164/8644ebf81a4c510f44f679926259252dd42aa50c.jpg?referer=91fb9f15c9ef7609651cacaf0302&amp;x=.jpg" alt=""></p>
-<p><em>参考文献</em></p>
-<p><em>Algorithms 4th Edition by Robert Sedgewick and Kevin Wayne </em></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-              <a href="/blog/tags/马上有OFFER/">
-                #马上有OFFER
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/05/懂点设计及在简历设计中的应用/">
-                懂点设计及在简历设计中的应用
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-05-18
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/05/懂点设计及在简历设计中的应用/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/05/懂点设计及在简历设计中的应用/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h3 id="你有没有注意到">你有没有注意到</h3><p>在《给大家看的设计书》中的第一章，作者提到了一个故事：<br>圣诞节作者收到的礼物是一本关于如何识别各种树的书。在书中提到一种作者认为很怪异的约书亚树，作者对自己说：”哦，北加利福尼亚绝对没有这种树。这树太怪异了，如果我见过，肯定会有印象的，可是我从来没有见过。“<br>可是当作者拿着树在所住的街区转了转后，作者发现至少有80%的住户都种有这种树！</p>
-<p>生活中有些事或者物，不是它们不存在而只是因为我们没有注意到。对于设计原则也是如此，优秀的设计其实很容易，只需三步：学习设计的基本原则；认识到自己没有应用这些原则；应用这些原则。</p>
-<h3 id="四大基本原则">四大基本原则</h3><ol>
-<li><p>对比。对比的基本思想是要避免页面上的元素太过相似。如果元素（字体，颜色，大小，形状，空间）不相同，那就干脆让它们截然不同。这样可以达到引人注目的效果。</p>
-</li>
-<li><p>重复。让设计中的的视觉要素在整个作品中重复出现。这样可以增加条理性，加强统一性。</p>
-</li>
-<li><p>对齐。每个元素都应当与页面上某个元素有某种视觉联系。这样能建立一种清晰，精巧且清爽的外观。</p>
-</li>
-<li><p>亲密性。彼此相关的元素应当靠近，归组在一起。这样有助于组织信息，减少混乱，为读者提供清晰的结构。</p>
-</li>
-</ol>
-<h3 id="实例分析">实例分析</h3><p><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=3bd888d3708b4710ca2ffdc9f3f5b2c0/cc11728b4710b9124985860cc1fdfc03934522ff.jpg?referer=2c3294d171f082027485a50f8e95&amp;x=.jpg" alt="moderncv 简历"></p>
-<p>对齐：使用左对齐<br>对比：标题加粗，要点突出<br>亲密性：段之间的间隔比段内文本之间的间隔大。<br>重复：字体的重复，颜色的重复使用。</p>
-<p><em>参考文献</em></p>
-<p><em>1. Robin Williams 《给大家看的设计书》</em><br><em>2. Latex 简历模板<a href="http://www.ctan.org/tex-archive/macros/latex/contrib/moderncv/" target="_blank" rel="external">moderncv </a></em></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/读书·旅行/">
-                #读书·旅行
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/05/Java版本BitMap实现/">
-                Java版本BitMap实现
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-05-13
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/05/Java版本BitMap实现/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/05/Java版本BitMap实现/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>BitMap即位图数据结构。此数据结构代表了有限域中的一个稠密集合，每个元素在集合中出现至多一次。<br>这一数据结构在《编程珠玑》一书中用于高效解决一定范围内无重复整数的排序问题。</p>
-<p>比如一个小于10的整数集合如{1,2,3,4,8}可以用下面的二进制字符串表示：<br>0 1 1 1 1 0 0 0 1 0</p>
-<p>如果整数在集合中，则其相应位置为1，否则为0。</p>
-<p>可以通过对int的位操作来实现BitMap。实现的思路是先找到相应位的存储位置，然后把该位设为0或1.<br>由于Java中int为32位，所以每次通过右移5位来找到i所在的整数在int[]中的位置（右移5位相当于除以32），然后将相应的位置设为1.</p>
-<p>具体的实现代码如下：</p>
-<pre>
-[java]
-/**
- *
- * BitMap.java
- * ZhangMin.name - zhangmin@zhangmin.name
- * name.zhangmin.java
- *
- */
-package name.zhangmin.java.bop;
-
-import name.zhangmin.util.StdOut;
-
-/**
- * The &lt;tt&gt;BitMap&lt;/tt&gt; class represents a bit map.
- * It supports operations such as &lt;em&gt;set&lt;/em&gt;, &lt;em&gt;test&lt;/em&gt;,
- * &lt;em&gt;clear&lt;/em&gt;.
- * &lt;p&gt;
- * This implementation use bitwise logical operations (such as
- * and, or, shift).
- * 
- * @author ZhangMin.name
- *
- */
-public class BitMap {
-    private static final int BITPERWORD = 32;
-    private static final int SHIFT = 5;
-    private static final int MASK = 0x1F;
-    private int[] a;
-
-    /**
-     * Initialize a empty bitmap.
-     * @param N the bitmap size
-     */
-    public BitMap(int N) {
-        if (N &lt; 0 || N &gt; Integer.MAX_VALUE)
-            throw new IllegalArgumentException(N + &quot; shoule be in [0,2147483647)&quot;);
-        this.a = new int[1 + N / BITPERWORD];
-        for (int i = 0; i &lt; a.length; i++)
-            a[i] &amp;= 0x0;
-    }
-    /**
-     * Set the i&lt;em&gt;th&lt;/em&gt; bit to 1.
-     * @param i
-     */
-    public void set(int i) {
-        if (i &lt; 0 || i &gt; Integer.MAX_VALUE)
-            throw new IllegalArgumentException(i + &quot; shoule be in [0,2147483647]&quot;);
-        a[i &gt;&gt; SHIFT] |= (1 &lt;&lt; (i &amp; MASK));
-    }
-    /**
-     * Clear the i&lt;em&gt;th&lt;/em&gt; bit to 0.
-     * @param i
-     */
-    public void clear(int i) {
-        if (i &lt; 0 || i &gt; Integer.MAX_VALUE)
-            throw new IllegalArgumentException(i + &quot; shoule be in [0,2147483647]&quot;);
-        a[i &gt;&gt; SHIFT] &amp;= ~(1 &lt;&lt; (i &amp; MASK));
-    }
-    /**
-     * Test the i&lt;em&gt;th&lt;/em&gt; bit.
-     * @param i
-     * @return 0 if the i&lt;em&gt;th&lt;/em&gt; bit is 0, non-zero otherwise.
-     */
-    public int test(int i) {
-        if (i &lt; 0 || i &gt; Integer.MAX_VALUE)
-            throw new IllegalArgumentException(i + &quot; shoule be in [0,2147483647]&quot;);
-        return a[i &gt;&gt; SHIFT] &amp; (1 &lt;&lt; (i &amp; MASK));
-    }
-    /**
-     * Unit test.
-     */
-    public static void main(String[] args) {
-        int N = 100;
-        BitMap bm = new BitMap(N);
-        for (int i = 0; i &lt; N; i += 3) {
-            bm.set(i);
-            StdOut.printf(&quot;%dth value is %d\n&quot;, i, bm.test(i));
-            bm.clear(i);
-            StdOut.printf(&quot;%dth value is %d\n&quot;, i, bm.test(i));
-        }
-    }
-
-}
-[/java]
-</pre>
-
-<p><em>参考文献</em><br>1. 《编程珠玑》第一章</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-              <a href="/blog/tags/马上有OFFER/">
-                #马上有OFFER
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/04/2014无锡环太湖徒步大会/">
-                2014无锡环太湖徒步大会
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-04-27
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/04/2014无锡环太湖徒步大会/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/2014无锡环太湖徒步大会/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>第一次参加徒步，一切都是新奇。<br>第二次参加徒步，一切都是比较。<br>有了比较，有了偏好，有了评价。<br>然而更多的是对第一次徒步的欢快场景的回忆。</p>
-<p><img src="http://h.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=91ceada6fffaaf5180e381babc6fe5d3/9c16fdfaaf51f3deeb5abce496eef01f3b297941.jpg?referer=c8df00fe271f95caffe2a686c75f&amp;x=.jpg" alt="皇族穿越来徒步"></p>
-<p><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=ab5499c73b12b31bc36ccd2cb6234747/a8773912b31bb05120c0b6a8347adab44bede04e.jpg?referer=4956905c0afa513d08bd58ee4044&amp;x=.jpg" alt="徒步开始"></p>
-<p><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=53d2ff4c1c178a82ca3c7fa5c63802b0/cefc1e178a82b9019b64c6b3718da9773812ef61.jpg?referer=86d8216fabec8a134d0d63d0493f&amp;x=.jpg" alt="队伍"></p>
-<p><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=23ce63f3f9f2b211e02e854bfabb1405/5243fbf2b21193138388fa3067380cd790238d62.jpg?referer=d4e7a05f74c6a7efe0319c16eb20&amp;x=.jpg" alt="徒步达人现身"></p>
-<p>徒步大会网址：<a href="http://walk.hellosport.cn/" target="_blank" rel="external">walk.hellosport.cn/</a></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/读书·旅行/">
-                #读书·旅行
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
 
           </div>
 
           
             <div class="pagination">
-              <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/24/">24</a><a class="extend next" rel="next" href="/blog/page/3/">&raquo;</a>
+              <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/39/">39</a><a class="extend next" rel="next" href="/blog/page/3/">&raquo;</a>
             </div>
           
         </div>
@@ -1414,17 +904,17 @@ public class BitMap {
         </div>
 
         <div class="site-state-item site-state-categories">
-          
+          <a href="/blog/categories">
             <span class="site-state-item-count">9</span>
             <span class="site-state-item-name">分类</span>
-          
+          </a>
         </div>
 
         <div class="site-state-item site-state-tags">
-          
+          <a href="/blog/tags">
             <span class="site-state-item-count">20</span>
             <span class="site-state-item-name">标签</span>
-          
+          </a>
         </div>
 
       </div>
