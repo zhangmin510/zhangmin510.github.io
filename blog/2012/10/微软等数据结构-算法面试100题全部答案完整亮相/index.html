@@ -1,99 +1,160 @@
-
- <!DOCTYPE HTML>
-<html lang="zh-CN">
+<!doctype html>
+<html class="theme-next use-motion theme-next-next">
 <head>
-  <meta charset="UTF-8">
   
-    <title>微软等数据结构+算法面试100题全部答案完整亮相 | ZhangMin.name</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
-    
-    <meta name="author" content="zhangmin.name">
-    
-    <meta name="description" content="本文转载自CSDN大牛的一篇博客：http://blog.csdn.net/v_july_v/article/details/6870251
-作者：July、阿财时间：二零一一年十月十三日。
-我能够看到此文，还要多谢陈同学！让我得以及时分享给大家
-引言无私分享造就开源的辉煌。今是二零一一年十月十三日">
-    
-    
-    
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="zhangmin_name" />
-    <meta name="twitter:title" content="微软等数据结构+算法面试100题全部答案完整亮相 | ZhangMin.name" />
-      
-    
-    
-    
-    <link rel="icon" href="/blog/img/favicon.png">
-    
-    
-    <link rel="apple-touch-icon" href="/blog/img/favicon.png">
-    <link rel="apple-touch-icon-precomposed" href="/blog/img/favicon.png">
-    
-    <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
 
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/blog/css/main.css?v=0.4.1"/>
+
+
+    <meta name="description" content="ZhangMin.name's Blog" />
+
+
+
+
+    <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+    <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.1" />
+
+
+
+
+  <title> 微软等数据结构+算法面试100题全部答案完整亮相 // ZhangMin.name </title>
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/blog/" title="ZhangMin.name">ZhangMin.name</a></h1>
-				<h2 class="blog-motto">勤思敏行 思行合一</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="http://www.zhangmin.name/blog/">首页</a></li>
-					
-						<li><a href="/blog/archives">存档</a></li>
-					
-						<li><a href="/blog/readings">读书</a></li>
-					
-					<li>
-					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:www.zhangmin.name/blog">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
 
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/blog/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">ZhangMin.name</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
     
-      <a href="/blog/2012/10/微软等数据结构-算法面试100题全部答案完整亮相/" title="微软等数据结构+算法面试100题全部答案完整亮相" itemprop="url">微软等数据结构+算法面试100题全部答案完整亮相</a>
-  </h1>
-  <p class="article-author">By
     
-      <a href="http://www.zhangmin.name/blog" title="zhangmin.name">zhangmin.name</a>
-    </p>
-  <p class="article-time">
-    <time datetime="2012-10-24T13:36:24.000Z" itemprop="datePublished">2012-10-24</time>
-    更新日期:<time datetime="2014-10-23T07:14:59.000Z" itemprop="dateModified">2014-10-23</time>
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
     
-  </p>
-</header>
-	<div class="article-content">
-		
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#define_HBASE_127"><span class="toc-number">1.</span> <span class="toc-text">define HBASE 127</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_T(X,_Y,_i)_(Y_&_(1<>_1;"><span class="toc-number">2.</span> <span class="toc-text">define T(X, Y, i) (Y & (1<> 1;</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#连续来几组微软公司的面试题，让你一次爽个够："><span class="toc-number">3.</span> <span class="toc-text">连续来几组微软公司的面试题，让你一次爽个够：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#微软面试题，挑战你的智商"><span class="toc-number">4.</span> <span class="toc-text">微软面试题，挑战你的智商</span></a></li></ol>
-		</div>
-		
-		<p>本文转载自CSDN大牛的一篇博客：<a href="http://blog.csdn.net/v_july_v/article/details/6870251" target="_blank" rel="external">http://blog.csdn.net/v_july_v/article/details/6870251</a></p>
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/blog/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-readings">
+        <a href="/blog/readings">
+          <i class="menu-item-icon icon-readings"></i> <br />
+          读书单
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              微软等数据结构+算法面试100题全部答案完整亮相
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2012-10-24
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/分享/">分享</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2012/10/微软等数据结构-算法面试100题全部答案完整亮相/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/微软等数据结构-算法面试100题全部答案完整亮相/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p>本文转载自CSDN大牛的一篇博客：<a href="http://blog.csdn.net/v_july_v/article/details/6870251" target="_blank" rel="external">http://blog.csdn.net/v_july_v/article/details/6870251</a></p>
 <p>作者：July、阿财<br>时间：二零一一年十月十三日。</p>
 <p>我能够看到此文，还要多谢陈同学！让我得以及时分享给大家</p>
 <p>引言<br>无私分享造就开源的辉煌。<br>今是二零一一年十月十三日，明日14日即是本人刚好开博一周年。在一周年之际，特此分享出微软面试全部100题答案的完整版，以作为对读者的回馈。<br>一 年之前的10月14日，一个名叫July的人在一个叫csdn的论坛上开帖分享微软等公司数据结构+算法面试100题，自此，与上千网友一起思考，解答这 些面试题目，最终成就了一个名为：结构之法算法之道的面试编程与算法研究并重的博客，如今，此博客影响力逐步渗透到海外，及至到整个互联网。<br>在此之前，由于本人笨拙，这微软面试100题的答案只整理到了前60题，故此，常有朋友留言或来信询问后面40题的答案。只是因个人认为：一、答案只是作 为一个参考，不可太过依赖；二、常常因一些事情耽搁。自此，后面40题的答案迟迟未得整理。且个人已经整理的前60题的答案，在我看来，是有诸多问题与弊 端的，甚至很多答案都是错误的。<br>互联网总是能带来惊喜。前几日，一位现局美国加州的名叫阿财的朋友发来一封邮件，并把他自己做的全部100题的答案一并发予给我，自此，便似遇见了知己。十分感谢。<br>话不絮烦。本只需贴出后面40题的答案，因为前60题的答案本人早已整理上传至网上，但多一种思路多一种参考亦未尝不可。把阿财的答案再稍加整理番，特此，全部100题的答案现今都贴出来。有任何问题，欢迎不吝指正。谢谢。</p>
@@ -121,15 +182,13 @@
 <p>2.你让一些人为你工作了七天，你要用一根金条作为报酬。金条被分成七小块，每天给出一<br>块。<br>如果你只能将金条切割两次，你怎样分给这些工人?<br>ANSWER:<br>1+2+4;</p>
 <p>3. ★用一种算法来颠倒一个链接表的顺序。现在在不用递归式的情况下做一遍。<br>ANSWER:<br>Node <em> reverse(Node </em> head) {<br>if (head == NULL) return head;<br>if (head-&gt;next == NULL) return head;<br>Node <em> ph = reverse(head-&gt;next);<br>head-&gt;next-&gt;next = head;<br>head-&gt;next = NULL;<br>return ph;<br>}<br>Node </em> reverseNonrecurisve(Node <em> head) {<br>if (head == NULL) return head;<br>Node </em> p = head;<br>Node <em> previous = NULL;<br>while (p-&gt;next != NULL) {<br>p-&gt;next = previous;<br>previous = p;<br>p = p-&gt;next;<br>}<br>p-&gt;next = previous;<br>return p;<br>}<br>★用一种算法在一个循环的链接表里插入一个节点，但不得穿越链接表。<br>ANSWER:<br>I don’t understand what is “Chuanyue”.<br>★用一种算法整理一个数组。你为什么选择这种方法?<br>ANSWER:<br>What is “Zhengli?”<br>★用一种算法使通用字符串相匹配。<br>ANSWER:<br>What is “Tongyongzifuchuan”… a string with “</em>” and “?”? If so, here is the code.<br>int match(char <em> str, char </em> ptn) {<br>if (<em>ptn == ‘ ’) return 1;<br>if (</em>ptn == ‘<em>’) {<br>do {<br>if (match(str++, ptn+1)) return 1;<br>} while (</em>str != ‘ ’);<br>return 0;<br>}<br>if (<em>str == ‘ ’) return 0;<br>if (</em>str == <em>ptn || </em>ptn == ‘?’) {<br>return match(str+1, ptn+1);<br>}<br>return 0;<br>}</p>
 <p>★颠倒一个字符串。优化速度。优化空间。<br>void reverse(char <em>str) {<br>reverseFixlen(str, strlen(str));<br>}<br>void reverseFixlen(char </em>str, int n) {<br>char<em> p = str+n-1;<br>while (str &lt; p) {<br>char c = </em>str;<br><em>str = </em>p; <em>p=c;<br>}<br>}<br>★颠倒一个句子中的词的顺序，比如将“我叫克丽丝”转换为“克丽丝叫我”，<br>实现速度最快，移动最少。<br>ANSWER:<br>Reverse the whole string, then reverse each word. Using the reverseFixlen() above.<br>void reverseWordsInSentence(char </em> sen) {<br>int len = strlen(sen);<br>reverseFixlen(sen, len);<br>char <em> p = str;<br>while (</em>p!=’ ’) {<br>while (<em>p == ‘ ‘ &amp;&amp; </em>p!=’ ’) p++;<br>str = p;<br>while (p!= ‘ ‘ &amp;&amp; <em>p!=’ ’) p++;<br>reverseFixlen(str, p-str);<br>}<br>}<br>★找到一个子字符串。优化速度。优化空间。<br>ANSWER:<br>KMP? BM? Sunday? Using BM or sunday, if it’s ASCII string, then it’s easy to fast access the auxiliary array. Otherwise an hashmap or bst may be needed. Lets assume it’s an ASCII string.<br>int bm_strstr(char </em>str, char *sub) {<br>int len = strlen(sub);<br>int i;<br>int aux[256];<br>memset(aux, sizeof(int), 256, len+1);<br>for (i=0; i aux[sub[i]] = len - i;<br>}<br>int n = strlen(str);<br>i=len-1;<br>while (i=0 &amp;&amp; str[j—] == sub[k—])<br>;<br>if (k if (i+1 i+=aux[str[i+1]];<br>else<br>return -1;<br>}<br>}<br>However, this algorithm, as well as BM, KMP algorithms use O(|sub|) space. If this is not acceptable, Rabin-carp algorithm can do it. Using hashing to fast filter out most false matchings.</p>
-<h1 id="define_HBASE_127">define HBASE 127</h1>
-<p>int rc_strstr(char <em> str, char </em> sub) {<br>int dest= 0;<br>char <em> p = sub;<br>int len = 0;<br>int TO_REDUCE = 1;<br>while (</em>p!=’ ’) {<br>dest = HBASE <em> dest + (int)(</em>p);<br>TO_REDUCE <em>= HBASE;<br>len ++;<br>}<br>int hash = 0;<br>p = str;<br>int i=0;<br>while (</em>p != ‘ ’) {<br>if (i++=len &amp;&amp; strncmp(sub, p-len+1, len) == 0) return i-len;<br>p++;<br>}<br>return -1;<br>}<br>★比较两个字符串，用O(n)时间和恒量空间。<br>ANSWER:<br>What is “comparing two strings”? Just normal string comparison? The natural way use O(n) time and O(1) space.<br>int strcmp(char <em> p1, char </em> p2) {<br>while (<em>p1 != ‘ ’ &amp;&amp; </em>p2 != ‘ ’ &amp;&amp; <em>p1 == </em>p2) {<br>p1++, p2++;<br>}<br>if (<em>p1 == ‘ ’ &amp;&amp; </em>p2 == ‘ ’) return 0;<br>if (<em>p1 == ‘ ’) return -1;<br>if (</em>p2 == ‘ ’) return 1;<br>return (<em>p1 - </em>p2); // it can be negotiated whether the above 3 if’s are necessary, I don’t like to omit them.<br>}<br>★ 假设你有一个用1001 个整数组成的数组，这些整数是任意排列的，但是你知道所有的整数都在1 到1000(包括1000)之间。此外，除一个数字出现两次外，其他所有数字只出现一次。假设你只能对这个数组做一次处理，用一种算法找出重复的那个数 字。如果你在运算中使用了辅助的存储方式，那么你能找到不用这种方式的算法吗?<br>ANSWER:<br>Sum up all the numbers, then subtract the sum from 1001*1002/2.<br>Another way, use A XOR A XOR B = B:<br>int findX(int a[]) {<br>int k = a[0];<br>for (int i=1; i k ~= a[i]~i;<br>}<br>return k;<br>}</p>
+<h1 id="define_HBASE_127">define HBASE 127</h1><p>int rc_strstr(char <em> str, char </em> sub) {<br>int dest= 0;<br>char <em> p = sub;<br>int len = 0;<br>int TO_REDUCE = 1;<br>while (</em>p!=’ ’) {<br>dest = HBASE <em> dest + (int)(</em>p);<br>TO_REDUCE <em>= HBASE;<br>len ++;<br>}<br>int hash = 0;<br>p = str;<br>int i=0;<br>while (</em>p != ‘ ’) {<br>if (i++=len &amp;&amp; strncmp(sub, p-len+1, len) == 0) return i-len;<br>p++;<br>}<br>return -1;<br>}<br>★比较两个字符串，用O(n)时间和恒量空间。<br>ANSWER:<br>What is “comparing two strings”? Just normal string comparison? The natural way use O(n) time and O(1) space.<br>int strcmp(char <em> p1, char </em> p2) {<br>while (<em>p1 != ‘ ’ &amp;&amp; </em>p2 != ‘ ’ &amp;&amp; <em>p1 == </em>p2) {<br>p1++, p2++;<br>}<br>if (<em>p1 == ‘ ’ &amp;&amp; </em>p2 == ‘ ’) return 0;<br>if (<em>p1 == ‘ ’) return -1;<br>if (</em>p2 == ‘ ’) return 1;<br>return (<em>p1 - </em>p2); // it can be negotiated whether the above 3 if’s are necessary, I don’t like to omit them.<br>}<br>★ 假设你有一个用1001 个整数组成的数组，这些整数是任意排列的，但是你知道所有的整数都在1 到1000(包括1000)之间。此外，除一个数字出现两次外，其他所有数字只出现一次。假设你只能对这个数组做一次处理，用一种算法找出重复的那个数 字。如果你在运算中使用了辅助的存储方式，那么你能找到不用这种方式的算法吗?<br>ANSWER:<br>Sum up all the numbers, then subtract the sum from 1001*1002/2.<br>Another way, use A XOR A XOR B = B:<br>int findX(int a[]) {<br>int k = a[0];<br>for (int i=1; i k ~= a[i]~i;<br>}<br>return k;<br>}</p>
 <p>★不用乘法或加法增加8 倍。现在用同样的方法增加7 倍。<br>ANSWER:<br>n&lt; (n&lt;a[i] &amp;&amp; i&gt;=s) i—;<br>if (!helper(a, i+1, e-1))<br>return 0;<br>int k = l;<br>while (a[e]=s) i—;<br>return helper(a, s, l);<br>}</p>
 <p>第10 题<br>翻转句子中单词的顺序。<br>题目：输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变。<br>句子中单词以空格符隔开。为简单起见，标点符号和普通字母一样处理。<br>例如输入“I am a student.”，则输出“student. a am I”。<br>Answer:<br>Already done this. Skipped.</p>
 <p>第11 题<br>求二叉树中节点的最大距离…<br>如果我们把二叉树看成一个图，父子节点之间的连线看成是双向的，<br>我们姑且定义”距离”为两节点之间边的个数。<br>写一个程序，<br>求一棵二叉树中相距最远的两个节点之间的距离。<br>ANSWER:<br>This is interesting… Also recursively, the longest distance between two nodes must be either from root to one leaf, or between two leafs. For the former case, it’s the tree height. For the latter case, it should be the sum of the heights of left and right subtrees of the two leaves’ most least ancestor.<br>The first case is also the sum the heights of subtrees, just the height + 0.</p>
 <p>int maxDistance(Node <em> root) {<br>int depth;<br>return helper(root, depth);<br>}<br>int helper(Node </em> root, int &amp;depth) {<br>if (root == NULL) {<br>depth = 0; return 0;<br>}<br>int ld, rd;<br>int maxleft = helper(root-&gt;left, ld);<br>int maxright = helper(root-&gt;right, rd);<br>depth = max(ld, rd)+1;<br>return max(maxleft, max(maxright, ld+rd));<br>}</p>
 <p>第12 题<br>题目：求1+2+…+n，<br>要求不能使用乘除法、for、while、if、else、switch、case 等关键字以及条件判断语句<br>（A?B:C）。<br>ANSWER:<br>1+..+n=n*(n+1)/2=(n^2+n)/2<br>it is easy to get x/2, so the problem is to get n^2<br>though no if/else is allowed, we can easilly go around using short-pass.<br>using macro to make it fancier:</p>
-<h1 id="define_T(X,_Y,_i)_(Y_&amp;_(1&lt;&gt;_1;">define T(X, Y, i) (Y &amp; (1&lt;&gt; 1;</h1>
-<p>}</p>
+<h1 id="define_T(X,_Y,_i)_(Y_&amp;_(1&lt;&gt;_1;">define T(X, Y, i) (Y &amp; (1&lt;&gt; 1;</h1><p>}</p>
 <p>第13 题：<br>题目：输入一个单向链表，输出该链表中倒数第k 个结点。链表的倒数第0 个结点为链表的尾指针。<br>链表结点定义如下：<br>struct ListNode<br>{<br>int m_nKey;<br>ListNode<em> m_pNext;<br>};<br>Answer:<br>Two ways. 1: record the length of the linked list, then go n-k steps. 2: use two cursors.<br>Time complexities are exactly the same.<br>Node </em> lastK(Node * head, int k) {<br>if (k0;k—) {<br>if (pk-&gt;next!=NULL) pk = pk-&gt;next;<br>else return NULL;<br>}<br>while (pk-&gt;next!=NULL) {<br>p=p-&gt;next, pk=pk-&gt;next;<br>}<br>return p;<br>}</p>
 <p>第14 题：<br>题目：输入一个已经按升序排序过的数组和一个数字，<br>在数组中查找两个数，使得它们的和正好是输入的那个数字。<br>要求时间复杂度是O(n)。如果有多对数字的和等于输入的数字，输出任意一对即可。<br>例如输入数组1、2、4、7、11、15 和数字15。由于4+11=15，因此输出4 和11。<br>ANSWER:<br>Use two cursors. One at front and the other at the end. Keep track of the sum by moving the cursors.<br>void find2Number(int a[], int n, int dest) {<br>int <em>f = a, </em>e=a+n-1;<br>int sum = <em>f + </em>e;<br>while (sum != dest &amp;&amp; f &lt; e) {<br>if (sum &lt; dest) sum = <em>(++f); else sum = </em>(—e); } if (sum == dest) printf(“%d, %dn”, <em>f, </em>e); } 第15 题： 题目：输入一颗二元查找树，将该树转换为它的镜像， 即在转换后的二元查找树中，左子树的结点都大于右子树的结点。 用递归和循环两种方法完成树的镜像转换。 例如输入： 8 /  6 10 / / 5 7 9 11 输出： 8 /  10 6 / / 11 9 7 5 定义二元查找树的结点为： struct BSTreeNode // a node in the binary search tree (BST) { int m_nValue; // value of node BSTreeNode <em>m_pLeft; // left child of node BSTreeNode </em>m_pRight; // right child of node }; ANSWER: This is the basic application of recursion. PS: I don’t like the m_xx naming convension. void swap(Node <strong> l, Node </strong> r) { Node <em> p = </em>l; <em>l = </em>r; <em>r = p; } void mirror(Node </em> root) { if (root == NULL) return; swap(&amp;(root-&gt;left), &amp;(root-&gt;right));<br>mirror(root-&gt;left);<br>mirror(root-&gt;right);<br>}</p>
 <p>void mirrorIteratively(Node <em> root) {<br>if (root == NULL) return;<br>stack buf;<br>buf.push(root);<br>while (!stack.empty()) {<br>Node </em> n = stack.pop();<br>swap(&amp;(root-&gt;left), &amp;(root-&gt;right));<br>if (root-&gt;left != NULL) buf.push(root-&gt;left);<br>if (root-&gt;right != NULL) buf.push(root-&gt;right);<br>}<br>}</p>
@@ -154,8 +213,7 @@
 </em>j++ = <em>i++;<br>}
 </em>j = ‘ ’;<br>return strDest;<br>}<br>Maybe you need to check if src and dest overlaps, then decide whether to copy from tail to head.</p>
 <p>最后压轴之戏，终结此微软等100 题系列V0.1 版。<br>那就，</p>
-<h1 id="连续来几组微软公司的面试题，让你一次爽个够：">连续来几组微软公司的面试题，让你一次爽个够：</h1>
-<p>97.第1 组微软较简单的算法面试题<br>1.编写反转字符串的程序，要求优化速度、优化空间。<br>ANSWER<br>Have done this.</p>
+<h1 id="连续来几组微软公司的面试题，让你一次爽个够：">连续来几组微软公司的面试题，让你一次爽个够：</h1><p>97.第1 组微软较简单的算法面试题<br>1.编写反转字符串的程序，要求优化速度、优化空间。<br>ANSWER<br>Have done this.</p>
 <p>2.在链表里如何发现循环链接？<br>ANSWER<br>Have done this.</p>
 <p>3.编写反转字符串的程序，要求优化速度、优化空间。<br>ANSWER<br>Have done this.</p>
 <p>4.给出洗牌的一个算法，并将洗好的牌存储在一个整形数组里。<br>ANSWER<br>Have done this.</p>
@@ -174,316 +232,729 @@
 <p>2.在9 个点上画10 条直线，要求每条直线上至少有三个点？（3 分钟-20 分钟）</p>
 <p>3.在一天的24 小时之中，时钟的时针、分针和秒针完全重合在一起的时候有几次？都分别是什么时间？你怎样算出来的？（5 分钟-15 分钟）</p>
 <p>30<br>终结附加题：</p>
-<h1 id="微软面试题，挑战你的智商">微软面试题，挑战你的智商</h1>
-<p>说明：如果你是第一次看到这种题，并且以前从来没有见过类似的题型，<br>并且能够在半个小时之内做出答案，说明你的智力超常..）<br>1.第一题. 五个海盗抢到了100 颗宝石，每一颗都一样大小和价值连城。他们决定这么分：<br>抽签决定自己的号码（1、2、3、4、5）<br>首先，由1 号提出分配方案，然后大家表决，当且仅当超过半数的人同意时，<br>按照他的方案进行分配，否则将被扔进大海喂鲨鱼<br>如果1 号死后，再由2 号提出分配方案，然后剩下的4 人进行表决，<br>当且仅当超过半数的人同意时，按照他的方案进行分配，否则将被扔入大海喂鲨鱼。<br>依此类推<br>条件：每个海盗都是很聪明的人，都能很理智地做出判断，从而做出选择。<br>问题：第一个海盗提出怎样的分配方案才能使自己的收益最大化？<br>Answer:<br>A traditional brain teaser.<br>Consider #5, whatever #4 proposes, he won’t agree, so #4 must agree whatever #3 proposes. So if there are only #3-5, #3 should propose (100, 0, 0). So the expected income of #3 is 100, and #4 and #5 is 0 for 3 guy problem. So whatever #2 proposes, #3 won’t agree, but if #2 give #4 and #5 $1, they can get more than 3-guy subproblem. So #2 will propose (98, 0, 1, 1). So for #1, if give #2 less than $98, #2 won’t agree. But he can give #3 $1 and #4 or #5 $2, so this is a (97, 0, 1, 2, 0) solution.</p>
+<h1 id="微软面试题，挑战你的智商">微软面试题，挑战你的智商</h1><p>说明：如果你是第一次看到这种题，并且以前从来没有见过类似的题型，<br>并且能够在半个小时之内做出答案，说明你的智力超常..）<br>1.第一题. 五个海盗抢到了100 颗宝石，每一颗都一样大小和价值连城。他们决定这么分：<br>抽签决定自己的号码（1、2、3、4、5）<br>首先，由1 号提出分配方案，然后大家表决，当且仅当超过半数的人同意时，<br>按照他的方案进行分配，否则将被扔进大海喂鲨鱼<br>如果1 号死后，再由2 号提出分配方案，然后剩下的4 人进行表决，<br>当且仅当超过半数的人同意时，按照他的方案进行分配，否则将被扔入大海喂鲨鱼。<br>依此类推<br>条件：每个海盗都是很聪明的人，都能很理智地做出判断，从而做出选择。<br>问题：第一个海盗提出怎样的分配方案才能使自己的收益最大化？<br>Answer:<br>A traditional brain teaser.<br>Consider #5, whatever #4 proposes, he won’t agree, so #4 must agree whatever #3 proposes. So if there are only #3-5, #3 should propose (100, 0, 0). So the expected income of #3 is 100, and #4 and #5 is 0 for 3 guy problem. So whatever #2 proposes, #3 won’t agree, but if #2 give #4 and #5 $1, they can get more than 3-guy subproblem. So #2 will propose (98, 0, 1, 1). So for #1, if give #2 less than $98, #2 won’t agree. But he can give #3 $1 and #4 or #5 $2, so this is a (97, 0, 1, 2, 0) solution.</p>
 <p>2.一道关于飞机加油的问题，已知：<br>每个飞机只有一个油箱，<br>飞机之间可以相互加油（注意是相互，没有加油机）<br>一箱油可供一架飞机绕地球飞半圈，<br>问题：<br>为使至少一架飞机绕地球一圈回到起飞时的飞机场，至少需要出动几架飞机？<br>（所有飞机从同一机场起飞，而且必须安全返回机场，不允许中途降落，中间没有飞机场）</p>
 <hr>
 <p>更多面试题，请参见：<br>微软、谷歌、百度等公司经典面试100题[第1-60题] （微软100题第二版前60题）<br>微软、Google等公司非常好的面试题及解答[第61-70题] （微软100题第二版第61-70题）<br>十道海量数据处理面试题与十个方法大总结 （十道海量数据处理面试题）<br>海量数据处理面试题集锦与Bit-map详解 （十七道海量数据处理面试题）<br>九月腾讯，创新工场，淘宝等公司最新面试十三题（2011年度9月最新面试30题）<br>十月百度，阿里巴巴，迅雷搜狗最新面试十一题（2011年度十月最新面试题集锦）<br>一切的详情，可看此文：<br>横空出世，席卷Csdn—评微软等数据结构+算法面试100题 （在此文中，你能找到与微软100题所有一切相关的东西）<br>所有的资源下载（题目+答案）地址：<br><a href="http://v_july_v.download.csdn.net/" target="_blank" rel="external">http://v_july_v.download.csdn.net/</a></p>
 <p>本微软等100 题系列V0.1 版，永久维护地址：<br><a href="http://topic.csdn.net/u/20101126/10/b4f12a00-6280-492f-b785-cb6835a63dc9.html" target="_blank" rel="external">http://topic.csdn.net/u/20101126/10/b4f12a00-6280-492f-b785-cb6835a63dc9.html</a></p>
 <p>作者声明:<br>“本人July 对以上所有任何内容和资料享有版权，转载请注明作者本人July 及出处。<br>向你的厚道致敬。谢谢。二零一一年十月十三日、以诸君为傲。</p>
 <p>欢迎，任何人，就以上任何内容，题目与答案思路，或其它任何问题、与我联系：<br>本人邮箱：zhoulei0907@yahoo.cn ”</p>
-  
-	</div>
-		<footer class="article-footer clearfix">
 
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/blog/categories/分享/">分享</a>
-</div>
-
-
-
-<div class="article-share" id="share">
-
-  <div data-url="http://www.zhangmin.name/blog/2012/10/微软等数据结构-算法面试100题全部答案完整亮相/" data-title="微软等数据结构+算法面试100题全部答案完整亮相 | ZhangMin.name" data-tsina="null" class="share clearfix">
-  </div>
-
-</div>
-</footer>   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/blog/2012/10/听说能力不好的原因是什么/" title="听说能力不好的原因是什么">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  听说能力不好的原因是什么</span>
-</a>
-</div>
-
-
-<div class="next">
-<a href="/blog/2012/10/手机共享Windows-7无线网络连接上网/"  title="手机共享Windows 7无线网络连接上网">
- <strong>NEXT:</strong><br/> 
- <span>手机共享Windows 7无线网络连接上网
-</span>
-</a>
-</div>
-
-</nav>
-
-	
-<section class="comment">
-	<div class="ds-thread"></div>
-</section>
-
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#define_HBASE_127"><span class="toc-number">1.</span> <span class="toc-text">define HBASE 127</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_T(X,_Y,_i)_(Y_&_(1<>_1;"><span class="toc-number">2.</span> <span class="toc-text">define T(X, Y, i) (Y & (1<> 1;</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#连续来几组微软公司的面试题，让你一次爽个够："><span class="toc-number">3.</span> <span class="toc-text">连续来几组微软公司的面试题，让你一次爽个够：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#微软面试题，挑战你的智商"><span class="toc-number">4.</span> <span class="toc-text">微软面试题，挑战你的智商</span></a></li></ol>
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">分类</p>
-		<ul>
-		
-			<li><a href="/blog/categories/Java/" title="Java">Java<sup>21</sup></a></li>
-		
-			<li><a href="/blog/categories/MSE/" title="MSE">MSE<sup>104</sup></a></li>
-		
-			<li><a href="/blog/categories/linux/" title="linux">linux<sup>8</sup></a></li>
-		
-			<li><a href="/blog/categories/storm/" title="storm">storm<sup>1</sup></a></li>
-		
-			<li><a href="/blog/categories/分享/" title="分享">分享<sup>70</sup></a></li>
-		
-			<li><a href="/blog/categories/原创/" title="原创">原创<sup>21</sup></a></li>
-		
-			<li><a href="/blog/categories/学习笔记/" title="学习笔记">学习笔记<sup>7</sup></a></li>
-		
-			<li><a href="/blog/categories/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">标签</p>
-		<ul class="clearfix">
-		
-			<li><a href="/blog/tags/Java/" title="Java">Java<sup>24</sup></a></li>
-		
-			<li><a href="/blog/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
-		
-			<li><a href="/blog/tags/OSGi/" title="OSGi">OSGi<sup>2</sup></a></li>
-		
-			<li><a href="/blog/tags/UCAS/" title="UCAS">UCAS<sup>9</sup></a></li>
-		
-			<li><a href="/blog/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>6</sup></a></li>
-		
-			<li><a href="/blog/tags/Web-Service/" title="Web Service">Web Service<sup>4</sup></a></li>
-		
-			<li><a href="/blog/tags/public-speaking/" title="public speaking">public speaking<sup>18</sup></a></li>
-		
-			<li><a href="/blog/tags/storm/" title="storm">storm<sup>8</sup></a></li>
-		
-			<li><a href="/blog/tags/wordpress/" title="wordpress">wordpress<sup>2</sup></a></li>
-		
-			<li><a href="/blog/tags/国科大/" title="国科大">国科大<sup>8</sup></a></li>
-		
-			<li><a href="/blog/tags/工程哲学/" title="工程哲学">工程哲学<sup>10</sup></a></li>
-		
-			<li><a href="/blog/tags/技术/" title="技术">技术<sup>15</sup></a></li>
-		
-			<li><a href="/blog/tags/明德/" title="明德">明德<sup>3</sup></a></li>
-		
-			<li><a href="/blog/tags/札记/" title="札记">札记<sup>26</sup></a></li>
-		
-			<li><a href="/blog/tags/生活/" title="生活">生活<sup>13</sup></a></li>
-		
-			<li><a href="/blog/tags/记事/" title="记事">记事<sup>5</sup></a></li>
-		
-			<li><a href="/blog/tags/讲座/" title="讲座">讲座<sup>8</sup></a></li>
-		
-			<li><a href="/blog/tags/读书·旅行/" title="读书·旅行">读书·旅行<sup>7</sup></a></li>
-		
-			<li><a href="/blog/tags/问题与算法/" title="问题与算法">问题与算法<sup>12</sup></a></li>
-		
-			<li><a href="/blog/tags/马上有OFFER/" title="马上有OFFER">马上有OFFER<sup>13</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
-    <ul>
-      <li><a href="http://www.zhangmin.name" target="_blank" title="ZhangMin.name">ZhangMin.name</a></li>
-      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
-    </ul>
-</div>
-
-
-</aside>
-</div>
-    </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<section class="info">
-		<p> 2015 <br/>
-			专注 勇敢爱 当下</p>
-	</section>
-	 
-	<div class="social-font" class="clearfix">
-		
-		<a href="http://weibo.com/302585340" target="_blank" title="weibo"></a>
-		
-		
-		<a href="https://twitter.com/zhangmin_name" target="_blank" title="twitter"></a>
-		
-		
-		<a href="https://github.com/zhangmin510" target="_blank" title="github"></a>
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
-		
-		<a href="http://www.zhangmin.name/blog" target="_blank" title="zhangmin.name">zhangmin.name</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/blog/js/jquery-2.1.0.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/2012/10/听说能力不好的原因是什么/">听说能力不好的原因是什么</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/2012/10/手机共享Windows-7无线网络连接上网/">手机共享Windows 7无线网络连接上网</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+    <div class="comments" id="comments">
+      
+        <div class="ds-thread" data-thread-key="2012/10/微软等数据结构-算法面试100题全部答案完整亮相/"
+             data-title="微软等数据结构+算法面试100题全部答案完整亮相" data-url="http://www.zhangmin.name/blog/2012/10/微软等数据结构-算法面试100题全部答案完整亮相/">
+        </div>
+
+      
+    </div>
+  
+
+          </div>
+
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview">
+          站点概览
+        </li>
+      </ul>
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/blog/images/default_avatar.jpg" alt="zhangmin.name" />
+        <p class="site-author-name">zhangmin.name</p>
+      </div>
+      <p class="site-description motion-element">ZhangMin.name's Blog</p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <a href="/blog/archives">
+            <span class="site-state-item-count">234</span>
+            <span class="site-state-item-name">日志</span>
+          </a>
+        </div>
+
+        <div class="site-state-item site-state-categories">
+          
+            <span class="site-state-item-count">9</span>
+            <span class="site-state-item-name">分类</span>
+          
+        </div>
+
+        <div class="site-state-item site-state-tags">
+          
+            <span class="site-state-item-count">20</span>
+            <span class="site-state-item-name">标签</span>
+          
+        </div>
+
+      </div>
+
+      
+
+      <div class="links-of-author motion-element">
+        
+          
+            <span class="links-of-author-item">
+              <a href="https://github.com/zhangmin510" target="_blank">GitHub</a>
+            </span>
+          
+            <span class="links-of-author-item">
+              <a href="http://weibo.com/302585340" target="_blank">Weibo</a>
+            </span>
+          
+        
+      </div>
+
+      
+      
+        <div class="cc-license motion-element">
+          <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+            <img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+          </a>
+        </div>
+      
+
+    </div>
+
+    
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          
+          
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#define_HBASE_127"><span class="nav-number">1.</span> <span class="nav-text">define HBASE 127</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#define_T(X,_Y,_i)_(Y_&_(1<>_1;"><span class="nav-number">2.</span> <span class="nav-text">define T(X, Y, i) (Y & (1<> 1;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#连续来几组微软公司的面试题，让你一次爽个够："><span class="nav-number">3.</span> <span class="nav-text">连续来几组微软公司的面试题，让你一次爽个够：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#微软面试题，挑战你的智商"><span class="nav-number">4.</span> <span class="nav-text">微软面试题，挑战你的智商</span></a></li></ol></div>
+          
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2010 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">zhangmin.name</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
     }
   });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      h  = $('article h2')
-      ah = $('article h2'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  if(ah.length==0){
-    t.css('display','none');
-  }else{
-    c.click(function(){
-      ta.css('display', 'block').addClass('fadeIn');
-    });
-    o.click(function(){
-      ta.css('display', 'none');
-    });
-    $(window).scroll(function(){
-      ta.css("top",Math.max(140,320-$(this).scrollTop()));
-    });
-  };
-});
 </script>
 
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina');
-  var html = [
-  '<a href="#" class="overlay" id="qrcode"></a>',
-  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
-  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
-    });
-  });
-});     
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
 </script>
 
 
-<script type="text/javascript">
-  var duoshuoQuery = {short_name:"zhangmin"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
 
 
 
 
+  
 
-  </body>
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhangmin"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+  
+</body>
 </html>

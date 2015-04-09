@@ -1,438 +1,902 @@
-
- <!DOCTYPE HTML>
-<html lang="zh-CN">
+<!doctype html>
+<html class="theme-next use-motion theme-next-next">
 <head>
-  <meta charset="UTF-8">
   
-    <title>Java实现RESTful Service | ZhangMin.name</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
-    
-    <meta name="author" content="zhangmin.name">
-    
-    <meta name="description" content="原文地址：http://www.vogella.com/tutorials/REST/article.html
-本教程介绍了如何使用JAX-RS的参考实现Jersey来实现REST Web Service。本教程使用Eclipse 4.4，Java 1.6，Tomcat 6.0 及JAX-RS 1.">
-    
-    
-    
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="zhangmin_name" />
-    <meta name="twitter:title" content="Java实现RESTful Service | ZhangMin.name" />
-      
-    
-    
-    
-    <link rel="icon" href="/blog/img/favicon.png">
-    
-    
-    <link rel="apple-touch-icon" href="/blog/img/favicon.png">
-    <link rel="apple-touch-icon-precomposed" href="/blog/img/favicon.png">
-    
-    <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
 
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/blog/css/main.css?v=0.4.1"/>
+
+
+    <meta name="description" content="ZhangMin.name's Blog" />
+
+
+
+	<meta name="keywords" content="Java,Web Service," />
+
+  <title> Java实现RESTful Service // ZhangMin.name </title>
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/blog/" title="ZhangMin.name">ZhangMin.name</a></h1>
-				<h2 class="blog-motto">勤思敏行 思行合一</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="http://www.zhangmin.name/blog/">首页</a></li>
-					
-						<li><a href="/blog/archives">存档</a></li>
-					
-						<li><a href="/blog/readings">读书</a></li>
-					
-					<li>
-					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:www.zhangmin.name/blog">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
 
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/blog/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">ZhangMin.name</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
     
-      <a href="/blog/2014/07/Java实现RESTful-Service/" title="Java实现RESTful Service" itemprop="url">Java实现RESTful Service</a>
-  </h1>
-  <p class="article-author">By
     
-      <a href="http://www.zhangmin.name/blog" title="zhangmin.name">zhangmin.name</a>
-    </p>
-  <p class="article-time">
-    <time datetime="2014-07-16T06:41:24.000Z" itemprop="datePublished">2014-7-16</time>
-    更新日期:<time datetime="2014-10-23T07:14:59.000Z" itemprop="dateModified">2014-10-23</time>
-    
-  </p>
-</header>
-	<div class="article-content">
-		
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-REST-Representational_State_Transfer"><span class="toc-number">1.</span> <span class="toc-text">1.REST-Representational State Transfer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1_什么是REST"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 什么是REST</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2_Http方法"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 Http方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3_RESTful_web_Service"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 RESTful web Service</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JAX-RS"><span class="toc-number">2.</span> <span class="toc-text">2.JAX-RS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1_JAX-RS"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 JAX-RS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2_JAX-RS的参考实现Jersey"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 JAX-RS的参考实现Jersey</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3_JRX-RS注解"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 JRX-RS注解</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Jersey"><span class="toc-number">3.</span> <span class="toc-text">3.Jersey</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-创建一个REST示例服务"><span class="toc-number">4.</span> <span class="toc-text">4.创建一个REST示例服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-RESTful_Web_Service与JAXB"><span class="toc-number">5.</span> <span class="toc-text">5.RESTful Web Service与JAXB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1创建项目"><span class="toc-number">5.1.</span> <span class="toc-text">5.1创建项目</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-创建CURD的RESTful_web_service"><span class="toc-number">6.</span> <span class="toc-text">6.创建CURD的RESTful web service</span></a></li></ol>
-		</div>
-		
-		<p>原文地址：<a href="http://www.vogella.com/tutorials/REST/article.html" target="_blank" rel="external">http://www.vogella.com/tutorials/REST/article.html</a></p>
-<p>本教程介绍了如何使用JAX-RS的参考实现Jersey来实现REST Web Service。<br>本教程使用Eclipse 4.4，Java 1.6，Tomcat 6.0 及JAX-RS 1.1 (Jersey 1.5)。</p>
-<h3 id="1-REST-Representational_State_Transfer">1.REST-Representational State Transfer</h3>
-<h4 id="1-1_什么是REST">1.1 什么是REST</h4>
-<p>REST是一种基于web标准和http协议的架构风格。REST是由Roy Fielding在2000年提出的。<br>在REST中一切都是resource，resource的访问是通过Http的标准接口来实现的。有一个REST服务器提供相关REST的服务，如<br>访问resource，修改resource。<br>每种resource都有一个唯一的URI标识，且都应该支持标准的http操作。REST允许resource使用不同的表示方法，如文本，XML，JSON等。<br>REST客户端可以通过Http请求使用特定的表示。</p>
-<h4 id="1-2_Http方法">1.2 Http方法</h4>
-<p>PUT，GET，POST，DELETE是REST中常用的Http方法。它们分别表示：<br>1. GET 定义resource的读取。没有任何的副作用，即不会改变resource。要满足幂等这个性质（自己重复运算得到的结果仍然是自己）。<br>2. PUT 创建一个resource。也是幂等的。<br>3. DELETE 移除一个resource。幂等，可以执行多次而不会产生不同的结果。<br>4. POST 更新一个已经存在的resource或者创建一个新的resource。</p>
-<h4 id="1-3_RESTful_web_Service">1.3 RESTful web Service</h4>
-<p>RESTful web Service是使用REST的基本概念及Http的方法实现的。一个典型的RESTful web Service定义了服务的基本的resource，支持的MIME Type（XML，JSON，用户自定义等），及支持的操作集合（GET，POST，PUT，DELETE）。</p>
-<h3 id="2-JAX-RS">2.JAX-RS</h3>
-<h4 id="2-1_JAX-RS">2.1 JAX-RS</h4>
-<p>Java通过JSR 311提供了REST支持。全名是The Java API for RESTful Web Service）。JAX-RS使用朱姐来定义REST相关的Java类。</p>
-<h4 id="2-2_JAX-RS的参考实现Jersey">2.2 JAX-RS的参考实现Jersey</h4>
-<p>Jersey是JAX-RS的参考实现。在Java Servlet容器中实现RESTful web Service。在服务端，Jersey提供了一个Servlet实现用来扫描可识别的resource。需要在web.xml中进行配置，即对这个Servlet进行注册和配置。<br>Jersey也提供了一个客户端程序用于与服务端的交互。<br>这个Servlet的基本的URL是<br>[java]<br><a href="http://your_domain:port/display-name/url-pattern/path_from_rest_class" target="_blank" rel="external">http://your_domain:port/display-name/url-pattern/path_from_rest_class</a><br>[/java]<br>这个Servlet分析Http请求，并选择正确的类和方法来响应请求。这些选择是基于每个提供resource的类的注解。<br>一个REST web Service包括数据类（resource）和服务。这两种类型要在不同的包中进行维护，这样可以方便Jersey的Servlet进行查找特定的数据类。<br>JAX-RS支持使用Java Architecture for XML Binding（[JAXB教程](<a href="http://www.vogella.com/tutorials/JAXB/article.html）创建XML，JSON。" target="_blank" rel="external">http://www.vogella.com/tutorials/JAXB/article.html）创建XML，JSON。</a></p>
-<h4 id="2-3_JRX-RS注解">2.3 JRX-RS注解</h4>
-<p>@PATH(your_path) 将访问路径设置为基本的URL+/your_path。基本路径取决于web.xml中配置的应用名称，Servlet的URL。<br>@POST 指示下面的方法将响应http POST请求。<br>@GET  指示下面的方法将响应http GET请求。<br>@PUT  指示下面的方法将响应http PUT请求。<br>@DELETE  指示下面的方法将响应http DELETE请求。<br>@Produces(MediaType.TEXT_PLAIN[, more-types])  @Produces 定义被注解为@GET的方法将要使用的MIME Type。d<br>@Consumes(type[, more-types])  @Consumes 定义这个方法将消费什么样的MIME Type。<br>@PathParam  用于从URL中提取参数并注入为方法的参数。</p>
-<h3 id="3-Jersey">3.Jersey</h3>
-<p>在<a href="http://jersey.java.net/" target="_blank" rel="external">http://jersey.java.net/</a>下载Jersey。</p>
-<h3 id="4-创建一个REST示例服务">4.创建一个REST示例服务</h3>
-<p>在Eclipse中创建Dynamic Web Project。将下载的jars放入WEB-INF/lib目录下。</p>
-<p>创建下面的Java类<br>[java]<br>package de.vogella.jersey.first;<br>import javax.ws.rs.GET;<br>import javax.ws.rs.Path;<br>import javax.ws.rs.Produces;<br>import javax.ws.rs.core.MediaType;<br>// Plain old Java Object it does not extend as class or implements<br>// an interface<br>// The class registers its methods for the HTTP GET request using the @GET annotation.<br>// Using the @Produces annotation, it defines that it can deliver several MIME types,<br>// text, XML and HTML.<br>// The browser requests per default the HTML MIME type.<br>//Sets the path to base URL + /hello<br>@Path(&quot;/hello&quot;)<br>public class Hello {<br>  // This method is called if TEXT_PLAIN is request<br>  @GET<br>  @Produces(MediaType.TEXT_PLAIN)<br>  public String sayPlainTextHello() {<br>    return &quot;Hello Jersey&quot;;<br>  }<br>  // This method is called if XML is request<br>  @GET<br>  @Produces(MediaType.TEXT_XML)<br>  public String sayXMLHello() {<br>    return &quot;&lt;?xml version=\&quot;1.0\&quot;?&gt;&quot; + &quot;&lt;hello&gt; Hello Jersey&quot; + &quot;&lt;/hello&gt;&quot;;<br>  }<br>  // This method is called if HTML is request<br>  @GET<br>  @Produces(MediaType.TEXT_HTML)<br>  public String sayHtmlHello() {<br>    return &quot;&lt;html&gt; &quot; + &quot;&lt;title&gt;&quot; + &quot;Hello Jersey&quot; + &quot;&lt;/title&gt;&quot;</p>
-<pre><code>    <span class="subst">+</span> <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;body<span class="subst">&amp;</span><span class="literal">gt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;h1<span class="subst">&amp;</span><span class="literal">gt</span>;<span class="subst">&amp;</span>quot; <span class="subst">+</span> <span class="subst">&amp;</span>quot;Hello Jersey<span class="subst">&amp;</span>quot; <span class="subst">+</span> <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;/body<span class="subst">&amp;</span><span class="literal">gt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;/h1<span class="subst">&amp;</span><span class="literal">gt</span>;<span class="subst">&amp;</span>quot; <span class="subst">+</span> <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;/html<span class="subst">&amp;</span><span class="literal">gt</span>; <span class="subst">&amp;</span>quot;;
-</code></pre><p>  }<br>}<br>[/java]</p>
-<p>在web.xml中进行配置</p>
-<p>[java]<br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;web-app xmlns:xsi=&quot;<a href="http://www.w3.org/2001/XMLSchema-instance&amp;quot" target="_blank" rel="external">http://www.w3.org/2001/XMLSchema-instance&amp;quot</a>; xmlns=&quot;<a href="http://java.sun.com/xml/ns/javaee&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee&amp;quot</a>; xmlns:web=&quot;<a href="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot</a>; xsi:schemaLocation=&quot;<a href="http://java.sun.com/xml/ns/javaee" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee</a> <a href="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot</a>; id=&quot;WebApp_ID&quot; version=&quot;2.5&quot;&gt;<br>  &lt;display-name&gt;de.vogella.jersey.first&lt;/display-name&gt;<br>  &lt;servlet&gt;<br>    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;<br>    &lt;servlet-class&gt;com.sun.jersey.spi.container.servlet.ServletContainer&lt;/servlet-class&gt;<br>    &lt;init-param&gt;<br>      &lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;<br>      &lt;param-value&gt;de.vogella.jersey.first&lt;/param-value&gt;<br>    &lt;/init-param&gt;<br>    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;<br>  &lt;/servlet&gt;<br>  &lt;servlet-mapping&gt;<br>    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;<br>    &lt;url-pattern&gt;/rest/*&lt;/url-pattern&gt;<br>  &lt;/servlet-mapping&gt;<br>&lt;/web-app&gt;<br>[/java]<br>访问网址测试： <a href="http://localhost:8080/de.vogella.jersey.first/rest/hello" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.first/rest/hello</a>.<br>或者使用Jersey的客户端测试，当然你也可以使用Apache HttpClient。<br>[java]<br>package de.vogella.jersey.first.client;<br>import java.net.URI;<br>import javax.ws.rs.core.MediaType;<br>import javax.ws.rs.core.UriBuilder;<br>import com.sun.jersey.api.client.Client;<br>import com.sun.jersey.api.client.ClientResponse;<br>import com.sun.jersey.api.client.WebResource;<br>import com.sun.jersey.api.client.config.ClientConfig;<br>import com.sun.jersey.api.client.config.DefaultClientConfig;<br>public class Test {<br>  public static void main(String[] args) {<br>    ClientConfig config = new DefaultClientConfig();<br>    Client client = Client.create(config);<br>    WebResource service = client.resource(getBaseURI());<br>    // Fluent interfaces<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;hello&quot;).accept(MediaType.TEXT_PLAIN).get(ClientResponse.class).toString());<br>    // Get plain text<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;hello&quot;).accept(MediaType.TEXT_PLAIN).get(String.class));<br>    // Get XML<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;hello&quot;).accept(MediaType.TEXT_XML).get(String.class));<br>    // The HTML<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;hello&quot;).accept(MediaType.TEXT_HTML).get(String.class));<br>  }<br>  private static URI getBaseURI() {<br>    return UriBuilder.fromUri(&quot;<a href="http://localhost:8080/de.vogella.jersey.first&quot;).build(" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.first&quot;).build(</a>);<br>  }<br>}<br>[/java]</p>
-<h3 id="5-RESTful_Web_Service与JAXB">5.RESTful Web Service与JAXB</h3>
-<h4 id="5-1创建项目">5.1创建项目</h4>
-<p>新建项目方法如上。</p>
-<p>[java]<br>package de.vogella.jersey.jaxb.model;<br>import javax.xml.bind.annotation.XmlRootElement;<br>@XmlRootElement<br>// JAX-RS supports an automatic mapping from JAXB annotated class to XML and JSON<br>// Isn’t that cool?<br>public class Todo {<br>  private String summary;<br>  private String description;<br>  public String getSummary() {<br>    return summary;<br>  }<br>  public void setSummary(String summary) {<br>    this.summary = summary;<br>  }<br>  public String getDescription() {<br>    return description;<br>  }<br>  public void setDescription(String description) {<br>    this.description = description;<br>  }<br>}<br>[/java]</p>
-<p>[java]<br>package de.vogella.jersey.jaxb;<br>import javax.ws.rs.GET;<br>import javax.ws.rs.Path;<br>import javax.ws.rs.Produces;<br>import javax.ws.rs.core.MediaType;<br>import de.vogella.jersey.jaxb.model.Todo;<br>@Path(&quot;/todo&quot;)<br>public class TodoResource {<br>  // This method is called if XMLis request<br>  @GET<br>  @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })<br>  public Todo getXML() {<br>    Todo todo = new Todo();<br>    todo.setSummary(&quot;This is my first todo&quot;);<br>    todo.setDescription(&quot;This is my first todo&quot;);<br>    return todo;<br>  }<br>  // This can be used to test the integration with the browser<br>  @GET<br>  @Produces({ MediaType.TEXT_XML })<br>  public Todo getHTML() {<br>    Todo todo = new Todo();<br>    todo.setSummary(&quot;This is my first todo&quot;);<br>    todo.setDescription(&quot;This is my first todo&quot;);<br>    return todo;<br>  }<br>}<br>[/java]</p>
-<p>[java]<br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;web-app xmlns:xsi=&quot;<a href="http://www.w3.org/2001/XMLSchema-instance&amp;quot" target="_blank" rel="external">http://www.w3.org/2001/XMLSchema-instance&amp;quot</a>;<br>  xmlns=&quot;<a href="http://java.sun.com/xml/ns/javaee&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee&amp;quot</a>; xmlns:web=&quot;<a href="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot</a>;<br>  xsi:schemaLocation=&quot;<a href="http://java.sun.com/xml/ns/javaee" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee</a> <a href="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot</a>;<br>  id=&quot;WebApp_ID&quot; version=&quot;2.5&quot;&gt;<br>  &lt;display-name&gt;de.vogella.jersey.jaxb&lt;/display-name&gt;<br>  &lt;servlet&gt;<br>    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;<br>    &lt;servlet-class&gt;com.sun.jersey.spi.container.servlet.ServletContainer&lt;/servlet-class&gt;<br>    &lt;init-param&gt;<br>      &lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;<br>      &lt;param-value&gt;de.vogella.jersey.jaxb&lt;/param-value&gt;<br>    &lt;/init-param&gt;<br>    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;<br>  &lt;/servlet&gt;<br>  &lt;servlet-mapping&gt;<br>    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;<br>    &lt;url-pattern&gt;/rest/*&lt;/url-pattern&gt;<br>  &lt;/servlet-mapping&gt;<br>&lt;/web-app&gt;<br>[/java]<br>访问网址：<a href="http://localhost:8080/de.vogella.jersey.jaxb/rest/todo" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.jaxb/rest/todo</a><br>创建客户端访问<br>[java]<br>package de.vogella.jersey.jaxb.client;<br>import java.net.URI;<br>import javax.ws.rs.core.MediaType;<br>import javax.ws.rs.core.UriBuilder;<br>import com.sun.jersey.api.client.Client;<br>import com.sun.jersey.api.client.WebResource;<br>import com.sun.jersey.api.client.config.ClientConfig;<br>import com.sun.jersey.api.client.config.DefaultClientConfig;<br>public class Test {<br>  public static void main(String[] args) {<br>    ClientConfig config = new DefaultClientConfig();<br>    Client client = Client.create(config);<br>    WebResource service = client.resource(getBaseURI());<br>    // Get XML  System.out.println(service.path(&quot;rest&quot;).path(&quot;todo&quot;).accept(MediaType.TEXT_XML).get(String.class));<br>    // Get XML for application  System.out.println(service.path(&quot;rest&quot;).path(&quot;todo&quot;).accept(MediaType.APPLICATION_JSON).get(String.class));<br>    // Get JSON for application<br> System.out.println(service.path(&quot;rest&quot;).path(&quot;todo&quot;).accept(MediaType.APPLICATION_XML).get(String.class));<br>  }<br>  private static URI getBaseURI() {<br>    return UriBuilder.fromUri(&quot;<a href="http://localhost:8080/de.vogella.jersey.jaxb&quot;).build(" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.jaxb&quot;).build(</a>);<br>  }<br>}<br>[/java]</p>
-<h3 id="6-创建CURD的RESTful_web_service">6.创建CURD的RESTful web service</h3>
-<p>[java]<br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;web-app xmlns:xsi=&quot;<a href="http://www.w3.org/2001/XMLSchema-instance&amp;quot" target="_blank" rel="external">http://www.w3.org/2001/XMLSchema-instance&amp;quot</a>; xmlns=&quot;<a href="http://java.sun.com/xml/ns/javaee&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee&amp;quot</a>; xmlns:web=&quot;<a href="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot</a>; xsi:schemaLocation=&quot;<a href="http://java.sun.com/xml/ns/javaee" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee</a> <a href="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot" target="_blank" rel="external">http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot</a>; id=&quot;WebApp_ID&quot; version=&quot;2.5&quot;&gt;<br>  &lt;display-name&gt;de.vogella.jersey.todo&lt;/display-name&gt;<br>  &lt;servlet&gt;<br>    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;<br>    &lt;servlet-class&gt;com.sun.jersey.spi.container.servlet.ServletContainer&lt;/servlet-class&gt;<br>    &lt;init-param&gt;<br>      &lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;<br>      &lt;param-value&gt;de.vogella.jersey.todo.resources&lt;/param-value&gt;<br>    &lt;/init-param&gt;<br>    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;<br>  &lt;/servlet&gt;<br>  &lt;servlet-mapping&gt;<br>    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;<br>    &lt;url-pattern&gt;/rest/*&lt;/url-pattern&gt;<br>  &lt;/servlet-mapping&gt;<br>&lt;/web-app&gt;<br>[/java]<br>创建下面的数据模型作为数据模型及一个单体提供这个模型。<br>[java]<br>package de.vogella.jersey.todo.model;<br>import javax.xml.bind.annotation.XmlRootElement;<br>@XmlRootElement<br>public class Todo {<br>  private String id;<br>  private String summary;<br>  private String description;<br>  public Todo(){<br>  }<br>  public Todo (String id, String summary){<br>    this.id = id;<br>    this.summary = summary;<br>  }<br>  public String getId() {<br>    return id;<br>  }<br>  public void setId(String id) {<br>    this.id = id;<br>  }<br>  public String getSummary() {<br>    return summary;<br>  }<br>  public void setSummary(String summary) {<br>    this.summary = summary;<br>  }<br>  public String getDescription() {<br>    return description;<br>  }<br>  public void setDescription(String description) {<br>    this.description = description;<br>  }<br>}<br>[/java]</p>
-<p>[java]<br>package de.vogella.jersey.todo.dao;<br>import java.util.HashMap;<br>import java.util.Map;<br>import de.vogella.jersey.todo.model.Todo;<br>public enum TodoDao {<br>  instance;<br>  private Map&lt;String, Todo&gt; contentProvider = new HashMap&lt;String, Todo&gt;();<br>  private TodoDao() {<br>    Todo todo = new Todo(&quot;1&quot;, &quot;Learn REST&quot;);<br>    todo.setDescription(&quot;Read <a href="http://www.vogella.com/tutorials/REST/article.html&amp;quot" target="_blank" rel="external">http://www.vogella.com/tutorials/REST/article.html&amp;quot</a>;);<br>    contentProvider.put(&quot;1&quot;, todo);<br>    todo = new Todo(&quot;2&quot;, &quot;Do something&quot;);<br>    todo.setDescription(&quot;Read complete <a href="http://www.vogella.com&amp;quot" target="_blank" rel="external">http://www.vogella.com&amp;quot</a>;);<br>    contentProvider.put(&quot;2&quot;, todo);<br>  }<br>  public Map&lt;String, Todo&gt; getModel(){<br>    return contentProvider;<br>  }<br>}<br>[/java]<br>创建一个简单地html页面POST数据到Service。<br>[java]<br>&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br> &lt;head&gt;<br>  &lt;title&gt;Form to create a new resource&lt;/title&gt;<br> &lt;/head&gt;<br>&lt;body&gt;<br>  &lt;form action=&quot;../de.vogella.jersey.todo/rest/todos&quot; method=&quot;POST&quot;&gt;<br>  &lt;label for=&quot;id&quot;&gt;ID&lt;/label&gt;<br>  &lt;input name=&quot;id&quot; /&gt;<br>  &lt;br/&gt;<br>  &lt;label for=&quot;summary&quot;&gt;Summary&lt;/label&gt;<br>  &lt;input name=&quot;summary&quot; /&gt;<br>  &lt;br/&gt;<br>  Description:<br>  &lt;TEXTAREA NAME=&quot;description&quot; COLS=40 ROWS=6&gt;&lt;/TEXTAREA&gt;<br>  &lt;br/&gt;<br>  &lt;input type=&quot;submit&quot; value=&quot;Submit&quot; /&gt;<br>  &lt;/form&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;<br>[/java]<br>REST Service<br>[java]<br>package de.vogella.jersey.todo.resources;<br>import javax.ws.rs.Consumes;<br>import javax.ws.rs.DELETE;<br>import javax.ws.rs.GET;<br>import javax.ws.rs.PUT;<br>import javax.ws.rs.Produces;<br>import javax.ws.rs.core.Context;<br>import javax.ws.rs.core.MediaType;<br>import javax.ws.rs.core.Request;<br>import javax.ws.rs.core.Response;<br>import javax.ws.rs.core.UriInfo;<br>import javax.xml.bind.JAXBElement;<br>import de.vogella.jersey.todo.dao.TodoDao;<br>import de.vogella.jersey.todo.model.Todo;<br>public class TodoResource {<br>  @Context<br>  UriInfo uriInfo;<br>  @Context<br>  Request request;<br>  String id;<br>  public TodoResource(UriInfo uriInfo, Request request, String id) {<br>    this.uriInfo = uriInfo;<br>    this.request = request;<br>    this.id = id;<br>  }<br>  //Application integration</p>
-<p>  @GET<br>  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})<br>  public Todo getTodo() {<br>    Todo todo = TodoDao.instance.getModel().get(id);<br>    if(todo==null)<br>      throw new RuntimeException(&quot;Get: Todo with &quot; + id +  &quot; not found&quot;);<br>    return todo;<br>  }<br>  // for the browser<br>  @GET<br>  @Produces(MediaType.TEXT_XML)<br>  public Todo getTodoHTML() {<br>    Todo todo = TodoDao.instance.getModel().get(id);<br>    if(todo==null)<br>      throw new RuntimeException(&quot;Get: Todo with &quot; + id +  &quot; not found&quot;);<br>    return todo;<br>  }<br>  @PUT<br>  @Consumes(MediaType.APPLICATION_XML)<br>  public Response putTodo(JAXBElement&lt;Todo&gt; todo) {<br>    Todo c = todo.getValue();<br>    return putAndGetResponse(c);<br>  }<br>  @DELETE<br>  public void deleteTodo() {<br>    Todo c = TodoDao.instance.getModel().remove(id);<br>    if(c==null)<br>      throw new RuntimeException(&quot;Delete: Todo with &quot; + id +  &quot; not found&quot;);<br>  }<br>  private Response putAndGetResponse(Todo todo) {<br>    Response res;<br>  if(TodoDao.instance.getModel().containsKey(todo.getId())) {<br>      res = Response.noContent().build();<br>    } else {<br>      res = Response.created(uriInfo.getAbsolutePath()).build();<br>    }<br>    TodoDao.instance.getModel().put(todo.getId(), todo);<br>    return res;<br>  }<br>}<br>[/java]<br>[java]<br>package de.vogella.jersey.todo.resources;<br>import java.io.IOException;<br>import java.net.URI;<br>import java.util.ArrayList;<br>import java.util.List;<br>import javax.servlet.http.HttpServletResponse;<br>import javax.ws.rs.Consumes;<br>import javax.ws.rs.FormParam;<br>import javax.ws.rs.GET;<br>import javax.ws.rs.POST;<br>import javax.ws.rs.Path;<br>import javax.ws.rs.PathParam;<br>import javax.ws.rs.Produces;<br>import javax.ws.rs.core.Context;<br>import javax.ws.rs.core.MediaType;<br>import javax.ws.rs.core.Request;<br>import javax.ws.rs.core.Response;<br>import javax.ws.rs.core.UriInfo;<br>import de.vogella.jersey.todo.dao.TodoDao;<br>import de.vogella.jersey.todo.model.Todo;<br>// Will map the resource to the URL todos<br>@Path(&quot;/todos&quot;)<br>public class TodosResource {<br>  // Allows to insert contextual objects into the class,<br>  // e.g. ServletContext, Request, Response, UriInfo<br>  @Context<br>  UriInfo uriInfo;<br>  @Context<br>  Request request;<br>  // Return the list of todos to the user in the browser<br>  @GET<br>  @Produces(MediaType.TEXT_XML)<br>  public List&lt;Todo&gt; getTodosBrowser() {<br>    List&lt;Todo&gt; todos = new ArrayList&lt;Todo&gt;();<br>    todos.addAll(TodoDao.instance.getModel().values());<br>    return todos;<br>  }<br>  // Return the list of todos for applications<br>  @GET<br>  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})<br>  public List&lt;Todo&gt; getTodos() {<br>    List&lt;Todo&gt; todos = new ArrayList&lt;Todo&gt;();<br>    todos.addAll(TodoDao.instance.getModel().values());<br>    return todos;<br>  }<br>  // retuns the number of todos<br>  // use <a href="http://localhost:8080/de.vogella.jersey.todo/rest/todos/count" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.todo/rest/todos/count</a><br>  // to get the total number of records<br>  @GET<br>  @Path(&quot;count&quot;)<br>  @Produces(MediaType.TEXT_PLAIN)<br>  public String getCount() {<br>    int count = TodoDao.instance.getModel().size();<br>    return String.valueOf(count);<br>  }<br>  @POST<br>  @Produces(MediaType.TEXT_HTML)<br>  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)<br>  public void newTodo(@FormParam(&quot;id&quot;) String id,<br>      @FormParam(&quot;summary&quot;) String summary,<br>      @FormParam(&quot;description&quot;) String description,<br>      @Context HttpServletResponse servletResponse) throws IOException {<br>    Todo todo = new Todo(id,summary);<br>    if (description!=null){<br>      todo.setDescription(description);<br>    }<br>    TodoDao.instance.getModel().put(id, todo);<br>    servletResponse.sendRedirect(&quot;../create_todo.html&quot;);<br>  }<br>  // Defines that the next path parameter after todos is<br>  // treated as a parameter and passed to the TodoResources<br>  // Allows to type <a href="http://localhost:8080/de.vogella.jersey.todo/rest/todos/1" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.todo/rest/todos/1</a><br>  // 1 will be treaded as parameter todo and passed to TodoResource<br>  @Path(&quot;{todo}&quot;)<br>  public TodoResource getTodo(@PathParam(&quot;todo&quot;) String id) {<br>    return new TodoResource(uriInfo, request, id);<br>  }<br>}<br>[/java]<br>创建客户端<br>运行：<a href="http://localhost:8080/de.vogella.jersey.todo/rest/todos" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.todo/rest/todos</a><br>[java]<br>package de.vogella.jersey.todo.client;<br>import java.net.URI;<br>import javax.ws.rs.core.MediaType;<br>import javax.ws.rs.core.UriBuilder;<br>import com.sun.jersey.api.client.Client;<br>import com.sun.jersey.api.client.ClientResponse;<br>import com.sun.jersey.api.client.WebResource;<br>import com.sun.jersey.api.client.config.ClientConfig;<br>import com.sun.jersey.api.client.config.DefaultClientConfig;<br>import com.sun.jersey.api.representation.Form;<br>import de.vogella.jersey.todo.model.Todo;<br>public class Tester {<br>  public static void main(String[] args) {<br>    ClientConfig config = new DefaultClientConfig();<br>    Client client = Client.create(config);<br>    WebResource service = client.resource(getBaseURI());<br>    // create one todo<br>    Todo todo = new Todo(&quot;3&quot;, &quot;Blabla&quot;);<br>    ClientResponse response = service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>      .path(todo.getId()).accept(MediaType.APPLICATION_XML)<br>        .put(ClientResponse.class, todo);<br>    // Return code should be 201 == created resource<br>    System.out.println(response.getStatus());<br>    // Get the Todos<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>        .accept(MediaType.TEXT_XML).get(String.class));<br>    // Get JSON for application<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>.accept(MediaType.APPLICATION_JSON).get(String.class));<br>    // Get XML for application<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>     .accept(MediaType.APPLICATION_XML).get(String.class));<br>    // Get the Todo with id 1<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;todos/1&quot;)<br>     .accept(MediaType.APPLICATION_XML).get(String.class));<br>    // get Todo with id 1<br>    service.path(&quot;rest&quot;).path(&quot;todos/1&quot;).delete();<br>    // Get the all todos, id 1 should be deleted<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>    .accept(MediaType.APPLICATION_XML).get(String.class));<br>    // create a Todo<br>    Form form = new Form();<br>    form.add(&quot;id&quot;, &quot;4&quot;);<br>    form.add(&quot;summary&quot;, &quot;Demonstration of the client lib for forms&quot;);<br>    response = service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>        .type(MediaType.APPLICATION_FORM_URLENCODED)<br>        .post(ClientResponse.class, form);<br>    System.out.println(&quot;Form response &quot; + response.getEntity(String.class));<br>    // Get the all todos, id 4 should be created<br>    System.out.println(service.path(&quot;rest&quot;).path(&quot;todos&quot;)<br>     .accept(MediaType.APPLICATION_XML).get(String.class));<br>  }<br>  private static URI getBaseURI() {<br>    return UriBuilder.fromUri(&quot;<a href="http://localhost:8080/de.vogella.jersey.todo&quot;).build(" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.todo&quot;).build(</a>);<br>  }<br>}<br>[/java]</p>
-  
-	</div>
-		<footer class="article-footer clearfix">
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/blog/tags/Java/">Java</a><a href="/blog/tags/Web-Service/">Web Service</a>
-  </div>
-
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/blog/categories/Java/">Java</a>
-</div>
-
-
-
-<div class="article-share" id="share">
-
-  <div data-url="http://www.zhangmin.name/blog/2014/07/Java实现RESTful-Service/" data-title="Java实现RESTful Service | ZhangMin.name" data-tsina="null" class="share clearfix">
-  </div>
-
-</div>
-</footer>   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/blog/2014/07/真伪球迷的2014巴西世界杯/" title="真伪球迷的2014巴西世界杯">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  真伪球迷的2014巴西世界杯</span>
-</a>
-</div>
-
-
-<div class="next">
-<a href="/blog/2014/07/可爱又可敬的苏轼/"  title="可爱又可敬的苏轼">
- <strong>NEXT:</strong><br/> 
- <span>可爱又可敬的苏轼
-</span>
-</a>
-</div>
-
-</nav>
-
-	
-<section class="comment">
-	<div class="ds-thread"></div>
-</section>
-
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-REST-Representational_State_Transfer"><span class="toc-number">1.</span> <span class="toc-text">1.REST-Representational State Transfer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1_什么是REST"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 什么是REST</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2_Http方法"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 Http方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3_RESTful_web_Service"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 RESTful web Service</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JAX-RS"><span class="toc-number">2.</span> <span class="toc-text">2.JAX-RS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1_JAX-RS"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 JAX-RS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2_JAX-RS的参考实现Jersey"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 JAX-RS的参考实现Jersey</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3_JRX-RS注解"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 JRX-RS注解</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Jersey"><span class="toc-number">3.</span> <span class="toc-text">3.Jersey</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-创建一个REST示例服务"><span class="toc-number">4.</span> <span class="toc-text">4.创建一个REST示例服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-RESTful_Web_Service与JAXB"><span class="toc-number">5.</span> <span class="toc-text">5.RESTful Web Service与JAXB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1创建项目"><span class="toc-number">5.1.</span> <span class="toc-text">5.1创建项目</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-创建CURD的RESTful_web_service"><span class="toc-number">6.</span> <span class="toc-text">6.创建CURD的RESTful web service</span></a></li></ol>
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">分类</p>
-		<ul>
-		
-			<li><a href="/blog/categories/Java/" title="Java">Java<sup>21</sup></a></li>
-		
-			<li><a href="/blog/categories/MSE/" title="MSE">MSE<sup>104</sup></a></li>
-		
-			<li><a href="/blog/categories/linux/" title="linux">linux<sup>8</sup></a></li>
-		
-			<li><a href="/blog/categories/storm/" title="storm">storm<sup>1</sup></a></li>
-		
-			<li><a href="/blog/categories/分享/" title="分享">分享<sup>70</sup></a></li>
-		
-			<li><a href="/blog/categories/原创/" title="原创">原创<sup>21</sup></a></li>
-		
-			<li><a href="/blog/categories/学习笔记/" title="学习笔记">学习笔记<sup>7</sup></a></li>
-		
-			<li><a href="/blog/categories/每日一文-94天/" title="每日一文(94天)">每日一文(94天)<sup>2</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">标签</p>
-		<ul class="clearfix">
-		
-			<li><a href="/blog/tags/Java/" title="Java">Java<sup>24</sup></a></li>
-		
-			<li><a href="/blog/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
-		
-			<li><a href="/blog/tags/OSGi/" title="OSGi">OSGi<sup>2</sup></a></li>
-		
-			<li><a href="/blog/tags/UCAS/" title="UCAS">UCAS<sup>9</sup></a></li>
-		
-			<li><a href="/blog/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>6</sup></a></li>
-		
-			<li><a href="/blog/tags/Web-Service/" title="Web Service">Web Service<sup>4</sup></a></li>
-		
-			<li><a href="/blog/tags/public-speaking/" title="public speaking">public speaking<sup>18</sup></a></li>
-		
-			<li><a href="/blog/tags/storm/" title="storm">storm<sup>8</sup></a></li>
-		
-			<li><a href="/blog/tags/wordpress/" title="wordpress">wordpress<sup>2</sup></a></li>
-		
-			<li><a href="/blog/tags/国科大/" title="国科大">国科大<sup>8</sup></a></li>
-		
-			<li><a href="/blog/tags/工程哲学/" title="工程哲学">工程哲学<sup>10</sup></a></li>
-		
-			<li><a href="/blog/tags/技术/" title="技术">技术<sup>15</sup></a></li>
-		
-			<li><a href="/blog/tags/明德/" title="明德">明德<sup>3</sup></a></li>
-		
-			<li><a href="/blog/tags/札记/" title="札记">札记<sup>26</sup></a></li>
-		
-			<li><a href="/blog/tags/生活/" title="生活">生活<sup>13</sup></a></li>
-		
-			<li><a href="/blog/tags/记事/" title="记事">记事<sup>5</sup></a></li>
-		
-			<li><a href="/blog/tags/讲座/" title="讲座">讲座<sup>8</sup></a></li>
-		
-			<li><a href="/blog/tags/读书·旅行/" title="读书·旅行">读书·旅行<sup>7</sup></a></li>
-		
-			<li><a href="/blog/tags/问题与算法/" title="问题与算法">问题与算法<sup>12</sup></a></li>
-		
-			<li><a href="/blog/tags/马上有OFFER/" title="马上有OFFER">马上有OFFER<sup>13</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
-    <ul>
-      <li><a href="http://www.zhangmin.name" target="_blank" title="ZhangMin.name">ZhangMin.name</a></li>
-      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
-    </ul>
-</div>
-
-
-</aside>
-</div>
-    </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<section class="info">
-		<p> 2015 <br/>
-			专注 勇敢爱 当下</p>
-	</section>
-	 
-	<div class="social-font" class="clearfix">
-		
-		<a href="http://weibo.com/302585340" target="_blank" title="weibo"></a>
-		
-		
-		<a href="https://twitter.com/zhangmin_name" target="_blank" title="twitter"></a>
-		
-		
-		<a href="https://github.com/zhangmin510" target="_blank" title="github"></a>
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
-		
-		<a href="http://www.zhangmin.name/blog" target="_blank" title="zhangmin.name">zhangmin.name</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/blog/js/jquery-2.1.0.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
       
-      $('#toc.toc-aside').css('display', 'none');
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/blog/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-readings">
+        <a href="/blog/readings">
+          <i class="menu-item-icon icon-readings"></i> <br />
+          读书单
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Java实现RESTful Service
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-07-16
+          
+        </span>
+
         
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/blog/categories/Java/">Java</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/blog/2014/07/Java实现RESTful-Service/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/07/Java实现RESTful-Service/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p>原文地址：<a href="http://www.vogella.com/tutorials/REST/article.html" target="_blank" rel="external">http://www.vogella.com/tutorials/REST/article.html</a></p>
+<p>本教程介绍了如何使用JAX-RS的参考实现Jersey来实现REST Web Service。<br>本教程使用Eclipse 4.4，Java 1.6，Tomcat 6.0 及JAX-RS 1.1 (Jersey 1.5)。</p>
+<h3 id="1-REST-Representational_State_Transfer">1.REST-Representational State Transfer</h3><h4 id="1-1_什么是REST">1.1 什么是REST</h4><p>REST是一种基于web标准和http协议的架构风格。REST是由Roy Fielding在2000年提出的。<br>在REST中一切都是resource，resource的访问是通过Http的标准接口来实现的。有一个REST服务器提供相关REST的服务，如<br>访问resource，修改resource。<br>每种resource都有一个唯一的URI标识，且都应该支持标准的http操作。REST允许resource使用不同的表示方法，如文本，XML，JSON等。<br>REST客户端可以通过Http请求使用特定的表示。</p>
+<h4 id="1-2_Http方法">1.2 Http方法</h4><p>PUT，GET，POST，DELETE是REST中常用的Http方法。它们分别表示：<br>1. GET 定义resource的读取。没有任何的副作用，即不会改变resource。要满足幂等这个性质（自己重复运算得到的结果仍然是自己）。<br>2. PUT 创建一个resource。也是幂等的。<br>3. DELETE 移除一个resource。幂等，可以执行多次而不会产生不同的结果。<br>4. POST 更新一个已经存在的resource或者创建一个新的resource。</p>
+<h4 id="1-3_RESTful_web_Service">1.3 RESTful web Service</h4><p>RESTful web Service是使用REST的基本概念及Http的方法实现的。一个典型的RESTful web Service定义了服务的基本的resource，支持的MIME Type（XML，JSON，用户自定义等），及支持的操作集合（GET，POST，PUT，DELETE）。</p>
+<h3 id="2-JAX-RS">2.JAX-RS</h3><h4 id="2-1_JAX-RS">2.1 JAX-RS</h4><p>Java通过JSR 311提供了REST支持。全名是The Java API for RESTful Web Service）。JAX-RS使用朱姐来定义REST相关的Java类。</p>
+<h4 id="2-2_JAX-RS的参考实现Jersey">2.2 JAX-RS的参考实现Jersey</h4><p>Jersey是JAX-RS的参考实现。在Java Servlet容器中实现RESTful web Service。在服务端，Jersey提供了一个Servlet实现用来扫描可识别的resource。需要在web.xml中进行配置，即对这个Servlet进行注册和配置。<br>Jersey也提供了一个客户端程序用于与服务端的交互。<br>这个Servlet的基本的URL是<br>[java]<br><a href="http://your_domain:port/display-name/url-pattern/path_from_rest_class" target="_blank" rel="external">http://your_domain:port/display-name/url-pattern/path_from_rest_class</a><br>[/java]<br>这个Servlet分析Http请求，并选择正确的类和方法来响应请求。这些选择是基于每个提供resource的类的注解。<br>一个REST web Service包括数据类（resource）和服务。这两种类型要在不同的包中进行维护，这样可以方便Jersey的Servlet进行查找特定的数据类。<br>JAX-RS支持使用Java Architecture for XML Binding（[JAXB教程](<a href="http://www.vogella.com/tutorials/JAXB/article.html）创建XML，JSON。" target="_blank" rel="external">http://www.vogella.com/tutorials/JAXB/article.html）创建XML，JSON。</a></p>
+<h4 id="2-3_JRX-RS注解">2.3 JRX-RS注解</h4><p>@PATH(your_path) 将访问路径设置为基本的URL+/your_path。基本路径取决于web.xml中配置的应用名称，Servlet的URL。<br>@POST 指示下面的方法将响应http POST请求。<br>@GET  指示下面的方法将响应http GET请求。<br>@PUT  指示下面的方法将响应http PUT请求。<br>@DELETE  指示下面的方法将响应http DELETE请求。<br>@Produces(MediaType.TEXT_PLAIN[, more-types])  @Produces 定义被注解为@GET的方法将要使用的MIME Type。d<br>@Consumes(type[, more-types])  @Consumes 定义这个方法将消费什么样的MIME Type。<br>@PathParam  用于从URL中提取参数并注入为方法的参数。</p>
+<h3 id="3-Jersey">3.Jersey</h3><p>在<a href="http://jersey.java.net/" target="_blank" rel="external">http://jersey.java.net/</a>下载Jersey。</p>
+<h3 id="4-创建一个REST示例服务">4.创建一个REST示例服务</h3><p>在Eclipse中创建Dynamic Web Project。将下载的jars放入WEB-INF/lib目录下。</p>
+<p>创建下面的Java类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.first;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.GET;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Path;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Produces;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.MediaType;</span><br><span class="line"><span class="comment">// Plain old Java Object it does not extend as class or implements </span></span><br><span class="line"><span class="comment">// an interface</span></span><br><span class="line"><span class="comment">// The class registers its methods for the HTTP GET request using the @GET annotation. </span></span><br><span class="line"><span class="comment">// Using the @Produces annotation, it defines that it can deliver several MIME types,</span></span><br><span class="line"><span class="comment">// text, XML and HTML. </span></span><br><span class="line"><span class="comment">// The browser requests per default the HTML MIME type.</span></span><br><span class="line"><span class="comment">//Sets the path to base URL + /hello</span></span><br><span class="line"><span class="annotation">@Path</span>(&amp;quot;/hello&amp;quot;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> </span>&#123;</span><br><span class="line">  <span class="comment">// This method is called if TEXT_PLAIN is request</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_PLAIN)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">sayPlainTextHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;quot;Hello Jersey&amp;quot;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// This method is called if XML is request</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_XML)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">sayXMLHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;quot;&amp;lt;?xml version=\&amp;quot;<span class="number">1.0</span>\&amp;quot;?&amp;gt;&amp;quot; + &amp;quot;&amp;lt;hello&amp;gt; Hello Jersey&amp;quot; + &amp;quot;&amp;lt;/hello&amp;gt;&amp;quot;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// This method is called if HTML is request</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_HTML)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">sayHtmlHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;quot;&amp;lt;html&amp;gt; &amp;quot; + &amp;quot;&amp;lt;title&amp;gt;&amp;quot; + &amp;quot;Hello Jersey&amp;quot; + &amp;quot;&amp;lt;/title&amp;gt;&amp;quot;</span><br><span class="line">        + &amp;quot;&amp;lt;body&amp;gt;&amp;lt;h1&amp;gt;&amp;quot; + &amp;quot;Hello Jersey&amp;quot; + &amp;quot;&amp;lt;/body&amp;gt;&amp;lt;/h1&amp;gt;&amp;quot; + &amp;quot;&amp;lt;/html&amp;gt; &amp;quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在web.xml中进行配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;?xml version=&amp;quot;<span class="number">1.0</span>&amp;quot; encoding=&amp;quot;UTF-<span class="number">8</span>&amp;quot;?&amp;gt;</span><br><span class="line">&amp;lt;web-app xmlns:xsi=&amp;quot;http:<span class="comment">//www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns=&amp;quot;http://java.sun.com/xml/ns/javaee&amp;quot; xmlns:web=&amp;quot;http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot; xsi:schemaLocation=&amp;quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot; id=&amp;quot;WebApp_ID&amp;quot; version=&amp;quot;2.5&amp;quot;&amp;gt;</span></span><br><span class="line">  &amp;lt;display-name&amp;gt;de.vogella.jersey.first&amp;lt;/display-name&amp;gt;</span><br><span class="line">  &amp;lt;servlet&amp;gt;</span><br><span class="line">    &amp;lt;servlet-name&amp;gt;Jersey REST Service&amp;lt;/servlet-name&amp;gt;</span><br><span class="line">    &amp;lt;servlet-<span class="class"><span class="keyword">class</span>&amp;<span class="title">gt</span></span>;com.sun.jersey.spi.container.servlet.ServletContainer&amp;lt;/servlet-<span class="class"><span class="keyword">class</span>&amp;<span class="title">gt</span></span>;</span><br><span class="line">    &amp;lt;init-param&amp;gt;</span><br><span class="line">      &amp;lt;param-name&amp;gt;com.sun.jersey.config.property.packages&amp;lt;/param-name&amp;gt;</span><br><span class="line">      &amp;lt;param-value&amp;gt;de.vogella.jersey.first&amp;lt;/param-value&amp;gt;</span><br><span class="line">    &amp;lt;/init-param&amp;gt;</span><br><span class="line">    &amp;lt;load-on-startup&amp;gt;<span class="number">1</span>&amp;lt;/load-on-startup&amp;gt;</span><br><span class="line">  &amp;lt;/servlet&amp;gt;</span><br><span class="line">  &amp;lt;servlet-mapping&amp;gt;</span><br><span class="line">    &amp;lt;servlet-name&amp;gt;Jersey REST Service&amp;lt;/servlet-name&amp;gt;</span><br><span class="line">    &amp;lt;url-pattern&amp;gt;/rest<span class="comment">/*&amp;lt;/url-pattern&amp;gt;</span><br><span class="line">  &amp;lt;/servlet-mapping&amp;gt;</span><br><span class="line">&amp;lt;/web-app&amp;gt; </span><br><span class="line">``` </span><br><span class="line">访问网址测试： http://localhost:8080/de.vogella.jersey.first/rest/hello.</span><br><span class="line">或者使用Jersey的客户端测试，当然你也可以使用Apache HttpClient。</span><br><span class="line">``` java</span><br><span class="line">package de.vogella.jersey.first.client;</span><br><span class="line">import java.net.URI;</span><br><span class="line">import javax.ws.rs.core.MediaType;</span><br><span class="line">import javax.ws.rs.core.UriBuilder;</span><br><span class="line">import com.sun.jersey.api.client.Client;</span><br><span class="line">import com.sun.jersey.api.client.ClientResponse;</span><br><span class="line">import com.sun.jersey.api.client.WebResource;</span><br><span class="line">import com.sun.jersey.api.client.config.ClientConfig;</span><br><span class="line">import com.sun.jersey.api.client.config.DefaultClientConfig;</span><br><span class="line">public class Test &#123;</span><br><span class="line">  public static void main(String[] args) &#123;</span><br><span class="line">    ClientConfig config = new DefaultClientConfig();</span><br><span class="line">    Client client = Client.create(config);</span><br><span class="line">    WebResource service = client.resource(getBaseURI());</span><br><span class="line">    // Fluent interfaces</span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;hello&amp;quot;).accept(MediaType.TEXT_PLAIN).get(ClientResponse.class).toString());</span><br><span class="line">    // Get plain text</span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;hello&amp;quot;).accept(MediaType.TEXT_PLAIN).get(String.class));</span><br><span class="line">    // Get XML</span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;hello&amp;quot;).accept(MediaType.TEXT_XML).get(String.class));</span><br><span class="line">    // The HTML</span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;hello&amp;quot;).accept(MediaType.TEXT_HTML).get(String.class));</span><br><span class="line">  &#125;</span><br><span class="line">  private static URI getBaseURI() &#123;</span><br><span class="line">    return UriBuilder.fromUri(&amp;quot;http://localhost:8080/de.vogella.jersey.first&amp;quot;).build();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="5-RESTful_Web_Service与JAXB">5.RESTful Web Service与JAXB</h3><h4 id="5-1创建项目">5.1创建项目</h4><p>新建项目方法如上。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.jaxb.model;</span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.annotation.XmlRootElement;</span><br><span class="line"><span class="annotation">@XmlRootElement</span></span><br><span class="line"><span class="comment">// JAX-RS supports an automatic mapping from JAXB annotated class to XML and JSON</span></span><br><span class="line"><span class="comment">// Isn't that cool?</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Todo</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> String summary;</span><br><span class="line">  <span class="keyword">private</span> String description;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getSummary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> summary;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSummary</span><span class="params">(String summary)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.summary = summary;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> description;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDescription</span><span class="params">(String description)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.description = description;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.jaxb;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.GET;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Path;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Produces;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.MediaType;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.jaxb.model.Todo;</span><br><span class="line"><span class="annotation">@Path</span>(&amp;quot;/todo&amp;quot;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TodoResource</span> </span>&#123;</span><br><span class="line">  <span class="comment">// This method is called if XMLis request</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(&#123; MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON &#125;)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Todo <span class="title">getXML</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Todo todo = <span class="keyword">new</span> Todo();</span><br><span class="line">    todo.setSummary(&amp;quot;This is my first todo&amp;quot;);</span><br><span class="line">    todo.setDescription(&amp;quot;This is my first todo&amp;quot;);</span><br><span class="line">    <span class="keyword">return</span> todo;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// This can be used to test the integration with the browser</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(&#123; MediaType.TEXT_XML &#125;)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Todo <span class="title">getHTML</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Todo todo = <span class="keyword">new</span> Todo();</span><br><span class="line">    todo.setSummary(&amp;quot;This is my first todo&amp;quot;);</span><br><span class="line">    todo.setDescription(&amp;quot;This is my first todo&amp;quot;);</span><br><span class="line">    <span class="keyword">return</span> todo;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;?xml version=&amp;quot;<span class="number">1.0</span>&amp;quot; encoding=&amp;quot;UTF-<span class="number">8</span>&amp;quot;?&amp;gt;</span><br><span class="line">&amp;lt;web-app xmlns:xsi=&amp;quot;http:<span class="comment">//www.w3.org/2001/XMLSchema-instance&amp;quot;</span></span><br><span class="line">  xmlns=&amp;quot;http:<span class="comment">//java.sun.com/xml/ns/javaee&amp;quot; xmlns:web=&amp;quot;http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot;</span></span><br><span class="line">  xsi:schemaLocation=&amp;quot;http:<span class="comment">//java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot;</span></span><br><span class="line">  id=&amp;quot;WebApp_ID&amp;quot; version=&amp;quot;<span class="number">2.5</span>&amp;quot;&amp;gt;</span><br><span class="line">  &amp;lt;display-name&amp;gt;de.vogella.jersey.jaxb&amp;lt;/display-name&amp;gt;</span><br><span class="line">  &amp;lt;servlet&amp;gt;</span><br><span class="line">    &amp;lt;servlet-name&amp;gt;Jersey REST Service&amp;lt;/servlet-name&amp;gt;</span><br><span class="line">    &amp;lt;servlet-<span class="class"><span class="keyword">class</span>&amp;<span class="title">gt</span></span>;com.sun.jersey.spi.container.servlet.ServletContainer&amp;lt;/servlet-<span class="class"><span class="keyword">class</span>&amp;<span class="title">gt</span></span>;</span><br><span class="line">    &amp;lt;init-param&amp;gt;</span><br><span class="line">      &amp;lt;param-name&amp;gt;com.sun.jersey.config.property.packages&amp;lt;/param-name&amp;gt;</span><br><span class="line">      &amp;lt;param-value&amp;gt;de.vogella.jersey.jaxb&amp;lt;/param-value&amp;gt;</span><br><span class="line">    &amp;lt;/init-param&amp;gt;</span><br><span class="line">    &amp;lt;load-on-startup&amp;gt;<span class="number">1</span>&amp;lt;/load-on-startup&amp;gt;</span><br><span class="line">  &amp;lt;/servlet&amp;gt;</span><br><span class="line">  &amp;lt;servlet-mapping&amp;gt;</span><br><span class="line">    &amp;lt;servlet-name&amp;gt;Jersey REST Service&amp;lt;/servlet-name&amp;gt;</span><br><span class="line">    &amp;lt;url-pattern&amp;gt;/rest<span class="comment">/*&amp;lt;/url-pattern&amp;gt;</span><br><span class="line">  &amp;lt;/servlet-mapping&amp;gt;</span><br><span class="line">&amp;lt;/web-app&amp;gt;</span></span><br></pre></td></tr></table></figure>
+<p>访问网址：<a href="http://localhost:8080/de.vogella.jersey.jaxb/rest/todo" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.jaxb/rest/todo</a><br>创建客户端访问<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.jaxb.client;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.MediaType;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.UriBuilder;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.Client;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.WebResource;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.config.ClientConfig;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.config.DefaultClientConfig;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    ClientConfig config = <span class="keyword">new</span> DefaultClientConfig();</span><br><span class="line">    Client client = Client.create(config);</span><br><span class="line">    WebResource service = client.resource(getBaseURI());</span><br><span class="line">    <span class="comment">// Get XML  System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todo&amp;quot;).accept(MediaType.TEXT_XML).get(String.class));</span></span><br><span class="line">    <span class="comment">// Get XML for application  System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todo&amp;quot;).accept(MediaType.APPLICATION_JSON).get(String.class));</span></span><br><span class="line">    <span class="comment">// Get JSON for application</span></span><br><span class="line"> System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todo&amp;quot;).accept(MediaType.APPLICATION_XML).get(String.class));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> URI <span class="title">getBaseURI</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> UriBuilder.fromUri(&amp;quot;http:<span class="comment">//localhost:8080/de.vogella.jersey.jaxb&amp;quot;).build();</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="6-创建CURD的RESTful_web_service">6.创建CURD的RESTful web service</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;?xml version=&amp;quot;<span class="number">1.0</span>&amp;quot; encoding=&amp;quot;UTF-<span class="number">8</span>&amp;quot;?&amp;gt;</span><br><span class="line">&amp;lt;web-app xmlns:xsi=&amp;quot;http:<span class="comment">//www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns=&amp;quot;http://java.sun.com/xml/ns/javaee&amp;quot; xmlns:web=&amp;quot;http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot; xsi:schemaLocation=&amp;quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot; id=&amp;quot;WebApp_ID&amp;quot; version=&amp;quot;2.5&amp;quot;&amp;gt;</span></span><br><span class="line">  &amp;lt;display-name&amp;gt;de.vogella.jersey.todo&amp;lt;/display-name&amp;gt;</span><br><span class="line">  &amp;lt;servlet&amp;gt;</span><br><span class="line">    &amp;lt;servlet-name&amp;gt;Jersey REST Service&amp;lt;/servlet-name&amp;gt;</span><br><span class="line">    &amp;lt;servlet-<span class="class"><span class="keyword">class</span>&amp;<span class="title">gt</span></span>;com.sun.jersey.spi.container.servlet.ServletContainer&amp;lt;/servlet-<span class="class"><span class="keyword">class</span>&amp;<span class="title">gt</span></span>;</span><br><span class="line">    &amp;lt;init-param&amp;gt;</span><br><span class="line">      &amp;lt;param-name&amp;gt;com.sun.jersey.config.property.packages&amp;lt;/param-name&amp;gt;</span><br><span class="line">      &amp;lt;param-value&amp;gt;de.vogella.jersey.todo.resources&amp;lt;/param-value&amp;gt;</span><br><span class="line">    &amp;lt;/init-param&amp;gt;</span><br><span class="line">    &amp;lt;load-on-startup&amp;gt;<span class="number">1</span>&amp;lt;/load-on-startup&amp;gt;</span><br><span class="line">  &amp;lt;/servlet&amp;gt;</span><br><span class="line">  &amp;lt;servlet-mapping&amp;gt;</span><br><span class="line">    &amp;lt;servlet-name&amp;gt;Jersey REST Service&amp;lt;/servlet-name&amp;gt;</span><br><span class="line">    &amp;lt;url-pattern&amp;gt;/rest<span class="comment">/*&amp;lt;/url-pattern&amp;gt;</span><br><span class="line">  &amp;lt;/servlet-mapping&amp;gt;</span><br><span class="line">&amp;lt;/web-app&amp;gt;</span></span><br></pre></td></tr></table></figure>
+<p>创建下面的数据模型作为数据模型及一个单体提供这个模型。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.todo.model;</span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.annotation.XmlRootElement;</span><br><span class="line"><span class="annotation">@XmlRootElement</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Todo</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> String id;</span><br><span class="line">  <span class="keyword">private</span> String summary;</span><br><span class="line">  <span class="keyword">private</span> String description;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Todo</span><span class="params">()</span></span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Todo</span> <span class="params">(String id, String summary)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.id = id;</span><br><span class="line">    <span class="keyword">this</span>.summary = summary;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> id;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(String id)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.id = id;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getSummary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> summary;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSummary</span><span class="params">(String summary)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.summary = summary;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> description;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDescription</span><span class="params">(String description)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.description = description;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.todo.dao;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.todo.model.Todo;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> TodoDao &#123;</span><br><span class="line">  instance;</span><br><span class="line">  <span class="keyword">private</span> Map&amp;lt;String, Todo&amp;gt; contentProvider = <span class="keyword">new</span> HashMap&amp;lt;String, Todo&amp;gt;();</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">TodoDao</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    Todo todo = <span class="keyword">new</span> Todo(&amp;quot;<span class="number">1</span>&amp;quot;, &amp;quot;Learn REST&amp;quot;);</span><br><span class="line">    todo.setDescription(&amp;quot;Read http:<span class="comment">//www.vogella.com/tutorials/REST/article.html&amp;quot;);</span></span><br><span class="line">    contentProvider.put(&amp;quot;<span class="number">1</span>&amp;quot;, todo);</span><br><span class="line">    todo = <span class="keyword">new</span> Todo(&amp;quot;<span class="number">2</span>&amp;quot;, &amp;quot;Do something&amp;quot;);</span><br><span class="line">    todo.setDescription(&amp;quot;Read complete http:<span class="comment">//www.vogella.com&amp;quot;);</span></span><br><span class="line">    contentProvider.put(&amp;quot;<span class="number">2</span>&amp;quot;, todo); </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> Map&amp;lt;String, Todo&amp;gt; getModel()&#123;</span><br><span class="line">    <span class="keyword">return</span> contentProvider;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建一个简单地html页面POST数据到Service。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;!DOCTYPE html&amp;gt;</span><br><span class="line">&amp;lt;html&amp;gt;</span><br><span class="line"> &amp;lt;head&amp;gt;</span><br><span class="line">  &amp;lt;title&amp;gt;Form to create a <span class="keyword">new</span> resource&amp;lt;/title&amp;gt;</span><br><span class="line"> &amp;lt;/head&amp;gt;</span><br><span class="line">&amp;lt;body&amp;gt;</span><br><span class="line">  &amp;lt;form action=&amp;quot;../de.vogella.jersey.todo/rest/todos&amp;quot; method=&amp;quot;POST&amp;quot;&amp;gt;</span><br><span class="line">  &amp;lt;label <span class="keyword">for</span>=&amp;quot;id&amp;quot;&amp;gt;ID&amp;lt;/label&amp;gt;</span><br><span class="line">  &amp;lt;input name=&amp;quot;id&amp;quot; /&amp;gt;</span><br><span class="line">  &amp;lt;br/&amp;gt;</span><br><span class="line">  &amp;lt;label <span class="keyword">for</span>=&amp;quot;summary&amp;quot;&amp;gt;Summary&amp;lt;/label&amp;gt;</span><br><span class="line">  &amp;lt;input name=&amp;quot;summary&amp;quot; /&amp;gt;</span><br><span class="line">  &amp;lt;br/&amp;gt;</span><br><span class="line">  Description:</span><br><span class="line">  &amp;lt;TEXTAREA NAME=&amp;quot;description&amp;quot; COLS=<span class="number">40</span> ROWS=<span class="number">6</span>&amp;gt;&amp;lt;/TEXTAREA&amp;gt;</span><br><span class="line">  &amp;lt;br/&amp;gt;</span><br><span class="line">  &amp;lt;input type=&amp;quot;submit&amp;quot; value=&amp;quot;Submit&amp;quot; /&amp;gt;</span><br><span class="line">  &amp;lt;/form&amp;gt;</span><br><span class="line">&amp;lt;/body&amp;gt;</span><br><span class="line">&amp;lt;/html&amp;gt;</span><br></pre></td></tr></table></figure></p>
+<p>REST Service<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.todo.resources;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Consumes;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.DELETE;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.GET;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.PUT;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Produces;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.Context;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.MediaType;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.Request;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.Response;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.UriInfo;</span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.JAXBElement;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.todo.dao.TodoDao;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.todo.model.Todo;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TodoResource</span> </span>&#123;</span><br><span class="line">  <span class="annotation">@Context</span></span><br><span class="line">  UriInfo uriInfo;</span><br><span class="line">  <span class="annotation">@Context</span></span><br><span class="line">  Request request;</span><br><span class="line">  String id;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">TodoResource</span><span class="params">(UriInfo uriInfo, Request request, String id)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.uriInfo = uriInfo;</span><br><span class="line">    <span class="keyword">this</span>.request = request;</span><br><span class="line">    <span class="keyword">this</span>.id = id;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//Application integration</span></span><br><span class="line"></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(&#123;MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON&#125;)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Todo <span class="title">getTodo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Todo todo = TodoDao.instance.getModel().get(id);</span><br><span class="line">    <span class="keyword">if</span>(todo==<span class="keyword">null</span>)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(&amp;quot;Get: Todo with &amp;quot; + id +  &amp;quot; not found&amp;quot;);</span><br><span class="line">    <span class="keyword">return</span> todo;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// for the browser</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_XML)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Todo <span class="title">getTodoHTML</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Todo todo = TodoDao.instance.getModel().get(id);</span><br><span class="line">    <span class="keyword">if</span>(todo==<span class="keyword">null</span>)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(&amp;quot;Get: Todo with &amp;quot; + id +  &amp;quot; not found&amp;quot;);</span><br><span class="line">    <span class="keyword">return</span> todo;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="annotation">@PUT</span></span><br><span class="line">  <span class="annotation">@Consumes</span>(MediaType.APPLICATION_XML)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Response <span class="title">putTodo</span><span class="params">(JAXBElement&amp;lt;Todo&amp;gt; todo)</span> </span>&#123;</span><br><span class="line">    Todo c = todo.getValue();</span><br><span class="line">    <span class="keyword">return</span> putAndGetResponse(c);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="annotation">@DELETE</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteTodo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Todo c = TodoDao.instance.getModel().remove(id);</span><br><span class="line">    <span class="keyword">if</span>(c==<span class="keyword">null</span>)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(&amp;quot;Delete: Todo with &amp;quot; + id +  &amp;quot; not found&amp;quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> Response <span class="title">putAndGetResponse</span><span class="params">(Todo todo)</span> </span>&#123;</span><br><span class="line">    Response res;</span><br><span class="line">  <span class="keyword">if</span>(TodoDao.instance.getModel().containsKey(todo.getId())) &#123;</span><br><span class="line">      res = Response.noContent().build();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      res = Response.created(uriInfo.getAbsolutePath()).build();</span><br><span class="line">    &#125;</span><br><span class="line">    TodoDao.instance.getModel().put(todo.getId(), todo);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.todo.resources;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Consumes;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.FormParam;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.GET;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.POST;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Path;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.PathParam;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Produces;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.Context;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.MediaType;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.Request;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.Response;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.UriInfo;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.todo.dao.TodoDao;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.todo.model.Todo;</span><br><span class="line"><span class="comment">// Will map the resource to the URL todos</span></span><br><span class="line"><span class="annotation">@Path</span>(&amp;quot;/todos&amp;quot;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TodosResource</span> </span>&#123;</span><br><span class="line">  <span class="comment">// Allows to insert contextual objects into the class, </span></span><br><span class="line">  <span class="comment">// e.g. ServletContext, Request, Response, UriInfo</span></span><br><span class="line">  <span class="annotation">@Context</span></span><br><span class="line">  UriInfo uriInfo;</span><br><span class="line">  <span class="annotation">@Context</span></span><br><span class="line">  Request request;</span><br><span class="line">  <span class="comment">// Return the list of todos to the user in the browser</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_XML)</span><br><span class="line">  <span class="keyword">public</span> List&amp;lt;Todo&amp;gt; getTodosBrowser() &#123;</span><br><span class="line">    List&amp;lt;Todo&amp;gt; todos = <span class="keyword">new</span> ArrayList&amp;lt;Todo&amp;gt;();</span><br><span class="line">    todos.addAll(TodoDao.instance.getModel().values());</span><br><span class="line">    <span class="keyword">return</span> todos; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Return the list of todos for applications</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(&#123;MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON&#125;)</span><br><span class="line">  <span class="keyword">public</span> List&amp;lt;Todo&amp;gt; getTodos() &#123;</span><br><span class="line">    List&amp;lt;Todo&amp;gt; todos = <span class="keyword">new</span> ArrayList&amp;lt;Todo&amp;gt;();</span><br><span class="line">    todos.addAll(TodoDao.instance.getModel().values());</span><br><span class="line">    <span class="keyword">return</span> todos; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// retuns the number of todos</span></span><br><span class="line">  <span class="comment">// use http://localhost:8080/de.vogella.jersey.todo/rest/todos/count</span></span><br><span class="line">  <span class="comment">// to get the total number of records</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Path</span>(&amp;quot;count&amp;quot;)</span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_PLAIN)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = TodoDao.instance.getModel().size();</span><br><span class="line">    <span class="keyword">return</span> String.valueOf(count);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="annotation">@POST</span></span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_HTML)</span><br><span class="line">  <span class="annotation">@Consumes</span>(MediaType.APPLICATION_FORM_URLENCODED)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">newTodo</span><span class="params">(@FormParam(&amp;quot;id&amp;quot;)</span> String id,</span><br><span class="line">      @<span class="title">FormParam</span><span class="params">(&amp;quot;summary&amp;quot;)</span> String summary,</span><br><span class="line">      @<span class="title">FormParam</span><span class="params">(&amp;quot;description&amp;quot;)</span> String description,</span><br><span class="line">      @Context HttpServletResponse servletResponse) <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    Todo todo = <span class="keyword">new</span> Todo(id,summary);</span><br><span class="line">    <span class="keyword">if</span> (description!=<span class="keyword">null</span>)&#123;</span><br><span class="line">      todo.setDescription(description);</span><br><span class="line">    &#125;</span><br><span class="line">    TodoDao.instance.getModel().put(id, todo);</span><br><span class="line">    servletResponse.sendRedirect(&amp;quot;../create_todo.html&amp;quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Defines that the next path parameter after todos is</span></span><br><span class="line">  <span class="comment">// treated as a parameter and passed to the TodoResources</span></span><br><span class="line">  <span class="comment">// Allows to type http://localhost:8080/de.vogella.jersey.todo/rest/todos/1</span></span><br><span class="line">  <span class="comment">// 1 will be treaded as parameter todo and passed to TodoResource</span></span><br><span class="line">  <span class="annotation">@Path</span>(&amp;quot;&#123;todo&#125;&amp;quot;)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> TodoResource <span class="title">getTodo</span><span class="params">(@PathParam(&amp;quot;todo&amp;quot;)</span> String id) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> TodoResource(uriInfo, request, id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建客户端<br>运行：<a href="http://localhost:8080/de.vogella.jersey.todo/rest/todos" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.todo/rest/todos</a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.todo.client;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.MediaType;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.UriBuilder;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.Client;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.ClientResponse;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.WebResource;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.config.ClientConfig;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.config.DefaultClientConfig;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.representation.Form;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.todo.model.Todo;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tester</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    ClientConfig config = <span class="keyword">new</span> DefaultClientConfig();</span><br><span class="line">    Client client = Client.create(config);</span><br><span class="line">    WebResource service = client.resource(getBaseURI());</span><br><span class="line">    <span class="comment">// create one todo</span></span><br><span class="line">    Todo todo = <span class="keyword">new</span> Todo(&amp;quot;<span class="number">3</span>&amp;quot;, &amp;quot;Blabla&amp;quot;);</span><br><span class="line">    ClientResponse response = service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">      .path(todo.getId()).accept(MediaType.APPLICATION_XML)</span><br><span class="line">        .put(ClientResponse.class, todo);</span><br><span class="line">    <span class="comment">// Return code should be 201 == created resource</span></span><br><span class="line">    System.out.println(response.getStatus());</span><br><span class="line">    <span class="comment">// Get the Todos</span></span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">        .accept(MediaType.TEXT_XML).get(String.class));</span><br><span class="line">    <span class="comment">// Get JSON for application</span></span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">.accept(MediaType.APPLICATION_JSON).get(String.class));</span><br><span class="line">    <span class="comment">// Get XML for application</span></span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">     .accept(MediaType.APPLICATION_XML).get(String.class));</span><br><span class="line">    <span class="comment">// Get the Todo with id 1</span></span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos/<span class="number">1</span>&amp;quot;)</span><br><span class="line">     .accept(MediaType.APPLICATION_XML).get(String.class));</span><br><span class="line">    <span class="comment">// get Todo with id 1</span></span><br><span class="line">    service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos/<span class="number">1</span>&amp;quot;).delete();</span><br><span class="line">    <span class="comment">// Get the all todos, id 1 should be deleted</span></span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">    .accept(MediaType.APPLICATION_XML).get(String.class));</span><br><span class="line">    <span class="comment">// create a Todo</span></span><br><span class="line">    Form form = <span class="keyword">new</span> Form();</span><br><span class="line">    form.add(&amp;quot;id&amp;quot;, &amp;quot;<span class="number">4</span>&amp;quot;);</span><br><span class="line">    form.add(&amp;quot;summary&amp;quot;, &amp;quot;Demonstration of the client lib <span class="keyword">for</span> forms&amp;quot;);</span><br><span class="line">    response = service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">        .type(MediaType.APPLICATION_FORM_URLENCODED)</span><br><span class="line">        .post(ClientResponse.class, form);</span><br><span class="line">    System.out.println(&amp;quot;Form response &amp;quot; + response.getEntity(String.class));</span><br><span class="line">    <span class="comment">// Get the all todos, id 4 should be created</span></span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">     .accept(MediaType.APPLICATION_XML).get(String.class));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> URI <span class="title">getBaseURI</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> UriBuilder.fromUri(&amp;quot;http:<span class="comment">//localhost:8080/de.vogella.jersey.todo&amp;quot;).build();</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/blog/tags/Java/">
+                #Java
+              </a>
+            
+              <a href="/blog/tags/Web-Service/">
+                #Web Service
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/2014/07/真伪球迷的2014巴西世界杯/">真伪球迷的2014巴西世界杯</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/2014/07/可爱又可敬的苏轼/">可爱又可敬的苏轼</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+    <div class="comments" id="comments">
+      
+        <div class="ds-thread" data-thread-key="2014/07/Java实现RESTful-Service/"
+             data-title="Java实现RESTful Service" data-url="http://www.zhangmin.name/blog/2014/07/Java实现RESTful-Service/">
+        </div>
+
+      
+    </div>
+  
+
+          </div>
+
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview">
+          站点概览
+        </li>
+      </ul>
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/blog/images/default_avatar.jpg" alt="zhangmin.name" />
+        <p class="site-author-name">zhangmin.name</p>
+      </div>
+      <p class="site-description motion-element">ZhangMin.name's Blog</p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <a href="/blog/archives">
+            <span class="site-state-item-count">234</span>
+            <span class="site-state-item-name">日志</span>
+          </a>
+        </div>
+
+        <div class="site-state-item site-state-categories">
+          
+            <span class="site-state-item-count">9</span>
+            <span class="site-state-item-name">分类</span>
+          
+        </div>
+
+        <div class="site-state-item site-state-tags">
+          
+            <span class="site-state-item-count">20</span>
+            <span class="site-state-item-name">标签</span>
+          
+        </div>
+
+      </div>
+
+      
+
+      <div class="links-of-author motion-element">
+        
+          
+            <span class="links-of-author-item">
+              <a href="https://github.com/zhangmin510" target="_blank">GitHub</a>
+            </span>
+          
+            <span class="links-of-author-item">
+              <a href="http://weibo.com/302585340" target="_blank">Weibo</a>
+            </span>
+          
+        
+      </div>
+
+      
+      
+        <div class="cc-license motion-element">
+          <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+            <img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+          </a>
+        </div>
+      
+
+    </div>
+
+    
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          
+          
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-REST-Representational_State_Transfer"><span class="nav-number">1.</span> <span class="nav-text">1.REST-Representational State Transfer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1_什么是REST"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 什么是REST</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2_Http方法"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Http方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3_RESTful_web_Service"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 RESTful web Service</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-JAX-RS"><span class="nav-number">2.</span> <span class="nav-text">2.JAX-RS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1_JAX-RS"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 JAX-RS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2_JAX-RS的参考实现Jersey"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 JAX-RS的参考实现Jersey</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3_JRX-RS注解"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 JRX-RS注解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Jersey"><span class="nav-number">3.</span> <span class="nav-text">3.Jersey</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-创建一个REST示例服务"><span class="nav-number">4.</span> <span class="nav-text">4.创建一个REST示例服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-RESTful_Web_Service与JAXB"><span class="nav-number">5.</span> <span class="nav-text">5.RESTful Web Service与JAXB</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1创建项目"><span class="nav-number">5.1.</span> <span class="nav-text">5.1创建项目</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-创建CURD的RESTful_web_service"><span class="nav-number">6.</span> <span class="nav-text">6.创建CURD的RESTful web service</span></a></li></ol></div>
+          
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2010 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">zhangmin.name</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
     }
   });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      h  = $('article h2')
-      ah = $('article h2'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  if(ah.length==0){
-    t.css('display','none');
-  }else{
-    c.click(function(){
-      ta.css('display', 'block').addClass('fadeIn');
-    });
-    o.click(function(){
-      ta.css('display', 'none');
-    });
-    $(window).scroll(function(){
-      ta.css("top",Math.max(140,320-$(this).scrollTop()));
-    });
-  };
-});
 </script>
 
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina');
-  var html = [
-  '<a href="#" class="overlay" id="qrcode"></a>',
-  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
-  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
-    });
-  });
-});     
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
 </script>
 
 
-<script type="text/javascript">
-  var duoshuoQuery = {short_name:"zhangmin"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
 
 
 
 
+  
 
-  </body>
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhangmin"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+  
+</body>
 </html>
