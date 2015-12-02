@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>back-of-the-envelope估算技术 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  June 5, 2014
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/马上有OFFER/'>马上有OFFER</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">back-of-the-envelope估算技术</h1>
+  <section class="post-content article-entry">
+    <p>back-of-the-envelope指的是一个粗略的，不精确的计算，但可以被用作对某个观点的支持或论据。简单的说，是介于猜测和铁证之间的一个概念。常用在数学，物理，及某些工程领域中。</p>
+<h3 id="基本的技巧">基本的技巧</h3><p>两种估算方法总比一种好，可以相互验证。<br>估算的快速检查<br>规则1：和的单位和被加数，加数的单位是一致的。<br>规则2：乘法的单位是乘数或者被乘数单位的乘积。<br>常识。</p>
+<h3 id="经验法则">经验法则</h3><p>1.72法则（Rule of 72）</p>
+<p>假设你将一笔钱以年利率r投资y年，如果r*y=72，那么你的钱会大致翻倍。</p>
+<p>2.利特尔法则（Little’s Law）</p>
+<p>排队论认为，在任何一个有进有出的系统中，留在系统中对象的数量等于平均离开率乘以对象在系统的平均停留时间。</p>
+<p>使用Little’s law对多用户系统的响应时间进行建模：<br>假设有n个用户，平均思考时间为z，连接到任意的一个系统的响应时间为r。<br>每一个用户的状态只有两个：思考和等待响应。因此，系统中总的服务数量为n，即负载为n。假设系统的吞吐率（单位时间的服务数）为x。<br>根据Little’s law可得：n = x * (z + r), r = n/x - z；</p>
+<h3 id="安全因素（Safety_Factors)">安全因素（Safety Factors)</h3><p>一个好的工程师应该承认自己知识的有限性。使用一个较大的安全系数来弥补我们的无知及我们容易犯的错误。（employing a huge<br>safety factor to compensate for ignorance).<br>同样的，在估计大小，花费，计划时，我们应该保守的使用2到4倍与正常值来弥补我们对自己的无知。</p>
+<p>一个典型的例子就是John Roebling 在建造Brooklyn Bridge时，他知道自己知识的限度，知道不能完整、准确的建模，所以他使用了六倍的安全系数。至今为止，他的桥仍然矗立在纽约的东河，连接着曼哈顿与布鲁克林。</p>
+<h3 id="面试中的估算题">面试中的估算题</h3><p>1.一辆学校班车里面能​​​​​​​​装多少个高尔夫球​</p>
+<p>大一个高尔夫球大致直径为5厘米，体积大致为125立方厘米。一辆校车的长度为10米，宽和高都为2米，则体积为40立方米。则可以装下的高尔夫球数为<br>40 * 10^6/ 125 约为30万个。考虑到球可以挤压，最终约为40万左右。</p>
+<p>2.全世界有多少个钢琴调音师？</p>
+<p>美国共有3亿人口，按三口之家计算，全美国共有1亿个家庭，如果一半家庭即5000万个家庭属于富裕阶层，拥有钢琴比例按10％,这个比例可能有点偏高，但在推算大致比例时是允许的.那么就有500万个家庭拥有钢琴，这样全美国就有500万架钢琴。 如果每架钢琴一年调音一次，一个调音师一年调音1000架次的话，那么全美国调音师的数量就是500万除以1000，等于5000人。世界人口有60多亿，是美国的20倍，但调音师应该不足美国的20倍。大体推算一下可知，美国的调音师数量约占全世界的1/4，全世界的调音师应该有2万人。</p>
+<p>​<br>3.擦遍西雅图所有窗户能挣多少钱</p>
+<p>假如西雅图有1万栋建筑物，每栋建筑物有600个窗户，擦一个窗户需要5分钟，收费标准为每小时20美元，那么一共可以挣1000万美元。</p>
+<p>4.美国有多少个加油站​</p>
+<p>看看该国有多少人口，一般一个家庭拥有多少辆汽车或者多少个家庭拥有一辆车，一般人凭日常常识就知道大概；然后算一算一辆车加油的频率，或者考虑多少人口、多少街区需要一个加油站，最后能得出答案。不一定正确，只要你足够自信、运用一套逻辑推导的方法、能自圆其说，就成功了。咨询公司招人也常用这一招儿，他们最需要的就是这种人才——能把一个“难题”用一堆复杂而逻辑严密的、每一步推论看起来都正确无比的报告解答开。​</p>
+<p>5.2的64次方是多少<br>2^10 ~1,000 一千<br>2^20 ~1,000,000 一百万<br>2^30 ~1,000,000,000 十亿<br>2^64 ~10^18*10=10 ^19​</p>
+<p>6.一万亿个数排序需要多少时间</p>
+<p>归并排序，O(nlogn)， 2GHz处理器。秒2*10^9约20亿次运算，大约3000秒。10^12log10^12 ~ 4乘以10^13<br>最后结果为2000s。<br>​</p>
+<h3 id="更多资料">更多资料</h3><p><a href="http://www.vendian.org/envelope/" target="_blank" rel="external">A view from the back of the envelope</a></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2014/06/13/Java并发编程入门/">
+        ← prev <!--Java并发编程入门-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2014/06/04/一个问题的解决之路/">
+        <!--一个问题的解决之路--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-back-of-the-envelope估算技术" data-title="back-of-the-envelope估算技术" data-url="http://zhangmin.name/blog/2014/06/05/back-of-the-envelope估算技术/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

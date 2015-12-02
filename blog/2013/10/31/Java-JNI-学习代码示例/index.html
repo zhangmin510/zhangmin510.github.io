@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>Java JNI 学习代码示例 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  October 31, 2013
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/Java/'>Java</a>
+    
+      <a href='/blog/tags/技术/'>技术</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">Java JNI 学习代码示例</h1>
+  <section class="post-content article-entry">
+    <p><strong>Java 本地方法声明及测试类</strong><br>[java]<br>package name.zhangmin.java.jni;</p>
+<p>/**</p>
+<ul>
+<li>Basics of JNI</li>
+<li><p>@author ZhangMin.name<br><em>
+</em>/<br>public class JNIExample {<br> private POJO pj;<br> private POJO[] pjs;<br> private float f;<br> private boolean[] bs;</p>
+<p> public native void sayHello();<br> public static native POJO getPOJO(int i,double[] d,JObject obj,JObject[] objs);<br> public native int getData();<br> public native JObject[] getRefs();</p>
+<p> public static void main(String[] args) {</p>
+<pre><code>JNIExample <span class="built_in">exp</span> = <span class="keyword">new</span> JNIExample();
+
+<span class="built_in">exp</span>.sayHello();
+
+<span class="keyword">double</span>[] d = {<span class="number">0.1</span>,<span class="number">0.2</span>};
+JObject obj = <span class="keyword">new</span> JObject(<span class="number">5</span>);
+JObject[] objs = {<span class="keyword">new</span> JObject(<span class="number">1</span>),<span class="keyword">new</span> JObject(<span class="number">2</span>)};
+POJO pj = getPOJO(<span class="number">5</span>,d,obj,objs);
+System.out.println(pj.toString());
+
+System.out.println(&amp;quot;Get <span class="keyword">int</span> data:&amp;quot; + <span class="built_in">exp</span>.getData());
+
+JObject[] jos = <span class="built_in">exp</span>.getRefs();
+System.out.println(jos[<span class="number">0</span>].toString());
+</code></pre><p> }</p>
+<p> static{</p>
+<pre><code><span class="tag">System</span><span class="class">.loadLibrary</span>(&amp;<span class="tag">quot</span>;<span class="tag">JavaNativeCode</span>&amp;<span class="tag">quot</span>;);
+</code></pre><p> }</p>
+</li>
+</ul>
+<p>}<br>[/java]</p>
+<p><strong>Java native method C++实现</strong><br>[c]<br>// JavaNativeCode.cpp : 定义 DLL 应用程序的导出函数。<br>//<br>/*</p>
+<ul>
+<li>JavaNativeCode implementation</li>
+<li>zhangmin@zhangmin.name<br>*/<br>#include &quot;stdafx.h&quot;</li>
+</ul>
+<p>#include &lt;iostream&gt;<br>using namespace std;<br>/*</p>
+<ul>
+<li>Class:     name_zhangmin_java_jni_JNIExample</li>
+<li>Method:    sayHello</li>
+<li>Signature: ()V<br><em>/<br>JNIEXPORT void JNICALL Java_name_zhangmin_java_jni_JNIExample_sayHello<br>(JNIEnv </em> env, jobject){<br>   jstring jstr;<br>   const char greeting[] = &quot; Hello JNI World!&quot;;<br>   jstr = env-&gt;NewStringUTF(greeting);<br>   cout&lt;&lt;&quot;From C++&quot;&lt;&lt;env-&gt;GetStringUTFChars(jstr,0)&lt;&lt;endl;<br>}</li>
+</ul>
+<p>/*</p>
+<ul>
+<li>Class:     name_zhangmin_java_jni_JNIExample</li>
+<li>Method:    getPOJO</li>
+<li>Signature: (I[DLname/zhangmin/java/jni/JObject;[Lname/zhangmin/java/jni/JObject;)Lname/zhangmin/java/jni/POJO;<br><em>/<br>JNIEXPORT jobject JNICALL Java_name_zhangmin_java_jni_JNIExample_getPOJO<br>(JNIEnv </em> env, jclass jc, jint i, jdoubleArray da, jobject jo, jobjectArray joa){<br>   jclass pojo = env-&gt;FindClass(&quot;name/zhangmin/java/jni/POJO&quot;);<br>   //获取数组元素<br>   jobject ele = env-&gt;GetObjectArrayElement(joa,0);<br>   jclass jobj = env-&gt;GetObjectClass(jo);<br>   //调用对象的get方法<br>   jint id = env-&gt;CallIntMethod(ele,env-&gt;GetMethodID(jobj,&quot;getId&quot;,&quot;()I&quot;));<br>   //获取对象的属性<br>   jfieldID objID = env-&gt;GetFieldID(jobj,&quot;field&quot;,&quot;D&quot;);<br>   jdouble field = env-&gt;GetDoubleField(jo,objID);<br>   //创建一个jdoubleArray<br>   jdouble dd[2] = {1.2,3.4};<br>   jdoubleArray d = env-&gt;NewDoubleArray(2);<br>   env-&gt;SetDoubleArrayRegion(d,0,2,dd);<br>   //通过调用对象的构造器创建一个对象<br>   jobject ret = env-&gt;NewObject(pojo,<pre><code>env-&amp;<span class="operator">gt</span>;GetMethodID(pojo,&amp;quot;&amp;<span class="operator">lt</span>;init&amp;<span class="operator">gt</span>;&amp;quot;,&amp;quot;(I[DLname/zhangmin/java/jni/JObject;)V&amp;quot;)
+,id,d,ele);
+</code></pre>   return ret;<br>}</li>
+</ul>
+<p>/*</p>
+<ul>
+<li>Class:     name_zhangmin_java_jni_JNIExample</li>
+<li>Method:    getData</li>
+<li>Signature: ()I<br><em>/<br>JNIEXPORT jint JNICALL Java_name_zhangmin_java_jni_JNIExample_getData<br>(JNIEnv </em>, jobject){<br>   jint i = 510;<br>   return i;<br>}</li>
+</ul>
+<p>/*</p>
+<ul>
+<li>Class:     name_zhangmin_java_jni_JNIExample</li>
+<li>Method:    getRefs</li>
+<li>Signature: ()[Lname/zhangmin/java/jni/JObject;<br><em>/<br>JNIEXPORT jobjectArray JNICALL Java_name_zhangmin_java_jni_JNIExample_getRefs<br>(JNIEnv </em> env, jobject jobj){<br>   //返回一个对象数组<br>   jclass jc = env-&gt;FindClass(&quot;name/zhangmin/java/jni/JObject&quot;);<br>   jobject jo = env-&gt;NewObject(jc,env-&gt;GetMethodID(jc,&quot;&lt;init&gt;&quot;,&quot;(I)V&quot;),100);<br>   jobjectArray joa = env-&gt;NewObjectArray(2,jc,NULL);<br>   env-&gt;SetObjectArrayElement(joa,0,jo);<br>   return joa;<br>}</li>
+</ul>
+<p>[/c]</p>
+<p><strong>POJO类</strong></p>
+<p>[java]<br>package name.zhangmin.java.jni;</p>
+<p>/**</p>
+<ul>
+<li>@author ZhangMin.name<br><em>
+</em>/<br>public class POJO {<br> private int i;<br> private double[] d;<br> private JObject obj;<br> private JObject[] objs;<br> public POJO(int i,double[] d,JObject obj){<pre><code><span class="keyword">this</span>.i = i;
+<span class="keyword">this</span>.d = d;
+<span class="keyword">this</span>.obj = obj;
+</code></pre> }<br> @Override<br> public String toString() {<pre><code><span class="keyword">return</span> i + &amp;quot;,&amp;quot; + d[<span class="number">0</span>] + &amp;quot;,&amp;quot; + obj.getId() ;
+</code></pre> }<br>}</li>
+</ul>
+<p>[/java]<br>[java]<br>/<em>*
+ </em></p>
+<ul>
+<li>JObject.java</li>
+<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>name.zhangmin.java<br><em>
+</em>/<br>package name.zhangmin.java.jni;</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>@author ZhangMin.name<br><em>
+</em>/<br>public class JObject {<br> private int id;<br> public double field;<br> public JObject(int id){<pre><code>this.<span class="property">id</span> = <span class="property">id</span>;
+</code></pre> }<br> public int getId() {<pre><code><span class="command">return</span> <span class="property">id</span>;
+</code></pre> }<br> public void setId(int id) {<pre><code>this.<span class="property">id</span> = <span class="property">id</span>;
+</code></pre> }<br> @Override<br> public String toString() {<pre><code><span class="command">return</span> <span class="property">id</span> + &amp;quot;,&amp;quot; + field;
+</code></pre> }<br>}</li>
+</ul>
+<p>[/java]</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/12/11/如何识别一个未知文件的编码格式/">
+        ← prev <!--如何识别一个未知文件的编码格式-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/10/25/利用Java-Service-Wrapper将Java应用程序发布为Service/">
+        <!--利用Java Service Wrapper将Java应用程序发布为Service--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-Java-JNI-学习代码示例" data-title="Java JNI 学习代码示例" data-url="http://zhangmin.name/blog/2013/10/31/Java-JNI-学习代码示例/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

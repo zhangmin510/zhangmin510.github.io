@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>Java对象创建初始化顺序 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  August 26, 2014
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/Java/'>Java</a>
+    
+      <a href='/blog/tags/马上有OFFER/'>马上有OFFER</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">Java对象创建初始化顺序</h1>
+  <section class="post-content article-entry">
+    <p>Java对象初始化关乎程序的安全运行，所以理解Java的初始化过程非常必要。Java中对象的初始化和创建是捆绑在一起的，两者不能分离。Java尽力保证所有变量在使用前都能够得到恰当的初始化。与C++一样，Java也通过构造器确保初始化。构造器是一种特殊类型的方法，它没有返回值。这与返回值为空的方法是不同的，虽然是空的返回值，但它仍然可以返回其他内容。构造器不返回任何东西。即使是用new表达式创建对象，也是new表达式返回新对象的引用，构造器没有返回任何东西。</p>
+<p>本文将从一个实例分析Java中对象创建的初始化顺序。</p>
+<p>假设有一个Horse的类，其对象的创建过程一般如下：</p>
+<ol>
+<li>当首次创建类型为Horse的对象时（构造器可以看成是静态方法）或者Horse的静态方法、静态域首次被访问时，Java解释器会查找类路径，定位Horse.class文件。如果有Horse继承自某一个类，还要查找并加载相应类的Class文件。</li>
+<li>载入Horse.class（即创建一个Class对象，如果有基类还要载入基类的Class），有关静态初始化的所有动作都会执行。静态初始化只在Class对象首次加载的时候进行一次。</li>
+<li>当用new Horse(）创建对象时，首先在堆上分配足够的存储空间。如果有父类，先执行父类的变量初始化和构造器。</li>
+<li>这块存储空间清零，自动将所有基本类型数据设置为默认值，引用为null。</li>
+<li>执行所有出现于字段定义处的初始化动作。</li>
+<li>执行构造器。</li>
+</ol>
+<p>在初始化过程中要注意两点：一是基本类型会有一个默认的初始值。这种自动初始化是无法阻止的。<br>二是非静态程序初始化块也会在构造函数之前执行。且在每次对象创建时都会执行。（常用语匿名内部类的初始化）。</p>
+<p>下面是一个实列，Horse类继承了Animal类，具体代码如下所示。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package name.zhangmin.java;&#10;public class Animal &#123;&#10; private int i = 9;&#10; protected int j;&#10; static &#123;&#10; System.out.println(&#38;quot;Animal&#39;s static block&#38;quot;);&#10; &#125;&#10; &#123;&#10; System.out.println(&#38;quot;Animal&#39;s non-static block&#38;quot;);&#10; &#125;&#10; Animal() &#123;&#10; System.out.println(&#38;quot;Animal&#39;s constructor&#38;quot;);&#10; System.out.println(&#38;quot;i = &#38;quot; + i + &#38;quot;, j = &#38;quot; + j);&#10; &#125;&#10; static int printInit(String s) &#123;&#10; System.out.println(s);&#10; return 16;&#10; &#125;&#10; private static int x1 = printInit(&#38;quot;static Animal.x1 initialized&#38;quot;);&#10;&#125;&#8203;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package name.zhangmin.java;&#10;public class Horse extends Animal &#123;&#10; private int k = printInit(&#38;quot;Horse.k initialized&#38;quot;);&#10; Horse() &#123;&#10; System.out.println(&#38;quot;Horse&#39;s constructor&#38;quot;);&#10; System.out.println(&#38;quot;k = &#38;quot; + k + &#38;quot;, j = &#38;quot; + j);&#10; &#125;&#10; public static void main(String[] args) &#123;&#10; System.out.println(&#38;quot;Horse&#39;s Main&#38;quot;);&#10; Horse h = new Horse();&#10; System.out.println(&#38;quot;Creating another Horse&#38;quot;);&#10; new Horse();&#10; &#125;&#10; static int x2 = printInit(&#38;quot;static Horse.x2 initialized&#38;quot;);&#10; &#123;&#10; System.out.println(&#38;quot;Horse&#39;s non-static block&#38;quot;);&#10; &#125;&#10; static &#123;&#10; System.out.println(&#38;quot;Horse&#39;s static block&#38;quot;);&#10; &#125;&#10;&#125;&#8203;</span><br></pre></td></tr></table></figure>
+<p>上述代码的运行结果如下所示：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Animal&#39;s static block&#10;static Animal.x1 initialized&#10;static Horse.x2 initialized&#10;Horse&#39;s static block&#10;Horse&#39;s Main&#10;Animal&#39;s non-static block&#10;Animal&#39;s constructor&#10;i = 9, j = 0&#10;Horse.k initialized&#10;Horse&#39;s non-static block&#10;Horse&#39;s constructor&#10;k = 16, j = 0&#10;Creating another Horse&#10;Animal&#39;s non-static block&#10;Animal&#39;s constructor&#10;i = 9, j = 0&#10;Horse.k initialized&#10;Horse&#39;s non-static block&#10;Horse&#39;s constructor&#10;k = 16, j = 0&#8203;</span><br></pre></td></tr></table></figure>
+<p>首先会执行Animal的静态域，静态块的初始化。执行的顺序就是域或块声明的顺序。执行完父类静态域的初始化后执行Horse的静态域初始化。类加载完成后，开始执行对象的创建过程。在这个过程中先执行父类Animal的非静态域或者块的初始化，然后是父类的构造器，之后才是子类Horse的非静态域或块的初始化，构造器。</p>
+<p>当第二次创建Horse对象时我们可以看到只执行父类非静态域或者块的初始化，父类Animal构造器，之后才是子类的非静态域，构造器。</p>
+<p>从上述的初始化过程可知，Java尽力保证了每个变量、对象在使用前能够正确的初始化。类的静态域只初始化一次，而非静态域则在每次对象创建时都进行初始化。如果有继承关系，要先完成父类的初始化和构造函数后才执行子类的初始化和构造函数。</p>
+<p><em>参考资料：《Java编程思想》第五章初始化与清理</em></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2014/10/07/最荒唐/">
+        ← prev <!--最荒唐-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2014/08/07/标准的软件面试准备过程/">
+        <!--标准的软件面试准备过程--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-Java对象创建初始化顺序" data-title="Java对象创建初始化顺序" data-url="http://zhangmin.name/blog/2014/08/26/Java对象创建初始化顺序/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

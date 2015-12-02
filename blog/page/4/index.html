@@ -1,1200 +1,267 @@
 <!doctype html>
-<html class="theme-next use-motion theme-next-next">
-<head>
-  
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
 
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <title>ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
 
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
-
-
-  <link rel="stylesheet" type="text/css" href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
-<link rel="stylesheet" type="text/css" href="/blog/css/main.css?v=0.4.1"/>
-
-
-    <meta name="description" content="ZhangMin.name's Blog" />
-
-
-
-
-    <meta name="keywords" content="zhangmin.name,张敏,张敏的个人主页,张敏的博客,zhangmin.name's blog" />
-
-
-
-
-
-    <link rel="shorticon icon" type="image/x-icon" href="http://www.zhangmin.name/images/favicon.png?v=0.4.1" />
-
-
-
-
-  <title> ZhangMin.name </title>
-</head>
-
-<body>
-  <div class="container one-column 
-   page-home 
-">
-    <div class="headband"></div>
-
-    <div id="header" class="header">
-      <div class="header-inner">
-        <h1 class="site-meta">
-  <span class="logo-line-before"><i></i></span>
-  <a href="/blog/" class="brand">
-      <span class="logo">
-        <i class="icon-logo"></i>
-      </span>
-      <span class="site-title">ZhangMin.name</span>
-  </a>
-  <span class="logo-line-after"><i></i></span>
-</h1>
-
-
-  <ul id="menu" class="menu">
+    </head>
     
-    
-      
-      <li class="menu-item menu-item-home">
-        <a href="/">
-          <i class="menu-item-icon icon-home"></i> <br />
-          首页
-        </a>
-      </li>
-    
-      
-      <li class="menu-item menu-item-categories">
-        <a href="/blog/categories">
-          <i class="menu-item-icon icon-categories"></i> <br />
-          分类
-        </a>
-      </li>
-    
-      
-      <li class="menu-item menu-item-archives">
-        <a href="/blog/archives">
-          <i class="menu-item-icon icon-archives"></i> <br />
-          归档
-        </a>
-      </li>
-    
-      
-      <li class="menu-item menu-item-tags">
-        <a href="/blog/tags">
-          <i class="menu-item-icon icon-tags"></i> <br />
-          标签
-        </a>
-      </li>
-    
-      
-      <li class="menu-item menu-item-readings">
-        <a href="/blog/readings">
-          <i class="menu-item-icon icon-readings"></i> <br />
-          读书单
-        </a>
-      </li>
-    
-  </ul>
-
-
-      </div>
-    </div>
-
-    <div id="main" class="main">
-      <div class="main-inner">
-        <div id="content" class="content">
-          
-            
-          
-
-          <div id="posts" class="posts-expand">
-            
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/05/Java版本BitMap实现/">
-                Java版本BitMap实现
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-05-13
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/05/Java版本BitMap实现/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/05/Java版本BitMap实现/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>BitMap即位图数据结构。此数据结构代表了有限域中的一个稠密集合，每个元素在集合中出现至多一次。<br>这一数据结构在《编程珠玑》一书中用于高效解决一定范围内无重复整数的排序问题。</p>
-<p>比如一个小于10的整数集合如{1,2,3,4,8}可以用下面的二进制字符串表示：<br>0 1 1 1 1 0 0 0 1 0</p>
-<p>如果整数在集合中，则其相应位置为1，否则为0。</p>
-<p>可以通过对int的位操作来实现BitMap。实现的思路是先找到相应位的存储位置，然后把该位设为0或1.<br>由于Java中int为32位，所以每次通过右移5位来找到i所在的整数在int[]中的位置（右移5位相当于除以32），然后将相应的位置设为1.</p>
-<p>具体的实现代码如下：</p>
-<pre>
-[java]
-/**
- *
- * BitMap.java
- * ZhangMin.name - zhangmin@zhangmin.name
- * name.zhangmin.java
- *
- */
-package name.zhangmin.java.bop;
-
-import name.zhangmin.util.StdOut;
-
-/**
- * The &lt;tt&gt;BitMap&lt;/tt&gt; class represents a bit map.
- * It supports operations such as &lt;em&gt;set&lt;/em&gt;, &lt;em&gt;test&lt;/em&gt;,
- * &lt;em&gt;clear&lt;/em&gt;.
- * &lt;p&gt;
- * This implementation use bitwise logical operations (such as
- * and, or, shift).
- * 
- * @author ZhangMin.name
- *
- */
-public class BitMap {
-    private static final int BITPERWORD = 32;
-    private static final int SHIFT = 5;
-    private static final int MASK = 0x1F;
-    private int[] a;
-
-    /**
-     * Initialize a empty bitmap.
-     * @param N the bitmap size
-     */
-    public BitMap(int N) {
-        if (N &lt; 0 || N &gt; Integer.MAX_VALUE)
-            throw new IllegalArgumentException(N + &quot; shoule be in [0,2147483647)&quot;);
-        this.a = new int[1 + N / BITPERWORD];
-        for (int i = 0; i &lt; a.length; i++)
-            a[i] &amp;= 0x0;
-    }
-    /**
-     * Set the i&lt;em&gt;th&lt;/em&gt; bit to 1.
-     * @param i
-     */
-    public void set(int i) {
-        if (i &lt; 0 || i &gt; Integer.MAX_VALUE)
-            throw new IllegalArgumentException(i + &quot; shoule be in [0,2147483647]&quot;);
-        a[i &gt;&gt; SHIFT] |= (1 &lt;&lt; (i &amp; MASK));
-    }
-    /**
-     * Clear the i&lt;em&gt;th&lt;/em&gt; bit to 0.
-     * @param i
-     */
-    public void clear(int i) {
-        if (i &lt; 0 || i &gt; Integer.MAX_VALUE)
-            throw new IllegalArgumentException(i + &quot; shoule be in [0,2147483647]&quot;);
-        a[i &gt;&gt; SHIFT] &amp;= ~(1 &lt;&lt; (i &amp; MASK));
-    }
-    /**
-     * Test the i&lt;em&gt;th&lt;/em&gt; bit.
-     * @param i
-     * @return 0 if the i&lt;em&gt;th&lt;/em&gt; bit is 0, non-zero otherwise.
-     */
-    public int test(int i) {
-        if (i &lt; 0 || i &gt; Integer.MAX_VALUE)
-            throw new IllegalArgumentException(i + &quot; shoule be in [0,2147483647]&quot;);
-        return a[i &gt;&gt; SHIFT] &amp; (1 &lt;&lt; (i &amp; MASK));
-    }
-    /**
-     * Unit test.
-     */
-    public static void main(String[] args) {
-        int N = 100;
-        BitMap bm = new BitMap(N);
-        for (int i = 0; i &lt; N; i += 3) {
-            bm.set(i);
-            StdOut.printf(&quot;%dth value is %d\n&quot;, i, bm.test(i));
-            bm.clear(i);
-            StdOut.printf(&quot;%dth value is %d\n&quot;, i, bm.test(i));
-        }
-    }
-
-}
-[/java]
-</pre>
-
-<p><em>参考文献</em><br>1. 《编程珠玑》第一章</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-              <a href="/blog/tags/马上有OFFER/">
-                #马上有OFFER
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/04/2014无锡环太湖徒步大会/">
-                2014无锡环太湖徒步大会
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-04-27
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/04/2014无锡环太湖徒步大会/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/2014无锡环太湖徒步大会/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>第一次参加徒步，一切都是新奇。<br>第二次参加徒步，一切都是比较。<br>有了比较，有了偏好，有了评价。<br>然而更多的是对第一次徒步的欢快场景的回忆。</p>
-<p><img src="http://h.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=91ceada6fffaaf5180e381babc6fe5d3/9c16fdfaaf51f3deeb5abce496eef01f3b297941.jpg?referer=c8df00fe271f95caffe2a686c75f&amp;x=.jpg" alt="皇族穿越来徒步"></p>
-<p><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=ab5499c73b12b31bc36ccd2cb6234747/a8773912b31bb05120c0b6a8347adab44bede04e.jpg?referer=4956905c0afa513d08bd58ee4044&amp;x=.jpg" alt="徒步开始"></p>
-<p><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=53d2ff4c1c178a82ca3c7fa5c63802b0/cefc1e178a82b9019b64c6b3718da9773812ef61.jpg?referer=86d8216fabec8a134d0d63d0493f&amp;x=.jpg" alt="队伍"></p>
-<p><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=23ce63f3f9f2b211e02e854bfabb1405/5243fbf2b21193138388fa3067380cd790238d62.jpg?referer=d4e7a05f74c6a7efe0319c16eb20&amp;x=.jpg" alt="徒步达人现身"></p>
-<p>徒步大会网址：<a href="http://walk.hellosport.cn/" target="_blank" rel="external">walk.hellosport.cn/</a></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/读书·旅行/">
-                #读书·旅行
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/03/《当卢浮宫遇见紫禁城》观看笔记/">
-                《当卢浮宫遇见紫禁城》观看笔记
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-03-23
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/03/《当卢浮宫遇见紫禁城》观看笔记/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/《当卢浮宫遇见紫禁城》观看笔记/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h3 id="前几集没有记……">前几集没有记……</h3><h3 id="第五集_铁血长风">第五集 铁血长风</h3><p>古罗马与汉</p>
-<p>​无论杀戮与牺牲，代价总被忘记，荣耀总被歌颂。</p>
-<p>凯撒：我来 我看 我胜利</p>
-<p>甘延寿：明犯强汉者，虽远必诛。</p>
-<p>任何人失去的，不是什么别的生活，而是他们现在所过的生活。</p>
-<p>任何人所过的，也不是什么别的生活，而是他现在失去的生活。</p>
-<p>最长和最短生命因此同一。</p>
-<p>——《沉思录》</p>
-<h3 id="第六集_神圣无上">第六集 神圣无上</h3><p>公元五世纪到十五世纪 黑暗时代 中世纪。</p>
-<p>中世纪的人们认为，现实与美丽的艺术，实际上是诱惑人心的罪恶。形体越美好，色彩越逼真，就越偏离上帝指引的道路。于是这时期的艺术发生了一个根本的变化，去除了一些逼真与现实的手法和技术，以失真的，没有立体感的形象来传达上帝永恒的真理。</p>
-<p>哥特式建筑：轻盈明亮，高耸入云。</p>
-<p>中国的建筑：雨过清风润，树重禅寺幽。</p>
-<p>欣赏宗教艺术品时，我们所面对的已经不是作品本身，而是当时人们精神寄托的载体。这些作品使我们感受到那一颗颗诚挚的灵魂和他们内心崇高的存在。</p>
-<h3 id="第七集_完美人生">第七集 完美人生</h3><p>西方绘画求真。</p>
-<p>中国绘画超越自然，追求最高的审美：一种精神境界，一种精神追求。</p>
-<p>悠远淡则真。</p>
-<p>卢浮宫镇馆之宝：维纳斯，胜利女神，蒙娜丽莎。</p>
-<p>文艺复兴时期崇尚人性的自由张扬，崇尚理性的科学严谨。求真写实。</p>
-<p>倪瓒与达芬奇</p>
-<p>倪瓒作画：有感于当下情境，在挥毫的瞬间融入多年对人生对自然的体悟。他的《秋庭嘉树图》，随性而起，心劲而终，强调自在飘逸的创作冲动。</p>
-<p>西方科学理性来表达人性。</p>
-<p>中国文人独与天地精神往来，师造化自然，写心中境意。</p>
-<h3 id="第八集_激越内心">第八集 激越内心</h3><p>伦勃朗《牛肉》十七世纪西方艺术的重要转折。</p>
-<p>使用光线的明亮变化体现立体感。用画笔执着的游走在色彩和光影之间，创造神秘而微妙的心灵空间。</p>
-<p>西方的思维是一种逻辑的演绎的思维，需要假设需要求证。中国人的思维是一种感悟的，归纳的思维。</p>
-<p>八大山人《鸟石图》对意境的高度概括。创造了一个个冷意超绝的符号，存在画纸中坚定地沉淀。</p>
-<p>禅宗：不立文字，直指本性。禅是一种生活态度，一种心境，一种大彻大悟的状态，一种对纯净和智慧的追求。</p>
-<p>艺术先安慰自己，再安慰世人。</p>
-<h3 id="第九集_东西对望">第九集 东西对望</h3><p>洛可可时代 追求中国风情。 代表人物为布歇。蓬巴杜夫人（路易十五情妇之一）被称为洛可可之母。洛可可先驱华托。</p>
-<p>C型，S型，漩涡型的造型，明亮轻松的色彩，温婉华丽的气质，爱情享乐的主题，这种浪漫主义风格叫做洛可可风格。它的本意是有着卷曲花纹的贝壳装饰工艺。</p>
-<p>在欧洲文化中，棕榈树象征着航海，象征着遥远的地方。</p>
-<p>康熙与路易十四</p>
-<p>郎世宁</p>
-<h3 id="第十集_再造往昔">第十集 再造往昔</h3><p>普桑（法兰西绘画之父） 大卫 安格尔</p>
-<p>欧洲古典主义：和谐，平衡，朴实肃穆的美感。</p>
-<p>画家的觉醒：也要表达。</p>
-<p>古代经典作品中谋求自我发展的道路。</p>
-<p>赵孟頫 董其昌（画家中的画家） 文化复古运动：笔笔要有根据，笔笔效法古人，师法古人。</p>
-<p>知识分子的文化觉醒。</p>
-<p>创新的拉丁语义并不是指创新而是指返回和利用过去的资源找到一种新的可能性。 ——陈丹青</p>
-<h3 id="第十一集_生于浪漫">第十一集 生于浪漫</h3><p>浪漫主义：一种激情，率真，突破传统，一种革命性的举动。表达自我真实的情感。表达人性最深沉的东西。<br>绘画的浪漫与作家作家的个性相关。而不是我们日常理解的卿卿我我，优美的抒情式浪漫。</p>
-<p>德拉克罗瓦《自由引导人民》</p>
-<p>浪漫主义小说《巴黎圣母院》</p>
-<p>浪漫主义宣言：万物中的一切，并非都是合乎人情的美，感觉到丑就在美的旁边，畸形靠近着优美。粗俗藏在崇高的背后；善与恶并存；黑暗与光明相共。 ——雨果</p>
-<p>用色彩歌颂死亡。</p>
-<p>徐渭 墨葡萄 绍兴。</p>
-<p>用墨表达生命。恣肆汪洋，淋漓酣畅。粗服蓬发，不掩天姿国色。<br>《牡丹亭》</p>
-<h3 id="第十二集_人间关切">第十二集 人间关切</h3><p>欧洲从古希腊起就把艺术作为对现实和自然的观察和分析。到了文艺复兴时期，大师们将艺术发挥成一门科学。<br>因为尽可能的与物质世界接近，关切人间就成了西方绘画的一个方向。</p>
-<p>西方的艺术精神：一方面将传统送入博物馆，精心的保存和陈列。一方面又打破已有的深厚传统，不断的创新。这种过程一步步推动文化与艺术的现代化。</p>
-<p>画论：必须观察大自然，以最现实的方式复制大自然，然后让情绪发挥作用，要想象出理想地世界。</p>
-<p>巴比松画派 写实，但回避现代化的现实，对传统的终结。是卢浮宫收藏的终结。<br>卢浮宫收藏从古希腊到巴比松之间的作品，其代表人物有柯罗。表达内心的安宁，和对自然的幻想。</p>
-<p>现实主义用严谨的技法，呈现明确的主题。画家以最准确的手法再现现实。</p>
-<p>奥赛博物馆 柯罗之后的作品。写实主义之后的作品。</p>
-<p>沉寂，超越，优美的中国画。不问世事。</p>
-<p>五四运动影响。艺术来救亡图存。<br>西方写实主义来改良中国画。</p>
-<p>徐悲鸿的导师是康有为。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/03/范冰冰版《武则天》群演记/">
-                范冰冰版《武则天》群演记
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-03-19
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/03/范冰冰版《武则天》群演记/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/范冰冰版《武则天》群演记/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h3 id="缘起及失望的第一次">缘起及失望的第一次</h3><p>记得来无锡之前就听人说，无锡有个中央影视基地，有很多戏都在那里拍。当时就想如果去做一次群众演员也是很好的生活体验。来无锡后也查过资料，当时没找着。前几天在陌陌上看到了一个人发群演招人的消息，就加了群。当晚和小伙伴商量想不想去当群众演员，小伙伴都很愿意，而且兴奋异常。过了一两天又有一人发群演消息，我就和负责人电话联系，问明情况就报了名。晚上回公寓后就睡觉，因为第二天早上六点起床。当天夜晚还曾经几度醒来，生怕早上错过这次机会。</p>
-<p>第二天早上六点钟起床，洗漱完毕就到电梯旁等小伙伴。打开手机发现有五条回电宝发来的信息，是同一个人在凌晨四点多打给我的。我回拨过去，她问我们有没有出发，我说马上；她又说，“那就不用了，昨晚打电话没打通就找别人替了，下次吧”。刚打完电话，小伙伴就下来了，也是睡眼朦胧。说明状况后两人无奈的继续回公寓睡觉。靠，不至于凌晨四点多打电话吧，那时我的手机还是被勿扰模式控制的……</p>
-<p>过了几天又有消息，又报了名。这次问清楚了所有情况，包括会不会打电话确认的问题。</p>
-<h3 id="群众演员的一天">群众演员的一天</h3><p>六点半起床，坐车通过一个接着一个的红灯向着水浒城进发。此时一轮红日已经挂在东方的天空中。路上都是去上班工作的人。我们到水浒城门口后，联系群主。然后拿着群演证，免费进入水浒城。先在水浒城里稍微转了转，然后去拍戏的地方——梅园。</p>
-<p><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8ff102bf950a304e5622a0ffe1f3d6bb/4034970a304e251fe7249243a586c9177e3e53bd.jpg?referer=c41311edd21609248532962b9d53&amp;x=.jpg" alt="群演证"></p>
-<p>找到后就是排队，分配角色，领取道具服。那种场景感觉就像是一群犯人等待着狱卒分配任务。</p>
-<p>我和小伙伴扮演的都是御林军。第一次群演，第一次穿这个衣服，不知所措。看旁人，找小伙伴互相系衣服上的带子。</p>
-<p>穿好衣服，领上长矛，然后跟着大部队进入今天的主场景梅园里，我被分配到一个角落的塔楼打鼓。我穿着这身笨重的衣服，拿着鼓锤，爬上在二层的鼓楼。上楼后放眼望去，对于我来说，塔楼下的一切都是新鲜的。一个个疑问在我的脑海中浮现：他们如何拍戏？主演有没有来？这些人都负责什么内容？怎么又两组同时拍……</p>
-<p>和我在一起的几个是个十五六岁的孩子，没咋念过书。而且我所知的群主演员有学生，有小青年，有女青年，有老头子，大多属于社会闲杂人等。我在塔楼上站了一上午，主要看拍戏的各个过程。我的另一个伙伴比较二，总烦我，我总开玩笑的说“滚”。一上午也把这个“滚”字练了好几十遍，也仿佛NG了好几十次，到了一种艺术的高度。</p>
-<p>到了中午，我这还是处于无所事事的状态。中午下楼，排队领剧组的盒饭吃。那场景对我来说是是非常有趣的，你会看到宫女，公公，御林军，锦衣卫几个人围一个圈坐下吃饭，外面有很多游客围观。在这种场景下，你可以感受到一丝时空错乱的感觉。饭菜还不错，大致相当于丽华十元套餐。</p>
-<h4 id="他们如何拍戏">他们如何拍戏</h4><p>上午几个妃子来了各自拍完了自己的戏份。拍戏时，一个演员，一个场景，导演念相关台词，演员演，NG几次，OK。</p>
-<p>小伙伴拍了一场打鼓的戏，几个人拿着鼓锤，佯装在打鼓。“开机，打鼓！”<br>“好，再来一次”……</p>
-<p><img src="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=95e838528f1001e94a3c140a88350ad1/7dd98d1001e93901171bfc8579ec54e736d1966b.jpg?referer=7f704da8df54564ebc72d109d229&amp;x=.jpg" alt="打鼓"></p>
-<h4 id="看范爷拍戏">看范爷拍戏</h4><p>当我回到拍摄场地时，看到有个女演员在拍戏，背对着我，没咋注意，走过才听人说是范冰冰，我再仔细一看，还真是范冰冰。现实中还是相当令人惊艳的，不愧是女神级别。刚想拿出手机拍照，就听工作人员在喊“不准拍照，把手机都收起来”。</p>
-<p>范爷拍摄的这个场景也拍了好几次，导演才喊OK。不断重复提升才是达到高水平必经的过程。我距离范爷的距离只有一两米的样子。</p>
-<p><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=988b6a56a1cc7cd9fe2d34dc093a5002/2fdda3cc7cd98d1035cd7d8a233fb80e7bec906b.jpg?referer=b9958f984b540923f37e564ed029&amp;x=.jpg" alt="范爷拍戏谢绝拍照"></p>
-<p>下午范爷几乎一直都在现场拍戏。范爷就是范爷，有人打伞，有人递水，有人找座，有人搀扶。坐下休息时也是围一帮人，与导演和工作人员讨论剧情及拍摄效果，有时都可以直接提议改台词。</p>
-<h4 id="不可或缺的替身演员">不可或缺的替身演员</h4><p>那几个替身演员一直在那里，从早上一直到晚上。下午张丰毅也来了，不过只拍了一个射箭的戏，以及和范冰冰一起拍过一个场景后，又等了一会儿后就走了。可是他的替身演员早上七点多就来了，晚上也是和我们群众演员一个时间点回去的。当背景，跪戏，高难度动作，无聊的工作都是他们的工作。一个演员从默默无闻到名满天下，其中艰辛，可见一斑。</p>
-<h4 id="意外">意外</h4><p>快结束时，两匹马“打架”，一匹可怜的白马被一匹黑马踢了，两匹马就在那里打架，吓坏了众人，好一会儿才在工作人员的努力下平息了这场混乱。可怜那匹白马，鲜血直流。</p>
-<h4 id="结束">结束</h4><p>排队交衣服，出门零钱，坐车走人，下馆吃饭，回寝休息。<br>两人共挣100元，两碗土豆烧牛肉盖浇面加煎蛋，一盘孜然牛肉，一份油饼，四桶饮料，节余7元。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-              <a href="/blog/tags/生活/">
-                #生活
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/03/图解如何选羽毛球/">
-                图解如何选羽毛球
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-03-17
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/03/图解如何选羽毛球/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/图解如何选羽毛球/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=01e3e9ddfa1986184547ef817ad65f4e/b151f8198618367a684c13612c738bd4b21ce541.jpg?referer=e3c57f1b5bee3d6d7bd1b3fb435f&amp;x=.jpg" alt="羽毛球结构图"></p>
-<p><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=1c73de5a257f9e2f74351d0d2f0b9819/86d6277f9e2f070895c046bceb24b899a801f241.jpg?referer=b40fc9de9a22720e22d9d6ca3e5f&amp;x=.jpg" alt="羽毛球等级分类"></p>
-<p><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=cad0ee038e5494ee83220f1c1dce91c3/b58f8c5494eef01f03277779e2fe9925bc317d5e.jpg?referer=e8c6fd0acb177f3e4923c93dbb34&amp;x=.jpg" alt="如何保养羽毛球"></p>
-<p><em>摘自淘宝Kawasaki川崎店</em></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/生活/">
-                #生活
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/03/无锡物博会/">
-                无锡物博会
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-03-04
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/03/无锡物博会/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/无锡物博会/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>[caption id=”attachment_1973” align=”alignnone” width=”3264”]<a href="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=19cd32588501a18bf4eb124aae147635/b21c8701a18b87d6b5661f6b050828381f30fd9a.jpg?referer=dd53a1e0442309f7be7898223b78&amp;x=.jpg" target="_blank" rel="external"><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=19cd32588501a18bf4eb124aae147635/b21c8701a18b87d6b5661f6b050828381f30fd9a.jpg?referer=dd53a1e0442309f7be7898223b78&amp;x=.jpg" alt="物博会工作会议"></a> 物博会工作会议[/caption]</p>
-<p>[caption id=”attachment_1963” align=”alignnone” width=”3264”]<a href="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8874d4bfb0fb43161e1f7a7f109f371e/54fbb2fb43166d22fa53a1e0442309f79052d29a.jpg?referer=8feabbc3eb50352ae87610381e78&amp;x=.jpg" target="_blank" rel="external"><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=8874d4bfb0fb43161e1f7a7f109f371e/54fbb2fb43166d22fa53a1e0442309f79052d29a.jpg?referer=8feabbc3eb50352ae87610381e78&amp;x=.jpg" alt="这是志愿者的专车"></a> 这是志愿者的专车[/caption]</p>
-<p>[caption id=”attachment_1965” align=”alignnone” width=”3264”]<a href="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=d7d5cbbff9edab6470724dc5c70ddefe/4afbfbedab64034f0b2a7772adc379310b551dda.jpg?referer=5be29f74eb24b899872b4d085bb9&amp;x=.jpg" target="_blank" rel="external"><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=d7d5cbbff9edab6470724dc5c70ddefe/4afbfbedab64034f0b2a7772adc379310b551dda.jpg?referer=5be29f74eb24b899872b4d085bb9&amp;x=.jpg" alt="国际大学生物联网创新创业大赛"></a> 国际大学生物联网创新创业大赛[/caption]</p>
-<p>[caption id=”attachment_1966” align=”alignnone” width=”3264”]<a href="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=e241837f59b5c9ea66f303e6e502c73d/023b5bb5c9ea15cee009557db4003af33b87b2db.jpg?referer=efdba17bba0e7bec7acd37d1feb9&amp;x=.jpg" target="_blank" rel="external"><img src="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=e241837f59b5c9ea66f303e6e502c73d/023b5bb5c9ea15cee009557db4003af33b87b2db.jpg?referer=efdba17bba0e7bec7acd37d1feb9&amp;x=.jpg" alt="移动的小提琴表演"></a> 移动的小提琴表演[/caption]</p>
-<p>[caption id=”attachment_1967” align=”alignnone” width=”3264”]<a href="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=c7e90700e9f81a4c2232eccce7111164/8644ebf81a4c510f1223576e6259252dd52aa5db.jpg?referer=c72eb1e9c9ef7609651cadaf03b9&amp;x=.jpg" target="_blank" rel="external"><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=c7e90700e9f81a4c2232eccce7111164/8644ebf81a4c510f1223576e6259252dd52aa5db.jpg?referer=c72eb1e9c9ef7609651cadaf03b9&amp;x=.jpg" alt="移动的模特"></a> 移动的模特[/caption]</p>
-<p>[caption id=”attachment_1969” align=”alignnone” width=”3264”]<a href="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=f3e2d307f9f2b211e02e854bfabb1405/5243fbf2b211931353a44ac467380cd790238ddb.jpg?referer=04cb10ab74c6a7efe0319c16ebb9&amp;x=.jpg" target="_blank" rel="external"><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=f3e2d307f9f2b211e02e854bfabb1405/5243fbf2b211931353a44ac467380cd790238ddb.jpg?referer=04cb10ab74c6a7efe0319c16ebb9&amp;x=.jpg" alt="最终展览特装效果"></a> 最终展览特装效果[/caption]</p>
-<p>[caption id=”attachment_1970” align=”alignnone” width=”3264”]<a href="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=9c9f48537d3e6709ba0045fa0bfcee00/c8177f3e6709c93d4bd6ba839d3df8dcd1005499.jpg?referer=0ee3678979899e5121990f249477&amp;x=.jpg" target="_blank" rel="external"><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=9c9f48537d3e6709ba0045fa0bfcee00/c8177f3e6709c93d4bd6ba839d3df8dcd1005499.jpg?referer=0ee3678979899e5121990f249477&amp;x=.jpg" alt="拆"></a> 拆[/caption]</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/生活/">
-                #生活
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-
-          </div>
-
-          
-            <div class="pagination">
-              <a class="extend prev" rel="prev" href="/blog/page/3/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/blog/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/39/">39</a><a class="extend next" rel="next" href="/blog/page/5/">&raquo;</a>
-            </div>
-          
-        </div>
-
-        
-<div class="sidebar-toggle">
-  <div class="sidebar-toggle-line-wrap">
-    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-  </div>
+		<body class="home-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
 </div>
+<h6><a href="/blog/readings">Readings</a></h6>
 
-<div id="sidebar" class="sidebar">
-  <div class="sidebar-inner">
+        </header>
 
+        <main id="content">
+        
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/12/29/高交会·深圳/">高交会·深圳</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  December 29, 2013
+  
+  
+    <span class="taglist">  &middot; 
     
-
-    <div class="site-overview">
-      <div class="site-author motion-element">
-        <img class="site-author-image" src="/blog/images/default_avatar.jpg" alt="zhangmin.name" />
-        <p class="site-author-name">zhangmin.name</p>
-      </div>
-      <p class="site-description motion-element">ZhangMin.name's Blog</p>
-      <div class="site-state motion-element">
-        <div class="site-state-item site-state-posts">
-          <a href="/blog/archives">
-            <span class="site-state-item-count">234</span>
-            <span class="site-state-item-name">日志</span>
-          </a>
-        </div>
-
-        <div class="site-state-item site-state-categories">
-          <a href="/blog/categories">
-            <span class="site-state-item-count">9</span>
-            <span class="site-state-item-name">分类</span>
-          </a>
-        </div>
-
-        <div class="site-state-item site-state-tags">
-          <a href="/blog/tags">
-            <span class="site-state-item-count">20</span>
-            <span class="site-state-item-name">标签</span>
-          </a>
-        </div>
-
-      </div>
-
-      
-
-      <div class="links-of-author motion-element">
-        
-          
-            <span class="links-of-author-item">
-              <a href="https://github.com/zhangmin510" target="_blank">GitHub</a>
-            </span>
-          
-            <span class="links-of-author-item">
-              <a href="http://weibo.com/302585340" target="_blank">Weibo</a>
-            </span>
-          
-        
-      </div>
-
-      
-      
-        <div class="cc-license motion-element">
-          <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
-            <img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons" />
-          </a>
-        </div>
-      
-
-    </div>
-
     
-
-  </div>
-</div>
-
-
-      </div>
-    </div>
-
-    <div id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; &nbsp;  2010 - 
-  2015
-  <span class="with-love">
-    <i class="icon-heart"></i>
-  </span>
-  <span class="author">zhangmin.name</span>
-</div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-
-
-      </div>
-    </div>
-
-    <div class="back-to-top"></div>
-  </div>
-
-  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
-
-  
-  
-
-  
-  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('.content img').each(function () {
-        var $image = $(this);
-        var $imageWrapLink = $image.parent('a');
-
-        if ($imageWrapLink.size() < 1) {
-          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
-        }
-        $imageWrapLink.addClass('fancybox');
-      });
-    });
-    $('.fancybox').fancybox({
-      helpers: {
-        overlay: {
-          locked: false
-        }
-      }
-    });
-  </script>
-
-
-  <script type="text/javascript">
-  function hasMobileUA () {
-    var nav = window.navigator;
-    var ua = nav.userAgent;
-    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
-
-    return pa.test(ua);
-  }
-
-  function isDesktop () {
-    return screen.width > 991 && !hasMobileUA();
-  }
-
-  function isTablet () {
-    return screen.width < 992 && screen.width > 767 && hasMobileUA();
-  }
-
-  function isMobile () {
-    return screen.width < 767 && hasMobileUA();
-  }
-
-  function escapeSelector (selector) {
-    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
-  }
-</script>
-
-  
-
-  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js"></script>
-  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js"></script>
-
-  <script type="text/javascript" id="motion.global">
-  $(document).ready(function () {
-    var body = $('body');
-    var isSidebarVisible = false;
-    var sidebarToggle = $('.sidebar-toggle');
-    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
-    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
-    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
-    var sidebar = $('.sidebar');
-
-    var SIDEBAR_WIDTH = '320px';
-    var SIDEBAR_DISPLAY_DURATION = 300;
-
-    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
-
-    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
-    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
-    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
-
-    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
-    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
-    var sidebarToogleLine2ndStatusClose = {opacity: 0};
-
-    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
-    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
-    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
-
-    LogoAndMenuMotion();
-    sidebatToggleMotion();
-    postsListMotion();
-    backToTopMotion();
-
-
-    $(document)
-      .on('sidebar.isShowing', function () {
-        isDesktop() && body.velocity(
-          {paddingRight: SIDEBAR_WIDTH},
-          SIDEBAR_DISPLAY_DURATION
-        );
-        sidebarContentMotion();
-      })
-      .on('sidebar.isHiding', function () {});
-
-    function LogoAndMenuMotion() {
-      $.Velocity.RunSequence([
-        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
-        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
-        
-        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
-        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
-        
-        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
-      ]);
-      $('.menu-item').velocity('transition.slideDownIn', {display: null});
-    }
-
-
-    function backToTopMotion () {
-      var b2top = $('.back-to-top');
-      b2top.on('click', function () {
-        body.velocity('scroll');
-      });
-    }
-
-    function sidebarShowMotion () {
-
-      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
-      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
-      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
-
-      sidebar.velocity({width: SIDEBAR_WIDTH}, {
-        display: 'block',
-        duration: SIDEBAR_DISPLAY_DURATION,
-        complete: function () {
-          sidebar.addClass('sidebar-active');
-          sidebar.trigger('sidebar.didShow');
-        }
-      });
-      sidebar.trigger('sidebar.isShowing');
-    }
-
-    function sidebarHideMotion () {
-      isDesktop() && body.velocity({paddingRight: 0});
-      sidebar.velocity('reverse');
-
-      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
-      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
-      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
-
-      sidebar.removeClass('sidebar-active');
-      sidebar.trigger('sidebar.isHiding');
-    };
-
-    function sidebarContentMotion () {
-      $('.sidebar .motion-element').velocity(
-        'transition.slideRightIn',
-        {stagger: 50, drag: true}
-      );
-    }
-
-    function postsListMotion () {
-      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
-      $('.post').velocity('transition.slideDownIn', postMotionOptions);
-    }
-
-    function sidebatToggleMotion () {
-      sidebarToggle.on('click', function () {
-        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
-        isSidebarVisible = !isSidebarVisible;
-      });
-
-      sidebarToggle.hover(function () {
-        if (isSidebarVisible) {return}
-        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
-        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
-        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
-      }, function () {
-        if (isSidebarVisible) {return}
-        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
-        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
-        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
-      });
-    }
-  });
-
-</script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
+      <a href='/blog/tags/生活/'>生活</a> 
     
+      <a href='/blog/tags/读书·旅行/'>读书·旅行</a> 
+    
+    </saan>
   
+  </h3>
+</section>
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"zhangmin"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/12/11/如何识别一个未知文件的编码格式/">如何识别一个未知文件的编码格式</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  December 11, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/Java/'>Java</a> 
+    
+      <a href='/blog/tags/技术/'>技术</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
 
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/10/31/Java-JNI-学习代码示例/">Java JNI 学习代码示例</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  October 31, 2013
   
   
-</body>
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/Java/'>Java</a> 
+    
+      <a href='/blog/tags/技术/'>技术</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/10/25/利用Java-Service-Wrapper将Java应用程序发布为Service/">利用Java Service Wrapper将Java应用程序发布为Service</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  October 25, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/Java/'>Java</a> 
+    
+      <a href='/blog/tags/技术/'>技术</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/10/22/Spring-OSGi中如何获取ApplicationContext/">Spring OSGi中如何获取ApplicationContext</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  October 22, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/Java/'>Java</a> 
+    
+      <a href='/blog/tags/OSGi/'>OSGi</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/10/08/如何长胖，终于被我找到了/">如何长胖，终于被我找到了</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  October 8, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/生活/'>生活</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/10/08/国庆环太湖骑行之旅/">国庆环太湖骑行之旅</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  October 8, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/生活/'>生活</a> 
+    
+      <a href='/blog/tags/读书·旅行/'>读书·旅行</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/09/12/Java基本数据类型和操作符需要注意的问题/">Java基本数据类型和操作符需要注意的问题</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  September 12, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/Java/'>Java</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/09/01/Ubuntu-13-04-自定义Grub/">Ubuntu 13.04 自定义Grub</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  September 1, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/Linux/'>Linux</a> 
+    
+      <a href='/blog/tags/技术/'>技术</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/08/29/使用Apache-MINA开发Java网络应用程序/">使用Apache MINA开发Java网络应用程序</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  August 29, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/Java/'>Java</a> 
+    
+      <a href='/blog/tags/技术/'>技术</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<nav class="pagination" role="pagination">
+  <a class="newer-posts" href="/blog/page/3/">← Newer Posts</a>
+  <span class="page-number">Page 4 of 24</span>
+  <a class="older-posts" href="/blog/page/5/">Older Posts →</a>
+</nav>
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
 </html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>《高性能网站建设指南》读书笔记 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  May 29, 2012
+  
+
+  <h1 class="post-title">《高性能网站建设指南》读书笔记</h1>
+  <section class="post-content article-entry">
+    <p>事实证明，网站加载的时间主要耗费在HTML及其相关组件的加载上。根据性能黄金法则：</p>
+<blockquote>
+<p>只有10%-20%的最终用户响应时间花在了下载HTML文档上。其余的80%-90%时间花在下载页面的组件（JS脚本，CSS，图片）。</p>
+</blockquote>
+<p>这本书介绍了提高网站性能的14条规则。下面我将进行简要概括：</p>
+<p><strong>规则1：减少HTTP请求</strong></p>
+<p>使用图片地图导航；CSS Sprites 将多张图片合成一张图片，然后利用CSS定位到需要的图片；利用data：URL模式内联图片；合并脚本和CSS文件。</p>
+<p><strong>规则2：使用内容发布网络</strong></p>
+<p>内容发布网络（CDN）是一组分布在不同地理位置的服务器，用于更加有效地向用户发布内容。</p>
+<p><strong>规则3：添加Expire头</strong></p>
+<p>利用浏览器的缓存调高性能。如果想更新内容可以修改文件名，使原缓存失效。</p>
+<p><strong>规则4：压缩组件</strong></p>
+<p>利用HTTP头Accept-Encoding 和Content-Encoding来压缩组件。</p>
+<p><strong>规则5：将样式表放在顶部</strong></p>
+<p>使HTML文档更早的加载，防止白屏的发生。</p>
+<p><strong>规则6：将脚本放在底部</strong></p>
+<p>减少脚本的加载影响其他HTML内容的加载。</p>
+<p><strong>规则7：避免CSS表达式</strong></p>
+<p>可以利用事件处理器来动态改变样式，只有特定事件发生时才运行。</p>
+<p><strong>规则8：使用外部JavaScript和CSS</strong></p>
+<p>便于组件复用和维护。当然首页还是使用内联样式表和脚本文件较好。</p>
+<p><strong>规则9：减少DNS查找</strong></p>
+<p>利用浏览器DNS缓存。</p>
+<p><strong>规则10：精简JavaScript</strong></p>
+<p>一般情况下精简比混淆更有效。因为代码混淆存在维护，调试难等问题。常用的JS精简工具有<a href="http://javascript.crockford.com/jsmin.html" target="_blank" rel="external">JSMIn</a>。</p>
+<p><strong>规则11：避免重定向</strong></p>
+<p>多次HTTP请求严重影响页面加载。</p>
+<p><strong>规则12：移除重复的脚本</strong></p>
+<p><strong>规则13：配置或移除ETag</strong></p>
+<p><strong>规则14：使Ajax可以缓存</strong></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2012/05/29/《舌尖上的中国》何以感动中国人/">
+        ← prev <!--《舌尖上的中国》何以感动中国人-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2012/05/20/流言！流言！/">
+        <!--流言！流言！--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-《高性能网站建设指南》读书笔记" data-title="《高性能网站建设指南》读书笔记" data-url="http://zhangmin.name/blog/2012/05/29/《高性能网站建设指南》读书笔记/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

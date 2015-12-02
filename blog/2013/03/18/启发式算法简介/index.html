@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>启发式算法简介 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  March 18, 2013
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/问题与算法/'>问题与算法</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">启发式算法简介</h1>
+  <section class="post-content article-entry">
+    <p>本文简要介绍启发式算法。</p>
+<p>启发式算法能够为很多实际应用问题提供一个可行解。但是算法不能保证该解就是最优解，或这个算法可以证明能够得到最优解但不能在有限的时间空间条件下得到最优解。启发式算法一般用于在一定时间或空间条件下还没有找到最优解的问题。</p>
+<p><strong>启发式算法的发展</strong><br>30年代 由于实际需要,提出了启发式算法(快速有效）。<br>50年代 逐步繁荣,贪婪算法和局部搜索得到关注。<br>60年代 反思,发现以前提出的启发式算法速度很快,但是解得质量不能保证,而且对大规模的问题仍然无能为力(收敛速度慢)。<br>70年代 计算复杂性理论提出。许多实际问题不可能在合理的时间范围内找到全局最优解。发现贪婪算法和局部搜索算法速度快,但解不好的原因主要是他们只是在局部的区域内找解,解没有全局最优性。<br>1975年 holland提出遗传算法 (Genetic Algorithm)<br>1977年 Glouer提出禁忌搜索算法 (Tabu Search)<br>1982年 Kirkpatrick提出模拟退火算法 (Simulated Annealing)<br>1995年 Dorigo提出蚁群算法 (Ant Colony Optimization)</p>
+<p><strong>启发式算法的优缺点</strong><br>1.优点<br>1）一般算法由于模型误差，数据不精确性，参数估计误差等问题使得它们得到的解比启发式算法差。<br>2）复杂问题求解没有最优算法或者最优算法过于复杂，而启发式算法却相对简单。<br>3）简单，直观，容易设计程序<br>2.缺点<br>1）不能保证得到最优解。<br>2）不稳定<br>3）启发式算法的效果依赖于实际问题和设计者的经验。</p>
+<p><strong>启发式算法的分类</strong><br>1.简单直观的算法<br>1）一步算法：不在可行解之间比较，直接得到问题的可行解。<br>2）改进算法：迭代过程是从一个可行解到另一个可行解的变化，通过两个解的比较来的到更好的解，直到解的质量满足一定的要求。<br>2.数学规划算法<br>用连续优化的方法解决组合优化问题。主要基于数学规划理论。<br>3.现代优化算法<br>该类算法的特点是基于客观世界的现象，通过迭代得到可行解。<br>1）禁忌搜索算法<br>2）模拟退火算法<br>3）遗传算法<br>4）人工神经网络<br>5）蚁群算法<br>6）粒子群算法<br>7）混合算法</p>
+<p><strong>启发式算法的性能分析</strong><br>评价一个启发式算法的优劣的指标主要有算法的复杂度，解的偏离程度，算法的稳健性。评价的手段包括纯理论的分析，概率分析，及统计分析。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/03/19/问题的复杂性及P与NP问题/">
+        ← prev <!--问题的复杂性及P与NP问题-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/03/17/组合优化问题/">
+        <!--组合优化问题--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-启发式算法简介" data-title="启发式算法简介" data-url="http://zhangmin.name/blog/2013/03/18/启发式算法简介/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

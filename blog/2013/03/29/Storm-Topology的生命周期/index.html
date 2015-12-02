@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>Storm Topology的生命周期 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  March 29, 2013
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/storm/'>storm</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">Storm Topology的生命周期</h1>
+  <section class="post-content article-entry">
+    <p>本文将详细介绍topology的生命周期，从运行 storm jar命令把topology上传到Nimbus，到Supervisor启动和停止worker，再到worker和task的设置和运行。另外，本文还将介绍Nimbus如何监控topology及topology是如何被杀死的。</p>
+<p>首先，关于topology需要注意一下两点：</p>
+<p>1.实际运行的topology与用户提交的topology是不同的。实际运行的topology中包含隐式的流及一个acker bolt用于实现和管理storm的确认框架（保证消息处理）。隐式的topology是由system_topology!函数实现的。</p>
+<p>2.System_topology！在两处使用：1）当Nimbus为topology创建任务时。2）当worker中需要知道如何路由消息时。</p>
+<p><strong>启动topology</strong></p>
+<p>1.storm jar设置特定参数并运行提交的类，storm jar将设置storm jar的环境变量，以便StormSubmitter使用。</p>
+<p>2.当你的代码使用StormSubmitter.submitTopology，StormSubmitter执行以下步骤：</p>
+<ul>
+<li>首先，如果还没有上传jar，则上传。</li>
+<li>Jar文件的上传通过Nimbus的Thrift接口。</li>
+<li>beginFileUpload返回Nimbus接受的路径。</li>
+<li>uploadChunk一次上传15kb的数据。</li>
+<li>完成上传将调用finishUpload。</li>
+<li>然后，StormSubmitter会调用submitTopology方法。</li>
+<li>Topology的设置将通过JSON进行序列化（JSON可以使使用其他语言开发更容易）。以Thrift调用submitTopology将以Nimbus的接收路径为参数。<br>3.Nimbus收到topology的提交。</li>
+</ul>
+<p>4.Nimbus标准化topology的配置（标准化的目的是使每一个单独的实例都有相同的序列化注册接口，这对序列化正确运行很重要）。</p>
+<p>5.Nimbus设置topology的静止状态。</p>
+<ul>
+<li>因为jar和配置太大，不能存入ZooKeeper，将保存在本地文件系统中。Jar和Config将被复制到{nimbus local dir}/stormdist/{topology id}。</li>
+<li>Setup-storm-static 将task-&gt;component写入ZK</li>
+<li><p>Setup-heartbeats 在ZK中创建ZK路径使task可以正常心跳。<br>6.Nimbus调用mk-assignment 分配任务到机器。任务分配包括：</p>
+</li>
+<li><p>master-code-dir：supervisor从Nimbus下载正确的jars/config</p>
+</li>
+<li>task-&gt;node+port:Map从taskid到worker（worker有node+port标示）。</li>
+<li>Node-&gt;host:Map&lt;nodeid,hostname&gt;worker获取需要的通信的其他worker的信息。Nodeid用于标示supervisor。所以一台机器可以运行多个supervisor，设置supervisor的工作由集成的Mesos完成。</li>
+<li>Task-&gt;start-time-secs：包括Nimbus开始启动task Map&lt;taskid,timestamp&gt;用于Nimbus对topology的监控。当初次启动任务时，任务会有一个较长的超时值（改时间通过nimbus.task.launch.secs设置）。<br>7.topology分配后，其状态是deactivated模式。Start-storm将向Zookeeper写入数据使集群知道topology是active并且可以发送元组。</li>
+</ul>
+<p>8.TODO cluster-state diagram</p>
+<p>9.Supervisor在后台运行一下两个函数：</p>
+<ul>
+<li>synchronize-supervisor每10s调用一次：当Zookeeper中assignment改变时从Nimbus下载代码，向本地写数据。该节点将开始运行。写的数据Map&lt;port-&gt;localAssignment&gt;LocalAssignment包含topology id及worker的taskid list。</li>
+<li><p>sync-process 从LFS读取synchronize-supervisor写的数据，比较正在节点上运行的信息，可以启动和停止worker进程使之同步。<br>10.通过mk-worker启动worker进程。</p>
+</li>
+<li><p>Worker连接到其他worker并启动一个线程监控变化。所以当worker陪重新分配，worker会重新连接到新的worker地址。</p>
+</li>
+<li>监控worker的active状态，并将状态写入storm-active-atom变量，该变量有task使用，以决定是否在spout上调用nextTuple.worker启动task线程。<br>11.Mk-task设置任务。Task设置路由函数，参数为输入流，输出元组，返回发送元组的taskid列表。Task设置spout和bolt的特定配置。</li>
+</ul>
+<p><strong>Topology的监控</strong></p>
+<p>Nimbus在topology的整个生命周期执行监控，在timer线程计划运行重复的task以检查topology。</p>
+<p>Nimbus的行为用FSM描述。</p>
+<p>每nimbus.monitor.freq.secs 出发monitor事件，通过reassign-transitions调用reassigntopology.reassign-topology</p>
+<p>调用mk-assignment 与topology第一次分配及更新topology调用的函数mk-assignment一样。</p>
+<p>Mk-assignment检查心跳信息，如果必要重新分配worker。在ZK中任何分配状态信息的修改将触发supervisor铜鼓及启动或停止worker。</p>
+<p><strong>杀死Topology</strong></p>
+<p>Storm kill与Nimbus的Thrift接口的功能相同。</p>
+<p>Nimbus接收到命令，应用kill transition（该transition改变topology的状态为killed，并计划移除事件。通过在未来运行等待时间后进行清理。</p>
+<p>等待时间默认为topology的消息超时时间，但可以通过storm kill -w 标志覆盖。这将使得topology在等待时间后状态变为deactivated。这可以是worker在关闭前继续完成正在进行的工作。</p>
+<p>改变topology的状态保证kill协议是容错的（防止Nimbus崩溃）如果topology在启动时状态就为killed，Nimbus会安排remove事件在等待时间后执行。</p>
+<p>移除ZK中topology的分配信息及静止信息。</p>
+<p>单独的消息管理命令do-cleanup执行，该命令将清除心跳目录及本地保存的jar/config目录。</p>
+<p><em>本文翻译自<a href="https://github.com/nathanmarz/storm/wiki/Lifecycle-of-a-topology" target="_blank" rel="external">https://github.com/nathanmarz/storm/wiki/Lifecycle-of-a-topology</a></em></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/03/30/Strom-Tutorial/">
+        ← prev <!--Strom Tutorial-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/03/28/Self-introduction-Speech/">
+        <!--Self-introduction Speech--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-Storm-Topology的生命周期" data-title="Storm Topology的生命周期" data-url="http://zhangmin.name/blog/2013/03/29/Storm-Topology的生命周期/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>Java基本数据类型和操作符需要注意的问题 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  September 12, 2013
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/Java/'>Java</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">Java基本数据类型和操作符需要注意的问题</h1>
+  <section class="post-content article-entry">
+    <h3 id="1-java中基本数据类型大小、默认值及其范围">1.java中基本数据类型大小、默认值及其范围</h3><p>boolean - false -</p>
+<p>char 16bits ‘u0000’(null) Unicode 0~Unicode 2^16-1(无符号类型）</p>
+<p>byte 8bits (byte)0  -128~127</p>
+<p>short 16bits (short)0  -2^15~2^15-1</p>
+<p>int 32bits 0  -2^31~2^31-1</p>
+<p>long 64bits 0L  -2^62~2^63-1</p>
+<p>float 32bits 0.0f  IEEE754</p>
+<p>double 64bits 0.0d  IEEE754</p>
+<h3 id="2-System-out-println()中的“+”">2.System.out.println()中的“+”</h3><p>在这种上下文环境中，“+”意味着“字符串连接”，并且如果必要，它还要执行“字符串转换”。如果编译器观察到一个String后面紧跟一个“+”，而这个“+”后面又紧跟一个非String类型的元素时，就会将非String转化为String类型。</p>
+<h3 id="3-基本类型的赋值">3.基本类型的赋值</h3><p>基本类型存储了实际的数值，而并非是指向一个对象的引用，所以在为其赋值的时候是直接将一个地方的数值复制到另一个地方。而对于将“一个对象赋值给另一个对象”，实际是将“引用”从一个地方复制到另一个地方。如果一个对象的所有引用都被覆盖了，那么这个不再被引用的对象就由“垃圾回收器”自动清理了。</p>
+<h3 id="4-算数操作符">4.算数操作符</h3><p>1）整数除法会直接去掉结果的小数位，而不是四舍五入的结果。</p>
+<p>2）一元减号用于转变数据的符号，而一元加号知识为了与一元减号相对应，但是它唯一的作用就是将较小的数据类型的操作数提升为int。</p>
+<h3 id="5-关系操作符">5.关系操作符</h3><p>==和!=适用于所有的基本数据类型，而其他比较符不适用于boolean。因为boolean只有true和false两个值，比较大小没意义。另外，对两个内容相同的对象执行==和!=操作时，比较的是对象的引用。如果想比较对象的内容，则需要覆盖equals方法。</p>
+<h3 id="6-逻辑操作符">6.逻辑操作符</h3><p>1）&amp;&amp;、||、！操作只能应用与布尔值。在java中不能将一个非布尔值当做布尔值来用。</p>
+<p>2）如果在该使用String的地方使用了布尔值，则布尔值会被自动转换成适当的文本形式。</p>
+<h3 id="7-直接常量">7.直接常量</h3><p>如果试图将一个变量初始化为超出自身范围的值，编译器都会向我们报告一条错误信息。如果超出范围编译器会自动转换成int，并告诉我们需要对这次赋值进行“窄化转型”。各种类型范围详见1。</p>
+<h3 id="8-移位操作符">8.移位操作符</h3><p>1）移位操作符只能操作整数类型。左移(&lt;&lt;)按照操作符右侧指定的位数将操作符左边的数向左移动（在低位补0）。“有符号”右移(&gt;&gt;)按照操作符右侧指定的位数将操作符左边的操作数右移。“有符号”右移操作符使用“符合扩展”：若为正，则在高位插入0；若为负，则在高位插入1。“无符号”右移(&gt;&gt;&gt;)，使用“0”扩展，无论正负，在高位插入0。</p>
+<p>2）对char，byte或者short的移位时，它们会被转换成int类型，并且得到的结果也是int类型的值。且只有低5位才有用，因为如果移动32位以上，原来的信息就会全部丢失。例如对于表达式x&lt;&lt;y，如果y&gt;32，那么将只取y的二进制表示的低5位。如果y=34（10 0010），低五位就是00010，即最终只移动两位。上述规则对于long类型及&gt;&gt;和&lt;&lt;&lt;都适用。</p>
+<p>3）如果对byte或者short进行无符号右移位结合赋值操作(&gt;&gt;&gt;=)可能会得到错误的结果。它们先会被转换成int，再进行右移操作，然后截断，赋值给原类型，在这种情况下会出现-1的结果。</p>
+<h3 id="9-类型转换">9.类型转换</h3><p>1）如果执行一种名为“窄化转换”的操作（将能容纳更多信息的数据类型转化成无法容纳那么多信息的类型），就有可能面临信息丢失的危险。此时，必须进行强制类型转换。而进行名为“扩展转换”，则不必进行类型转化，也不会丢失信息。</p>
+<p>2）再进行“窄化转换”是，必须注意截尾和舍入的问题。如将float转换成int是直接将小数点后面的数值截掉，而不是舍入。如果想舍入可用Math.round()方法。</p>
+<p>3）通常，在一个表达式中，最大的数据类型决定了结果的类型。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/10/08/国庆环太湖骑行之旅/">
+        ← prev <!--国庆环太湖骑行之旅-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/09/01/Ubuntu-13-04-自定义Grub/">
+        <!--Ubuntu 13.04 自定义Grub--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-Java基本数据类型和操作符需要注意的问题" data-title="Java基本数据类型和操作符需要注意的问题" data-url="http://zhangmin.name/blog/2013/09/12/Java基本数据类型和操作符需要注意的问题/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

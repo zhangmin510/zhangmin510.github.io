@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>禁忌搜索算法参考 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  March 21, 2013
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/问题与算法/'>问题与算法</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">禁忌搜索算法参考</h1>
+  <section class="post-content article-entry">
+    <p>在现代优化算法中，领域的概念很重要。邻域的定义如下：</p>
+<p>N(x):x属于D—&gt;N(x)属于2^D,且x属于N(x)称为一个邻域映射。2^D表示D的所有子集组成的集合，N(x)表示x的邻域。y属于N(x)称为x的一个邻居。</p>
+<p>邻域的构造依赖于决策变量的表示。</p>
+<p><strong>局部搜索的两种策略</strong><br>1)选定一个可行的初始解，定义邻域。从邻域中找到最好的解与初始解比较，然后取最小的解为新的初始解。如此迭代直到解满足一定条件后停止。<br>2）随机法。从初始可行解邻域中随机选择一点，与初始解比较，循环直到解的质量达到一定程度。</p>
+<p><strong>局部搜索的缺点</strong><br>1)无法保证得到全局最优解。<br>2）解的质量依赖于起始点和领域的选取。<br>3）为了得到高质量的解，需要比较不同的邻域结构和初始解，只有在选择足够多时，才能保证得到最优解。</p>
+<p><strong>禁忌搜索算法的提出</strong><br>禁忌搜索（Tabu Search)是局部领域算法的推广，Fred Glover(<a href="http://spot.colorato.edu/~glover）在1986年提出这个概念，进而进一步形成一套完整的算法。算法的特点就是禁忌，禁止重复前面的工作，跳出局部最优点。" target="_blank" rel="external">http://spot.colorato.edu/~glover）在1986年提出这个概念，进而进一步形成一套完整的算法。算法的特点就是禁忌，禁止重复前面的工作，跳出局部最优点。</a></p>
+<p><strong>禁忌算法的一般步骤</strong></p>
+<p>[java]<br>设定初始解和禁忌对象及禁忌长度<br>产生候选集合（如果候选集合中出现禁忌的对象直接逃过）<br>比较，更新初始解，禁忌长度，禁忌对象<br>[/java]</p>
+<p>候选集合可以从邻域中该选择若干目标值最佳的邻居，或者是在邻域中的一部分邻居中选择若干目标值最佳的状态，或者是随机选择。候选集合的评价函数可以是直接评价函数（通过目标函数的运算得到评价函数）或者是间接评价函数（构造其他评价函数替代目标函数，应反映目标函数的特性，减少计算复杂性）。</p>
+<p><strong>禁忌搜索的关键参数与操作</strong><br>两项指标：<br>1）禁忌对象：被禁的变化的因素<br>2）禁忌长度：禁忌的步数<br>三种变化：<br>1）解的变化（从一个解到另一个解）<br>2）解向量分量的变化<br>3）目标值的变化（隐含解集合的变化，一个目标值代表一组解的集合）</p>
+<p><strong>禁忌对象的选取</strong><br>解的变化禁忌范围较小，搜索范围较大可能造成计算时间的增加。而解向量分量的变化及目标值禁忌的禁忌范围大，减少了搜索的时间，但是有可能陷入局部最优。</p>
+<p><strong>禁忌长度的选取</strong><br>1)  常数，易于实现。<br>2）t属于[tmin,tmax]，随问题的规模变化。<br>3）tmin和tmax动态选择。<br>如果禁忌长度过长会导致较长的计算时间，也可能使得算法无法进行下去。如果禁忌长度过短，容易陷入局部最优，无法从局部最优点中跳出达到全局最优点。</p>
+<p>可以通过记录禁忌次数等频率信息来控制禁忌参数。如果一个元素或序列重复出现或者目标值变化很小，可增加禁忌的长度避开循环。如果一个目标值出现(最值)的频率很高，可以终止计算，认为已达到最优。一般记录的频率信息包括静态的信息（解，目标值，当前最优解）和动态信息（解，目标值等的变化趋势)。</p>
+<p><strong>特赦原则</strong><br>1)  基于评价值。如出现一个解好于前面任意的解，可特赦。<br>2）基于最小错误。若所有的都被禁忌，特赦评价值最小的。<br>3）基于影响力规则。对目标解的变化影响较大可特赦。</p>
+<p><strong>终止规则</strong><br>1)  确定步数<br>2）频率控制。超过一定频率就停止。<br>3）目标控制。如最优解不发生变化了。</p>
+<p><strong>最优定理</strong><br>在禁忌搜索算法中，若可行解区域与候选解是连通的（有交集），只要禁忌表记录充分大，一定能够得到最优解。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/03/21/蚁群算法参考/">
+        ← prev <!--蚁群算法参考-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/03/20/apache-axis2和eclipse开发hello-web-service/">
+        <!--apache axis2和eclipse开发hello web service--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-禁忌搜索算法参考" data-title="禁忌搜索算法参考" data-url="http://zhangmin.name/blog/2013/03/21/禁忌搜索算法参考/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

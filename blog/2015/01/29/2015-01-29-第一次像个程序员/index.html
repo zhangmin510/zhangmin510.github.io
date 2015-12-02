@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>第一次像个程序员 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  January 29, 2015
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/Java/'>Java</a>
+    
+      <a href='/blog/tags/札记/'>札记</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">第一次像个程序员</h1>
+  <section class="post-content article-entry">
+    <p>以前看到过一篇文章说优秀的程序员有一个特点就是懒。由于懒，不想做重复的事情，让程序去做重复的事情。在这个过程中，也许写程序的时间比去做重复的事情花费的时间还多。但是这个过程中的乐趣确实无穷的。与其经历那份煎熬，不如做些有挑战的，有成就感的事情。</p>
+<p>避免做重复的事，这是每个程序员都应该去做的事。</p>
+<h1 id="无聊的任务">无聊的任务</h1><p>一个已经用PowerDesigner设计好的数据库，还要去补充数据库表结构的详细文档。讨厌为了文档而文档的文档撰写工作。这是一个无聊，无趣，浪费生命的工作。</p>
+<h1 id="偷懒">偷懒</h1><p>能不能导出？这是我的第一个想法。但是PowerDesigner只导出SQL语句。无奈，文档需要更详细的内容。项目文件能不能直接用文本打开？用记事本打开，可以。而且我看到了程序员都喜欢看到的格式XML。剩下的工作就是解析XML，提取关于数据库表的内容，转成CSV文件，然后在复制粘贴到WORD中。</p>
+<h1 id="Show_Time">Show Time</h1><p>不修改文档只解析，用SAX就好了。<br><a id="more"></a></p>
+<h2 id="分析">分析</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;c:Tables&#62;&#10;&#60;o:Table Id=&#34;o83&#34;&#62;&#10;&#60;a:ObjectID&#62;11195183-1EF0-4FDB-BC9F-5F45A42D3200&#60;/a:ObjectID&#62;&#10;&#60;a:Name&#62;&#29992;&#25143;&#34920;&#60;/a:Name&#62;&#10;&#60;a:Code&#62;TBL_USER&#60;/a:Code&#62;&#10;&#60;a:CreationDate&#62;1407122337&#60;/a:CreationDate&#62;&#10;&#60;a:Creator&#62;Administrator&#60;/a:Creator&#62;&#10;&#60;a:ModificationDate&#62;1422326992&#60;/a:ModificationDate&#62;&#10;&#60;a:Modifier&#62;Administrator&#60;/a:Modifier&#62;&#10;&#60;a:Comment&#62;&#29992;&#25143;&#34920;&#60;/a:Comment&#62;&#10;&#60;a:TotalSavingCurrency/&#62;&#10;&#60;c:Columns&#62;&#10;&#60;o:Column Id=&#34;o112&#34;&#62;&#10;&#60;a:ObjectID&#62;46BD538A-51A2-4ED0-83DA-4840413F2993&#60;/a:ObjectID&#62;&#10;&#60;a:Name&#62;&#29992;&#25143;&#32534;&#21495;&#60;/a:Name&#62;&#10;&#60;a:Code&#62;U_ID&#60;/a:Code&#62;&#10;&#60;a:CreationDate&#62;1407122416&#60;/a:CreationDate&#62;&#10;&#60;a:Creator&#62;Administrator&#60;/a:Creator&#62;&#10;&#60;a:ModificationDate&#62;1421802615&#60;/a:ModificationDate&#62;&#10;&#60;a:Modifier&#62;Administrator&#60;/a:Modifier&#62;&#10;&#60;a:DataType&#62;int&#60;/a:DataType&#62;&#10;&#60;a:Mandatory&#62;1&#60;/a:Mandatory&#62;&#10;&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o113&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o114&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o115&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o116&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o117&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o118&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o119&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o120&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o121&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o122&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o123&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;/c:Columns&#62;&#10;&#60;c:Keys&#62;...&#60;/c:Keys&#62;&#10;&#60;c:PrimaryKey&#62;...&#60;/c:PrimaryKey&#62;&#10;&#60;/o:Table&#62;</span><br></pre></td></tr></table></figure>
+<p>对于如此工整，完美，结构化的数据，一定是程序的最爱。Java SAX解析主要代码如下：</p>
+<h2 id="解析">解析</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class PDMHandler extends DefaultHandler&#123;&#10;&#9;private List&#60;Table&#62; tables = null;&#10;&#9;private Table table = null;&#10;&#9;private List&#60;Column&#62; columns = null;&#10;&#9;private Column column = null;&#10;&#10;&#9;private boolean inTables = false;&#10;&#9;private boolean inTable = false;&#10;&#9;private boolean inColumns = false;&#10;&#9;private boolean inColumn = false;&#10;&#10;&#9;private String cur = null;&#10;&#10;&#9;public List&#60;Table&#62; getTables(InputStream is) throws Exception &#123;&#10;&#9;&#9;SAXParserFactory factory = SAXParserFactory.newInstance();&#10;&#9;&#9;SAXParser parser = factory.newSAXParser();&#10;&#9;&#9;PDMHandler handler = new PDMHandler();&#10;&#9;&#9;parser.parse(is, handler);&#10;&#9;&#9;return handler.getTables();&#10;&#9;&#125;&#10;&#10;&#9;public List&#60;Table&#62; getTables() &#123;&#10;&#9;&#9;return tables;&#10;&#9;&#125;&#10;&#10;&#9;@Override&#10;&#9;public void startDocument() throws SAXException &#123;&#10;&#9;&#9;System.out.println(&#34;Start parsing...&#34;);&#10;&#9;&#9;this.tables = new ArrayList&#60;Table&#62;();&#10;&#9;&#125;&#10;&#10;&#9;@Override&#10;&#9;public void endDocument() throws SAXException &#123;&#10;&#9;&#9;System.out.println(&#34;Parsing finished.&#34;);&#10;&#9;&#125;&#10;&#10;&#9;@Override&#10;&#9;public void startElement(String uri, String localName, String qName,&#10;&#9;&#9;&#9;Attributes attributes) throws SAXException &#123;&#10;&#9;&#9;if (&#34;c:Tables&#34;.equals(qName)) inTables = true;&#10;&#10;&#9;&#9;if (inTables) &#123;&#10;&#9;&#9;&#9;if (&#34;o:Table&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;&#9;inTable = true;&#10;&#9;&#9;&#9;&#9;table = new Table();&#10;&#9;&#9;&#9;&#125;&#10;&#10;&#9;&#9;&#9;if (inTable) &#123;&#10;&#9;&#9;&#9;&#9;if (&#34;c:Columns&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;&#9;&#9;inColumns = true;&#10;&#9;&#9;&#9;&#9;&#9;columns = new ArrayList&#60;Column&#62;();&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#10;&#9;&#9;&#9;&#9;if (inColumns) &#123;&#10;&#9;&#9;&#9;&#9;&#9;if (&#34;o:Column&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;&#9;&#9;&#9;inColumn = true;&#10;&#9;&#9;&#9;&#9;&#9;&#9;column = new Column();&#10;&#9;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#125;&#10;&#9;&#9;cur = qName;&#10;&#9;&#125;&#10;&#10;&#9;@Override&#10;&#9;public void characters(char[] ch, int start, int length)&#10;&#9;&#9;&#9;throws SAXException &#123;&#10;&#9;&#9;String content = new String(ch, start, length);&#10;&#9;&#9;//&#60;a:code&#62;Name&#60;/a:code&#62;&#10;&#9;&#9;//First visit value is Name, second visit value is LF(10)&#10;&#9;&#9;boolean first = (int) content.charAt(0) != 10;&#10;&#9;&#9;if (inColumn) &#123;&#10;&#9;&#9;&#9;if (first) &#123;&#10;&#9;&#9;&#9;&#9;if (&#34;a:Name&#34;.equals(cur)) column.setName(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Code&#34;.equals(cur)) column.setDataItem(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:DataType&#34;.equals(cur)) column.setType(&#34;\&#34;&#34; + content + &#34;\&#34;&#34;);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Length&#34;.equals(cur)) column.setLength(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Comment&#34;.equals(cur)) column.setComment(content);&#10;&#9;&#9;&#9;&#9;else &#123; &#125;&#10;&#9;&#9;&#9;&#125;&#10;&#10;&#9;&#9;&#125;  else if (inTable)&#123;&#10;&#9;&#9;&#9;if (first) &#123;&#10;&#9;&#9;&#9;&#9;if (&#34;a:Name&#34;.equals(cur)) table.setTableName(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Code&#34;.equals(cur)) table.setTableCode(content);&#10;&#9;&#9;&#9;&#9;else &#123; &#125;&#10;&#9;&#9;&#9;&#125;&#10;&#10;&#9;&#9;&#125; else &#123; &#125;&#10;&#9;&#125;&#10;&#10;&#9;@Override&#10;&#9;public void endElement(String uri, String localName, String qName)&#10;&#9;&#9;&#9;throws SAXException &#123;&#10;&#9;&#9;if (&#34;o:Column&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;inColumn = false;&#10;&#9;&#9;&#9;if (inColumns) columns.add(column);&#10;&#9;&#9;&#125;&#10;&#9;&#9;if (&#34;c:Columns&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;inColumns = false;&#10;&#9;&#9;&#9;inTable = false;&#10;&#9;&#9;&#9;table.setColumns(columns);&#10;&#9;&#9;&#9;tables.add(table);&#10;&#9;&#9;&#125;&#10;&#9;&#9;if (&#34;c:Tables&#34;.equals(qName)) inTables = false;&#10;&#9;&#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>最后对格式稍加处理，就可以得到CSV文件，可以非常方便的复制粘贴到WORD中。</p>
+<h2 id="转换">转换</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#29992;&#25143;&#34920;(TBL_USER)&#10;1,&#29992;&#25143;&#32534;&#21495;,U_ID,&#34;int&#34;,,,&#10;2,&#29992;&#25143;&#21517;,U_NAME,&#34;varchar(20)&#34;,20,,&#10;3,&#29992;&#25143;&#23494;&#30721;,U_PWD,&#34;varchar(20)&#34;,20,,&#10;4,&#26426;&#26500;&#20195;&#30721;,ORG_CODE,&#34;varchar(50)&#34;,50,,&#10;5,&#21592;&#24037;&#24037;&#21495;,U_NUM,&#34;varchar(20)&#34;,20,,&#10;6,&#29366;&#24577;,U_STATUS,&#34;varchar(2)&#34;,2,,&#10;7,&#26368;&#21518;&#30331;&#24405;&#26102;&#38388;,U_LAST_LOGIN_TIME,&#34;datetime&#34;,,,&#10;8,&#21019;&#24314;&#20154;,U_CREATER,&#34;int&#34;,,,&#10;9,&#21019;&#24314;&#26102;&#38388;,U_CREATE_TIME,&#34;datetime&#34;,,,&#10;10,&#22791;&#27880;,U_REMARK,&#34;varchar(200)&#34;,200,,&#10;11,&#26368;&#21518;&#23494;&#30721;&#26356;&#26032;&#26102;&#38388;,U_LAST_UPDATE_PWD_TIME,&#34;datetime&#34;,,,&#10;12,&#31163;&#32844;&#26085;&#26399;,U_DEL_TIME,&#34;date&#34;,,,</span><br></pre></td></tr></table></figure>
+<h1 id="Further_and_beyond">Further and beyond</h1><p>写代码的过程中感觉到用java写这段简单的文本处理程序是比较费力的。如果用一些脚本语言如Python或者基于JVM的Groovy，会更方便、更快捷，更高效的。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2015/12/02/nodejs菜鸟需跨过的坎/">
+        ← prev <!--nodejs菜鸟需跨过的坎-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2015/01/27/2015-1-27-RESTful-Java-with-JAX-RS/">
+        <!--RESTful Java with JAX-RS Reading Note--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-2015-01-29-第一次像个程序员" data-title="第一次像个程序员" data-url="http://zhangmin.name/blog/2015/01/29/2015-01-29-第一次像个程序员/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

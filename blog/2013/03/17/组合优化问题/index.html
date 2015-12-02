@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>组合优化问题 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  March 17, 2013
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/问题与算法/'>问题与算法</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">组合优化问题</h1>
+  <section class="post-content article-entry">
+    <p>任何控制和决策问题本质上都是优化问题，用于解决优化问题的优化技术是一种以数学为基础，用于求解各种工程问题优化解的应用技术，是一个重要的科学分支，在诸多工程领域有广泛的应用。组合问题是优化问题中的一类。所谓组合优化,是指在离散的、有限的数学结构上,寻找一个(或一组)满足给定约束条件并使其目标函数值达到最大或最小的解。—般来说,组合优化问题通常带有大量的局部极值点,往往是不可微的、不连续的、多维的、有约束条件的、高度非线性的NP完全(难)问题,因此,精确地求解组合优化问题的全局最优解的“有效”算法一般是不存在的。</p>
+<p><strong>优化问题可以按照不同的角度分类</strong><br>1)函数优化，组合优化，混合型<br>2)约束优化,无约束优化<br>3)单目标，多目标<br>4)确定性，随机性，模糊<br>5)在线，离线</p>
+<p><strong>常见的组合优化问题</strong><br>1）TSP 旅行商问题<br>旅行商问题是统筹学和理论计算机科学中主要研究的问题之一。其问题描述是：给定一个城市的列表及两两城市之间的距离，目标是找到一个这样的环游使得每个城市只访问一次。<br>2）VRP 车行驶路线优化问题<br>VRP问题也是一个整数规划问题。其问题描述是：从一个场站出发，找到一个最短路线可以将场站周围的地点遍历一遍。<br>3）背包问题<br>给定一些物品及物品的价值和容量，求能放入背包中最大价值物品的集合。该问题来自与实际生活中把最有用的物品装入一个固定容量的背包中。<br>4）装箱问题问题<br>有n个尺寸不超过1的物品，有数个尺寸为1的箱子，如何将这些物品装入箱子，使得所用的箱子数最少。<br>5）图着色问题<br>对于n个顶点的无环图G,要求对其各个顶点进行着色,使得任意两个相邻的顶点都有不同的颜色,且所用颜色种类最少<br>6) 调度问题<br>给定各个要加工的零件的加工次序，要求确定一个与加工次序相容的各机器上所有工件的加工顺序，使得加工性能指标达到最优。<br>7）集合覆盖问题<br>给定一个包含n个元素的集合S以，S的一些子集及选择每一个子集的代价。求一个代价最小的子集，该子集包含S的n个元素。<br>8）最小支撑树<br>找到图的一个具有最小权重(图中每条边都有一个权重)的包含图中每一个顶点的树。<br>9）最短路径<br>给定一个图，找到从一个顶点出发到达最后一个顶点的最短路径。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/03/18/启发式算法简介/">
+        ← prev <!--启发式算法简介-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/03/16/配置storm开发环境/">
+        <!--配置storm开发环境--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-组合优化问题" data-title="组合优化问题" data-url="http://zhangmin.name/blog/2013/03/17/组合优化问题/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

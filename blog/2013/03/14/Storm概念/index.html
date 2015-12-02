@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>Storm概念 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  March 14, 2013
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/storm/'>storm</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">Storm概念</h1>
+  <section class="post-content article-entry">
+    <p><strong>流</strong></p>
+<p>流(stream)是storm的核心抽象。流是无限的元组序列以分布式的方式进行处理。流由模式定义，所谓模式就是流中元组的域的名称。默认情况下，元组可以包含integer，long，short，byte，string，double，float，boolean及byte array。当然也可以自定义Serializer来支持自定义类型或数据对象。声明流时会指定一个id，由于单流的spout和bolt非常常见，OutputFieldsDeclarer提供了便捷的方法声明一个指定id的单流。在这种情况下，流的默认id是“default”。</p>
+<p><strong>Spout</strong></p>
+<p>Spout:<span style="font-family: 宋体;">流计算的数据源。一般情况下，</span><span style="font-family: 'Times New Roman';">spout</span><span style="font-family: 宋体;">从队列代理读取数据，但是</span><span style="font-family: 'Times New Roman';">spout</span><span style="font-family: 宋体;">也可以产生自己的数据流，或者从</span><span style="font-family: 'Times New Roman';">twitter</span><span style="font-family: 宋体;">的流</span><span style="font-family: 'Times New Roman';">API</span><span style="font-family: 宋体;">读取。</span><span style="font-family: 'Times New Roman';">Spout</span><span style="font-family: 宋体;">实现了很多队列系统。</span></p>
+<p>Spout可以是可靠的也可以是非可靠的。一个可靠地spout重新处理一个失败的元组，而不可靠的spout只负责发送，不管元组是否被成功进行处理。Spout可以发送一个或多个流，可以通过OutputFieldsDeclarer的declareStream声明流，利用SpoutOutputCollector的emit方法发送元组，并制定流将如何发送。Spout的主要方法是nextTuple,nextTuple发送一个元组到 topology或简单的返回。如果没有新的元组需要发送，必须保证nextTuple不会阻塞任何spout的实现。因为storm会在同一个线程调用spout的所有方法。另一个主要的方法是ack和fail。这两个方法将在storm检测到元组被成功发送到topology及失败时分别调用。Ack和fail只能由可靠的spout调用。</p>
+<p><strong>Bolt</strong></p>
+<p>Bolt<span style="font-family: 宋体;">：处理任意数据的输入流并产生任意数据的输出流。大多数逻辑计算都通过</span><span style="font-family: 'Times New Roman';">bolt</span><span style="font-family: 宋体;">进行处理。如函数过滤器，流合并，流聚集，数据库连接等。</span></p>
+<p><strong>Topology</strong></p>
+<p>Topology<span style="font-family: 宋体;">：是</span><span style="font-family: 'Times New Roman';">spout</span><span style="font-family: 宋体;">和</span><span style="font-family: 'Times New Roman';">bolt</span><span style="font-family: 宋体;">的网络。网络中的每条边代表一个</span><span style="font-family: 'Times New Roman';">bolt</span><span style="font-family: 宋体;">订阅了其他的</span><span style="font-family: 'Times New Roman';">bolt</span><span style="font-family: 宋体;">或</span><span style="font-family: 'Times New Roman';">spout</span><span style="font-family: 宋体;">的输出流。一个</span><span style="font-family: 'Times New Roman';">topology</span><span style="font-family: 宋体;">是任意复杂的多阶段流计算。部署后，就不能确定</span><span style="font-family: 'Times New Roman';">topology</span><span style="font-family: 宋体;">在那个节点运行。</span></p>
+<p><strong>流分组</strong></p>
+<p>定义一个topology需要指定每一个bolt的输入信息是什么，流分组定义流是如何在众多bolt任务之间被分割的。通过事先CustomStreamGrouping接口可以自定义流分组方式。Storm的内置流分组方式有：<br>All Grouping 全分组：流被复制发送到所有bolt任务，要小心使用该分组方式。<br>Global Grouping 全局分组：整个流将由一个bolt任务处理，特别的，将由最小id的bolt处理。<br>None Grouping 不分组：这个分组方式表示不关心分组的方式。现在，此方式或与随机分组方式相同。但最终storm将在相同的线程执行使用该分组方式的bolt。<br>Direct Grouping 直接分组：这是一个比较特别的分组方式，元组的消费者将决定消费者的那个任务接受该元组。直接分组方式只能用于声明为直接流的流。发送到直接流的元组必须用emitDirect方法发送元组。通过提供TopologyContext或跟踪emit方法的输出，可以得到一个bolt的消费者的id。（给方法返回元组发送到任务的id）<br>Local or Shuffle Grouping 本地分组或随机分组：如果目标bolt有一个或多个任务，在相同worker进程，元组将只为那些进程的任务进行随机分组。否则，该分组方式与随机分组类似。</p>
+<p><strong>可靠性</strong></p>
+<p>Storm通过追踪有每一个spout触发的元组树，并决定什么时候元组树成功的完成处理。每一个topology都有一个消息超时属性。如果流在该时间内spout没能完成处理，则storm会重新发送并处理该元组。为了充分利用storm的可靠性，必须告诉storm当新的边添加到元组树及何时完成处理独立元组。这可以通过OutputCollector对象实现。通过emit方法制定发送到的流，通过ack发送确认信息。</p>
+<p><strong>任务</strong></p>
+<p>每一个spout和bolt可以在集群上执行多个任务，每一个任务对应一个线程。流分组决定如何在两个任务集合之间发送元组。你可以设置每一个spout和bolt的并行度，通过TopoloBuilder的setSpout和setBolt方法。</p>
+<p><strong>Worker </strong></p>
+<p>Topology 在一个或多个工作者进程内执行。每一个工作者进程是一个物理的JVM并执行topology集合的一部分。</p>
+<p><em>注：以上内容翻译自<a href="https://github.com/nathanmarz/storm/wiki/Concepts" target="_blank" rel="external">https://github.com/nathanmarz/storm/wiki/Concepts</a></em></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/03/15/Storm配置/">
+        ← prev <!--Storm配置-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/03/13/Storm原理/">
+        <!--Storm原理--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-Storm概念" data-title="Storm概念" data-url="http://zhangmin.name/blog/2013/03/14/Storm概念/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

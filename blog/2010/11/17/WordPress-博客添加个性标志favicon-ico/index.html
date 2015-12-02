@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>WordPress 博客添加个性标志favicon.ico | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  November 17, 2010
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/wordpress/'>wordpress</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">WordPress 博客添加个性标志favicon.ico</h1>
+  <section class="post-content article-entry">
+    <p>为WordPress博客添加个性的favicon.ico，可以让博客个性标志显示在浏览器地址栏上和收藏夹中，加深访客对博客的印象。博主们访问一些添加了favicon标志的博客应该注意到，在浏览器地址栏博客地址前面或在浏览器标签中显示出来的个性图片，<a href="http://www.boke8.net/" title="博客吧" target="_blank" rel="external">博客吧</a>同时也有添加favicon.ico图标。</p>
+<p><strong>favicon.ico介绍：</strong></p>
+<p>所谓favicon，即Favorites Icon的缩写，顾名思义，便是其可以让浏览器的收藏夹中除显示相应的标题外，还以图标的方式区别不同的网站。而且根据不同版本的浏览器，作用效果也会有差异。</p>
+<p><strong>favicon.ico添加方法：</strong></p>
+<p>先挑一张喜欢的图片，调整成16×16大小，通过相关图片制作工具，将其转换为扩展名为.ico，文件名为favicon的图片，即favicon.ico</p>
+<p><em>方法一</em></p>
+<ul>
+<li>把准备好的favicon.ico图标直接上传到WordPress博客所在的网站空间的根目录</li>
+<li><p>保存更新文件文件，清除浏览器缓存即可以地址栏看到favicon图标<br><em>方法二</em></p>
+</li>
+<li><p>把准备好的favicon.ico图标上传到空间的某个目录（如博客根目录）</p>
+</li>
+<li>编辑主题文件header.php，在&lt;head&gt;和&lt;/head&gt;之间添加以下代码：<div><br><table><br><tbody><br><tr><br><td><br><pre></pre><br></td><br><td><br><pre>&lt;link rel=”shortcut icon” href=”favicon.ico”  type=”image/x-icon” /&gt;/&gt;<br>&lt;link rel=”Bookmark” href=”favicon.ico” /&gt;</pre><br></td><br></tr><br></tbody><br></table><br></div></li>
+<li>保存更新文件文件，清除浏览器缓存即实现效果<br><strong>添加动态favicon图标的方法：</strong></li>
+</ul>
+<ol>
+<li>先挑一张喜欢的gif动态图片，调整成16×16大小，重新命名为favicon.gif</li>
+<li>编辑WordPress主题文件header.php，在&lt;head&gt;和&lt;/head&gt;之间添加以下代码：<div><br><table><br><tbody><br><tr><br><td><br><pre></pre><br></td><br><td><br><pre>&lt;link rel=”icon” href=”favicon.gif” type=”image/gif” &gt;</pre><br></td><br></tr><br></tbody><br></table><br></div></li>
+<li>保存更新文件，清除浏览器缓存即可以地址栏看到favicon动态图标效果<br><strong>提醒：</strong>有些主机不支持方法一，所以建议使用方法二。<div>
+
+</div></li>
+</ol>
+<p>»本文转自： <a href="http://www.boke8.net/" target="_blank" rel="external">博客吧</a></p>
+<p></p>
+<div><br><br>» 原文地址：<a href="/Users/ZhangMin/Desktop/Thisterm/ZM%20Corporation/ZhangMin.name/%E8%B5%84%E6%BA%90/WordPress%20%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E4%B8%AA%E6%80%A7%E6%A0%87%E5%BF%97favicon.ico%20%20%20%E5%8D%9A%E5%AE%A2%E5%90%A7_files/WordPress%20%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E4%B8%AA%E6%80%A7%E6%A0%87%E5%BF%97favicon.ico%20%20%20%E5%8D%9A%E5%AE%A2%E5%90%A7.htm" title="WordPress 博客添加个性标志favicon.ico">http://www.boke8.net/wordpress-favicon-ico.html</a><br><br>————————————————————————————————————————————————————————-<br><br>我的站标是i形，i的点是红色，下面是黑色，是ThinkPad中的i，代表思考，勤思敏行；也是小写的I，代表我，个性，要行动，思行合一。设计的灵感来自ThinkPad的宣传语。<br><br></div>
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2010/11/17/网站站标/">
+        ← prev <!--网站站标-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2010/11/11/揭露骗子“免费空间”/">
+        <!--揭露骗子“免费空间”--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-WordPress-博客添加个性标志favicon-ico" data-title="WordPress 博客添加个性标志favicon.ico" data-url="http://zhangmin.name/blog/2010/11/17/WordPress-博客添加个性标志favicon-ico/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

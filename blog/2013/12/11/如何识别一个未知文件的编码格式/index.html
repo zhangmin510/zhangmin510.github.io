@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>如何识别一个未知文件的编码格式 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  December 11, 2013
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/Java/'>Java</a>
+    
+      <a href='/blog/tags/技术/'>技术</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">如何识别一个未知文件的编码格式</h1>
+  <section class="post-content article-entry">
+    <p>识别一个未知文件的格式（英文专业术语为Codepage-detection）在诸多领域有应用，如搜索引擎，浏览器等。<br>对于Unicode编码的文件，在文件的开头有两个字节或者多个字节用于表示文件的编码格式及字节顺序。这几个字节不会出现在文件的内容中，只会影响文件被装进内存时的方式。UTF-8，UCS-2/UTF-16等编码格式可以通过文件开头的BOM（Byte Order Mark）来识别。常见BOM及对应编码格式如下所示：<br>FF FE  UCS-2LE or UTF-16LE<br>FE FF  UCS-2BE or UTF-16BE<br>EF BB BF  UTF-8<br>当然这个方法也不能保证识别的正确性，因为有的文件开头可能就会有相同的字节。况且大多数文件都没有BOM。</p>
+<p>由于所有其他的编码格式都兼容ASCII编码，所以如果一个文件的内容都是ASCII，就不能判断该文件的编码格式。如果一个文件既有ASCII编码的字符也有UTF-8编码的字符可以通过寻找UTF-8的字节序列来实现，如：<br>0xxxxxxx  ASCII &lt; 0x80 (128)<br>110xxxxx 10xxxxxx  2-byte &gt;= 0x80<br>1110xxxx 10xxxxxx 10xxxxxx  3-byte &gt;= 0x400<br>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx  4-byte &gt;= 0x10000</p>
+<p>在java中有几种工具可以进行文件编码的识别，如Mozilla jchardet（<a href="http://jchardet.sourceforge.net/）和IBM的ICU4j（http://site.icu-project.org/）。相比而言，后者的准确性更高。" target="_blank" rel="external">http://jchardet.sourceforge.net/）和IBM的ICU4j（http://site.icu-project.org/）。相比而言，后者的准确性更高。</a><br>下面是两个工具的使用示例：<br>[java]<br>/<em>*
+ </em></p>
+<ul>
+<li>ICUExample.java</li>
+<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>name.zhangmin.timediary<br><em>
+</em>/<br>package name.zhangmin.timediary.util;</li>
+</ul>
+<p>import java.io.BufferedInputStream;<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.FileNotFoundException;<br>import java.io.IOException;</p>
+<p>import com.ibm.icu.text.CharsetDetector;<br>import com.ibm.icu.text.CharsetMatch;</p>
+<p>/**</p>
+<ul>
+<li><p>@author ZhangMin.name<br><em>
+</em>/<br>public class ICUExample {</p>
+<p> /**</p>
+<ul>
+<li>@param args</li>
+<li><p>@throws IOException<br>*/<br>public static void main(String[] args) throws IOException {<br> String base = &quot;C:\Users\ZhangMin.name\Desktop\EncodeTest&quot;;<br> File[] f = new File(base).listFiles();<br> for(int i = 0 ; i &lt; f.length ; i ++){</p>
+<pre><code>System.out.<span class="keyword">println</span>(&amp;quot;Detcting <span class="keyword">file</span> &amp;quot; + f[i].getName());
+FileInputStream fis = <span class="keyword">new</span> FileInputStream(f[i]);
+BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(fis);
+<span class="keyword">byte</span>[] content =  <span class="keyword">new</span> <span class="keyword">byte</span>[(<span class="keyword">int</span>) f[i].length()];
+bis.<span class="keyword">read</span>(content);
+
+CharsetDetector detector = <span class="keyword">new</span> CharsetDetector();
+detector.setText(content);
+
+CharsetMatch cm = detector.detect();
+<span class="keyword">if</span>(cm != <span class="keyword">null</span>){
+    <span class="keyword">int</span> confidence = cm.getConfidence();
+    System.out.<span class="keyword">println</span>(&amp;quot;Charset: &amp;quot; + cm.getName() + &amp;quot;, confidence: &amp;quot;
+    + confidence + &amp;quot;%&amp;quot;);
+}
+</code></pre><p> }</p>
+<p>}<br>}</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>[/java]</p>
+<p>[java]<br>/<em>*
+ </em></p>
+<ul>
+<li>JchardetExample.java</li>
+<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>name.zhangmin.timediary<br><em>
+</em>/<br>package name.zhangmin.timediary.util;</li>
+</ul>
+<p>import java.io.BufferedInputStream;<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.IOException;<br>import org.mozilla.intl.chardet.<em> ;<br>/*</em></p>
+<ul>
+<li><p>@author ZhangMin.name<br><em>
+</em>/<br>public class JchardetExample {<br> public static boolean found = false;<br> /**</p>
+<ul>
+<li>@param args</li>
+<li><p>@throws IOException<br>*/<br>public static void main(String[] args) throws IOException {<br> String base = &quot;C:\Users\ZhangMin.name\Desktop\EncodeTest&quot;;<br> File[] f = new File(base).listFiles();<br> for(int i = 0 ; i &lt; f.length ; i ++){</p>
+<pre><code>System.out.<span class="keyword">println</span>(&amp;quot;Detcting <span class="keyword">file</span> &amp;quot; + f[i].getName());
+FileInputStream fis = <span class="keyword">new</span> FileInputStream(f[i]);
+BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(fis);
+<span class="comment">// Initalize the nsDetector() ;</span>
+nsDetector det = <span class="keyword">new</span> nsDetector(nsPSMDetector.ALL);
+<span class="comment">// Set an observer...</span>
+<span class="comment">// The Notify() will be called when a matching charset is found.</span>
+det.Init(<span class="keyword">new</span> nsICharsetDetectionObserver(){
+    <span class="keyword">public</span> <span class="keyword">void</span> Notify(String charset){
+        JchardetExample.found = <span class="keyword">true</span>;
+        System.out.<span class="keyword">println</span>(&amp;quot;CHARSET: &amp;quot; + charset);
+    }
+});
+
+<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];
+<span class="keyword">int</span> len;
+<span class="keyword">boolean</span> done = <span class="keyword">false</span>;
+<span class="keyword">boolean</span> isAscii = <span class="keyword">true</span>;
+
+<span class="keyword">while</span>((len = bis.<span class="keyword">read</span>(buf, <span class="number">0</span>, buf.length)) != -<span class="number">1</span>){
+    <span class="comment">// Check if the stream is only ascii.</span>
+    <span class="keyword">if</span>(isAscii){
+        isAscii = det.isAscii(buf, len);
+    }
+    <span class="comment">// DoIt if non-ascii and not done yet.</span>
+    <span class="keyword">if</span>(!isAscii &amp;amp;&amp;amp; !done){
+        done = det.DoIt(buf, len, <span class="keyword">false</span>);
+    }
+}
+det.DataEnd();
+
+<span class="keyword">if</span>(isAscii){
+    System.out.<span class="keyword">println</span>(&amp;quot;CHARSET: ASCII&amp;quot;);
+    JchardetExample.found = <span class="keyword">true</span>;
+}
+<span class="keyword">if</span>(!found){
+    String prob[] = det.getProbableCharsets();
+    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &amp;lt; prob.length ; j ++){
+        System.out.<span class="keyword">println</span>(&amp;quot;Probable Charset :&amp;quot; + prob[j]);
+    }
+}
+</code></pre><p> }</p>
+<p>}</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>}</p>
+<p>[/java]</p>
+<p><strong>参考文献：</strong><br><a href="http://stackoverflow.com/questions/1288899/java-text-file-encoding" target="_blank" rel="external">http://stackoverflow.com/questions/1288899/java-text-file-encoding</a><br><a href="http://codesnipers.com/?q=node/68" target="_blank" rel="external">http://codesnipers.com/?q=node/68</a><br><a href="http://jchardet.sourceforge.net/" target="_blank" rel="external">http://jchardet.sourceforge.net/</a><br><a href="http://site.icu-project.org/" target="_blank" rel="external">http://site.icu-project.org/</a><br><a href="http://site.icu-project.org/" target="_blank" rel="external">http://site.icu-project.org/</a></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/12/29/高交会·深圳/">
+        ← prev <!--高交会·深圳-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/10/31/Java-JNI-学习代码示例/">
+        <!--Java JNI 学习代码示例--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-如何识别一个未知文件的编码格式" data-title="如何识别一个未知文件的编码格式" data-url="http://zhangmin.name/blog/2013/12/11/如何识别一个未知文件的编码格式/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

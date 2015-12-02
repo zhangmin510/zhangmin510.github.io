@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>Spring OSGi中如何获取ApplicationContext | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  October 22, 2013
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/Java/'>Java</a>
+    
+      <a href='/blog/tags/OSGi/'>OSGi</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">Spring OSGi中如何获取ApplicationContext</h1>
+  <section class="post-content article-entry">
+    <h3 id="Application_Context的创建">Application Context的创建</h3><p>Spring OSGi提供org.springframework.osgi.extender这个Bundle来为每个支持Spring功能的Bundle初始化一个Application Context。当extender Bundle启动后，它会为那些状态为ACTIVE并且支持Spring的Bundle创建application context。也就是说，这个Bundle通过监听bundle启动事件来完成Application Context的创建。Extender bundle创建application context是异步的，通过不同的线程启动每个Bundle。这样可以保证启动平台快速并且Bundles之间的服务引用不会引起死锁。如果 application context创建失败，bundle会是ACTIVE状态，但是这时将没有服务导出。<br>这和Application context销毁相反，Application context销毁是同步的，通过同一个线程。</p>
+<h3 id="如何判断Application_Context创建创建成功">如何判断Application Context创建创建成功</h3><p>当Application Context创建成功后，这个对象会被注册为一个服务。这个服务接口是 org.springframework.context.ApplicationContext。并且这个服务带有一个服务属性：org.springframework.context.service.name，对应的值为Bundle的symbolic name，这个值在Manifest文件中定义。注册这个服务主要目的是更容易测试管理。通过引用这个服务调用getBean()或类似的方法是不推荐的。建议的方式的将需要的Bean发布成一个服务，然后需要这个服务的Bundle引用它。</p>
+<h3 id="如何在Bundle中获得OSGi的BundleContext">如何在Bundle中获得OSGi的BundleContext</h3><p>Application context创建成功后会包含一个类型为BundleContext，名字为bundleContext的Bean。你可以在配制文件注入这个Bean。此外，你还可以通过实现org.springframework.osgi.context.BundleContextAware接口来获取。</p>
+<p>当一个bundle停止了，它发布的服务将会从服务注册表里删除，它的状态变成RESOLVED，它将释放所有资源，停止所有线程，但是导出的Packages对其他bundle继续有效。所有资源加载通过org.springframework.core.io.ResourceLoader并且通过它关将资源加入到application context。</p>
+<h3 id="如何在一个Bundle中获取Spring_Extender创建的ApplicationContext">如何在一个Bundle中获取Spring Extender创建的ApplicationContext</h3><p>1.通过实现ApplicationContextAware接口</p>
+<p>Spring中提供一些Aware相关接口，像是BeanFactoryAware、ApplicationContextAware、ResourceLoaderAware、ServletContextAware等等。这些Aware接口的Bean在被初始之后，可以取得一些相对应的资源，例如实现BeanFactoryAware的Bean在初始化后，Spring容器将会注入BeanFactory的实例，而实作ApplicationContextAware的Bean，在Bean被初始后，将会被注入 ApplicationContext的实例等等。<br>[java]<br> public class SomeBean implements ApplicationContextAware{<br>      private ApplicationContext context;<br>      …<br>      public void setApplicationContext(ApplicationContext     applicationcontext) throws BeansException {<br>         this.context= applicationcontext;<br>      }<br>   }<br>[/java]</p>
+<p>2.通过OSGi Service</p>
+<p>[java]<br>public static ApplicationContext getApplicationContext(final BundleContext bundleContext) {<br>        final String filter = &quot;(org.springframework.context.service.name=&quot; + bundleContext.getBundle().getSymbolicName() + &quot;)&quot;;<br>        final ServiceReference[] applicationContextRefs;<br>        final ApplicationContext applicationContext;<br>        try {<br>            applicationContextRefs = bundleContext.getServiceReferences(ApplicationContext.class.getName(), filter);<br>        } catch (final InvalidSyntaxException e) {/&gt;<br>            throw new RuntimeException(e);<br>        }<br>        if(applicationContextRefs.length != 1) {<br>            return null;<br>        }<br>        applicationContext = (ApplicationContext) bundleContext.getService(applicationContextRefs[0]);<br>       return applicationContext;<br>}<br>[/java]</p>
+<h3 id="参考">参考</h3><p>1.<a href="http://www.cnblogs.com/ygyinx/archive/2012/10/27/osgi_application_context.html" target="_blank" rel="external">Spring DM Application Context</a></p>
+<p>2.<a href="http://tech-tauk.blogspot.com/2009/10/ways-to-get-spring-applicationcontext.html" target="_blank" rel="external">Ways to get Spring ApplicationContext -In Spring DM</a></p>
+<p>3.<a href="http://mindpipe.blogspot.com/2011/03/spring-osgi-how-to-get.html" target="_blank" rel="external">Spring OSGi - how to get ApplicationContext for a bundle</a></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/10/25/利用Java-Service-Wrapper将Java应用程序发布为Service/">
+        ← prev <!--利用Java Service Wrapper将Java应用程序发布为Service-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/10/08/如何长胖，终于被我找到了/">
+        <!--如何长胖，终于被我找到了--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-Spring-OSGi中如何获取ApplicationContext" data-title="Spring OSGi中如何获取ApplicationContext" data-url="http://zhangmin.name/blog/2013/10/22/Spring-OSGi中如何获取ApplicationContext/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

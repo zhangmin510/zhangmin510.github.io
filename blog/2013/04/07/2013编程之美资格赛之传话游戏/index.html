@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>2013编程之美资格赛之传话游戏 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  April 7, 2013
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/问题与算法/'>问题与算法</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">2013编程之美资格赛之传话游戏</h1>
+  <section class="post-content article-entry">
+    <p>传话游戏</p>
+<p>时间限制: 1000ms 内存限制: 256MB</p>
+<p>描述<br>Alice和Bob还有其他几位好朋友在一起玩传话游戏。这个游戏是这样进行的：首先，所有游戏者按顺序站成一排，Alice站第一位，Bob站最后一位。然后，Alice想一句话悄悄告诉第二位游戏者，第二位游戏者又悄悄地告诉第三位，第三位又告诉第四位……以此类推，直到倒数第二位告诉Bob。两位游戏者在传话中，不能让其他人听到，也不能使用肢体动作来解释。最后，Bob把他所听到的话告诉大家，Alice也把她原本所想的话告诉大家。</p>
+<p>由于传话过程中可能出现一些偏差，游戏者越多，Bob最后听到的话就与Alice所想的越不同。Bob听到的话往往会变成一些很搞笑的东西，所以大家玩得乐此不疲。经过几轮游戏后，Alice注意到在两人传话中，有些词汇往往会错误地变成其他特定的词汇。Alice已经收集到了这样的一个词汇转化的列表，她想知道她的话传到Bob时会变成什么样子，请你写个程序来帮助她。</p>
+<p>输入<br>输入包括多组数据。第一行是整数 T，表示有多少组测试数据。每组数据第一行包括两个整数 N 和 M，分别表示游戏者的数量和单词转化列表长度。随后有 M 行，每行包含两个用空格隔开的单词 a 和 b，表示单词 a 在传话中一定会变成 b。输入数据保证没有重复的 a。最后一行包含若干个用单个空格隔开的单词，表示Alice所想的句子，句子总长不超过100个字符。所有单词都只包含小写字母，并且长度不超过20，同一个单词的不同时态被认为是不同的单词。你可以假定不在列表中的单词永远不会变化。</p>
+<p>输出<br>对于每组测试数据，单独输出一行“Case #c: s”。其中，c 为测试数据编号，s 为Bob所听到的句子。s 的格式与输入数据中Alice所想的句子格式相同。</p>
+<p>数据范围<br>1 ≤ T ≤ 100</p>
+<p>小数据：2 ≤ N ≤ 10, 0 ≤ M ≤ 10</p>
+<p>大数据：2 ≤ N ≤ 100, 0 ≤ M ≤ 100</p>
+<p>样例输入<br>2<br>4 3<br>ship sheep<br>sinking thinking<br>thinking sinking<br>the ship is sinking<br>10 5<br>tidy tiny<br>tiger liar<br>tired tire<br>tire bear<br>liar bear<br>a tidy tiger is tired<br>样例输出<br>Case #1: the sheep is thinking<br>Case #2: a tiny bear is bear</p>
+<p>[java]<br>import java.util.HashMap;<br>import java.util.Scanner;</p>
+<p>public class Main {<br>    public static void main(String[] args) {<br>        int t = 0;<br>        String[] alice = null;<br>        String[] answers = null;<br>        Scanner in = new Scanner(System.in);<br>        while(in.hasNext()) {<br>            t = in.nextInt();//测试数据数<br>            if(t &lt; 1 || t &gt; 100    ){<br>                return;<br>            }<br>            answers = new String[t];<br>            int players = 0,wtrans = 0;<br>            HashMap&lt;String,String&gt; trans = new HashMap&lt;String,String&gt;();<br>            for(int tt = 0; tt &lt; t; tt ++){<br>                //读取数据<br>                players = in.nextInt();<br>                if(players  100){<br>                    return;<br>                }<br>                wtrans = in.nextInt();<br>                if(wtrans &lt; 0 || wtrans &gt; 100){<br>                    return;<br>                }<br>                trans.clear();<br>                while(–wtrans &gt;= 0){<br>                    trans.put(in.next(),in.next());<br>                }</p>
+<pre><code>            in.nextLine();<span class="comment">//读取next()剩下的&amp;quot;n&amp;quot;</span>
+            alice = in.nextLine().split(&amp;quot; &amp;quot;);
+            <span class="comment">//开始传话</span>
+            StringBuilder sb = <span class="keyword">new</span> StringBuilder();
+            String tmp = null;
+            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j &amp;lt;alice.length;j++){
+                <span class="keyword">for</span>(<span class="keyword">int</span> jj = <span class="number">1</span>;jj &amp;lt; players; jj++){
+                    tmp = alice[j];
+                    <span class="keyword">if</span>(trans.containsKey(tmp)){
+                        alice[j] = trans.get(tmp);
+                    }<span class="keyword">else</span>{
+                        <span class="keyword">break</span>;
+                    }
+                }
+                sb.append(alice[j]).append(&amp;quot; &amp;quot;);
+            }
+            answers[tt] = sb.toString().substring(<span class="number">0</span>, sb.length()-<span class="number">1</span>);
+        }
+        <span class="keyword">for</span>(<span class="keyword">int</span> ii = <span class="number">0</span> ;ii &amp;lt; t;ii++){
+        System.out.println(&amp;quot;Case <span class="preprocessor">#&amp;quot;+(ii+<span class="number">1</span>)+&amp;quot;: &amp;quot;+answers[ii]);</span>
+        }
+
+     }
+
+}
+</code></pre><p>}<br>[/java]</p>
+<p>总结体会：<br>1.调用完in.next()函数后再调用in.nextLine()读取结果总为空。原因是由于in.next()函数不提取”n”。<br>2.对于每组测试数据运行之前没有清空Map，导致总是WA。编程经验缺乏才导致会犯这样低级的错误。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/04/08/试论自然、必然与自由的关系/">
+        ← prev <!--试论自然、必然与自由的关系-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/04/06/一阶台阶的落差/">
+        <!--一阶台阶的落差--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-2013编程之美资格赛之传话游戏" data-title="2013编程之美资格赛之传话游戏" data-url="http://zhangmin.name/blog/2013/04/07/2013编程之美资格赛之传话游戏/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

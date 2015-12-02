@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>服务提供者架构 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  October 8, 2014
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/Java/'>Java</a>
+    
+      <a href='/blog/tags/马上有OFFER/'>马上有OFFER</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">服务提供者架构</h1>
+  <section class="post-content article-entry">
+    <p>服务提供者架构（Service Provider Framework）在Java的类库中被广泛使用，如JDBC，JMS，Java Security，等等。</p>
+<p>多个服务提供者实现一个服务，系统为客户端提供多个实现，并把他们从多个实现中解耦出来。<br>服务提供者对实现的修改对客户端是透明的，这样提供了更好的扩展性。<br>该框架有四个重要组成部分：<br>1 服务接口（Service Interface），通过抽象统一声明，由服务提供者进行实现。</p>
+<p>2 服务提供者注册API（Provider Registration API），用于系统注册服务提供者，可以方便让客户端访问。</p>
+<p>3 服务访问API（Service Access API），客户端可以用来获取服务的实例。</p>
+<p>4 服务者提供接口（Service Provider Interface）（可选），提供负责创建服务实现的实例。如果没有该部分，可以通过类名进行注册，并通过反射进行实例化。</p>
+<p>例如在JDBC中：</p>
+<p>Connection 是服务接口，Oracle，MySQL等是服务提供者，它们实现了相对应的服务接口。</p>
+<p>DriverManager.registerDriver是服务提供者注册API。<br>DriverManager.getConnection()是服务访问API。</p>
+<p>Driver就是服务提供者接口,并把自己注册到DriverManager。</p>
+<p>下面通过一个例子说明服务者提供者框架的实现：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//&#26381;&#21153;&#25509;&#21475;&#10;public interface Service &#123;&#10;     public void serve();&#10;&#125;&#10;//&#26381;&#21153;&#25552;&#20379;&#32773;&#25509;&#21475;&#10;public interface ServiceProvider &#123;&#10;     public Service getService();&#10;&#125;&#10;//&#26381;&#21153;&#27880;&#20876;&#31649;&#29702;&#10;public class ServiceManager &#123;&#10;    private ServiceManager() &#123;&#125;&#10;    private static final Map&#38;lt;String, ServiceProvider&#38;gt; registry = &#10;          new ConcurrentHashMap&#38;lt;String, ServiceProvider&#38;gt;();&#10;    public static void registerProvider(String serviceName, ServiceProvider provider) &#123;&#10;          registry.put(serviceName, provider);&#10;    &#125;&#10;    public static Service getServiceByName(String name) &#123;&#10;         ServiceProvider sp = registry.get(name);&#10;         if (p == null) throw new IllegalArgumentException(&#38;quot;Given service not registered&#38;quot;);&#10;         return sp.getService();&#10;    &#125;&#10;&#125;&#10;//&#26381;&#21153;&#20855;&#20307;&#25552;&#20379;&#32773;&#65292;&#24182;&#36827;&#34892;&#27880;&#20876;&#10;public class MyServiceProvider implements ServiceProvider &#123;&#10;      static &#123;&#10;          ServiceManager.register(&#38;quot;myProvider&#38;quot;, new MyServiceProvider());&#10;       &#125;&#10;       public Service getService() &#123;&#10;           return new ServiceImpl();&#10;       &#125;&#10;       class ServiceImpl implements Service &#123;&#10;            public void serve() &#123;&#10;                System.out.println(&#38;quot;Good Morning, My Lord&#38;quot;);&#10;            &#125;&#10;        &#125;&#10;&#125;&#10;//&#23458;&#25143;&#31471;&#20351;&#29992;&#26381;&#21153;&#10;public class Client &#123;&#10;        public static void main(String[] args) throws Exception &#123;&#10;               Class.forName(&#38;quot;MyServiceProvider&#38;quot;);&#10;               Service service = ServiceManager.getServiceByName(&#38;quot;myProvider&#38;quot;);&#10;               service.serve();&#10;        &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p><em>参考文献</em></p>
+<p><em>Effective Java</em></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2014/10/13/正确地用Java实现单例-Singleton-模式/">
+        ← prev <!--正确地用Java实现单例(Singleton)模式-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2014/10/07/最荒唐/">
+        <!--最荒唐--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-服务提供者架构" data-title="服务提供者架构" data-url="http://zhangmin.name/blog/2014/10/08/服务提供者架构/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

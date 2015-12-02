@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>RESTful Java with JAX-RS Reading Note | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  January 27, 2015
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/Java/'>Java</a>
+    
+      <a href='/blog/tags/Web-Service/'>Web Service</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">RESTful Java with JAX-RS Reading Note</h1>
+  <section class="post-content article-entry">
+    <h1 id="REST_Theory">REST Theory</h1><p>REpresentation State Transfer(REST) principles:</p>
+<ul>
+<li>Addressable resources.The key abstraction of information and data in REST is a resource, and each resource<br>must be addressable via a URI (Uniform Resource Identifier).Each HTTP request<br>must contain the URI of the object you are requesting information from or posting<br>information to. </li>
+<li>Uniform, constrained interface.Use a small set of well-defined methods(HTTP’s method) to manipulate your resources.</li>
+<li>Representation-oriented.You interact with services using representations of that service. A resource referenced<br>by one URI can have different formats. Different platforms need different formats.</li>
+<li>Communicate statelessly.Stateless applications are easier to scale.</li>
+<li>Hypermedia As The Engine Of Application State(HATEOAS).Let your data formats drive state transitions in your applications.<br>Hypermedia is a document-centric approach with the added support for embedding links to other services and information within that document<br>format.</li>
+</ul>
+<h1 id="Designing_RESTful_Service">Designing RESTful Service</h1><h2 id="Object_model">Object model</h2><p><img src="http://f.picphotos.baidu.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=a78e60e36f224f4a5399731639cce16f/42166d224f4a20a453562a0292529822730ed0ae.jpg?referer=fc2516dfc45c10387d69faf21064&amp;x=.jpg" alt="Object Model"></p>
+<h2 id="Model_the_URI">Model the URI</h2><p>In a RESTful system, endpoints are usually referred to as resources and are identified using a URI. URIs satisfy the addressability<br>requirements of a RESTful service.<br>For example:<br>/orders<br>/orders/{id}</p>
+<h2 id="Define_the_data_format">Define the data format</h2><p>XML,JSON,YMAL etc.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;product id=&#34;543&#34;&#62;&#10;&#60;link rel=&#34;self&#34; href=&#34;http://example.com/products/543&#34;/&#62;&#10;&#60;name&#62;iPhone&#60;/name&#62;&#10;&#60;cost&#62;$199.99&#60;/cost&#62;&#10;&#60;/product&#62;</span><br></pre></td></tr></table></figure>
+<h2 id="Assigning_HTTP_methods">Assigning HTTP methods</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /products HTTP/1.1&#10;&#10;HTTP/1.1 200 OK&#10;Content-Type: application/xml&#10;&#60;products&#62;&#10;&#60;product id=&#34;111&#34;&#62;&#10;&#60;link rel=&#34;self&#34; href=&#34;http://example.com/products/111&#34;/&#62;&#10;&#60;name&#62;iPhone&#60;/name&#62;&#10;&#60;cost&#62;$199.99&#60;/cost&#62;&#10;&#60;/product&#62;&#10;&#60;product id=&#34;222&#34;&#62;&#10;&#60;link rel=&#34;self&#34; href=&#34;http://example.com/products/222&#34;/&#62;&#10;&#60;name&#62;Macbook&#60;/name&#62;&#10;&#60;cost&#62;$1599.99&#60;/cost&#62;&#10;&#60;/product&#62;</span><br></pre></td></tr></table></figure>
+<h1 id="First_JAX-RS_Service">First JAX-RS Service</h1><h2 id="JAX-RS_Overview_and_Roadmap">JAX-RS Overview and Roadmap</h2><p>JAX-RS is a framework that focuses on applying Java annotations to plain Java objects:</p>
+<ul>
+<li>It has <strong>annotations</strong> to bind specific URI patterns and HTTP operations to individual methods of your Java class. </li>
+<li>It has <strong>parameter injection</strong> annotations so that you can easily pull in information from the HTTP request. </li>
+<li>It has <strong>message body readers and writers</strong> that allow you to decouple data format marshalling and unmarshalling from your Java<br>data objects. </li>
+<li>It has <strong>exception mappers</strong> that can map an application-thrown exception to an HTTP response code and message. </li>
+<li>Finally, it has some nice facilities for HTTP <strong>content negotiation</strong>.</li>
+</ul>
+<p>These are also roadmap to dive into JAX-RS.</p>
+<h2 id="Bean_class">Bean class</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Java bean class&#10;public class Customer &#123;&#10;private int id;&#10;private String firstName;&#10;private String lastName;&#10;private String street;&#10;private String city;&#10;private String state;&#10;private String zip;&#10;private String country;&#10;......</span><br></pre></td></tr></table></figure>
+<h2 id="Resource_class">Resource class</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Path(&#34;/customers&#34;)&#10;public class CustomerResource &#123;&#10;@GET&#10;@Path(&#34;&#123;id&#125;&#34;)&#10;@Produces(&#34;application/xml&#34;)&#10;public StreamingOutput getCustomer(@PathParam(&#34;id&#34;) int id) &#123;&#10;final Customer customer = customerDB.get(id);&#10;if (customer == null) &#123;&#10;throw new WebApplicationException(&#10;Response.Status.NOT_FOUND);&#10;&#125;&#10;return new StreamingOutput() &#123;&#10;public void write(OutputStream outputStream)&#10;throws IOException, WebApplicationException &#123;&#10;outputCustomer(outputStream, customer);&#10;&#125;&#10;&#125;;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Deploy_resources">Deploy resources</h2><p>Using Application class for deployment configuration.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public abstract class Application &#123;&#10;private static final Set&#60;Object&#62; emptySet = Collections.emptySet();&#10;//Any JAX-RS service class returned by this method will&#10;//follow the per-request model mentioned earlier&#10;//a list of JAX-RS service objects as the application programmer, are responsible for&#10;//creating and initializing these objects&#10;public abstract Set&#60;Class&#60;?&#62;&#62; getClasses();&#10;//Any JAX-RS service class returned by this method will&#10;//follow the singleton mode.&#10;public Set&#60;Object&#62; getSingletons() &#123;&#10;return emptySet;&#10;&#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>Extend the Application class and configure it in web.xml.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;?xml version=&#34;1.0&#34;?&#62;&#10;&#60;web-app&#62;&#10;&#60;display-name&#62;Archetype Created Web Application&#60;/display-name&#62;&#10;&#60;servlet&#62;&#10;&#60;servlet-name&#62;Rest&#60;/servlet-name&#62;&#10;&#60;servlet-class&#62;&#10;com.jaxrs.vendor.JaxrsVendorServlet&#10;&#60;/servlet-class&#62;&#10;&#60;init-param&#62;&#10;&#60;param-name&#62;javax.ws.rs.Application&#60;/param-name&#62;&#10;&#60;param-value&#62;&#10;com.restfully.shop.services.ShoppingApplication&#10;&#60;/param-value&#62;&#10;&#60;/init-param&#62;&#10;&#60;/servlet&#62;&#10;&#60;servlet-mapping&#62;&#10;&#60;servlet-name&#62;Rest&#60;/servlet-name&#62;&#10;&#60;url-pattern&#62;/*&#60;/url-pattern&#62;&#10;&#60;/servlet-mapping&#62;&#10;&#60;/web-app&#62;</span><br></pre></td></tr></table></figure>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2015/01/29/2015-01-29-第一次像个程序员/">
+        ← prev <!--第一次像个程序员-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2014/10/13/Java内存区域及内存溢出处理/">
+        <!--Java内存区域及内存溢出处理--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-2015-1-27-RESTful-Java-with-JAX-RS" data-title="RESTful Java with JAX-RS Reading Note" data-url="http://zhangmin.name/blog/2015/01/27/2015-1-27-RESTful-Java-with-JAX-RS/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

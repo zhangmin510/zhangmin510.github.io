@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>2013编程之美测试赛之踩方格 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  April 9, 2013
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/问题与算法/'>问题与算法</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">2013编程之美测试赛之踩方格</h1>
+  <section class="post-content article-entry">
+    <p>踩方格</p>
+<p>时间限制: 1000ms 内存限制: 1024MB</p>
+<p>描述</p>
+<p>有一个方格矩阵，矩阵边界在无穷远处。我们做如下假设：</p>
+<p>a. 每走一步时，只能从当前方格移动一格，走到某个相邻的方格上；</p>
+<p>b. 走过的格子立即塌陷无法再走第二次；</p>
+<p>c. 只能向北、东、西三个方向走；</p>
+<p>请问：如果允许在方格矩阵上走n步，共有多少种不同的方案。2种走法只要有一步不一样，即被认为是不同的方案。</p>
+<p>输入</p>
+<p>允许在方格上行走的步数n</p>
+<p>输出</p>
+<p>计算出的方案数量</p>
+<p>对于小数据1 &lt;= n &lt;= 20; 对于大数据1 &lt;= n &lt;= 100.</p>
+<p>样例输入</p>
+<p>2</p>
+<p>样例输出</p>
+<p>7</p>
+<p>解法一：</p>
+<p>设F(n)表示走n步的方案数，F(0)=1,F(1)=3。则F(n)可以用下面的式子表示</p>
+<p>F(n)=F(n-1)+2*[F(n-2)+…+F(1)+F(0)+1]</p>
+<p>其中F(n-1)表示向北走一步后剩余n-1步的方案数，然后假设向东走一步再向北走一步剩余n-2步的方案数。依次类推，继续向北向东，直到最后一步向北，此时F(0)=1，走完；或者向东走完最后一步。同理可得假设向北走一步后向西走的方案数。</p>
+<p>[java]<br>import java.util.Scanner;<br>public class Main {<br>    public static void main(String[] args) {<br>        Scanner in = new Scanner(System.in);<br>        while(in.hasNext()) {<br>            int step = in.nextInt();<br>            int[] f = new int[step+1];<br>            f[0] = 1;<br>            f[1] = 3;<br>            for(int i=2;i &lt;= step;i++){<br>                int sum=0;<br>                for(int j=0;j &lt;= i-2;j++){<br>                    sum += f[j];<br>                }<br>                f[i] = f[i-1] + 2*(sum+1);<br>            }<br>            System.out.println(f[step]);<br>        }<br>    }<br>}<br>[/java]</p>
+<p>此方法仅适用与小数据，大数据时会溢出。下面是java版的大数据版本</p>
+<p>[java]<br>import java.math.BigInteger;<br>import java.util.Scanner;<br>public class Main {<br>public static void main(String[] args) {</p>
+<p>Scanner in = new Scanner(System.in);<br>while(in.hasNext()) {<br>int step = in.nextInt();<br>BigInteger[] f = new BigInteger[step+1];<br>for(int i = 0;i &lt;= step;i ++){<br>f[i] = new BigInteger(&quot;0&quot;);<br>}<br>f[0] = new BigInteger(&quot;1&quot;);<br>f[1] = new BigInteger(&quot;3&quot;);<br>for(int i=2;i &lt;= step;i++){<br>BigInteger sum= new BigInteger(&quot;0&quot;);<br>for(int j=0;j &lt;= i-2;j++){<br>sum = sum.add(f[j]);<br>}<br>sum = sum.add(new BigInteger(&quot;1&quot;));<br>sum = sum.multiply(new BigInteger(&quot;2&quot;));<br>f[i] = f[i].add(f[i-1].add(sum));<br>}<br>System.out.println(f[step].toString());</p>
+<p>}</p>
+<p>}<br>}<br>[/java]</p>
+<p>此解法思路来自博客：激情与梦想<a href="http://www.cnblogs.com/easyFancy/archive/2013/04/05/3000759.html" target="_blank" rel="external">http://www.cnblogs.com/easyFancy/archive/2013/04/05/3000759.html</a></p>
+<p>解法二：</p>
+<p>对于大神精妙简洁的解法，我的枚举法简直是不值一提，但毕竟是自己的东西还是贴出来了。知道差距，才能更好进步。</p>
+<p>[java]<br>import java.util.Iterator;<br>import java.util.Scanner;<br>import java.util.ArrayList;</p>
+<p>public class Main {<br>      static int count(ArrayList&lt;Integer&gt; olist,ArrayList&lt;Integer&gt; nlist){<br>        int result = 0;<br>        Iterator&lt;Integer&gt; it = olist.iterator();<br>         while(it.hasNext()){<br>             int choose = ((Integer)it.next()).intValue();<br>             switch(choose){<br>             case 0:<br>                 result+=3;<br>                 nlist.add(0);<br>                 nlist.add(1);<br>                 nlist.add(-1);<br>                 break;<br>             case 1:<br>                 result+=2;<br>                 nlist.add(1);<br>                 nlist.add(0);<br>                 break;<br>             case -1:<br>                 result+=2;<br>                 nlist.add(-1);<br>                 nlist.add(0);<br>                 break;<br>             }<br>         }<br>         return result;<br>    }</p>
+<pre><code>public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span>[] args) {
+    <span class="type">Scanner</span> <span class="keyword">in</span> = new <span class="type">Scanner</span>(<span class="type">System</span>.<span class="keyword">in</span>);
+    <span class="keyword">while</span>(<span class="keyword">in</span>.hasNext()) {
+       <span class="type">int</span> <span class="literal">result</span> = <span class="number">3</span>;
+       <span class="type">int</span> step = <span class="keyword">in</span>.nextInt();
+       <span class="type">int</span> n = <span class="number">1</span>;
+       <span class="type">ArrayList</span>&amp;lt;<span class="type">Integer</span>&amp;gt; al = new <span class="type">ArrayList</span>&amp;lt;<span class="type">Integer</span>&amp;gt;();
+       al.add(-<span class="number">1</span>);
+       al.add(<span class="number">1</span>);
+       al.add(<span class="number">0</span>);
+       <span class="keyword">while</span>(step &amp;gt; <span class="number">1</span> &amp;amp;&amp;amp; n &amp;lt; step){
+           <span class="type">ArrayList</span>&amp;lt;<span class="type">Integer</span>&amp;gt; nlist = new <span class="type">ArrayList</span>&amp;lt;<span class="type">Integer</span>&amp;gt;();
+           <span class="literal">result</span> = count(al,nlist);
+           al = nlist;
+           n++;
+       }
+       <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="literal">result</span>);
+    }
+}
+</code></pre><p>}<br>[/java]</p>
+<p>枚举法在小数据情况下就必须要设置最大heap大小为1024m。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/04/10/《看见》札记/">
+        ← prev <!--《看见》札记-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/04/08/试论自然、必然与自由的关系/">
+        <!--试论自然、必然与自由的关系--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-2013编程之美测试赛之踩方格" data-title="2013编程之美测试赛之踩方格" data-url="http://zhangmin.name/blog/2013/04/09/2013编程之美测试赛之踩方格/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>手机共享Windows 7无线网络连接上网 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  October 18, 2012
+  
+
+  <h1 class="post-title">手机共享Windows 7无线网络连接上网</h1>
+  <section class="post-content article-entry">
+    <p>利用Windows 7 提供网络共享功能，可以将笔记本电脑变成WiFi热点，建立无线局域网。这样你的手机就可以在不买无线路由器的情况下享受宽带的网速了。</p>
+<p>下面介绍如何开启Windows 7隐藏的虚拟WiFi和SoftAP功能来实现共享上网。</p>
+<p>1）用管理员权限打开cmd，运行命令：netsh wlan set hostednetwork mode=allow ssid=yourid key=yourpwd。命令用法: set hostednetwork [mode=]allow|disallow [ssid=]&lt;ssid&gt;[key=]&lt;passphrase&gt; [keyUsage=]persistent|temporary</p>
+<p>参数:</p>
+<p>mode 指定允许还是禁止托管网络。<br>ssid 托管网络的 SSID。<br>key 托管网络使用的用户安全密钥。<br>keyUsage 指定用户密钥密钥是永久性的还是临时的。</p>
+<p>备注:此命令更改托管网络的属性，包括: 托管网络的 SSID、允许或禁止系统中的托管网络、以及托管网络所使用的用户安全密钥。用户安全密钥应为 8 到 63 个 ASCII 字符组成的字符串，例如，密码，或 64 个十六进制的数字(代表 32 个二进制字节)。</p>
+<p>2）命令运行成功之后，网络连接中会多出一个网卡为“Microsoft Virtual WIFI Miniport Adapter”的“无线网络连接 2”</p>
+<p>3）然后打开当前你的网络连接的适配器属性——共享，勾选共享Internet连接共享的选项。确定之后，刚才的网络连接会显示“共享的”字样。</p>
+<p>4）然后在cmd窗口再输入：netsh wlan start hostednetwork。至此你就可以通过手机的wlan连接共享的无线网络进行上网了。</p>
+<p>5）另外，利用命令：netsh wlan show hostednetwork查看共享连接的相关信息。</p>
+<p><strong>相关问题及解决方案：</strong></p>
+<p>出现“Internet连接共享时出现问题。。。”</p>
+<p>解决方法：在cmd中输入service.msc，检查windows firewall和Internet Connection sharing(ICS)服务是否开启，如未启动，则启动之。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2012/10/24/微软等数据结构-算法面试100题全部答案完整亮相/">
+        ← prev <!--微软等数据结构+算法面试100题全部答案完整亮相-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2012/10/11/我见证：莫言成为第一位获得诺贝尔文学奖的中国籍作家/">
+        <!--我见证：莫言成为第一位获得诺贝尔文学奖的中国籍作家--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-手机共享Windows-7无线网络连接上网" data-title="手机共享Windows 7无线网络连接上网" data-url="http://zhangmin.name/blog/2012/10/18/手机共享Windows-7无线网络连接上网/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

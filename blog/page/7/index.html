@@ -1,1260 +1,265 @@
 <!doctype html>
-<html class="theme-next use-motion theme-next-next">
-<head>
-  
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
 
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <title>ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
 
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
-
-
-  <link rel="stylesheet" type="text/css" href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
-<link rel="stylesheet" type="text/css" href="/blog/css/main.css?v=0.4.1"/>
-
-
-    <meta name="description" content="ZhangMin.name's Blog" />
-
-
-
-
-    <meta name="keywords" content="zhangmin.name,张敏,张敏的个人主页,张敏的博客,zhangmin.name's blog" />
-
-
-
-
-
-    <link rel="shorticon icon" type="image/x-icon" href="http://www.zhangmin.name/images/favicon.png?v=0.4.1" />
-
-
-
-
-  <title> ZhangMin.name </title>
-</head>
-
-<body>
-  <div class="container one-column 
-   page-home 
-">
-    <div class="headband"></div>
-
-    <div id="header" class="header">
-      <div class="header-inner">
-        <h1 class="site-meta">
-  <span class="logo-line-before"><i></i></span>
-  <a href="/blog/" class="brand">
-      <span class="logo">
-        <i class="icon-logo"></i>
-      </span>
-      <span class="site-title">ZhangMin.name</span>
-  </a>
-  <span class="logo-line-after"><i></i></span>
-</h1>
-
-
-  <ul id="menu" class="menu">
+    </head>
     
-    
-      
-      <li class="menu-item menu-item-home">
-        <a href="/">
-          <i class="menu-item-icon icon-home"></i> <br />
-          首页
-        </a>
-      </li>
-    
-      
-      <li class="menu-item menu-item-categories">
-        <a href="/blog/categories">
-          <i class="menu-item-icon icon-categories"></i> <br />
-          分类
-        </a>
-      </li>
-    
-      
-      <li class="menu-item menu-item-archives">
-        <a href="/blog/archives">
-          <i class="menu-item-icon icon-archives"></i> <br />
-          归档
-        </a>
-      </li>
-    
-      
-      <li class="menu-item menu-item-tags">
-        <a href="/blog/tags">
-          <i class="menu-item-icon icon-tags"></i> <br />
-          标签
-        </a>
-      </li>
-    
-      
-      <li class="menu-item menu-item-readings">
-        <a href="/blog/readings">
-          <i class="menu-item-icon icon-readings"></i> <br />
-          读书单
-        </a>
-      </li>
-    
-  </ul>
-
-
-      </div>
-    </div>
-
-    <div id="main" class="main">
-      <div class="main-inner">
-        <div id="content" class="content">
-          
-            
-          
-
-          <div id="posts" class="posts-expand">
-            
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/09/Java基本数据类型和操作符需要注意的问题/">
-                Java基本数据类型和操作符需要注意的问题
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-09-12
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/09/Java基本数据类型和操作符需要注意的问题/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/Java基本数据类型和操作符需要注意的问题/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h3 id="1-java中基本数据类型大小、默认值及其范围">1.java中基本数据类型大小、默认值及其范围</h3><p>boolean - false -</p>
-<p>char 16bits ‘u0000’(null) Unicode 0~Unicode 2^16-1(无符号类型）</p>
-<p>byte 8bits (byte)0  -128~127</p>
-<p>short 16bits (short)0  -2^15~2^15-1</p>
-<p>int 32bits 0  -2^31~2^31-1</p>
-<p>long 64bits 0L  -2^62~2^63-1</p>
-<p>float 32bits 0.0f  IEEE754</p>
-<p>double 64bits 0.0d  IEEE754</p>
-<h3 id="2-System-out-println()中的“+”">2.System.out.println()中的“+”</h3><p>在这种上下文环境中，“+”意味着“字符串连接”，并且如果必要，它还要执行“字符串转换”。如果编译器观察到一个String后面紧跟一个“+”，而这个“+”后面又紧跟一个非String类型的元素时，就会将非String转化为String类型。</p>
-<h3 id="3-基本类型的赋值">3.基本类型的赋值</h3><p>基本类型存储了实际的数值，而并非是指向一个对象的引用，所以在为其赋值的时候是直接将一个地方的数值复制到另一个地方。而对于将“一个对象赋值给另一个对象”，实际是将“引用”从一个地方复制到另一个地方。如果一个对象的所有引用都被覆盖了，那么这个不再被引用的对象就由“垃圾回收器”自动清理了。</p>
-<h3 id="4-算数操作符">4.算数操作符</h3><p>1）整数除法会直接去掉结果的小数位，而不是四舍五入的结果。</p>
-<p>2）一元减号用于转变数据的符号，而一元加号知识为了与一元减号相对应，但是它唯一的作用就是将较小的数据类型的操作数提升为int。</p>
-<h3 id="5-关系操作符">5.关系操作符</h3><p>==和!=适用于所有的基本数据类型，而其他比较符不适用于boolean。因为boolean只有true和false两个值，比较大小没意义。另外，对两个内容相同的对象执行==和!=操作时，比较的是对象的引用。如果想比较对象的内容，则需要覆盖equals方法。</p>
-<h3 id="6-逻辑操作符">6.逻辑操作符</h3><p>1）&amp;&amp;、||、！操作只能应用与布尔值。在java中不能将一个非布尔值当做布尔值来用。</p>
-<p>2）如果在该使用String的地方使用了布尔值，则布尔值会被自动转换成适当的文本形式。</p>
-<h3 id="7-直接常量">7.直接常量</h3><p>如果试图将一个变量初始化为超出自身范围的值，编译器都会向我们报告一条错误信息。如果超出范围编译器会自动转换成int，并告诉我们需要对这次赋值进行“窄化转型”。各种类型范围详见1。</p>
-<h3 id="8-移位操作符">8.移位操作符</h3><p>1）移位操作符只能操作整数类型。左移(&lt;&lt;)按照操作符右侧指定的位数将操作符左边的数向左移动（在低位补0）。“有符号”右移(&gt;&gt;)按照操作符右侧指定的位数将操作符左边的操作数右移。“有符号”右移操作符使用“符合扩展”：若为正，则在高位插入0；若为负，则在高位插入1。“无符号”右移(&gt;&gt;&gt;)，使用“0”扩展，无论正负，在高位插入0。</p>
-<p>2）对char，byte或者short的移位时，它们会被转换成int类型，并且得到的结果也是int类型的值。且只有低5位才有用，因为如果移动32位以上，原来的信息就会全部丢失。例如对于表达式x&lt;&lt;y，如果y&gt;32，那么将只取y的二进制表示的低5位。如果y=34（10 0010），低五位就是00010，即最终只移动两位。上述规则对于long类型及&gt;&gt;和&lt;&lt;&lt;都适用。</p>
-<p>3）如果对byte或者short进行无符号右移位结合赋值操作(&gt;&gt;&gt;=)可能会得到错误的结果。它们先会被转换成int，再进行右移操作，然后截断，赋值给原类型，在这种情况下会出现-1的结果。</p>
-<h3 id="9-类型转换">9.类型转换</h3><p>1）如果执行一种名为“窄化转换”的操作（将能容纳更多信息的数据类型转化成无法容纳那么多信息的类型），就有可能面临信息丢失的危险。此时，必须进行强制类型转换。而进行名为“扩展转换”，则不必进行类型转化，也不会丢失信息。</p>
-<p>2）再进行“窄化转换”是，必须注意截尾和舍入的问题。如将float转换成int是直接将小数点后面的数值截掉，而不是舍入。如果想舍入可用Math.round()方法。</p>
-<p>3）通常，在一个表达式中，最大的数据类型决定了结果的类型。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/09/Ubuntu-13-04-自定义Grub/">
-                Ubuntu 13.04 自定义Grub
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-09-01
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/linux/">linux</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/09/Ubuntu-13-04-自定义Grub/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/Ubuntu-13-04-自定义Grub/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>在windows直接安装ubuntu后，windows的启动项会变成最后一项，为了将windows设为默认启动项，可以尝试以下几种方法：</p>
-<p>1.安装启动管理器</p>
-<p>[shell]sudo apt-get install startupmanager[/shell]</p>
-<p>安装好后打开应用程序将windows设置为默认启动项就可以了。</p>
-<p>2.更改grub配置文件（也是最基本的方法)</p>
-<p>在/etc/grub.d目录下有几个文件。默认情况下win7对应的文件名是30_os-prober，第一个linux系统对应的是10-linux，00是header，05是debian-theme，可见10是第一个启动项，只需要更改win7的文件名(06-09均可)即可改变启动顺序。</p>
-<p>[shell]<br>sudo mv /etc/grub.d/30_os-prober /etc/grub.d/08_os-prober<br>sudo update-grub（这个命令会重新生成/boot/grub/grub.cfg）<br>[/shell]</p>
-<p>3.安装GRUB Customizer</p>
-<p>Ubuntu 13.04下通过PPA安装，打开终端，输入命令：</p>
-<p>[shell]<br>sudo add-apt-repository ppa:danielrichter2007/grub-customizer<br>sudo apt-get update<br>sudo apt-get install grub-customizer<br>[/shell]</p>
-<p>安装好后打开软件设置即可。</p>
-<p>参考文章:<br>1.<a href="http://www.linuxidc.com/Linux/2013-05/84109.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2013-05/84109.htm</a><br>2.<a href="http://www.th7.cn/system/win/201305/39122.shtml" target="_blank" rel="external">http://www.th7.cn/system/win/201305/39122.shtml</a> </p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Linux/">
-                #Linux
-              </a>
-            
-              <a href="/blog/tags/技术/">
-                #技术
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/08/使用Apache-MINA开发Java网络应用程序/">
-                使用Apache MINA开发Java网络应用程序
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-08-29
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/08/使用Apache-MINA开发Java网络应用程序/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/使用Apache-MINA开发Java网络应用程序/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>Apache MINA是一种Java NIO 的网络应用框架。通过使用Apache MINA可以开发高性能，高扩展性的网络应用程序。MINA提供基于抽象事件驱动的统一的异步API。</p>
-<p>MINA的架构如下图所示：<br><img src="http://mina.apache.org/staticresources/images/mina/mina_app_arch.png" alt="MINA架构图"></p>
-<p>由上图可知，基于MINA的应用程序可分为三层：<br>1. I/O Service 执行实际的I/O操作<br>2. Filter Chain 将字节数据过滤成所需数据结构，或者相反<br>3. I/O Handler 执行实际业务逻辑</p>
-<p>所以，如果你要创建一个基于MINA的网络应用程序，你需要：<br>1. 创建I/O Service。可以从已有的Service（*Accepter）中选择或者自己创建。<br>2. 创建Filter Chain。从已有的Filters中选择或者自定义。<br>3. 创建I/O Handler。处理消息或实现具体的业务逻辑。</p>
-<p>下面是一个基于TCP/IP的TimeServer：</p>
-<p>TimeServer的代码如下：</p>
-<p>[java]<br>/<em>*
- </em></p>
-<ul>
-<li>MinaTimeServer.java</li>
-<li>ZhangMin.name - zhangmin@zhangmin.name</li>
-<li>name.zhangmin.java<br><em>
-</em>/<br>package name.zhangmin.java.mina;<br>import java.io.IOException;<br>import java.net.InetSocketAddress;<br>import java.nio.charset.Charset;<br>import org.apache.mina.core.service.IoAcceptor;<br>import org.apache.mina.core.session.IdleStatus;<br>import org.apache.mina.filter.codec.ProtocolCodecFilter;<br>import org.apache.mina.filter.codec.textline.TextLineCodecFactory;<br>import org.apache.mina.filter.logging.LoggingFilter;<br>import org.apache.mina.transport.socket.nio.NioSocketAcceptor;<br>/**</li>
-<li>@author ZhangMin.name<br><em>
-</em>/<br>public class MinaTimeServer {<br> public static int PORT = 1234;<br> /**<ul>
-<li>一个Apache MINA</li>
-<li>@param args<br>*/<br>public static void main(String[] args) throws IOException{<br> //创建一个对象监听从客户端建立的连接<br> IoAcceptor acceptor = new NioSocketAcceptor();<br> //增加 一个filter，用于答应相关日志信息<br> acceptor.getFilterChain().addLast(&quot;logger&quot;, new LoggingFilter());<br> //增加一个filter用于将二进制数据或者协议特定数据翻译成为Message对象，或者相反<br> //本实例使用自带的TextLineFactory来处理文本信息<br> acceptor.getFilterChain().addLast(&quot;codec&quot;,<pre><code>new ProtocolCodecFilter<span class="list">(
-<span class="keyword">new</span> TextLineCodecFactory<span class="list">(
-    <span class="keyword">Charset</span>.forName<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;UTF-8&amp;quot;)</span>
-    )</span>)</span>)</span><span class="comment">;</span>
-</code></pre> //设置处理请求的Handler<br> acceptor.setHandler(new TimeServerHandler());<br> //设置套接字相关的配置参数<br> acceptor.getSessionConfig().setReadBufferSize(2048);<br> acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);<br> //设置绑定的端口号<br> acceptor.bind(new InetSocketAddress(PORT));<br> System.out.println(&quot;Start listening to PORT: &quot; + PORT);<br>}</li>
-</ul>
-</li>
-</ul>
-<p>}</p>
-<p>[/java]</p>
-<p>Handler的代码如下：</p>
-<p>[java]<br>/<em>*
- </em></p>
-<ul>
-<li>TimeServerHandler.java</li>
-<li>ZhangMin.name - zhangmin@zhangmin.name</li>
-<li>name.zhangmin.java<br><em>
-</em>/<br>package name.zhangmin.java.mina;<br>import java.util.Date;<br>import org.apache.mina.core.service.IoHandlerAdapter;<br>import org.apache.mina.core.session.IdleStatus;<br>import org.apache.mina.core.session.IoSession;<br>/**</li>
-<li><p>@author ZhangMin.name<br><em>
-</em>/<br>public class TimeServerHandler extends IoHandlerAdapter {<br> //处理相关异常<br> @Override<br> public void exceptionCaught(IoSession session, Throwable cause)</p>
-<pre><code>    <span class="keyword">throws</span> Exception {
-cause.printStackTrace();
-</code></pre><p> }<br>//处理从客户端发来的请求和向客户端发送数据<br> @Override<br> public void messageReceived(IoSession session, Object message)</p>
-<pre><code>    <span class="keyword">throws</span> Exception {
-<span class="keyword">String</span> <span class="built_in">str</span> = message.toString();
-System.out.<span class="built_in">println</span>(&amp;quot;Receiving Message :&amp;quot; + <span class="built_in">str</span>);
-<span class="keyword">if</span>(<span class="built_in">str</span>.<span class="built_in">trim</span>().equalsIgnoreCase(&amp;quot;quit&amp;quot;)){
-    session.close(<span class="keyword">true</span>);
-    System.<span class="built_in">exit</span>(<span class="number">0</span>);
-    <span class="keyword">return</span>;
-}
-Date date = <span class="keyword">new</span> Date();
-session.write(date.toString());
-System.out.<span class="built_in">println</span>(&amp;quot;Messge written...&amp;quot;);
-</code></pre><p> }</p>
-<p> @Override<br> public void sessionIdle(IoSession session, IdleStatus status)</p>
-<pre><code>    throws Exception {
-System.<span class="type">out</span>.println(&amp;quot;IDLE: &amp;quot; + session.getIdleCount(<span class="keyword">status</span>));
-</code></pre><p> }</p>
-</li>
-</ul>
-<p>}<br>[/java]</p>
-<p>使用telnet程序进行测试：&gt;telent 127.0.0.1 1234</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-              <a href="/blog/tags/技术/">
-                #技术
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/08/-转-25个让Java程序员更高效的Eclipse插件/">
-                [转]25个让Java程序员更高效的Eclipse插件
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-08-29
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/08/-转-25个让Java程序员更高效的Eclipse插件/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/-转-25个让Java程序员更高效的Eclipse插件/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><img src="http://eclipse.org/eclipse.org-common/themes/Nova/images/eclipse.png" alt="Eclipse"></p>
-<p>下面列出来的是25个最好的免费Eclipse插件，可以让开发者更高效的工作 。</p>
-<p><strong>提高代码质量的插件</strong></p>
-<ol>
-<li>FindBugs<br>FindBugs可以帮你找到Java代码中的bug，它使用Lesser GNU Public License的自由软件许可。2.  Checkstyle<br>Checkstyle插件可以集成到Eclipse IDE中去，能确保Java代码遵循标准代码样式。3.  ECLemma<br>ECLemma是一款拥有Eclipse Public License许可的免费工具，它提供了方便快捷的开发和测试环境。你可以使用代码覆盖模式下的“launch”功能，用起来就像是真正的运行/调试模式。你可以通过使用代码覆盖试图，高亮源文件，计数来分析代码。4.  JDepend4Eclipse JDepend4Eclipse可以帮助你遍历文件夹，协助你量化设计的质量。它使用Eclipse Public License v1.0许可。5.  PMD PMD是一款代码分析器，用来检测变量和写得不好的代码。（更新网址-<a href="http://pmd.sourceforge.net/eclipse/）6" target="_blank" rel="external">http://pmd.sourceforge.net/eclipse/）6</a>.  SourceHelper SourceHelper可以协助编码和调试，对写好的代码提供说明。7.  Structure101 Structure101帮助修改代码的架构，就是说你可以改变架构，而不打乱代码。</li>
-</ol>
-<p><strong>文本编辑插件</strong></p>
-<ol>
-<li>AnyEdit ToolsAnyEdit为输出控制台和工具栏增加了新的编辑器，帮助导入和导出数据。它使用Eclipse Public License v1.0许可。2.  Eclim Eclim给Eclipse引入了Vim的功能，Vim是最好的编辑器之一。开发者可以采用不同的语言来编写代码，它也提供bug纠错功能。Eclim使用GPLV3许可。3.  Eclipse-rbe Eclipse-rbe用来编辑Java文件，它的功能有为缺失变量发出警告信息，排序键值，转变Unicode编码等。它使用GNU库或LGPL许可。</li>
-</ol>
-<p><strong>依赖管理</strong></p>
-<ol>
-<li>Apache IvyDE Apache IvyDE集成了Apache Ivy的依赖管理功能。它能管理’ivy.xml’中的依赖，也能够配合WPT和Ant插件的使用。2.  M2eclipse (Maven插件)M2eclipse能够管理简单的项目，也能管理多模块项目，它能在Eclipse中启动maven。它提供依赖管理，能提供自动下载。</li>
-</ol>
-<p><strong>版本控制插件</strong></p>
-<ol>
-<li>Subclipse Subclipse是一个SVN插件，它为Eclipse IDE提供subversion支持，使用EPL 1.0许可。2.  EGit EGit提供同步视图，可以读.git/ 下排除的文件，提供rebase功能，为pull和push提供精简的操作。3.  MercurialEclipse MercurialEclipse是个流行的版本控制系统。它提供了clone repository功能，push-pull同步功能，以及简单的回滚功能。4.  P4Eclipse P4Eclipse吸纳了Perforce管理系统的特长。它提供了以开发者为导向的一系列的功能，并且支持许多Agile开流程发以及传统开发流程。</li>
-</ol>
-<p><strong>框架开发插件</strong></p>
-<ol>
-<li>Spring Tool Suite Spring Tool Suite提供了XML文件预览以及图形化的spring配置编辑器等开发环境和工具，它能让开发变得更简单。2.  Spring IDE  Spring IDE帮助你开发Spring应用，它提供了图形编辑界面。它还能用图形的方式显示bean之间的关系。（更新网址 – <a href="http://springide.org/updatesite）3" target="_blank" rel="external">http://springide.org/updatesite）3</a>.  Hibernator Hibernator能够创建或更新数据库schema，运行hibernate查询语句，创建映射文档。用户可以将一个Java类和一个相关的映射文件同步起来。4.  JbossTools JbossTools 3.2x支持JBoss，Hibernate，Drools，XHTML，Seam等。（更新网址-<a href="http://download.jboss.org/jbosstools/updates/JBossTools-2.1.2.GA）" target="_blank" rel="external">http://download.jboss.org/jbosstools/updates/JBossTools-2.1.2.GA）</a></li>
-</ol>
-<p><strong>其他功能插件</strong></p>
-<ol>
-<li>ASM – 二进制预览插件 ASM Bytecode Outline插件可以显示当前的Java文件或class文件的分解的二进制代码，便于Java/class文件的二进制比较，也可以显示当前二进制代码的ASMifier代码。你可以用Eclipse更新管理器来安装ASM。（更新网址-<a href="http://download.forge.objectweb.org/eclipse-update/）2" target="_blank" rel="external">http://download.forge.objectweb.org/eclipse-update/）2</a>.  Mylyn – 任务管理 Mylyn采用任务为中心的界面，它为开发者提供了任务管理工具。另外，也集成了富文本编辑工具，以及监测工具。3.  Eclipse Launcher Eclipse launcher采用Delphi 6写成，使用它你可以自定义启动Eclipse IDE时的配置。4.  FileSync FileSync拥有Eclipse Pulic License v1.0许可，它是一个文件同步工具，可以创建，删除，映射文件。5.  Log4E Log4E可以帮你更容易的写日志，而不需要受特定日志框架的约束。当然你也可以自定义你自己的日志模版。</li>
-</ol>
-<p>总而言之，插件能让Eclipse用其他语言来编写。Eclipse插件是必不可少的，因为它们让Java应用无缝连接，降低了Java的复杂度。然而，装了过多的插件会让你的Eclipse变慢，所以你需要有选择性的安装插件。除了以上提到的插件，当然还有其他的高效率的插件，如Jadclipse。如果你还有其他让你觉得好用的插件，请写下来吧。</p>
-<p>英文原文： <a href="http://www.fromdev.com/2012/01/25-best-free-eclipse-plug-ins-for-java.html" target="_blank" rel="external">fromdev.com</a></p>
-<p>编译：<a href="http://blog.jobbole.com/16127/" target="_blank" rel="external">伯乐在线 – 唐小娟</a></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/08/一个文件说明Java编码规范/">
-                一个文件说明Java编码规范
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-08-21
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/08/一个文件说明Java编码规范/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/一个文件说明Java编码规范/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>[java]<br>/<em>*
- </em></p>
-<ul>
-<li>JavaCodeConvention.java</li>
-<li>ZhangMin.name - zhangmin@zhangmin.name</li>
-<li>name.zhangmin.java</li>
-<li>2013年8月21日<br><em>
-</em>/<br>package name.zhangmin.java;</li>
-</ul>
-<p>import java.util.Date;<br>import java.math.*;</p>
-<p>/**</p>
-<ul>
-<li>这里是类或者借口的注释内容。属于Java文档注释，主要类的设计规范。<br>*</li>
-<li>对于所有的注释应该注意以下几点：</li>
-<li>1.注释应该提供代码的概要信息及其他一些不易通过代码就能理解的附属的信息；</li>
-<li>2.注释应该只包括哪些与代码实现和理解相关的内容。</li>
-<li>3.注释一般不要包括特殊字符，如格式符和退格。<br>*</li>
-<li>缩进一般为4个空格，Tab为八个空格。一行内容不要超过80个字符。<br>*</li>
-<li><p>@author ZhangMin.name<br><em>
-</em>/<br>public class JavaCodeConvention {</p>
-<p> /<em> 类或者接口范围内的注释内容 。属于实现注释，主要描述具体的代码实现</em>/</p>
-<p> /<em> 静态变量 </em>/<br> public static String hello = &quot;hello world&quot;;</p>
-<p> /<em> 实例变量 </em>/<br> public final int MIN_WIDTH = 4;</p>
-<p> public    int     id;                /<em> id标识 </em>/<br> protected String  name;                /<em> 名字 </em>/<br> private   Date    birthday;            /<em> 生日 </em>/</p>
-<p> int level; // indentation level<br> int size; // size of table</p>
-<p> /<em> 构造器 </em>/<br> public JavaCodeConvention(String name){</p>
-<pre><code>this.<span class="property">name</span> = <span class="property">name</span>;
-</code></pre><p> }</p>
-<p> /<em> 方法应该按照功能进行排序，而不是按照可访问性来进行排序 </em>/<br> public void setBirthday(Date birth){</p>
-<pre><code><span class="keyword">this</span>.birthday = birth;
-</code></pre><p> }</p>
-<p> /<em> 将过长的代码行进行分解 </em>/<br> public void function(String longExpression1, String longExpression2, String longExpression3,</p>
-<pre><code>    <span class="built_in">String</span> longExpression4, <span class="built_in">String</span> longExpression5){
-name = longExpression1 + longExpression2 + longExpression3 + longExpression4
-         + longExpression5; <span class="comment">// PREFER</span>
-</code></pre><p> }</p>
-<p> //传统的缩进<br> public void someMethod(int anArg, Object anotherArg, String yetAnotherArg,<br>  Object andStillAnother) {</p>
-<p> }</p>
-<p> public void emptyMethod(){ }</p>
-<p> //八个空格的缩进<br> private synchronized void horkingLongMethodName(int anArg,</p>
-<pre><code><span class="built_in">Object</span> anotherArg, <span class="built_in">String</span> yetAnotherArg,
-<span class="built_in">Object</span> andStillAnother) {
-</code></pre><p> }</p>
-<p> private void doSomethingAboutIt(){</p>
-<pre><code><span class="comment">//变量声明放到方法的第一行</span>
-Integer <span class="built_in">alpha</span> = <span class="keyword">new</span> Integer(<span class="number">0</span>);
-<span class="built_in">int</span> condition = <span class="number">1</span>;
-
-<span class="comment">//过长三元运算语句的处理方法</span>
-<span class="keyword">String</span> aLongBooleanExpression = <span class="keyword">new</span> <span class="keyword">String</span>(&amp;quot;world&amp;quot;);
-<span class="built_in">int</span> beta = <span class="number">1</span>,gamma = <span class="number">2</span>;
-<span class="built_in">alpha</span> = (aLongBooleanExpression.equals(&amp;quot;hello&amp;quot;)) ? beta : gamma;
-<span class="built_in">alpha</span> = (aLongBooleanExpression.equals(&amp;quot;hello&amp;quot;)) ? beta
-                                                 : gamma;
-<span class="built_in">alpha</span> = (aLongBooleanExpression.equals(&amp;quot;hello&amp;quot;))
-        ? beta
-        : gamma;
-
-<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &amp;lt; <span class="number">1000</span>; i++);
-<span class="keyword">while</span> (condition == <span class="number">1</span>) {
-
-}
-<span class="keyword">switch</span> (condition) {
-    <span class="keyword">case</span> <span class="number">1</span>:
-        System.out.<span class="built_in">println</span>(<span class="number">1</span>);
-        <span class="comment">/* falls through */</span>
-    <span class="keyword">case</span> <span class="number">2</span>:
-        System.out.<span class="built_in">println</span>(<span class="number">2</span>);
-        <span class="keyword">break</span>;
-    <span class="keyword">default</span>:
-        System.out.<span class="built_in">println</span>(<span class="number">3</span>);
-        <span class="keyword">break</span>;
-}
-<span class="comment">//if (bar &amp;gt; 1) {</span>
-<span class="comment">//</span>
-<span class="comment">// // Do a triple-flip.</span>
-<span class="comment">// ...</span>
-<span class="comment">//}</span>
-<span class="comment">//else</span>
-<span class="comment">// return false;</span>
-</code></pre><p> }</p>
-<p> protected void ifStatement(){</p>
-<pre><code>int a=1,b=2,c=2,<span class="keyword">d</span>=1;
-
-a += c + <span class="keyword">d</span>;
-a = (a + b) / (c * <span class="keyword">d</span>);
-
-<span class="comment">//过长条件语句的处理方法</span>
-<span class="keyword">if</span> ((a &amp;gt; b &amp;amp;&amp;amp; c &amp;gt; <span class="keyword">d</span>)
-        || (b == <span class="keyword">d</span> &amp;amp;&amp;amp; a &amp;lt; <span class="keyword">d</span>)
-        ||!(a == c &amp;amp;&amp;amp; <span class="keyword">d</span> == b)) {
- doSomethingAboutIt();
-}<span class="keyword">else</span> <span class="keyword">if</span>( b == <span class="keyword">d</span>){
-
-}<span class="keyword">else</span>{
-
-}
-
-<span class="comment">//或者</span>
-<span class="keyword">if</span> ((a &amp;gt; b &amp;amp;&amp;amp; c &amp;gt; <span class="keyword">d</span>) || ((b == <span class="keyword">d</span> &amp;amp;&amp;amp; a &amp;lt; <span class="keyword">d</span>)
-        ||!(a == c &amp;amp;&amp;amp; <span class="keyword">d</span> == b))) {
- doSomethingAboutIt();
-}
-</code></pre><p> }<br>}<br>[/java]</p>
-</li>
-</ul>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/08/罗辑思维/">
-                罗辑思维
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-08-09
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/08/罗辑思维/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/罗辑思维/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>2012年12月21日，传说中世界末日的那一天。一个叫《罗辑思维》的节目上线了。从此，每天早上打开微信就会有一个60秒语音的马桶伴侣，每周五还有我，一个叫罗振宇的胖子在镜头前唠叨“歪理邪说”。</p>
-<p>一晃8个月。如今《罗辑思维》视频光在优酷上就拥有超过3000万人次的观看量，我们的微信公众号上聚集了50万忠实用户。一颗小小的种子，正迎着互联网的轻风成长。</p>
-<p>我自知，大家爱的不是我，罗胖只是歪嘴肉身凡胎。更不是我的搭档，那个叫申音的小胡子。</p>
-<p><strong>大家爱的是罗辑思维里展现的那个魅力人格体，寄托着我们对知识、对自由、对未来、对独立的向往。</strong></p>
-<p>回到我和老申的初心，罗辑思维是一个要跨越十年的互联网实验，它不仅仅是一个脱口秀，一个自媒体。我们想要打造的是一个有灵魂的知识社群，一帮自由人的自由联合。</p>
-<p>现在是我们再向前迈出一步的时候了。</p>
-<p>茫茫人海中，罗辑思维想找到这样一帮朋友，十六个字概括：<strong>爱智求真、积极上进、自由阳光、人格健全。</strong><br>十万同道，这样的要求算不算高？这样的一群人如果真能通过互联网聚集在一起，究竟能发生什么？值得想象和期待。</p>
-<p>公元627年，一个叫玄奘的和尚出玉门关，陪伴他的只有古道西风瘦马。</p>
-<p>三藏法师只有目标和愿力，没有清晰明确的路线图。</p>
-<p>爱，就供养。不爱，就观望。</p>
-<p>凡新事业，必有它的投入和付出，罗辑思维也不例外。树木愈大，根基越深，为了罗辑思维能够持续地健康地走下去，我们需要大家的供养、资助。众人举炬，焰照前路。</p>
-<p>第一年，“罗辑思维朋友圈”诚求5000位发起会员，200元会费，两年会员资格。和我们一道同行。</p>
-<p>200元，也许只是半张演唱会门票，一顿美餐，或者4张电影票，但也可以用来供养一个事业。</p>
-<p>如果您有能力有意愿为罗辑思维贡献更多，我们还额外准备了500个铁杆会员的名额。1200元，2年资格之外，您还有义务为社群做更大的贡献。</p>
-<p>在这里，我和老申要做一个特别承诺：《罗辑思维》的常规视频、微信语音及文章永久免费，向所有热爱知识的朋友奉上，与会员权益无关。</p>
-<p>我承认，这也许是史上最无理的会员方案。没有高高在上的特权，没有清晰可见的权益回报，甚至还有主动参与的义务。但罗胖相信爱的愿力。</p>
-<p>8月9日到8月13日，我在桥这边等你，等你成为罗辑思维生命中的一部分，我们一起来做一个有意义的事业。</p>
-<p><em>转自罗辑思维的《史上最无理会员方案》一文</em></p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/读书·旅行/">
-                #读书·旅行
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-
-          </div>
-
-          
-            <div class="pagination">
-              <a class="extend prev" rel="prev" href="/blog/page/6/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/blog/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/39/">39</a><a class="extend next" rel="next" href="/blog/page/8/">&raquo;</a>
-            </div>
-          
-        </div>
-
-        
-<div class="sidebar-toggle">
-  <div class="sidebar-toggle-line-wrap">
-    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-  </div>
+		<body class="home-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
 </div>
+<h6><a href="/blog/readings">Readings</a></h6>
 
-<div id="sidebar" class="sidebar">
-  <div class="sidebar-inner">
+        </header>
 
+        <main id="content">
+        
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/05/26/一名大学毕业生的反思/">一名大学毕业生的反思</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 26, 2013
+  
+  
+    <span class="taglist">  &middot; 
     
-
-    <div class="site-overview">
-      <div class="site-author motion-element">
-        <img class="site-author-image" src="/blog/images/default_avatar.jpg" alt="zhangmin.name" />
-        <p class="site-author-name">zhangmin.name</p>
-      </div>
-      <p class="site-description motion-element">ZhangMin.name's Blog</p>
-      <div class="site-state motion-element">
-        <div class="site-state-item site-state-posts">
-          <a href="/blog/archives">
-            <span class="site-state-item-count">234</span>
-            <span class="site-state-item-name">日志</span>
-          </a>
-        </div>
-
-        <div class="site-state-item site-state-categories">
-          <a href="/blog/categories">
-            <span class="site-state-item-count">9</span>
-            <span class="site-state-item-name">分类</span>
-          </a>
-        </div>
-
-        <div class="site-state-item site-state-tags">
-          <a href="/blog/tags">
-            <span class="site-state-item-count">20</span>
-            <span class="site-state-item-name">标签</span>
-          </a>
-        </div>
-
-      </div>
-
-      
-
-      <div class="links-of-author motion-element">
-        
-          
-            <span class="links-of-author-item">
-              <a href="https://github.com/zhangmin510" target="_blank">GitHub</a>
-            </span>
-          
-            <span class="links-of-author-item">
-              <a href="http://weibo.com/302585340" target="_blank">Weibo</a>
-            </span>
-          
-        
-      </div>
-
-      
-      
-        <div class="cc-license motion-element">
-          <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
-            <img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons" />
-          </a>
-        </div>
-      
-
-    </div>
-
     
-
-  </div>
-</div>
-
-
-      </div>
-    </div>
-
-    <div id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; &nbsp;  2010 - 
-  2015
-  <span class="with-love">
-    <i class="icon-heart"></i>
-  </span>
-  <span class="author">zhangmin.name</span>
-</div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-
-
-      </div>
-    </div>
-
-    <div class="back-to-top"></div>
-  </div>
-
-  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
-
-  
-  
-
-  
-  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('.content img').each(function () {
-        var $image = $(this);
-        var $imageWrapLink = $image.parent('a');
-
-        if ($imageWrapLink.size() < 1) {
-          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
-        }
-        $imageWrapLink.addClass('fancybox');
-      });
-    });
-    $('.fancybox').fancybox({
-      helpers: {
-        overlay: {
-          locked: false
-        }
-      }
-    });
-  </script>
-
-
-  <script type="text/javascript">
-  function hasMobileUA () {
-    var nav = window.navigator;
-    var ua = nav.userAgent;
-    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
-
-    return pa.test(ua);
-  }
-
-  function isDesktop () {
-    return screen.width > 991 && !hasMobileUA();
-  }
-
-  function isTablet () {
-    return screen.width < 992 && screen.width > 767 && hasMobileUA();
-  }
-
-  function isMobile () {
-    return screen.width < 767 && hasMobileUA();
-  }
-
-  function escapeSelector (selector) {
-    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
-  }
-</script>
-
-  
-
-  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js"></script>
-  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js"></script>
-
-  <script type="text/javascript" id="motion.global">
-  $(document).ready(function () {
-    var body = $('body');
-    var isSidebarVisible = false;
-    var sidebarToggle = $('.sidebar-toggle');
-    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
-    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
-    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
-    var sidebar = $('.sidebar');
-
-    var SIDEBAR_WIDTH = '320px';
-    var SIDEBAR_DISPLAY_DURATION = 300;
-
-    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
-
-    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
-    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
-    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
-
-    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
-    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
-    var sidebarToogleLine2ndStatusClose = {opacity: 0};
-
-    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
-    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
-    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
-
-    LogoAndMenuMotion();
-    sidebatToggleMotion();
-    postsListMotion();
-    backToTopMotion();
-
-
-    $(document)
-      .on('sidebar.isShowing', function () {
-        isDesktop() && body.velocity(
-          {paddingRight: SIDEBAR_WIDTH},
-          SIDEBAR_DISPLAY_DURATION
-        );
-        sidebarContentMotion();
-      })
-      .on('sidebar.isHiding', function () {});
-
-    function LogoAndMenuMotion() {
-      $.Velocity.RunSequence([
-        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
-        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
-        
-        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
-        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
-        
-        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
-      ]);
-      $('.menu-item').velocity('transition.slideDownIn', {display: null});
-    }
-
-
-    function backToTopMotion () {
-      var b2top = $('.back-to-top');
-      b2top.on('click', function () {
-        body.velocity('scroll');
-      });
-    }
-
-    function sidebarShowMotion () {
-
-      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
-      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
-      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
-
-      sidebar.velocity({width: SIDEBAR_WIDTH}, {
-        display: 'block',
-        duration: SIDEBAR_DISPLAY_DURATION,
-        complete: function () {
-          sidebar.addClass('sidebar-active');
-          sidebar.trigger('sidebar.didShow');
-        }
-      });
-      sidebar.trigger('sidebar.isShowing');
-    }
-
-    function sidebarHideMotion () {
-      isDesktop() && body.velocity({paddingRight: 0});
-      sidebar.velocity('reverse');
-
-      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
-      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
-      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
-
-      sidebar.removeClass('sidebar-active');
-      sidebar.trigger('sidebar.isHiding');
-    };
-
-    function sidebarContentMotion () {
-      $('.sidebar .motion-element').velocity(
-        'transition.slideRightIn',
-        {stagger: 50, drag: true}
-      );
-    }
-
-    function postsListMotion () {
-      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
-      $('.post').velocity('transition.slideDownIn', postMotionOptions);
-    }
-
-    function sidebatToggleMotion () {
-      sidebarToggle.on('click', function () {
-        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
-        isSidebarVisible = !isSidebarVisible;
-      });
-
-      sidebarToggle.hover(function () {
-        if (isSidebarVisible) {return}
-        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
-        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
-        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
-      }, function () {
-        if (isSidebarVisible) {return}
-        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
-        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
-        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
-      });
-    }
-  });
-
-</script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
+      <a href='/blog/tags/UCAS/'>UCAS</a> 
     
+      <a href='/blog/tags/国科大/'>国科大</a> 
+    
+    </saan>
   
+  </h3>
+</section>
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"zhangmin"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/05/25/Web-Service-ppt/">Web Service ppt</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 25, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/Web-Service/'>Web Service</a> 
+    
+      <a href='/blog/tags/技术/'>技术</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
 
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/05/24/Delivering-the-speech/">Delivering the speech</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 24, 2013
   
   
-</body>
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/public-speaking/'>public speaking</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/05/23/五月病/">五月病</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 23, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/生活/'>生活</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/05/22/参加“创新与美的思考”大型讲座暨2013编程之美全国挑战赛颁奖盛典/">参加“创新与美的思考”大型讲座暨2013编程之美全国挑战赛颁奖盛典</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 22, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/UCAS/'>UCAS</a> 
+    
+      <a href='/blog/tags/国科大/'>国科大</a> 
+    
+      <a href='/blog/tags/生活/'>生活</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/05/21/Everything-is-a-remix/">Everything is a remix</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 21, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/UCAS/'>UCAS</a> 
+    
+      <a href='/blog/tags/国科大/'>国科大</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/05/20/工程思维与工程设计/">工程思维与工程设计</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 20, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/工程哲学/'>工程哲学</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/05/19/Using-visual-aids/">Using visual aids</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 19, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/public-speaking/'>public speaking</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/05/18/公众科学日：走马观正负电子对撞机/">公众科学日：走马观正负电子对撞机</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 18, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/UCAS/'>UCAS</a> 
+    
+      <a href='/blog/tags/国科大/'>国科大</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/05/17/YOURLS改造总结/">YOURLS改造总结</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 17, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/技术/'>技术</a> 
+    
+      <a href='/blog/tags/札记/'>札记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<nav class="pagination" role="pagination">
+  <a class="newer-posts" href="/blog/page/6/">← Newer Posts</a>
+  <span class="page-number">Page 7 of 24</span>
+  <a class="older-posts" href="/blog/page/8/">Older Posts →</a>
+</nav>
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
 </html>

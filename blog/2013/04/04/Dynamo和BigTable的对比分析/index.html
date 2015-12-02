@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>Dynamo和BigTable的对比分析 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  April 4, 2013
+  
+
+  <h1 class="post-title">Dynamo和BigTable的对比分析</h1>
+  <section class="post-content article-entry">
+    <p>本文将从实现这些系统的关键技术，如数据划分、数据一致性与可用性、负载均衡、容错控制，来对比分析Google的BigTable和Amazon的Dynamo。</p>
+<p><strong>数据划分</strong></p>
+<p>Dynamo采用一致性哈希的方式对数据进行划分。这种数据划分方式在数据存入时就将数据均匀地映射到系统的存储单元中，从而最大限度地避免系统单点存储的数据量过大的问题。同时，一致性哈希算法也为系统带来了良好的扩展性。</p>
+<p>BigTable使用顺序分裂的方式进行数据划分。这种划分方式可以有效地利用系统资源，并能提供很好的扩展性。与使用哈希方式不同的是，顺序分裂的数据与存储节点并不存在直接映射的关系，需要有一个节点管理这些映射关系，这也使得整个系统的扩展性限制于这个管理节点的能力。</p>
+<p><strong>数据一致性和可用性</strong></p>
+<p>Dynamo和BigTable都采用副本冗余的方式来保证数据的高可用性。但是由于个系统采用不同的管理方式，它们的实现方式是不同的。Dynamo在整个哈希环上通过gossip机制进行通讯来完成副本的异步复制。BigTable则采用日志的方式来保证服务节点内存中的数据的可用性。</p>
+<p><strong>负载均衡</strong></p>
+<p>Dynamo采用了虚拟节点技术，通过虚拟化的手段将节点的服务能力单元化，将访问将访问压力较大的虚拟节点映射到服务能力较强的物理节点，达到访问压力的均衡。访问压力的均衡同时伴随着数据的均衡。为了最小化数据均衡过程中数据迁移的开销，Dynamo 同样采用虚拟化技术，量化节点的存储能力，将虚拟后的存储节点相对均匀地分散到集群哈希环上，避免数据均衡过程中全环的数据移动。</p>
+<p>与Dynamo不同的是，BigTable 通过主控节点来监控各个子表服务器上的访问负载状态，利用主控节点调度管理子表服务器的分裂和迁移将访问压力均匀地分散到各个子表服务器上。由于BigTable 采用分布式文件系统作为数据的底层存储，因而访问压力均衡过程中并不涉及到存储数据的迁移操作，以一种巧妙的方式避免了数据均衡的问题。</p>
+<p><strong>容错控制</strong></p>
+<p>Dynamo通过各节点之间定期进行通信来了解节点的活动状态，从而侦测是否有失效存在。如果出现失效状态，，由于哈希方式的数据划分策略，使得系统中各个节点既作为存储节点也作为服务节点，服务迁移的过程伴随着大量的数据迁移，因而系统必须认真应对各种失效状态，以使失效恢复过程中尽量避免大规模存储数据迁移带来的系统开销。</p>
+<p>BigTable通过分布式锁服务chubby来跟踪主控节点和子表节点的服务状态。如果出现失效状态，主控节点将停止失效的节点，并将相关服务转移到其他节点。服务的迁移并不涉及存储数据的移动，不会引入额外的系统开销，因而也就无需区分各种失效状态。这种依赖于底层分布式文件系统的共享存储方式，简化了系统的失效恢复。</p>
+<p>上述差异归纳如下表所示。</p>
+<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/04/dynamoVsBigtable.jpg" target="_blank" rel="external"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/04/dynamoVsBigtable.jpg" alt="dynamoVsBigtable"></a></p>
+<p>参考文献</p>
+<p>1.郭斯杰，贾鸿飞，熊劲，互联网海量数据存储和处理技术综述，《信息技术快报》第7卷第5期</p>
+<p>2.大数据101：非结构化数据分析</p>
+<p><a href="http://www.intel.cn/content/www/cn/zh/big-data/unstructured-data-analytics-paper.html" target="_blank" rel="external">http://www.intel.cn/content/www/cn/zh/big-data/unstructured-data-analytics-paper.html</a></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/04/05/工程决策的合理性标准/">
+        ← prev <!--工程决策的合理性标准-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/04/03/《白鹿原》读后感/">
+        <!--《白鹿原》读后感--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-Dynamo和BigTable的对比分析" data-title="Dynamo和BigTable的对比分析" data-url="http://zhangmin.name/blog/2013/04/04/Dynamo和BigTable的对比分析/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>配置storm开发环境 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  March 16, 2013
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/storm/'>storm</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">配置storm开发环境</h1>
+  <section class="post-content article-entry">
+    <p>本文介绍如何配置storm开发环境。总体来说有以下两个步骤：<br>下载storm发布版本，解压，将bin/目录添加到当前环境变量中。<br>为了能够在远程集群启动和停止topology，将storm集群信息写到~/.storm/storm.yaml中。</p>
+<p><strong>什么是开发环境</strong></p>
+<p>Storm有两种模式：本地模式和远程模式。<br>Storm开发环境就是将所有storm相关的软件安装完毕，可以在storm本地模式下测试storm topology。将一个打包的topology上传到远程集群上，运行或杀死topology。</p>
+<p><strong>在本地安装storm发布版本</strong></p>
+<p>为了能够将storm topology从本地提交到远程storm集群，你需要在本地安装storm发布版本。安装后会有一个storm客户端是你能够和远程storm集群通信及交互。如果只是在本地进行开发和测试topology，建议你使用maven将storm开发依赖包含到你的项目中。</p>
+<p><strong>在集群上启动和停止topology</strong></p>
+<p>安装storm客户端后，你就可以与远程storm集群交互了。首先你需要告诉storm将要和那个集群通信。为了实现这一目的你需要将主机地址添加到~/.storm/storm.yaml文件中。如下所示：<br>Nimbus.host: “123.45.43.56”<br>另外，如果使用storm-deploy项目在AWS上部署storm，将会自动设置。可以使用attach命令连接到一个storm集群。<br>Lein run:deploy –attach –name mystormcluster</p>
+<p><em>注：以上内容翻译自<a href="https://github.com/nathanmarz/storm/wiki/Setting-up-development-environment" target="_blank" rel="external">https://github.com/nathanmarz/storm/wiki/Setting-up-development-environment</a></em></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/03/17/组合优化问题/">
+        ← prev <!--组合优化问题-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/03/15/Storm配置/">
+        <!--Storm配置--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-配置storm开发环境" data-title="配置storm开发环境" data-url="http://zhangmin.name/blog/2013/03/16/配置storm开发环境/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

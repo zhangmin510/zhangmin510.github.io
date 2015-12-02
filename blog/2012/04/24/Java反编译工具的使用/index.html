@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>Java反编译工具的使用 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  April 24, 2012
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/Java/'>Java</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">Java反编译工具的使用</h1>
+  <section class="post-content article-entry">
+    <p><img src="http://www.zhangmin.name/blog/wp-content/uploads/java.jpg" alt="java">在学习和开发Java程序工程中，我们经常会用到第三方的类库。为了更好的实用类库，我们可能需要研究类库的源代码，正所谓知其然，还要知其所以然。通常情况下，这些类库都提供源代码，但有的类库只提供jar包，此时，java反编译工具就可以大战拳脚了。</p>
+<p><strong>常见的java反编译工具</strong></p>
+<ul>
+<li>Java反编译器 Java Decompiler</li>
+</ul>
+<p>&nbsp;这款反编译器叫 &quot;Java Decompiler&quot;, 由 Pavel Kouznetsov开发，目前最新版本为 0.2.5. 它由 C++开发，并且官方可以下载 windows、linux和苹果Mac Os三个平台的可执行程序。</p>
+<ul>
+<li>Java反编译工具 jad</li>
+</ul>
+<p>jad 是一个使用非常广泛的 Java 反编译工具。</p>
+<ul>
+<li>Java反编译插件 Jadclipse</li>
+</ul>
+<p>Jadclipse 是一个集成Eclipse 的Java反编译插件</p>
+<ul>
+<li>Java 反编译器 JD-GUI</li>
+</ul>
+<p>JD-GUI 是一个用 C++ 开发的 Java 反编译工具，由 Pavel Kouznetsov开发，支持Windows、Linux和苹果Mac Os三个平台。</p>
+<ul>
+<li>Java反编译器 jdec</li>
+</ul>
+<p>jdec是一个Java反编译器。它能够把出现在一个.class文件中的字节码还原成Java源代码，反编译的结果几乎与原始Java文件相同。它还自带一个利用swing开发的用户操作界面。</p>
+<ul>
+<li>dex2jar</li>
+</ul>
+<p>dex2jar 是一个用来将 Android 的 Dalvik Executable (.dex) format 文件转成 Java 类文件的工具。</p>
+<ul>
+<li>Java Class文件的反编译工具 uuDeJava</li>
+</ul>
+<p>uuDeJava是Java Class文件的反编译工具。反编译的Java源程序被输出到Class的相同目录。内部使用jad.exe。 反编译Class文件时，可以直接点击Class文件(关联后)，或者选中文件或目录发送到uuDeJava的快捷方式。还可以拖动文件或目录到uuDeJava的主窗口。</p>
+<pre><code><span class="keyword">*</span><span class="keyword">*</span>Jad 的使用<span class="keyword">*</span><span class="keyword">*</span>
+</code></pre><p>Jad是一个使用非常广泛的java反编译工具，跨平台。Jad支持内部类和匿名类的反编译。</p>
+<p>jad下载地址：<a href="http://www.varaneckas.com/jad" target="_blank" rel="external">http://www.varaneckas.com/jad</a></p>
+<p>常用命令如下：</p>
+<pre><code>反编译单个文件
+</code></pre><p><code>jad -sjava example.class</code></p>
+<p>默认情况下会生成.jad的文件，通过选项-sjava可以生成.java文件。</p>
+<p>反编译多个文件</p>
+<p><code>jad -o -r -sjava -dsrc tree/**/*.class</code></p>
+<p>此命令的意思是将tree下的所有.class文件反编译，并按照tree下的层及目录组织，最后放到src目录下。</p>
+<p>在下载jad压缩包的README文件中有详细地命令使用介绍。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2012/05/09/一个复旦研究生的中国食品安全报告及他的掷出窗外网/">
+        ← prev <!--一个复旦研究生的中国食品安全报告及他的掷出窗外网-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2012/04/21/Greasemonkey-油猴脚本-–-定制你属于你自己的个性互联网！/">
+        <!--Greasemonkey 油猴脚本 – 定制你属于你自己的个性互联网！--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-Java反编译工具的使用" data-title="Java反编译工具的使用" data-url="http://zhangmin.name/blog/2012/04/24/Java反编译工具的使用/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

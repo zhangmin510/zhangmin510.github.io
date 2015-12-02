@@ -1,1231 +1,251 @@
 <!doctype html>
-<html class="theme-next use-motion theme-next-next">
-<head>
-  
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
 
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <title>ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
 
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
-
-
-  <link rel="stylesheet" type="text/css" href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
-<link rel="stylesheet" type="text/css" href="/blog/css/main.css?v=0.4.1"/>
-
-
-    <meta name="description" content="ZhangMin.name's Blog" />
-
-
-
-
-    <meta name="keywords" content="zhangmin.name,张敏,张敏的个人主页,张敏的博客,zhangmin.name's blog" />
-
-
-
-
-
-    <link rel="shorticon icon" type="image/x-icon" href="http://www.zhangmin.name/images/favicon.png?v=0.4.1" />
-
-
-
-
-  <title> ZhangMin.name </title>
-</head>
-
-<body>
-  <div class="container one-column 
-   page-home 
-">
-    <div class="headband"></div>
-
-    <div id="header" class="header">
-      <div class="header-inner">
-        <h1 class="site-meta">
-  <span class="logo-line-before"><i></i></span>
-  <a href="/blog/" class="brand">
-      <span class="logo">
-        <i class="icon-logo"></i>
-      </span>
-      <span class="site-title">ZhangMin.name</span>
-  </a>
-  <span class="logo-line-after"><i></i></span>
-</h1>
-
-
-  <ul id="menu" class="menu">
+    </head>
     
-    
-      
-      <li class="menu-item menu-item-home">
-        <a href="/">
-          <i class="menu-item-icon icon-home"></i> <br />
-          首页
-        </a>
-      </li>
-    
-      
-      <li class="menu-item menu-item-categories">
-        <a href="/blog/categories">
-          <i class="menu-item-icon icon-categories"></i> <br />
-          分类
-        </a>
-      </li>
-    
-      
-      <li class="menu-item menu-item-archives">
-        <a href="/blog/archives">
-          <i class="menu-item-icon icon-archives"></i> <br />
-          归档
-        </a>
-      </li>
-    
-      
-      <li class="menu-item menu-item-tags">
-        <a href="/blog/tags">
-          <i class="menu-item-icon icon-tags"></i> <br />
-          标签
-        </a>
-      </li>
-    
-      
-      <li class="menu-item menu-item-readings">
-        <a href="/blog/readings">
-          <i class="menu-item-icon icon-readings"></i> <br />
-          读书单
-        </a>
-      </li>
-    
-  </ul>
-
-
-      </div>
-    </div>
-
-    <div id="main" class="main">
-      <div class="main-inner">
-        <div id="content" class="content">
-          
-            
-          
-
-          <div id="posts" class="posts-expand">
-            
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/03/Java-泛型一文搞定/">
-                Java 泛型一文搞定
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-03-04
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/Java/">Java</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/03/Java-泛型一文搞定/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/Java-泛型一文搞定/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h3 id="为什么要引入泛型机制">为什么要引入泛型机制</h3><p>你可以使用泛型机制写出更安全、更简单易读的代码，而不是使用Object变量和强制转换。<br>泛型编程意味着你可以写出对不同类型都可以重用的代码。</p>
-<p>先看在Java SE 5.0之前，java的泛型编程是通过继承实现的。如一个ArrayList的实现：<br>[java]<br>public class ArrayList{<br>    public Object get(int i){…}<br>    public void add(Object o){…}<br>    …<br>    private Object[] elementData;<br>[/java]</p>
-<p>这种方法有两个问题：</p>
-<p>1）当你调用get方法时，你必须使用强制类型转换。</p>
-<p>2）由于没有类型检查，你可以add任何类型的对象。而这可能导致运行时发生错误。</p>
-<p>Java泛型使用类型参数很好的解决了这两个问题：无论是编译器还是程序员都可以很容易的获得类型<br>信息，从而避免强制类型转换并且必要时（如add）进行类型检查以避免运行时的发生错误。</p>
-<p>一般情况下，只有涉及到大量的强制转换和一般类型（如Object，Comparable）的代码才会从泛型编程中受益。</p>
-<h3 id="泛型类">泛型类</h3><p>将类型参数作为方法返回值和域及本地变量的类型定义，一个泛型类定义示例:</p>
-<p>[java]<br>public class Pair&lt;T,U&gt;{<br>    private T first;<br>    private U second;<br>    public Pair(){<br>        first = null;<br>        second = null;<br>    }<br>    public Pair(T first,U second){<br>        this.first = first;<br>        this.second = second;<br>    }<br>    public T getFirst(){<br>        return first;<br>    }<br>    …<br>}<br>[/java]</p>
-<h3 id="泛型方法">泛型方法</h3><p>你也可以在普通类中定义泛型方法，示例如下：</p>
-<p>[java]<br>class GenericMethod{<br>    public static &lt;T&gt; T getMiddle(T[] a){<br>           return a[a.length/2];<br>    }<br>}<br>[/java]<br>注意类型参数&lt;T&gt;在修饰符（public static）后面，方法返回类型之前。<br>在使用泛型方法时你可以指定类型，如:</p>
-<p>[java]<br>String[] name = {&quot;a&quot;,&quot;b&quot;};<br>String mid = GenericMethod.&lt;String&gt;getMiddle(names);<br>[/java]</p>
-<p>但一般情况下你不需要指定，因为编译器会帮你搞定的。</p>
-<h3 id="类型参数的边界">类型参数的边界</h3><p>可以指定类型参数的边界：</p>
-<p>[java]<br>&lt;T extends BoundingType&gt;<br>[/java]</p>
-<p>也可以是多个边界：</p>
-<p>[java]<br>&lt;T extends Comparable &amp; Serializable&gt;<br>[/java]</p>
-<p>由于java是单继承，所以在指定泛型类型边界时只能指定一个类，且必须放在第一位，但可以指定多个接口。</p>
-<h3 id="泛型代码与虚拟机">泛型代码与虚拟机</h3><p>当你定义泛型时，编译器会自动提供一个对应的原始类型。原始类型的名称就是泛型类型的名称，只是移除了类型参数。<br>类型变量将会被第一个边界类型替代，如果没有边界类型，将由Object代替。因此，一般把标记接口（没有方法的接口，如<br>Seralizable）放在边界类型列表的后一位。</p>
-<p>下面的代码显示了Pair&lt;T,U&gt;的原始类型：</p>
-<p>[java]<br>public class Pair{<br>    private Object first;<br>    private Object second;<br>    public Pair(){<br>        first = null;<br>        second = null;<br>    }<br>    public Pair(Object first,Object second){<br>        this.first = first;<br>        this.second = second;<br>    }<br>    public Object getFirst(){<br>        return first;<br>    }<br>    …<br>}<br>[/java]</p>
-<p>当你进行方法调用时，编译器会先调用方法（Object的），然后自动加入类型转换。</p>
-<h3 id="类型擦除引起的问题">类型擦除引起的问题</h3><p>java的泛型在编译期有效，在运行期被擦除。</p>
-<p>对于代码：</p>
-<p>[java]<br>class DateInterval extends Pair&lt;Date&gt;<br>{<br>public void setSecond(Date second)<br>{<br>if (second.compareTo(getFirst()) &gt;= 0)<br>super.setSecond(second);<br>}<br>}<br>[/java]</p>
-<p>类型擦除后为：</p>
-<p>[java]<br>class DateInterval extends Pair<br>{<br>public void setSecond(Date second)<br>{…}<br>. . .<br>}<br>[/java]</p>
-<p>但是DateInterval内还有一个方法，继承自Pair，即：</p>
-<p>[java]<br>public void setSecond(Object second)<br>[/java]</p>
-<p>这两个方法是完全不同的方法，因为它们的参数类型不一样。当进行调用时，它们应该没什么不同。</p>
-<p>[java]<br>DateInterval interval = new DateInterval(. . .);<br>Pair&lt;Date&gt; pair = interval;<br>pair.setSecond(aDate);<br>[/java]</p>
-<p>期望的运行结果是调用dateInterval的setSecond方法。</p>
-<p>为了确保正确性，编译器会在DateInterval中加入桥方法：</p>
-<p>[java]<br>public void setSecond(Object second) {<br>      setSecond((Date) second);<br>}<br>[/java]</p>
-<p>现在让我们看一下执行过程：</p>
-<p>pair的类型是Pair&lt;Date&gt;，该类只有一个setSecond(Object)方法。编译器调用pair指向的对象的<br>方法即DateInterval的setSecond(Object),这是一个桥方法，调用了我们期望调用的方法。</p>
-<p>关于泛型代码的翻译：</p>
-<p>1）虚拟机没有泛型，只有普通的类和方法。</p>
-<p>2）类型参数都被替换了。</p>
-<p>3）桥方法用于保证多态。</p>
-<p>4）强制转换被插入以保证类型安全。</p>
-<h3 id="java泛型的限制和局限（多数是由于类型擦除）">java泛型的限制和局限（多数是由于类型擦除）</h3><p>1）类型参数不能使用原始类型。类型被擦除成Object了。</p>
-<p>2）运行时类型查询只适合原始类型。getClass返回的也是原始类型。</p>
-<p>3）不能抛出或者捕捉泛型类的实例。</p>
-<p>[java]<br>public static &lt;T extends Throwable&gt; void doWork(Class&lt;T&gt; t)<br>{<br>try<br>{<br>do work<br>}<br>catch (T e)//错误<br>{<br>}<br>}<br>[/java]</p>
-<p>但可以指定抛出异常：</p>
-<p>[java]<br>public static &lt;T extends Throwable&gt; void doWork(T t) throws T // OK<br>{<br>try<br>{<br>do work<br>}<br>catch (Throwable realCause)<br>{<br>t.initCause(realCause);<br>throw t;<br>}<br>}<br>[/java]</p>
-<p>4）不能创建泛型数组。类型擦除后，List&lt;Object&gt;[] 和 List&lt;String&gt;[]是一样的，由于数组会检查每一项的类型，如果类型不一致，会抛出ArrayStoreException。擦除机制不能很好的处理，仍然会抛出异常，所以干脆就不允许。（注：创建泛型数组的方法：T[] t = (T[]) Array.newInstance(class,size);)</p>
-<p>5）不能实例化类型参数变量。new T()。不过可以通过Class.newInstance来创建。</p>
-<p>6）不能再static域使用类型参数。</p>
-<p>7）小心类型擦除后的冲突。</p>
-<h3 id="类型通配符">类型通配符</h3><p>java泛型支持通配符，可以单独使用一个“？”来表示任意类型，也可以使用extends关键词表示某一个类或者接口的子类型。还可以使用super关键词表示某一个类或者接口的父类型。</p>
-<p>一般情况下，泛型结构只参与“读”操作则限定上界（extends），如：</p>
-<p>[java]<br>public static &lt;E&gt; void read(List&lt;? super E&gt; list){<br>    …<br>}<br>[/java]</p>
-<p>编译器只能推断出是E类型的父类，不能确定E类型的父类到底是什么，只能在运行时确定。<br>当然你可以把它当做Object类来处理，需要时在转换成E类型，但这违背了泛型的初衷——避免强制类型转换。<br>如果使用extends，虽然也不能确定具体是什么类型，但它一定是一个确定的类型，比如read(Arrays.asList(“A’))调动该方法就可以确定是String。</p>
-<p>只参与“写”操作则限定下界（super），如：</p>
-<p>[java]<br>public static void write(List&lt;? extends Number&gt; list){<br>    …<br>}<br>[/java]</p>
-<p>编译器无法推断出泛型类型到底是什么，是Integer还是Double？在这种情况下，只有null可以write。因为null是一个万用类型，它可以是所有类的实例对象。如果使用super关键字，无论是123，还是1.23都是Number类型，都可以进行操作。</p>
-<p>如果既读又写，直接使用泛型类型，如List&lt;E&gt;。</p>
-<h3 id="协变与泛型">协变与泛型</h3><p>协变（covariance）,即用一个窄类型替换宽类型。相反，逆变（contravariance），则是用宽类型替代子类型。​<br>泛型不支持协变，数组支持协变。</p>
-<p>[java]<br>Number[] n = new Integer[10];<br>//error<br>List&lt;Number&gt; ln = new ArrayList&lt;Integer&gt;();<br>[/java]</p>
-<p>java为了保证运行期安全，必须保证参数类型是固定的，所以不允许一个泛型参数可以同时包含两种类型。<br>但可以使用通配符模拟协变。</p>
-<p>[java]<br>//correct<br>List&lt;? extends Number&gt; ln = new ArrayList&lt;Integer&gt;();<br>[/java]</p>
-<p>​表示允许Number的所有子类，包括自身作为泛型类型，但在运行期只能有一个具体类型。也就是通配符只在编码期有效，<br>运行期必须是一个确定的类型。</p>
-<p>java泛型也不支持逆变，但同样可以使用super关键字模拟逆变。</p>
-<p>[java]<br>//correct<br>List&lt;? super Integer&gt; ln = new ArrayList&lt;Number&gt;();<br>[/java]</p>
-<h3 id="泛型类型参数T,?和Object之间的区别">泛型类型参数T,?和Object之间的区别</h3><p>三者都可以容纳所有对象，但使用顺序应该是List&lt;T&gt;,List&lt;?&gt;,List&lt;Object&gt;。<br>List&lt;T&gt;表示集合中都是T类型，具体类型运行时确定；List&lt;?&gt;表示的是任意类型，与List&lt;T&gt;类似，<br>而List&lt;Object&gt;表示集合中的类型是Object类型.<br>List&lt;T&gt;可以进行读写操作，因为它是固定的类型，不需要转型。<br>List&lt;?&gt;是只读类型，可以且只支持删除操作，因为编译器不知道是什么类型，无法校验安全。而且List&lt;?&gt;读出的类型是Object类型，<br>需要主动转型，通常用于泛型方法的返回值。<br>List&lt;Object&gt;可以执行读写操作，但是执行写入操作时要向上转型，读出时要向下转型，而此时已经失去了泛型的意义。</p>
-<p><em>参考文献</em></p>
-<ol>
-<li>《Java核心技术》2.  《编写高质量代码——改善Java程序的151个建议》</li>
-</ol>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/Java/">
-                #Java
-              </a>
-            
-              <a href="/blog/tags/技术/">
-                #技术
-              </a>
-            
-              <a href="/blog/tags/马上有OFFER/">
-                #马上有OFFER
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/02/书呆子/">
-                书呆子
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-02-25
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/02/书呆子/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/02/书呆子/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=fd19498833adcbef05347e039c945fe0/0df431adcbef7609668de9d32cdda3cc7dd99ef3.jpg?referer=cd45dc59be315c601a825fdfda91&amp;x=.jpg" alt="书呆子"></p>
-<p>寒窗苦读几十载</p>
-<p>过关斩将或被斩无数次</p>
-<p>终于到了现在的水平和状态</p>
-<p>心中理想与梦想</p>
-<p>脑中独立与自由</p>
-<p>科技报国，实干兴家</p>
-<p>勤勤恳恳</p>
-<p>一心只读圣贤书</p>
-<p>虽至今还无所作为</p>
-<p>但日后的路长又宽</p>
-<p>在那些不懂你的世界的人看来<br>你就是书呆子</p>
-<p>不懂人情世故</p>
-<p>只是做些他们永远都不会明白的事</p>
-<p>你试图向他们解释</p>
-<p>可是你不是大师</p>
-<p>他们也不是好学学生</p>
-<p>于是他们给你“书呆子”的称呼</p>
-<p>你认为他们没见过世面<br>不懂这大千世界</p>
-<p>他们以他们的经验坚定着他们的看法</p>
-<p>你以你的学识和见识笃定你的道路</p>
-<p>谁对谁错</p>
-<p>不去管它</p>
-<p>实践去说</p>
-<p>事实去证明</p>
-<p>对你来说正确的做法是<br>一心只读圣贤书</p>
-<p>闲来去察人情世</p>
-<p>世间道理本相同</p>
-<p>下点功夫鸣惊人</p>
-<p>然而更关键的是</p>
-<p>去说明你的看法</p>
-<p>表达你的观点</p>
-<p>让他们碰撞</p>
-<p>擦出火花</p>
-<p>而不是一笑而过</p>
-<p>任其图说</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/02/合并查找算法学习笔记/">
-                合并查找算法学习笔记
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-02-25
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/02/合并查找算法学习笔记/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/02/合并查找算法学习笔记/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h3 id="设计算法的步骤：">设计算法的步骤：</h3><p>一、对问题建模。</p>
-<p>二、找的一个可运行的算法解决这个问题。</p>
-<p>三、算法是否够快？内存占用是否够少？</p>
-<p>四、如果不是，找出原因。</p>
-<p>五、寻找优化的可能。</p>
-<p>六、迭代直到满意为止。</p>
-<h3 id="动态连接性问题（Dynamic_connectivity）">动态连接性问题（Dynamic connectivity）</h3><p>判断网络中任意两点之间的连接性。</p>
-<p><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=264720cf0d2442a7aa0efda0e178dc76/0eb30f2442a7d9337083fe3faf4bd11373f00156.jpg?referer=8e6cf5c848ed2e73a5feb31c6f4d&amp;x=.jpg" alt="动态连接问题"></p>
-<p>给定N个对象的集合，对这些对象有两中类型的操作：<br>1）Union：连接两个对象</p>
-<p>2）Find：是否存在一条连接给定两个对象的路径</p>
-<p>对这个问题建模：</p>
-<p>1）对对象建模：这里的对象可以是任何类型。如图片中的像素，网络中的计算机，社交网络中的好友，计算机芯片中的晶体管，集合中的元素等等。</p>
-<p>2）对连接建模：连接满足以下的性质：自反性（p与p连接），对称型（p与q连接，则q与p连接），传递性（如果p和q连接，q和r连接，则p和r连接）。</p>
-<p>我们还可以定义连接组件：最大的相连对象的集合。</p>
-<p>设计算法解决问题：</p>
-<p>设计有效的数据结构。要考虑到对象的数量N和操作的数量都可能很大。Find和Union操作可能是交叉进行的。</p>
-<p></p><p></p>
-<p>Quick-find算法：</p>
-<p>数据结构:int id[N]。</p>
-<p>如果p和q连接，当且仅当id[p] = id[q].</p>
-<p>Find：id[p] == id[q].</p>
-<p>Union:合并p和q，将所有id值等于id[p]都改为id[q].</p>
-<p>Quick-find算法分析：</p>
-<p>初始化时代价为O(N)，Find的代价是O(1)，Union的代价是O(N).<br>对于N个对象的N次Union的代价是O(N^2)。</p>
-<p>Quick-union算法：</p>
-<p>数据结构：int id[N],id[i]是i的父节点。<br>i的根节点为id[id[id[..id[i]..]]]，直到节点值不变为止。（确保无环）。</p>
-<p>Find：root(p) == root(q)</p>
-<p>Union:合并p和q，将p的根的id值设为q的根值。</p>
-<p>Quick-union算法分析：</p>
-<p>初始化时代价为O(N),union的代价为O(N)，find的代价为O(N)。</p>
-<p>对比Quick-find和Quick-union可知Quick-find的Union操作代价太高，树是扁平的，但是需要付出很大的代价。<br>Quick-union的树高度可能很高，find操作的代价太高。</p>
-<p>可以改进的方面：<br>1）降低树的高度。通过记录每个树的高度，合并时将小的树连接到大的树根上。<br>2）路径压缩。当计算完p的根时，将每一个检查过的节点指向p的根。</p>
-<p><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=ef7e52a58f1001e94a3c140a88350ad1/7dd98d1001e939016d8d967279ec54e737d196ea.jpg?referer=05e6275fdf54564ebc72d009d2a8&amp;x=.jpg" alt="几种Union-Find算法分析"><br>WQUPC（Weighted quick-union with path compression）算法的平摊分析【Hopcroft-Ulman,Tarjan】：<br>从空数据结构开始在N个对象上的任意序列的M次union-find操作的数组访问次数&lt;=c(N+MlgN)。<br>理论上WQUPC不是线性的，但是实践中它是线性的。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/问题与算法/">
-                #问题与算法
-              </a>
-            
-              <a href="/blog/tags/马上有OFFER/">
-                #马上有OFFER
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/01/我的第一堂MOOC课——机器学习基石/">
-                我的第一堂MOOC课——机器学习基石
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-01-23
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/01/我的第一堂MOOC课——机器学习基石/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/我的第一堂MOOC课——机器学习基石/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h3 id="什么是MOOC">什么是MOOC</h3><p>大型开放式网络课程，即MOOC（massive open online courses）。2012年，美国的顶尖大学陆续设立网络学习平台，在网上提供免费课程，Coursera、Udacity、edX三大课程提供商的兴起，给更多学生提供了系统学习的可能。这三个大平台的课程全部针对高等教育，并且像真正的大学一样，有一套自己的学习和管理系统。</p>
-<p>详见果壳MOOC入门第一课：<a href="http://www.guokr.com/zone/MOOC/" target="_blank" rel="external">http://www.guokr.com/zone/MOOC/</a><br>网易公开课年终策划：<a href="http://open.163.com/2014/#/home" target="_blank" rel="external">http://open.163.com/2014/#/home</a></p>
-<h3 id="我的MOOC第一课">我的MOOC第一课</h3><p>在我的同学的影响下，我也注册了cousera上的国立台湾大学林轩田的《机器学习基石》课程。这门课时中文授课，但作业和讲义都是英文的。还记得第一次上课时做随堂测验题那种欣喜。这是一种非常好的方式来让学生跟上老师的讲课节奏。听了几讲，觉得林老师讲的非常生动，有条理，由浅入深，真正算是机器学习基石课程。</p>
-<p>这门课的首先介绍了什么是机器学习，通过最简单的PLA算法介绍了机器是如何学习的。其次介绍了机器为什么能够学习，主要从霍夫丁不等式开始推论，引出了机器学习最重要的理论基础VC bound 和VC维。然后通过介绍最简单的线性回归，逻辑线性回归算法展示了机器是如何学习的。最后介绍了过度拟合的危害及应对过度拟合的方法，引入了为提高机器学习能力的方法。</p>
-<p>课程的四次作业设计的也非常合理，从题目之间的设计可以看出老师的良苦用心。而且最令人感动的是林老师几乎回答论坛上的每一个问题。</p>
-<h3 id="我的感悟">我的感悟</h3><p>想MOOC这样的网络课程，如果不是自己真正的感兴趣，一般是很难坚持上完一门课的。因为没有传统学校中学分的要求，也没有老师的监督，全靠学生的自我控制力。如果你的时间很紧，很难坚持的上完一门课，因为它的优先级和重要性与你当前哪些“正事”是无法相比的。但我也相信，只要你坚持上完一门自己感兴趣的课程，你会收获到很多惊喜。</p>
-<p>最后是关于Honor Code的，每个人注册时都要同意并签署。如果有人在论坛中违反了Honor Code就会被其他同学发现，这种相互监督的方式更好的提高了在线课程的学习质量，也很好的体现了互联网的自治精神。不是为了及格或者学分去学习一门课程，而是自己主动去学习感兴趣的课程，自我完善，自我提升。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2014/01/我们都是赶路人/">
-                我们都是赶路人
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2014-01-02
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2014/01/我们都是赶路人/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/我们都是赶路人/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <p>新一年到来时在罗辑思维中看到蒋方舟的一篇文章《黑夜中也健步如飞的路》。讲的是关于梦想的事情。原文如下：</p>
-<p>大学四年，我听了无数次讲座和演讲。在所有这些演讲中，听众最多的，当然是那些创业成功者来做的演讲。演讲结束之后，有三个问题被问得最多：“第一，你觉得你成功的最大因素是什么？第二，你的公司去年的营业额是多少？第三，你们公司现在招人么？麻烦给一个发简历的邮箱吧。”</p>
-<p>而最有趣的是，所有这些以招聘和广告为目的的演讲，题目中一定包含着“梦想”两个字。</p>
-<p>从那时候开始，我开始对“梦想”这个词产生了怀疑。</p>
-<p>现在，当我打开电视，听到的最多的词也是梦想。一个又一个年轻人说：“音乐是我的生命，我不能没有它，所以我来了。”意思是：“我想红”。台下的评委问：“你的梦想是什么？”台上的选手说：“唱歌给更多的人听。”意思还是：“我想红。”</p>
-<p>成为明星是梦想、成为冠军是梦想，答对五个题目打败了四个人闯了三关也是梦想，甚至上电视三分钟就被速配了一个恋爱伴侣，晕晕乎乎就牵手下台也属于“梦想”。</p>
-<p>我们是多容易被词汇迷惑啊。自从有了“成功人士”这个称谓，我们对于“成功”的想象就是“白玉为堂金做马”；自从“梦想”这个词被滥用，它所指代的内容就是“有朝一日，大鸣大放，路人皆知”。</p>
-<p>如果马丁路德金活在当今中国，他会不会说：“我有一个梦想……不过跟大家都差不多……”</p>
-<p>罗胖新年寄语：<br>1，人人都想牛逼。<br>2，想牛逼，没啥不好意思。<br>3，把“想牛逼”装修成“有梦想”等等高大上的词汇，让明白人笑话。<br>4，放下虚荣、懒惰和妄念，赶路要紧。<br>5，2014，咱都多少往前走一段。</p>
-<p>而“赶路”一词，让我想起了元旦听了无数遍的胡德夫的《匆匆》：</p>
-<embed src="http://www.xiami.com/widget/0_381833/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent">
-
-<p>初看春花红，转眼已成冬，</p>
-<p>匆匆，匆匆，</p>
-<p>一年容易又到头，韶光逝去无影踪。</p>
-<p>人生本有尽，宇宙永无穷，</p>
-<p>匆匆，匆匆，</p>
-<p>种树为后人乘凉，要学我们老祖宗。</p>
-<p>人生啊，就像一条路，一会儿西，一会儿东，</p>
-<p>匆匆，匆匆。</p>
-<p>我们都是赶路人，珍惜光阴莫放松，</p>
-<p>匆匆，匆匆，</p>
-<p>莫等到了尽头，枉叹此行成空。</p>
-<p>人生啊，就像一条路，一会儿西，一会儿东，</p>
-<p>匆匆，匆匆。</p>
-<p>人生啊，就像一条路，一会儿西，一会儿东，</p>
-<p>匆匆，匆匆。</p>
-<p>我们都是赶路人，珍惜光阴莫放松！</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/札记/">
-                #札记
-              </a>
-            
-              <a href="/blog/tags/生活/">
-                #生活
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/blog/2013/12/高交会·深圳/">
-                高交会·深圳
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          
-            发表于 2013-12-29
-          
-        </span>
-
-        
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <a href="/blog/categories/MSE/">MSE</a>
-
-                
-                
-
-              
-            </span>
-          
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/blog/2013/12/高交会·深圳/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/12/高交会·深圳/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          
-            <h3 id="高交会">高交会</h3><p>高交会号称“中国科技第一展”，由中华人民共和国商务部、中华人民共和国科学技术部、中华人民共和国工业和信息化部、中华人民共和国国家发展和改革委员会、中华人民共和国教育部、中华人民共和国人力资源和社会保障部、中华人民共和国农业部、中华人民共和国国家知识产权局、中国科学院、中国工程院、深圳市人民政府主办，深圳市中国国际高新技术成果交易中心（深圳会展中心管理有限责任公司）承办，是中国规模最大、最具影响力的科技类展会。</p>
-<h3 id="高交会现场">高交会现场</h3><p>作为发展中心的高交会工作组的志愿者，我有幸参与了第十五届高交会。我也全程参与了高交会的筹备，展览，撤展等整个过程，受益良多，眼界大开。</p>
-<p>在筹备阶段我参加了一次工作小组的会议。会议主要是讨论筹备的进度及需要解决的问题。领导的处事风格是不仅告诉你他的选择，他还告诉你为什么做出这样的选择。另一方面就是领导额视野，一般的工作人员都是只顾自己负责的部分有没有完成，而没有顾及整个发展中心在整个展会中的位置。</p>
-<p>我们11月六日坐飞机到深圳展开布展工作。我们志愿者的主要任务就是打杂。工作小组最重要的任务就是融汇大屏幕的搭建和调试。融汇大屏由72块电视组成，搭架子，安装屏幕，插线都比较繁琐，也是工作的重中之重。对于第三次参加高交会布展的工作人员仍然需要大领导不断监督，提醒，才能把每一个细节都注意到。如对线路的保护，大屏幕稳定性等等。</p>
-<p><img src="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=39b7b0f07f1ed21b7dc92ee09d55acf9/a5c27d1ed21b0ef4a5f6b95cdfc451da81cb3e91.jpg?referer=11e06d030855b319c5eeb7457a70&amp;x=.jpg" alt="志愿者工作中"></p>
-<p><em>安装大屏幕中……</em></p>
-<p>作为中科院的组团单位，发展中心需要接待来参展的每一个单位的工作人员。因而就需要把工作都做到位，使得参展人员来了拿出电脑就可以直接使用，完成布展。</p>
-<p><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=dc6dececb68f8c54e7d3c52a0a125cc8/f2deb48f8c5494ee8323251b2ff5e0fe99257eaa.jpg?referer=e6f6cefaa586c91751146709ba68&amp;x=.jpg" alt="央视记者采访"></p>
-<p><em>原来央视记者采访也会NG很多次</em></p>
-<p><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=1a8fcf3bb1de9c82a265f98a5cbaf137/d009b3de9c82d158446872b3820a19d8bd3e42cd.jpg?referer=74d48c77d488d43fa9bea5c2aec3&amp;x=.jpg" alt="中科院专题馆"></p>
-<p><em>这个融汇大屏幕使我们工作的大头</em></p>
-<p>第一天上午，听说汪洋要来。当我从在四号馆转悠时就看到一大波人正在往中科院的五号馆走，我就知道是汪洋来了。跟紧人群，曾经一度被安保人员推开。不过汪洋40分钟的安排在中科院专题馆停留时间最长，可以留给我更多的拍照时间。只能看到有人在汇报工作，听不到他们在说什么。</p>
-<p><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=584a497c9058d109c0e3a9b7e163bd82/574e9258d109b3de199cce6acebf6c81800a4c94.jpg?referer=46d0dccffe039245f8a2d43fac8a&amp;x=.jpg" alt="汪洋来了"></p>
-<p><em>嗨，哥们，你挡着我了</em></p>
-<p>展览阶段的深圳会议展览中心可谓是人山人海，从第一天到第五天人都很多。不像是物博会，第二三天就需要动员学生来充当观众了。其中一号馆最大，最热闹，也最吸引人。</p>
-<p><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=0c18d4214b540923ae69637ba263a034/ca1349540923dd54d7e78d6ad309b3de9c82481f.jpg?referer=f3225822bb12c8fcede4c2fda8f5&amp;x=.jpg" alt="人山人海的一号馆"></p>
-<p>展览阶段还去五楼听了一个2013移动互联网智慧峰会，思维专家介绍了未来网络，宽带中国战略和移动支付等内容。</p>
-<p>最后一天下午开始撤展，拆大屏幕，打包装箱使我们的主要任务。装车都是请的搬运工人，即使这样，我们还是忙到了晚上12点才结束。今天晚上是通宵撤展，展会上所有的一切都要撤掉。</p>
-<h3 id="我在深圳">我在深圳</h3><p>这次行程有很多我人生中的第一次：第一次坐飞机，第一次到深圳，第一次参加如此大规模的展会，第一次见到国家级领导。</p>
-<p><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=b87cb7334e086e066ea83f4e32330ac9/a8014c086e061d950a9e1c3a79f40ad163d9cad3.jpg?referer=f2faa03b6963f624454a0d3336b1&amp;x=.jpg" alt="夜幕下的无锡"></p>
-<p><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=a82a5d246f224f4a5399731639cce16f/42166d224f4a20a45cf217c592529822730ed0c7.jpg?referer=f3812b18c45c10387d69faf210dd&amp;x=.jpg" alt="罗湖区"></p>
-<p><em>宾馆外的罗湖区</em></p>
-<p><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=cbecb52a952bd40746c7d3f84bb2ef6c/aa18972bd40735fa240565bb9c510fb30f24083e.jpg?referer=b145b7453b12b31b9e7bf91968d5&amp;x=.jpg" alt="何香凝艺术馆"></p>
-<p><em>何香凝艺术馆，</em></p>
-<p><img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=effee3c8ad51f3dec7b2b961a4d58122/fcfaaf51f3deb48ffebc8adcf21f3a292cf578de.jpg?referer=42a63b2d97cad1c889acc817b8b4&amp;x=.jpg" alt="来深圳必去世界之窗"></p>
-<p><img src="http://g.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=477bd88d6e81800a6ae5890b810e42c7/cdbf6c81800a19d82a1da50731fa828ba61e4691.jpg?referer=11b7b0f07f1ed21b20de1bd5a28f&amp;x=.jpg" alt="亚冠的比赛不能不看"></p>
-<p><em>见证恒大夺冠</em></p>
-<p>在深圳的日子还是相当满意的，住在东门商业街附近，早餐晚餐都是自助。回来同学说我都胖了，脸变圆了。</p>
-<p><img src="http://d.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=ddd894e6b11c8701d2b6b2e31744ef12/8ad4b31c8701a18b747d384d9c2f07082838fe1a.jpg?referer=9e89507822a4462327dd91523af8&amp;x=.jpg" alt="东门商业街"></p>
-<p>见了同学，参观了何香凝艺术馆，感受了大梅沙的沙滩和海浪。见证了东门的人流涌动，车水马龙。</p>
-
-          
-        
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/blog/tags/生活/">
-                #生活
-              </a>
-            
-              <a href="/blog/tags/读书·旅行/">
-                #读书·旅行
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-
-          </div>
-
-          
-            <div class="pagination">
-              <a class="extend prev" rel="prev" href="/blog/page/4/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/blog/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/39/">39</a><a class="extend next" rel="next" href="/blog/page/6/">&raquo;</a>
-            </div>
-          
-        </div>
-
-        
-<div class="sidebar-toggle">
-  <div class="sidebar-toggle-line-wrap">
-    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-  </div>
+		<body class="home-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
 </div>
+<h6><a href="/blog/readings">Readings</a></h6>
 
-<div id="sidebar" class="sidebar">
-  <div class="sidebar-inner">
+        </header>
 
+        <main id="content">
+        
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/08/29/-转-25个让Java程序员更高效的Eclipse插件/">[转]25个让Java程序员更高效的Eclipse插件</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  August 29, 2013
+  
+  
+    <span class="taglist">  &middot; 
     
-
-    <div class="site-overview">
-      <div class="site-author motion-element">
-        <img class="site-author-image" src="/blog/images/default_avatar.jpg" alt="zhangmin.name" />
-        <p class="site-author-name">zhangmin.name</p>
-      </div>
-      <p class="site-description motion-element">ZhangMin.name's Blog</p>
-      <div class="site-state motion-element">
-        <div class="site-state-item site-state-posts">
-          <a href="/blog/archives">
-            <span class="site-state-item-count">234</span>
-            <span class="site-state-item-name">日志</span>
-          </a>
-        </div>
-
-        <div class="site-state-item site-state-categories">
-          <a href="/blog/categories">
-            <span class="site-state-item-count">9</span>
-            <span class="site-state-item-name">分类</span>
-          </a>
-        </div>
-
-        <div class="site-state-item site-state-tags">
-          <a href="/blog/tags">
-            <span class="site-state-item-count">20</span>
-            <span class="site-state-item-name">标签</span>
-          </a>
-        </div>
-
-      </div>
-
-      
-
-      <div class="links-of-author motion-element">
-        
-          
-            <span class="links-of-author-item">
-              <a href="https://github.com/zhangmin510" target="_blank">GitHub</a>
-            </span>
-          
-            <span class="links-of-author-item">
-              <a href="http://weibo.com/302585340" target="_blank">Weibo</a>
-            </span>
-          
-        
-      </div>
-
-      
-      
-        <div class="cc-license motion-element">
-          <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
-            <img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons" />
-          </a>
-        </div>
-      
-
-    </div>
-
     
-
-  </div>
-</div>
-
-
-      </div>
-    </div>
-
-    <div id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; &nbsp;  2010 - 
-  2015
-  <span class="with-love">
-    <i class="icon-heart"></i>
-  </span>
-  <span class="author">zhangmin.name</span>
-</div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-
-
-      </div>
-    </div>
-
-    <div class="back-to-top"></div>
-  </div>
-
-  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
-
-  
-  
-
-  
-  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('.content img').each(function () {
-        var $image = $(this);
-        var $imageWrapLink = $image.parent('a');
-
-        if ($imageWrapLink.size() < 1) {
-          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
-        }
-        $imageWrapLink.addClass('fancybox');
-      });
-    });
-    $('.fancybox').fancybox({
-      helpers: {
-        overlay: {
-          locked: false
-        }
-      }
-    });
-  </script>
-
-
-  <script type="text/javascript">
-  function hasMobileUA () {
-    var nav = window.navigator;
-    var ua = nav.userAgent;
-    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
-
-    return pa.test(ua);
-  }
-
-  function isDesktop () {
-    return screen.width > 991 && !hasMobileUA();
-  }
-
-  function isTablet () {
-    return screen.width < 992 && screen.width > 767 && hasMobileUA();
-  }
-
-  function isMobile () {
-    return screen.width < 767 && hasMobileUA();
-  }
-
-  function escapeSelector (selector) {
-    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
-  }
-</script>
-
-  
-
-  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js"></script>
-  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js"></script>
-
-  <script type="text/javascript" id="motion.global">
-  $(document).ready(function () {
-    var body = $('body');
-    var isSidebarVisible = false;
-    var sidebarToggle = $('.sidebar-toggle');
-    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
-    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
-    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
-    var sidebar = $('.sidebar');
-
-    var SIDEBAR_WIDTH = '320px';
-    var SIDEBAR_DISPLAY_DURATION = 300;
-
-    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
-
-    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
-    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
-    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
-
-    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
-    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
-    var sidebarToogleLine2ndStatusClose = {opacity: 0};
-
-    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
-    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
-    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
-
-    LogoAndMenuMotion();
-    sidebatToggleMotion();
-    postsListMotion();
-    backToTopMotion();
-
-
-    $(document)
-      .on('sidebar.isShowing', function () {
-        isDesktop() && body.velocity(
-          {paddingRight: SIDEBAR_WIDTH},
-          SIDEBAR_DISPLAY_DURATION
-        );
-        sidebarContentMotion();
-      })
-      .on('sidebar.isHiding', function () {});
-
-    function LogoAndMenuMotion() {
-      $.Velocity.RunSequence([
-        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
-        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
-        
-        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
-        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
-        
-        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
-      ]);
-      $('.menu-item').velocity('transition.slideDownIn', {display: null});
-    }
-
-
-    function backToTopMotion () {
-      var b2top = $('.back-to-top');
-      b2top.on('click', function () {
-        body.velocity('scroll');
-      });
-    }
-
-    function sidebarShowMotion () {
-
-      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
-      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
-      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
-
-      sidebar.velocity({width: SIDEBAR_WIDTH}, {
-        display: 'block',
-        duration: SIDEBAR_DISPLAY_DURATION,
-        complete: function () {
-          sidebar.addClass('sidebar-active');
-          sidebar.trigger('sidebar.didShow');
-        }
-      });
-      sidebar.trigger('sidebar.isShowing');
-    }
-
-    function sidebarHideMotion () {
-      isDesktop() && body.velocity({paddingRight: 0});
-      sidebar.velocity('reverse');
-
-      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
-      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
-      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
-
-      sidebar.removeClass('sidebar-active');
-      sidebar.trigger('sidebar.isHiding');
-    };
-
-    function sidebarContentMotion () {
-      $('.sidebar .motion-element').velocity(
-        'transition.slideRightIn',
-        {stagger: 50, drag: true}
-      );
-    }
-
-    function postsListMotion () {
-      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
-      $('.post').velocity('transition.slideDownIn', postMotionOptions);
-    }
-
-    function sidebatToggleMotion () {
-      sidebarToggle.on('click', function () {
-        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
-        isSidebarVisible = !isSidebarVisible;
-      });
-
-      sidebarToggle.hover(function () {
-        if (isSidebarVisible) {return}
-        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
-        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
-        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
-      }, function () {
-        if (isSidebarVisible) {return}
-        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
-        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
-        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
-      });
-    }
-  });
-
-</script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
+      <a href='/blog/tags/Java/'>Java</a> 
     
+    </saan>
   
+  </h3>
+</section>
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"zhangmin"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/08/21/一个文件说明Java编码规范/">一个文件说明Java编码规范</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  August 21, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/Java/'>Java</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
 
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/08/09/罗辑思维/">罗辑思维</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  August 9, 2013
   
   
-</body>
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/读书·旅行/'>读书·旅行</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/07/12/人为什么要帮助他人/">人为什么要帮助他人</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  July 12, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/札记/'>札记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/07/12/每日一博93天总结/">每日一博93天总结</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  July 12, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/札记/'>札记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/06/10/端午/">端午</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  June 10, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/札记/'>札记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/06/09/觉不觉解很重要/">觉不觉解很重要</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  June 9, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/札记/'>札记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/06/08/我是知识分子吗/">我是知识分子吗</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  June 8, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/札记/'>札记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/06/07/罗振宇：这一代人的怕与爱/">罗振宇：这一代人的怕与爱</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  June 7, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/札记/'>札记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/blog/2013/06/06/科学圈的那些事/">科学圈的那些事</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  June 6, 2013
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/blog/tags/札记/'>札记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<nav class="pagination" role="pagination">
+  <a class="newer-posts" href="/blog/page/4/">← Newer Posts</a>
+  <span class="page-number">Page 5 of 24</span>
+  <a class="older-posts" href="/blog/page/6/">Older Posts →</a>
+</nav>
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
 </html>

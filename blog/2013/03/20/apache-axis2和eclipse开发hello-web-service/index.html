@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>apache axis2和eclipse开发hello web service | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  March 20, 2013
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/Web-Service/'>Web Service</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">apache axis2和eclipse开发hello web service</h1>
+  <section class="post-content article-entry">
+    <p><strong>Axis2</strong></p>
+<p>Axis2是下一代 Apache Axis。Axis2 虽然由 Axis 1.x 处理程序模型提供支持，但它具有更强的灵活性并可扩展到新的体系结构。Axis2 基于新的体系结构进行了全新编写，而且没有采用 Axis 1.x 的常用代码。支持开发 Axis2 的动力是探寻模块化更强、灵活性更高和更有效的体系结构，这种体系结构可以很容易地插入到其他相关 Web 服务标准和协议（如 WS-Security、WS-ReliableMessaging 等）的实现中。<br>Apache Axis2 是Axis的后续版本，是新一代的SOAP引擎。</p>
+<p><strong>下载与安装</strong></p>
+<p>下载axis2 Binary Distribution：<a href="http://axis.apache.org/axis2/java/core/download.cgi" target="_blank" rel="external">http://axis.apache.org/axis2/java/core/download.cgi</a></p>
+<p>解压到一个单独的目录即可。</p>
+<p>下载 Service Archive Wizard - Eclipse Plug-in和Code Generator Wizard - Eclipse Plug-in：<a href="http://axis.apache.org/axis2/java/core/tools/index.html" target="_blank" rel="external">http://axis.apache.org/axis2/java/core/tools/index.html</a></p>
+<p>解压后，将两个jar 文件放到eclipse的dropsin目录，并重启eclipse。</p>
+<p><strong>编写服务代码</strong></p>
+<p>新建一个java项目，代码如下：</p>
+<p>[java]</p>
+<p>package com.example;<br>public class HelloWebService {<br> /**</p>
+<ul>
+<li>say hello service</li>
+<li>@param name</li>
+<li>@return<br><em>/<br>public String sayHello(String name){<br>return &quot;hello &quot;+name;<br>}<br>/*</em></li>
+<li>add service</li>
+<li>@param a</li>
+<li>@param b</li>
+<li>@return<br>*/<br>public int add(int a,int b){<br>return a+b;<br>}<br>}</li>
+</ul>
+<p>[/java]</p>
+<p>然后利用Axis2 Service Archiver打包-&gt;class file location 为项目的bin目录-&gt;选择skip wsdl-&gt;如果没有引用其他jar文件点击下一步-&gt;选择自动生成service xml文件-&gt;输入服务名称(随意)、类全名-&gt;设置aar文件名以及存放目录-&gt;Finish.</p>
+<p>这是生成一个HelloWebService.aar文件，该文件很像一个jar包，文件中META-INF目录下的service.xml 内容如下，描述了你创建的服务。</p>
+<p>[xml]</p>
+<p>&lt;?xml version=&quot;1.0&quot;?&gt;<br>-&lt;service name=&quot;HelloWebService&quot;&gt; &lt;description&gt; Please Type your service description here &lt;/description&gt; -&lt;messageReceivers&gt; &lt;messageReceiver class=&quot;org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver&quot; mep=&quot;<a href="http://www.w3.org/2004/08/wsdl/in-only&quot;/&amp;gt" target="_blank" rel="external">http://www.w3.org/2004/08/wsdl/in-only&quot;/&amp;gt</a>; &lt;messageReceiver class=&quot;org.apache.axis2.rpc.receivers.RPCMessageReceiver&quot; mep=&quot;<a href="http://www.w3.org/2004/08/wsdl/in-out&quot;/&amp;gt" target="_blank" rel="external">http://www.w3.org/2004/08/wsdl/in-out&quot;/&amp;gt</a>; &lt;/messageReceivers&gt; &lt;parameter name=&quot;ServiceClass&quot;&gt;com.example.HelloWebService&lt;/parameter&gt; &lt;/service&gt;</p>
+<p>[/xml]</p>
+<p><strong>发布Web Service</strong></p>
+<p>将生成的HelloWebService.aar 文件拷贝到…axis2-1.6.2repositoryservices目录中，然后运行…axis2-1.6.2bin中的axis2server.bat 文件。启动后访问<a href="http://localhost:8080/axis2/services/就可以看到你的服务的描述了。" target="_blank" rel="external">http://localhost:8080/axis2/services/就可以看到你的服务的描述了。</a></p>
+<p>HelloWebService</p>
+<p>Available operations</p>
+<ul>
+<li>add</li>
+<li>sayHello<br>点击<a href="http://localhost:8080/axis2/services/HelloWebService?wsdl" target="_blank" rel="external">HelloWebService</a>可以看到发布服务的wsdl文件。<br><strong>生成客户端代码
+</strong>选择Eclipse Wizard 中的Axis2 Code Generator-&gt;选择Generate Java source code from a WSDL file-&gt;输入wsdl location：<a href="http://localhost:8080/axis2/services/HelloWebService?wsdl-&gt;选择output为你的项目-&gt;Finish。" target="_blank" rel="external">http://localhost:8080/axis2/services/HelloWebService?wsdl-&gt;选择output为你的项目-&gt;Finish。</a><br>然后添加axis2 Binary Distribution lib中的所有jar文件。</li>
+</ul>
+<p><strong>编写测试代码
+</strong>编写代码如下：<br>[java]<br>package com.example.test;<br>import java.rmi.RemoteException;<br>import com.example.Add;<br>import com.example.AddResponse;<br>import com.example.HelloWebService;<br>import com.example.HelloWebServiceStub;<br>import com.example.SayHello;<br>import com.example.SayHelloResponse;<br>public class Client {<br> /**</p>
+<ul>
+<li><p>@param args<br>*/<br>public static void main(String[] args) {<br>// TODO Auto-generated method stub<br>HelloWebServiceStub hws;<br>try {<br>hws = new HelloWebServiceStub();<br>SayHello sh = new SayHello();<br>sh.setName(&quot;world&quot;);<br>SayHelloResponse shr = hws.sayHello(sh);<br>System.out.println(shr.get_return());</p>
+<p>Add add = new Add();<br>add.setA(1);<br>add.setB(1);<br>AddResponse ar = hws.add(add);<br>System.out.println(ar.get_return());</p>
+<p>} catch (RemoteException e) {<br>// TODO Auto-generated catch block<br>e.printStackTrace();<br>}<br>}<br>}<br>[/java]<br>运行结果为：<br>hello world<br>2</p>
+</li>
+</ul>
+<p><strong>可能出现的错误的解决方法</strong></p>
+<p>Unsupported major.minor version 51.0 错误：用jdk7编译的class文件放到基于jdk6运行在tomcat之中，就会报这个错。打开exclipse中项目上的属性—java compiler–选择一个合适的版本后重新编译即可。</p>
+<p><em>参考文章</em></p>
+<p><em>1)<a href="http://blog.csdn.net/xiaochunyong/article/details/7764683" target="_blank" rel="external">http://blog.csdn.net/xiaochunyong/article/details/7764683</a></em></p>
+<p><em>2)<a href="http://blog.163.com/tuchengju@126/blog/static/38071165201111196597487/" target="_blank" rel="external">http://blog.163.com/tuchengju@126/blog/static/38071165201111196597487/</a></em></p>
+<p><em>3)<a href="http://baike.baidu.com/view/2435061.htm" target="_blank" rel="external">http://baike.baidu.com/view/2435061.htm</a></em></p>
+<p>4)<a href="http://axis.apache.org/axis2/java/core/index.html" target="_blank" rel="external">http://axis.apache.org/axis2/java/core/index.html</a></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2013/03/21/禁忌搜索算法参考/">
+        ← prev <!--禁忌搜索算法参考-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2013/03/19/问题的复杂性及P与NP问题/">
+        <!--问题的复杂性及P与NP问题--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-apache-axis2和eclipse开发hello-web-service" data-title="apache axis2和eclipse开发hello web service" data-url="http://zhangmin.name/blog/2013/03/20/apache-axis2和eclipse开发hello-web-service/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

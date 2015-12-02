@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>合并查找算法学习笔记 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  February 25, 2014
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/问题与算法/'>问题与算法</a>
+    
+      <a href='/blog/tags/马上有OFFER/'>马上有OFFER</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">合并查找算法学习笔记</h1>
+  <section class="post-content article-entry">
+    <h3 id="设计算法的步骤：">设计算法的步骤：</h3><p>一、对问题建模。</p>
+<p>二、找的一个可运行的算法解决这个问题。</p>
+<p>三、算法是否够快？内存占用是否够少？</p>
+<p>四、如果不是，找出原因。</p>
+<p>五、寻找优化的可能。</p>
+<p>六、迭代直到满意为止。</p>
+<h3 id="动态连接性问题（Dynamic_connectivity）">动态连接性问题（Dynamic connectivity）</h3><p>判断网络中任意两点之间的连接性。</p>
+<p><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=264720cf0d2442a7aa0efda0e178dc76/0eb30f2442a7d9337083fe3faf4bd11373f00156.jpg?referer=8e6cf5c848ed2e73a5feb31c6f4d&amp;x=.jpg" alt="动态连接问题"></p>
+<p>给定N个对象的集合，对这些对象有两中类型的操作：<br>1）Union：连接两个对象</p>
+<p>2）Find：是否存在一条连接给定两个对象的路径</p>
+<p>对这个问题建模：</p>
+<p>1）对对象建模：这里的对象可以是任何类型。如图片中的像素，网络中的计算机，社交网络中的好友，计算机芯片中的晶体管，集合中的元素等等。</p>
+<p>2）对连接建模：连接满足以下的性质：自反性（p与p连接），对称型（p与q连接，则q与p连接），传递性（如果p和q连接，q和r连接，则p和r连接）。</p>
+<p>我们还可以定义连接组件：最大的相连对象的集合。</p>
+<p>设计算法解决问题：</p>
+<p>设计有效的数据结构。要考虑到对象的数量N和操作的数量都可能很大。Find和Union操作可能是交叉进行的。</p>
+<p></p><p></p>
+<p>Quick-find算法：</p>
+<p>数据结构:int id[N]。</p>
+<p>如果p和q连接，当且仅当id[p] = id[q].</p>
+<p>Find：id[p] == id[q].</p>
+<p>Union:合并p和q，将所有id值等于id[p]都改为id[q].</p>
+<p>Quick-find算法分析：</p>
+<p>初始化时代价为O(N)，Find的代价是O(1)，Union的代价是O(N).<br>对于N个对象的N次Union的代价是O(N^2)。</p>
+<p>Quick-union算法：</p>
+<p>数据结构：int id[N],id[i]是i的父节点。<br>i的根节点为id[id[id[..id[i]..]]]，直到节点值不变为止。（确保无环）。</p>
+<p>Find：root(p) == root(q)</p>
+<p>Union:合并p和q，将p的根的id值设为q的根值。</p>
+<p>Quick-union算法分析：</p>
+<p>初始化时代价为O(N),union的代价为O(N)，find的代价为O(N)。</p>
+<p>对比Quick-find和Quick-union可知Quick-find的Union操作代价太高，树是扁平的，但是需要付出很大的代价。<br>Quick-union的树高度可能很高，find操作的代价太高。</p>
+<p>可以改进的方面：<br>1）降低树的高度。通过记录每个树的高度，合并时将小的树连接到大的树根上。<br>2）路径压缩。当计算完p的根时，将每一个检查过的节点指向p的根。</p>
+<p><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=ef7e52a58f1001e94a3c140a88350ad1/7dd98d1001e939016d8d967279ec54e737d196ea.jpg?referer=05e6275fdf54564ebc72d009d2a8&amp;x=.jpg" alt="几种Union-Find算法分析"><br>WQUPC（Weighted quick-union with path compression）算法的平摊分析【Hopcroft-Ulman,Tarjan】：<br>从空数据结构开始在N个对象上的任意序列的M次union-find操作的数组访问次数&lt;=c(N+MlgN)。<br>理论上WQUPC不是线性的，但是实践中它是线性的。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2014/02/25/书呆子/">
+        ← prev <!--书呆子-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2014/01/23/我的第一堂MOOC课——机器学习基石/">
+        <!--我的第一堂MOOC课——机器学习基石--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-合并查找算法学习笔记" data-title="合并查找算法学习笔记" data-url="http://zhangmin.name/blog/2014/02/25/合并查找算法学习笔记/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

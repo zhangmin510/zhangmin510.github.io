@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="/atom.xml">
+        <link rel="canonical" href="http://zhangmin.name/">
+
+        <title>Ubuntu Unity界面消失的解决方法 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/readings">Readings</a></h6>
+
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  April 14, 2012
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/Linux/'>Linux</a>
+    
+      <a href='/blog/tags/Ubuntu/'>Ubuntu</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">Ubuntu Unity界面消失的解决方法</h1>
+  <section class="post-content article-entry">
+    <p><img src="http://www.zhangmin.name/blog/wp-content/uploads/ubuntu_logo_black-orange-300x67.png" alt="ubuntu_logo"></p>
+<p>在Ubuntu 11.10中，修改Compizconfig-settings- 时，由于禁止了某些必要的插件，使得Unity界面消失了，没有了Lancher，标题栏也消失了，在网上看了很多的资料，解决方法如下：</p>
+<p>重新设置Unity，打开Terminal(ctr+alt+f1 或是alt+f2,输入gnome-terminal)输入：</p>
+<p><code>sudo apt-get install compizconfig-settings-manager</code></p>
+<p><code>sudo unity --reset</code></p>
+<p>一般情况下需要一分钟的时间重置unity，在运行过程中可能会出现控制台没有任何反馈输入，保险起见，两到三分钟后再按ctr+c终止程序。</p>
+<p>然后重新启动GDM 或是 LightDM(如果termianl 不好使可以进入tty1，ctrl+alt+f1)，命令如下：</p>
+<p><code>sudo service gdm restart</code></p>
+<p>或是</p>
+<p><code>sudo service lightdm restart</code></p>
+<p>如果上述方法不成功，你可以重新按转compiz和unity，命令如下：</p>
+<p>`sudo apt-get update</p>
+<pre><code>sudo apt-get <span class="operator"><span class="keyword">install</span> compiz
+
+sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> compizconfig-<span class="keyword">settings</span>-manager
+
+sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> unity<span class="string">`</span></span>
+</code></pre><p>然后再重启GDM或是LightDM。</p>
+<p>如果你的窗口标题栏消失了，可以用一下的命令：</p>
+<p><code>gtk-window-decorator --replace</code></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2012/04/16/《写给程序员的web设计书》笔记/">
+        ← prev <!--《写给程序员的web设计书》笔记-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2012/04/11/25个让Java程序员更高效的Eclipse插件/">
+        <!--25个让Java程序员更高效的Eclipse插件--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-Ubuntu-Unity界面消失的解决方法" data-title="Ubuntu Unity界面消失的解决方法" data-url="http://zhangmin.name/blog/2012/04/14/Ubuntu-Unity界面消失的解决方法/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>
