@@ -1,0 +1,1103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[ZhangMin.name]]></title>
+  <subtitle><![CDATA[勤思敏行 思行合一]]></subtitle>
+  <link href="/blog/atom.xml" rel="self"/>
+  <link href="http://zhangmin.name/blog/"/>
+  <updated>2015-12-03T07:56:02.000Z</updated>
+  <id>http://zhangmin.name/blog/</id>
+  
+  <author>
+    <name><![CDATA[ZhangMin.name]]></name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[nodejs菜鸟需跨过的坎]]></title>
+    <link href="http://zhangmin.name/blog/2015/12/02/nodejs%E8%8F%9C%E9%B8%9F%E9%9C%80%E8%B7%A8%E8%BF%87%E7%9A%84%E5%9D%8E/"/>
+    <id>http://zhangmin.name/blog/2015/12/02/nodejs菜鸟需跨过的坎/</id>
+    <published>2015-12-02T05:57:10.000Z</published>
+    <updated>2015-12-03T07:56:02.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="作用域">作用域</h3><p>javascript的作用域是函数作用域，不是以大括号为起始的块级作用域。在一个函数中定义的变量只在这个函数的内部可见。在函数中引用变量时，会一级一级去搜索变量，直到全局作用域。</p>
+<p>在访问未定义的变量或者未初始化的变量获得的值是undefined。</p>
+<pre><code><span class="keyword">var</span> scope = <span class="string">'global'</span>
+    <span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+                <span class="built_in">console</span>.log(scope) <span class="comment">// undefined</span>
+                            <span class="keyword">var</span> scope = <span class="string">'f'</span>
+                                }
+f();
+
+javascript 的作用域是静态作用域，即在定义时决定的，而不是在调用时决定的。
+
+    <span class="keyword">var</span> scope = <span class="string">'top'</span>
+        <span class="keyword">var</span> f1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+                    <span class="built_in">console</span>.log(scope) <span class="comment">// global</span>
+                            }
+<span class="keyword">var</span> f2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            scope = <span class="string">'f2'</span>;
+                    f1();
+                        }
+f2(); <span class="comment">//top</span>
+
+全局作用域的变量在任何地方都可以直接引用。全局变量满足一下三点：
+
+* 在最外层定义的变量
+* 全局对象global的属性
+* 未定义直接赋值的变量
+
+不通过<span class="keyword">var</span>声明的就是属于上面的第三种全局变量。通过<span class="keyword">var</span>声明的是局部变量。
+</code></pre><h3 id="闭包">闭包</h3><pre><code>闭包是由函数（环境）以及其封闭的自由变量组成的集合体。当一个函数返回一个它内部定义的函数时，就产生了一个闭包，闭包不但包含返回的参数，还包括这个函数的定义环境。
+
+    <span class="keyword">var</span> genClosure = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+                <span class="keyword">var</span> count = <span class="number">0</span>;
+                        <span class="keyword">var</span> <span class="keyword">get</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+                                        count++;
+                                                    <span class="keyword">return</span> count;
+                                                            }
+                                <span class="keyword">return</span> <span class="keyword">get</span>;
+                                    }
+<span class="keyword">var</span> c1 = genClosure();
+    <span class="keyword">var</span> c2 = genClosure();
+        console.log(c1());<span class="comment">//1</span>
+            console.log(c2());<span class="comment">//1</span>
+                console.log(c1());<span class="comment">//2</span>
+                    console.log(c2());<span class="comment">//2</span>
+
+                    genClosure 返回<span class="keyword">get</span>函数时，将<span class="keyword">get</span>可能引用到的变量也返回了，并在内存中生成了一个副本。c1和c2就是相互独立的了。
+
+                    闭包主要有两个用途：
+
+                    * 实现嵌套回调函数。
+                    * 隐藏对象的细节。
+</code></pre><h3 id="上下文对象this">上下文对象this</h3><pre><code>                    this表示被调用函数所处的环境。this的作用就是在一个函数内部引用调用它的对象本身。Javascript任何函数都是某个对象调用的，包括全局对象。
+                    函数类型的变量是指向函数实体的一个引用,引用之间的赋值不会复制整个对象。this指针永远是这个引用所属的对象。
+
+                        var someuse = {
+                                   name: <span class="string">'javascript'</span>,
+                                                <span class="function"><span class="keyword">func</span>: <span class="title">function</span><span class="params">()</span> {</span>
+                                                              console.<span class="built_in">log</span>(this.name)<span class="comment">;</span>
+                                                                     }
+                                             }
+var foo = {
+            name = <span class="string">'foo'</span>
+                    }
+someuser.<span class="keyword">func</span>()<span class="comment">;// javascript</span>
+    foo.<span class="keyword">func</span> = someuser.<span class="keyword">func</span><span class="comment">;</span>
+        foo.<span class="keyword">func</span>()<span class="comment">;//foo</span>
+            name = <span class="string">'global'</span>
+                <span class="function"><span class="keyword">func</span> = <span class="title">someuser</span>.<span class="title">func</span>;</span>
+                    <span class="function"><span class="keyword">func</span><span class="params">()</span>;//<span class="title">global</span></span>
+</code></pre><h4 id="call和apply">call和apply</h4><pre><code>                    这两个函数的作用就是以不同的对象作为上下文来调用某个函数。简而言之，就是允许一个对象去掉用另外一个对象的成员函数。
+                    <span class="built_in">call</span>与apply的差别就是<span class="built_in">call</span>以参数表来接受调用的参数，而apply以数组来接受被调用函数的参数。
+
+                         <span class="function"><span class="keyword">func</span>.<span class="title">call</span><span class="params">(thisArg[, arg1[, arg2,[...]]])</span></span>
+     <span class="function"><span class="keyword">func</span>.<span class="title">apply</span><span class="params">(thisArg[, argsArray])</span></span>
+
+<span class="function"><span class="keyword">func</span>是函数的引用，<span class="title">thisArg</span>是<span class="title">func</span>的被调用时的上下文对象，<span class="title">arg1</span>,<span class="title">arg2</span>和<span class="title">argsArray</span>是传入<span class="title">func</span>的参数。</span>
+
+    var someuse = {
+               name: <span class="string">'say'</span>,
+                            <span class="function"><span class="keyword">func</span>: <span class="title">function</span><span class="params">(word)</span> {</span>
+                                          console.<span class="built_in">log</span>(this.name + <span class="string">' '</span> + word)<span class="comment">;</span>
+                                                 }
+                         }
+var foo = {
+            name = <span class="string">'foo'</span>
+                    }
+
+someuse.<span class="keyword">func</span>.apply(foo, <span class="string">'hello'</span>)<span class="comment">;// foo hello</span>
+
+bind方法可以永久绑定上下文，这样其无论被谁调用，上下文都是固定的。
+
+    <span class="function"><span class="keyword">func</span>.<span class="title">bind</span><span class="params">(thisArg[, arg1[, arg2[, ....]]])</span></span>
+
+bind还可以绑定参数列表，从而省略重复的参数。
+
+    var someuser = {
+               name: <span class="string">'i'</span>,
+                            <span class="function"><span class="keyword">func</span>: <span class="title">function</span><span class="params">(act,word)</span> {</span>
+                                          console.<span class="built_in">log</span>(this.name + <span class="string">' '</span> +  act + <span class="string">' '</span> + word)<span class="comment">;</span>
+                                                 }
+                         }
+someuser.<span class="keyword">func</span>(<span class="string">'love'</span>, <span class="string">'you'</span>)<span class="comment">;//i love you</span>
+    lfunc = someuser.<span class="keyword">func</span>.bind(someuser, <span class="string">'loves'</span>)<span class="comment">;</span>
+        lfunc(<span class="string">'her'</span>)<span class="comment">;//i love her</span>
+</code></pre><h3 id="循环">循环</h3><pre><code><span class="tag">var</span> js
+    <span class="tag">var</span> hello
+</code></pre><h3 id="原型">原型</h3><h3 id="编程风格">编程风格</h3><pre><code><span class="comment">* 缩进。两格，因为函数嵌套较多。</span>
+<span class="comment">* 行宽。最佳80。在任何设备都能方便阅读。</span>
+<span class="comment">* 语句分隔符。分号';'。</span>
+<span class="comment">* 变量定义。一行一个变量定义。</span>
+<span class="comment">* 变量名。小驼峰式命名。youNameIs。</span>
+<span class="comment">* 函数。构造函数大驼峰，一般小驼峰。</span>
+<span class="comment">* 引号。统一用单引号，双引号和单引号语义上一样，但是JSON和XML都规定了双引号，这样便于无歧义直接引用。</span>
+<span class="comment">* 关联数组初始化。var = {放在一行，下面没对键值一行。</span>
+<span class="comment">    * 等号。尽量使用三个=而不是两个=来判断相等。==包含了隐式类型转换。</span>
+<span class="comment">        * 命名函数。尽量给构造函数和回调函数命名，这样可以更清楚的追溯调用栈。</span>
+        回调函数的第一个参数是<span class="keyword">err</span>，如果没有为undefined。
+<span class="comment">        * 对象定义。尽量将所所有成员函数使用原型定义，将属性在构造函数内定义，然后对构造函数使用new关键词创建对象。</span>
+<span class="comment">        * 继承。避免复杂继承，使用util的inherits函数。</span>
+
+        (...待续...）
+</code></pre><h3 id="参考文献"><em>参考文献</em></h3><pre><code><span class="number">1</span>.《<span class="keyword">Node</span>.<span class="identifier"></span><span class="title">js</span>开发开发指南》 郭家宝
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="作用域">作用域</h3><p>javascript的作用域是函数作用域，不是以大括号为起始的块级作用域。在一个函数中定义的变量只在这个函数的内部可见。在函数中引用变量时，会一级一级去搜索变量，直到全局作用域。</p>
+<p>在访问未定义的变量或者未初始化的变量获]]>
+    </summary>
+    
+      <category term="nodejs" scheme="http://zhangmin.name/blog/tags/nodejs/"/>
+    
+      <category term="nodejs" scheme="http://zhangmin.name/blog/categories/nodejs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[第一次像个程序员]]></title>
+    <link href="http://zhangmin.name/blog/2015/01/29/2015-01-29-%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%83%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98/"/>
+    <id>http://zhangmin.name/blog/2015/01/29/2015-01-29-第一次像个程序员/</id>
+    <published>2015-01-29T01:15:40.000Z</published>
+    <updated>2015-12-02T06:16:48.000Z</updated>
+    <content type="html"><![CDATA[<p>以前看到过一篇文章说优秀的程序员有一个特点就是懒。由于懒，不想做重复的事情，让程序去做重复的事情。在这个过程中，也许写程序的时间比去做重复的事情花费的时间还多。但是这个过程中的乐趣确实无穷的。与其经历那份煎熬，不如做些有挑战的，有成就感的事情。</p>
+<p>避免做重复的事，这是每个程序员都应该去做的事。</p>
+<h1 id="无聊的任务">无聊的任务</h1><p>一个已经用PowerDesigner设计好的数据库，还要去补充数据库表结构的详细文档。讨厌为了文档而文档的文档撰写工作。这是一个无聊，无趣，浪费生命的工作。</p>
+<h1 id="偷懒">偷懒</h1><p>能不能导出？这是我的第一个想法。但是PowerDesigner只导出SQL语句。无奈，文档需要更详细的内容。项目文件能不能直接用文本打开？用记事本打开，可以。而且我看到了程序员都喜欢看到的格式XML。剩下的工作就是解析XML，提取关于数据库表的内容，转成CSV文件，然后在复制粘贴到WORD中。</p>
+<h1 id="Show_Time">Show Time</h1><p>不修改文档只解析，用SAX就好了。<br><a id="more"></a></p>
+<h2 id="分析">分析</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;c:Tables&#62;&#10;&#60;o:Table Id=&#34;o83&#34;&#62;&#10;&#60;a:ObjectID&#62;11195183-1EF0-4FDB-BC9F-5F45A42D3200&#60;/a:ObjectID&#62;&#10;&#60;a:Name&#62;&#29992;&#25143;&#34920;&#60;/a:Name&#62;&#10;&#60;a:Code&#62;TBL_USER&#60;/a:Code&#62;&#10;&#60;a:CreationDate&#62;1407122337&#60;/a:CreationDate&#62;&#10;&#60;a:Creator&#62;Administrator&#60;/a:Creator&#62;&#10;&#60;a:ModificationDate&#62;1422326992&#60;/a:ModificationDate&#62;&#10;&#60;a:Modifier&#62;Administrator&#60;/a:Modifier&#62;&#10;&#60;a:Comment&#62;&#29992;&#25143;&#34920;&#60;/a:Comment&#62;&#10;&#60;a:TotalSavingCurrency/&#62;&#10;&#60;c:Columns&#62;&#10;&#60;o:Column Id=&#34;o112&#34;&#62;&#10;&#60;a:ObjectID&#62;46BD538A-51A2-4ED0-83DA-4840413F2993&#60;/a:ObjectID&#62;&#10;&#60;a:Name&#62;&#29992;&#25143;&#32534;&#21495;&#60;/a:Name&#62;&#10;&#60;a:Code&#62;U_ID&#60;/a:Code&#62;&#10;&#60;a:CreationDate&#62;1407122416&#60;/a:CreationDate&#62;&#10;&#60;a:Creator&#62;Administrator&#60;/a:Creator&#62;&#10;&#60;a:ModificationDate&#62;1421802615&#60;/a:ModificationDate&#62;&#10;&#60;a:Modifier&#62;Administrator&#60;/a:Modifier&#62;&#10;&#60;a:DataType&#62;int&#60;/a:DataType&#62;&#10;&#60;a:Mandatory&#62;1&#60;/a:Mandatory&#62;&#10;&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o113&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o114&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o115&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o116&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o117&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o118&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o119&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o120&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o121&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o122&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;o:Column Id=&#34;o123&#34;&#62;...&#60;/o:Column&#62;&#10;&#60;/c:Columns&#62;&#10;&#60;c:Keys&#62;...&#60;/c:Keys&#62;&#10;&#60;c:PrimaryKey&#62;...&#60;/c:PrimaryKey&#62;&#10;&#60;/o:Table&#62;</span><br></pre></td></tr></table></figure>
+<p>对于如此工整，完美，结构化的数据，一定是程序的最爱。Java SAX解析主要代码如下：</p>
+<h2 id="解析">解析</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class PDMHandler extends DefaultHandler&#123;&#10;&#9;private List&#60;Table&#62; tables = null;&#10;&#9;private Table table = null;&#10;&#9;private List&#60;Column&#62; columns = null;&#10;&#9;private Column column = null;&#10;&#10;&#9;private boolean inTables = false;&#10;&#9;private boolean inTable = false;&#10;&#9;private boolean inColumns = false;&#10;&#9;private boolean inColumn = false;&#10;&#10;&#9;private String cur = null;&#10;&#10;&#9;public List&#60;Table&#62; getTables(InputStream is) throws Exception &#123;&#10;&#9;&#9;SAXParserFactory factory = SAXParserFactory.newInstance();&#10;&#9;&#9;SAXParser parser = factory.newSAXParser();&#10;&#9;&#9;PDMHandler handler = new PDMHandler();&#10;&#9;&#9;parser.parse(is, handler);&#10;&#9;&#9;return handler.getTables();&#10;&#9;&#125;&#10;&#10;&#9;public List&#60;Table&#62; getTables() &#123;&#10;&#9;&#9;return tables;&#10;&#9;&#125;&#10;&#10;&#9;@Override&#10;&#9;public void startDocument() throws SAXException &#123;&#10;&#9;&#9;System.out.println(&#34;Start parsing...&#34;);&#10;&#9;&#9;this.tables = new ArrayList&#60;Table&#62;();&#10;&#9;&#125;&#10;&#10;&#9;@Override&#10;&#9;public void endDocument() throws SAXException &#123;&#10;&#9;&#9;System.out.println(&#34;Parsing finished.&#34;);&#10;&#9;&#125;&#10;&#10;&#9;@Override&#10;&#9;public void startElement(String uri, String localName, String qName,&#10;&#9;&#9;&#9;Attributes attributes) throws SAXException &#123;&#10;&#9;&#9;if (&#34;c:Tables&#34;.equals(qName)) inTables = true;&#10;&#10;&#9;&#9;if (inTables) &#123;&#10;&#9;&#9;&#9;if (&#34;o:Table&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;&#9;inTable = true;&#10;&#9;&#9;&#9;&#9;table = new Table();&#10;&#9;&#9;&#9;&#125;&#10;&#10;&#9;&#9;&#9;if (inTable) &#123;&#10;&#9;&#9;&#9;&#9;if (&#34;c:Columns&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;&#9;&#9;inColumns = true;&#10;&#9;&#9;&#9;&#9;&#9;columns = new ArrayList&#60;Column&#62;();&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#10;&#9;&#9;&#9;&#9;if (inColumns) &#123;&#10;&#9;&#9;&#9;&#9;&#9;if (&#34;o:Column&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;&#9;&#9;&#9;inColumn = true;&#10;&#9;&#9;&#9;&#9;&#9;&#9;column = new Column();&#10;&#9;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#125;&#10;&#9;&#9;cur = qName;&#10;&#9;&#125;&#10;&#10;&#9;@Override&#10;&#9;public void characters(char[] ch, int start, int length)&#10;&#9;&#9;&#9;throws SAXException &#123;&#10;&#9;&#9;String content = new String(ch, start, length);&#10;&#9;&#9;//&#60;a:code&#62;Name&#60;/a:code&#62;&#10;&#9;&#9;//First visit value is Name, second visit value is LF(10)&#10;&#9;&#9;boolean first = (int) content.charAt(0) != 10;&#10;&#9;&#9;if (inColumn) &#123;&#10;&#9;&#9;&#9;if (first) &#123;&#10;&#9;&#9;&#9;&#9;if (&#34;a:Name&#34;.equals(cur)) column.setName(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Code&#34;.equals(cur)) column.setDataItem(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:DataType&#34;.equals(cur)) column.setType(&#34;\&#34;&#34; + content + &#34;\&#34;&#34;);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Length&#34;.equals(cur)) column.setLength(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Comment&#34;.equals(cur)) column.setComment(content);&#10;&#9;&#9;&#9;&#9;else &#123; &#125;&#10;&#9;&#9;&#9;&#125;&#10;&#10;&#9;&#9;&#125;  else if (inTable)&#123;&#10;&#9;&#9;&#9;if (first) &#123;&#10;&#9;&#9;&#9;&#9;if (&#34;a:Name&#34;.equals(cur)) table.setTableName(content);&#10;&#9;&#9;&#9;&#9;else if (&#34;a:Code&#34;.equals(cur)) table.setTableCode(content);&#10;&#9;&#9;&#9;&#9;else &#123; &#125;&#10;&#9;&#9;&#9;&#125;&#10;&#10;&#9;&#9;&#125; else &#123; &#125;&#10;&#9;&#125;&#10;&#10;&#9;@Override&#10;&#9;public void endElement(String uri, String localName, String qName)&#10;&#9;&#9;&#9;throws SAXException &#123;&#10;&#9;&#9;if (&#34;o:Column&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;inColumn = false;&#10;&#9;&#9;&#9;if (inColumns) columns.add(column);&#10;&#9;&#9;&#125;&#10;&#9;&#9;if (&#34;c:Columns&#34;.equals(qName)) &#123;&#10;&#9;&#9;&#9;inColumns = false;&#10;&#9;&#9;&#9;inTable = false;&#10;&#9;&#9;&#9;table.setColumns(columns);&#10;&#9;&#9;&#9;tables.add(table);&#10;&#9;&#9;&#125;&#10;&#9;&#9;if (&#34;c:Tables&#34;.equals(qName)) inTables = false;&#10;&#9;&#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>最后对格式稍加处理，就可以得到CSV文件，可以非常方便的复制粘贴到WORD中。</p>
+<h2 id="转换">转换</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#29992;&#25143;&#34920;(TBL_USER)&#10;1,&#29992;&#25143;&#32534;&#21495;,U_ID,&#34;int&#34;,,,&#10;2,&#29992;&#25143;&#21517;,U_NAME,&#34;varchar(20)&#34;,20,,&#10;3,&#29992;&#25143;&#23494;&#30721;,U_PWD,&#34;varchar(20)&#34;,20,,&#10;4,&#26426;&#26500;&#20195;&#30721;,ORG_CODE,&#34;varchar(50)&#34;,50,,&#10;5,&#21592;&#24037;&#24037;&#21495;,U_NUM,&#34;varchar(20)&#34;,20,,&#10;6,&#29366;&#24577;,U_STATUS,&#34;varchar(2)&#34;,2,,&#10;7,&#26368;&#21518;&#30331;&#24405;&#26102;&#38388;,U_LAST_LOGIN_TIME,&#34;datetime&#34;,,,&#10;8,&#21019;&#24314;&#20154;,U_CREATER,&#34;int&#34;,,,&#10;9,&#21019;&#24314;&#26102;&#38388;,U_CREATE_TIME,&#34;datetime&#34;,,,&#10;10,&#22791;&#27880;,U_REMARK,&#34;varchar(200)&#34;,200,,&#10;11,&#26368;&#21518;&#23494;&#30721;&#26356;&#26032;&#26102;&#38388;,U_LAST_UPDATE_PWD_TIME,&#34;datetime&#34;,,,&#10;12,&#31163;&#32844;&#26085;&#26399;,U_DEL_TIME,&#34;date&#34;,,,</span><br></pre></td></tr></table></figure>
+<h1 id="Further_and_beyond">Further and beyond</h1><p>写代码的过程中感觉到用java写这段简单的文本处理程序是比较费力的。如果用一些脚本语言如Python或者基于JVM的Groovy，会更方便、更快捷，更高效的。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>以前看到过一篇文章说优秀的程序员有一个特点就是懒。由于懒，不想做重复的事情，让程序去做重复的事情。在这个过程中，也许写程序的时间比去做重复的事情花费的时间还多。但是这个过程中的乐趣确实无穷的。与其经历那份煎熬，不如做些有挑战的，有成就感的事情。</p>
+<p>避免做重复的事，这是每个程序员都应该去做的事。</p>
+<h1 id="无聊的任务">无聊的任务</h1><p>一个已经用PowerDesigner设计好的数据库，还要去补充数据库表结构的详细文档。讨厌为了文档而文档的文档撰写工作。这是一个无聊，无趣，浪费生命的工作。</p>
+<h1 id="偷懒">偷懒</h1><p>能不能导出？这是我的第一个想法。但是PowerDesigner只导出SQL语句。无奈，文档需要更详细的内容。项目文件能不能直接用文本打开？用记事本打开，可以。而且我看到了程序员都喜欢看到的格式XML。剩下的工作就是解析XML，提取关于数据库表的内容，转成CSV文件，然后在复制粘贴到WORD中。</p>
+<h1 id="Show_Time">Show Time</h1><p>不修改文档只解析，用SAX就好了。<br>]]>
+    
+    </summary>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/tags/Java/"/>
+    
+      <category term="札记" scheme="http://zhangmin.name/blog/tags/%E6%9C%AD%E8%AE%B0/"/>
+    
+      <category term="MSE" scheme="http://zhangmin.name/blog/categories/MSE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[RESTful Java with JAX-RS Reading Note]]></title>
+    <link href="http://zhangmin.name/blog/2015/01/27/2015-1-27-RESTful-Java-with-JAX-RS/"/>
+    <id>http://zhangmin.name/blog/2015/01/27/2015-1-27-RESTful-Java-with-JAX-RS/</id>
+    <published>2015-01-27T02:38:51.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="REST_Theory">REST Theory</h1><p>REpresentation State Transfer(REST) principles:</p>
+<ul>
+<li>Addressable resources.The key abstraction of information and data in REST is a resource, and each resource<br>must be addressable via a URI (Uniform Resource Identifier).Each HTTP request<br>must contain the URI of the object you are requesting information from or posting<br>information to. </li>
+<li>Uniform, constrained interface.Use a small set of well-defined methods(HTTP’s method) to manipulate your resources.</li>
+<li>Representation-oriented.You interact with services using representations of that service. A resource referenced<br>by one URI can have different formats. Different platforms need different formats.</li>
+<li>Communicate statelessly.Stateless applications are easier to scale.</li>
+<li>Hypermedia As The Engine Of Application State(HATEOAS).Let your data formats drive state transitions in your applications.<br>Hypermedia is a document-centric approach with the added support for embedding links to other services and information within that document<br>format.</li>
+</ul>
+<h1 id="Designing_RESTful_Service">Designing RESTful Service</h1><h2 id="Object_model">Object model</h2><p><img src="http://f.picphotos.baidu.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=a78e60e36f224f4a5399731639cce16f/42166d224f4a20a453562a0292529822730ed0ae.jpg?referer=fc2516dfc45c10387d69faf21064&amp;x=.jpg" alt="Object Model"></p>
+<h2 id="Model_the_URI">Model the URI</h2><p>In a RESTful system, endpoints are usually referred to as resources and are identified using a URI. URIs satisfy the addressability<br>requirements of a RESTful service.<br>For example:<br>/orders<br>/orders/{id}</p>
+<h2 id="Define_the_data_format">Define the data format</h2><p>XML,JSON,YMAL etc.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;product id=&#34;543&#34;&#62;&#10;&#60;link rel=&#34;self&#34; href=&#34;http://example.com/products/543&#34;/&#62;&#10;&#60;name&#62;iPhone&#60;/name&#62;&#10;&#60;cost&#62;$199.99&#60;/cost&#62;&#10;&#60;/product&#62;</span><br></pre></td></tr></table></figure>
+<h2 id="Assigning_HTTP_methods">Assigning HTTP methods</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /products HTTP/1.1&#10;&#10;HTTP/1.1 200 OK&#10;Content-Type: application/xml&#10;&#60;products&#62;&#10;&#60;product id=&#34;111&#34;&#62;&#10;&#60;link rel=&#34;self&#34; href=&#34;http://example.com/products/111&#34;/&#62;&#10;&#60;name&#62;iPhone&#60;/name&#62;&#10;&#60;cost&#62;$199.99&#60;/cost&#62;&#10;&#60;/product&#62;&#10;&#60;product id=&#34;222&#34;&#62;&#10;&#60;link rel=&#34;self&#34; href=&#34;http://example.com/products/222&#34;/&#62;&#10;&#60;name&#62;Macbook&#60;/name&#62;&#10;&#60;cost&#62;$1599.99&#60;/cost&#62;&#10;&#60;/product&#62;</span><br></pre></td></tr></table></figure>
+<h1 id="First_JAX-RS_Service">First JAX-RS Service</h1><h2 id="JAX-RS_Overview_and_Roadmap">JAX-RS Overview and Roadmap</h2><p>JAX-RS is a framework that focuses on applying Java annotations to plain Java objects:</p>
+<ul>
+<li>It has <strong>annotations</strong> to bind specific URI patterns and HTTP operations to individual methods of your Java class. </li>
+<li>It has <strong>parameter injection</strong> annotations so that you can easily pull in information from the HTTP request. </li>
+<li>It has <strong>message body readers and writers</strong> that allow you to decouple data format marshalling and unmarshalling from your Java<br>data objects. </li>
+<li>It has <strong>exception mappers</strong> that can map an application-thrown exception to an HTTP response code and message. </li>
+<li>Finally, it has some nice facilities for HTTP <strong>content negotiation</strong>.</li>
+</ul>
+<p>These are also roadmap to dive into JAX-RS.</p>
+<h2 id="Bean_class">Bean class</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Java bean class&#10;public class Customer &#123;&#10;private int id;&#10;private String firstName;&#10;private String lastName;&#10;private String street;&#10;private String city;&#10;private String state;&#10;private String zip;&#10;private String country;&#10;......</span><br></pre></td></tr></table></figure>
+<h2 id="Resource_class">Resource class</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Path(&#34;/customers&#34;)&#10;public class CustomerResource &#123;&#10;@GET&#10;@Path(&#34;&#123;id&#125;&#34;)&#10;@Produces(&#34;application/xml&#34;)&#10;public StreamingOutput getCustomer(@PathParam(&#34;id&#34;) int id) &#123;&#10;final Customer customer = customerDB.get(id);&#10;if (customer == null) &#123;&#10;throw new WebApplicationException(&#10;Response.Status.NOT_FOUND);&#10;&#125;&#10;return new StreamingOutput() &#123;&#10;public void write(OutputStream outputStream)&#10;throws IOException, WebApplicationException &#123;&#10;outputCustomer(outputStream, customer);&#10;&#125;&#10;&#125;;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Deploy_resources">Deploy resources</h2><p>Using Application class for deployment configuration.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public abstract class Application &#123;&#10;private static final Set&#60;Object&#62; emptySet = Collections.emptySet();&#10;//Any JAX-RS service class returned by this method will&#10;//follow the per-request model mentioned earlier&#10;//a list of JAX-RS service objects as the application programmer, are responsible for&#10;//creating and initializing these objects&#10;public abstract Set&#60;Class&#60;?&#62;&#62; getClasses();&#10;//Any JAX-RS service class returned by this method will&#10;//follow the singleton mode.&#10;public Set&#60;Object&#62; getSingletons() &#123;&#10;return emptySet;&#10;&#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>Extend the Application class and configure it in web.xml.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;?xml version=&#34;1.0&#34;?&#62;&#10;&#60;web-app&#62;&#10;&#60;display-name&#62;Archetype Created Web Application&#60;/display-name&#62;&#10;&#60;servlet&#62;&#10;&#60;servlet-name&#62;Rest&#60;/servlet-name&#62;&#10;&#60;servlet-class&#62;&#10;com.jaxrs.vendor.JaxrsVendorServlet&#10;&#60;/servlet-class&#62;&#10;&#60;init-param&#62;&#10;&#60;param-name&#62;javax.ws.rs.Application&#60;/param-name&#62;&#10;&#60;param-value&#62;&#10;com.restfully.shop.services.ShoppingApplication&#10;&#60;/param-value&#62;&#10;&#60;/init-param&#62;&#10;&#60;/servlet&#62;&#10;&#60;servlet-mapping&#62;&#10;&#60;servlet-name&#62;Rest&#60;/servlet-name&#62;&#10;&#60;url-pattern&#62;/*&#60;/url-pattern&#62;&#10;&#60;/servlet-mapping&#62;&#10;&#60;/web-app&#62;</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="REST_Theory">REST Theory</h1><p>REpresentation State Transfer(REST) principles:</p>
+<ul>
+<li>Addressable resources.The key abstracti]]>
+    </summary>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/tags/Java/"/>
+    
+      <category term="Web Service" scheme="http://zhangmin.name/blog/tags/Web-Service/"/>
+    
+      <category term="MSE" scheme="http://zhangmin.name/blog/categories/MSE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Java内存区域及内存溢出处理]]></title>
+    <link href="http://zhangmin.name/blog/2014/10/13/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E5%8F%8A%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%A4%84%E7%90%86/"/>
+    <id>http://zhangmin.name/blog/2014/10/13/Java内存区域及内存溢出处理/</id>
+    <published>2014-10-13T07:22:19.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p>本文是学习Java内存管理的学习笔记。更详细的内容参见《深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）》第二章 Java内存区域及内存溢出异常。</p>
+<h2 id="Java内存划分">Java内存划分</h2><p>Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个不同的数据区域。每个区域都有各自的用途及各自创建和销毁的时间。这些区域可以分为两类：所有线程共享的区域（如方法区和堆）和线程私有的区域（如虚拟机栈，本地方法栈和程序计数器）。<br>​<br>各个区域的用途可以都可以用一句话进行概括：</p>
+<p>先是线程私有的区域，它们和线程的生命周期相同。</p>
+<ol>
+<li><p>程序计数器（PC）：一块较小的内存，存放的是下一条执行指令的字节码地址；如果执行的是本地方法，则计数器值为undefined；该区域不会抛出OutOfMemoryError异常。</p>
+</li>
+<li><p>虚拟机栈：Java方法执行的内存模型，每次方法调用都伴随着栈帧（存储局部变量，动态链接，方法出口等信息）的入栈出栈过程；该区域会抛出两种异常，一种是超过了规定的最大栈深度的StackOverflowError，另一种是无法申请到内存的OutOfMemoryError。</p>
+</li>
+<li><p>本地方法栈：为Native方法服务，与虚拟机栈类似。</p>
+</li>
+</ol>
+<p>所有线程共享的区域，和虚拟机的生命周期相同。</p>
+<ol>
+<li><p>堆：存放对象实例和数组，是垃圾回收的主要战场。内存不够时会抛出OutOfMemoryError异常。</p>
+</li>
+<li><p>方法区：存储已加载的类信息，常量，静态变量，JIT编译后的数据；该区域内存的回收主要是常量池回收和类的卸载；当内存不足时也会抛OutOfMemoryError异常。</p>
+</li>
+</ol>
+<p>另外还有一块内存就是直接内存：该区域不是虚拟机运行时数据区的一部分，最常见的例子就是Java NIO。该去也会抛出OutOfMemoryError。</p>
+<h2 id="解决OutOfMemoryError">解决OutOfMemoryError</h2><p>先判断是那些内存区域出现了该异常，然后再根据可能在这些区域出现问题的代码中进行定位。</p>
+<ol>
+<li><p>堆溢出。大量从GC Roots可达的对象在堆上被创建。可以同过VM Args来进行调试：-Xms20m -Xmx20 -XX:+HeapDumpOnOutOfMemoryError。让虚拟机在出现内存异常是Dump出当前的内存堆快照以便分析。可以通过Eclipse的内存映像分析工具分析Dump出的文件，重点确认内存中的对象是否是必要的，是内存溢出还是内存泄露。如果是内存泄露，可以查看泄露对象到GC Roots的引用链。找出了泄漏对象的类型信息及GC Roots引用链信息就可以定位泄露代码的位置。如果是内存溢出，则要看堆参数大小是否合适，从代码检查是否有某些对象生命周期过长，尝试减少程序运行时内存消耗。</p>
+</li>
+<li><p>虚拟机栈和本地方法栈溢出。设置栈大小的参数 -Xss20m。减少堆的容量，方法调用是否正确。</p>
+</li>
+<li><p>方法区溢出。方法区用于存放Class的相关信息，如类名、访问修饰符、常量池、字段描述、方法描述等。可能的原因是常量池变量过多或者加载的类过多。<br>运行时导致常量池变化的一个方法String.intern()，它是一个Native方法，它的作用是：如果字符串常量池中已经包含一个等于此String对象的字符串，则返回代表池中这个字符串的String对象；否则，将此String对象包含的字符串添加到常量池中，并且返回此String对象的引用。方法区溢出也是一种常见的内存溢出异常，一个类要被垃圾收集器回收掉，判定条件是比较苛刻的。因此，在经常动态生成大量Class的应用中，需要特别注意类的回收状况。常见的应用有大量JSP或动态产生JSP文件的应用（JSP第一次运行时需要编译为Java类）、基于OSGi的应用（即使是同一个类文件，被不同的加载器加载也会视为不同的类）等。可以通过设置VM Args：-XX:PermSize -XX:MaxPermSize调整方法区的大小。</p>
+</li>
+<li><p>直接内存溢出。由DirectMemory导致的内存溢出，一个明显的特征是在Heap Dump文件中不会看见明显的异常，如果读者发现OutOfMemeoryError之后Dump文件很小，而程序中又直接或间接使用了NIO，那就可以考虑检查一下是不是这方面的原因。可以通过-XX:MaxDirectMemorySize指定直接内存的大小，如果不指定，则默认与Java堆最大值（-Xmx指定）一样。</p>
+</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>本文是学习Java内存管理的学习笔记。更详细的内容参见《深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）》第二章 Java内存区域及内存溢出异常。</p>
+<h2 id="Java内存划分">Java内存划分</h2><p>Java虚拟机在执行Java程序时会把它]]>
+    </summary>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/tags/Java/"/>
+    
+      <category term="马上有OFFER" scheme="http://zhangmin.name/blog/tags/%E9%A9%AC%E4%B8%8A%E6%9C%89OFFER/"/>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/categories/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[正确地用Java实现单例(Singleton)模式]]></title>
+    <link href="http://zhangmin.name/blog/2014/10/13/%E6%AD%A3%E7%A1%AE%E5%9C%B0%E7%94%A8Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B-Singleton-%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://zhangmin.name/blog/2014/10/13/正确地用Java实现单例-Singleton-模式/</id>
+    <published>2014-10-13T06:26:15.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p>在设计模式中，单例模式解决的是创建对象实例的数量及创建时间的问题。该模式保证一个类只有一个实例，并提供一个全局的访问点访问对象。之所以需要单例模式一个原因是在某些业务背景下，一个对象只能有一个实例，如金融相关的交易管理引擎；另外一个原因是有的对象创建所需要的内存和CPU开销较大，为了优化程序，只在内存中保存一个对象实例。</p>
+<h3 id="单例模式实现的特点">单例模式实现的特点</h3><p>单例模式实现的特点有：</p>
+<ol>
+<li>有一个无参的私有构造函数。</li>
+<li>有一个私有的静态变量保存单例实例的引用。</li>
+<li>有一个公有的静态方法来获取单例实例的引用。</li>
+</ol>
+<h3 id="单例模式的优缺点">单例模式的优缺点</h3><p>单例模式控制了实例的数量，从而保证了访问对象的唯一性。另外，由于由类自己控制实例化进程，所以类在改变实例化进程上有相应的伸缩性。但是由于单例模式自己控制实例化过程，所以整个对象的生命周期也需要由单例类来实现。</p>
+<h3 id="单线程下的实现">单线程下的实现</h3><p>在单线程的情况下，一个单例模式的实现非常简单，代码如下所示：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;&#10;     private static Singleton instance;&#10;     private Singleton() &#123; &#125;&#10;     public static Singleton getInstance() &#123;&#10;           if (instance == null) &#123;&#10;                 instance = new Singleton();&#10;           &#125;&#10;           return instance;&#10;     &#125;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="多线程下的实现">多线程下的实现</h3><p>Java多线程下最简单的同步方法就是使用系统内置的synchronized关键词，只需要在单线程实现代码的getInstance()方法加上synchronized关键词就可以做到线程安全。但是这种实现并不高效。每次只有一个线程访问getInstance方法，但事实上，只要第一次当instance为null时才有必要进行同步，之后就完全没有必要了。所以就有了一种改进实现叫做双重锁检查（Double Checked Locking）。其代码实现如下所示：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;&#10;    private static Singleton instance;&#10;    private Singleton() &#123; &#125;&#10;    public static Singleton getInstance() &#123;&#10;          if (instance == null) &#123;&#10;             synchronized(Singleton.class) &#123;&#10;                 if (instance == null) &#123;&#10;                     instance = new Singleton();&#10;                 &#125;&#10;              &#125;&#10;           &#125;&#10;           return instance;&#10;      &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>之所以要使用双重锁检查是因为如果同时又两个线程进入第一个if语句，就有可能导致创建多个对象的情况。</p>
+<p>但是这种实现还是存在问题的。主要是对于语句instance = new Singleton()这条语句在JVM中执行是分三步的：<br>1. 给instance分配内存。</p>
+<p>2. 调用Singleton的构造函数来初始化成员变量。</p>
+<p>3. 将instance对象指向已经创建完的对象。</p>
+<p>由于JVM为了优化指令执行存在指令重拍，所以2,3两步的顺序不能得到保证。如果对象没有完成初始化就将对象所在的地址引用赋值给了instance，则会导致运行错误。解决这一问题的方法是使用volatile关键字，该关键字在Java内存模型级别保证了变量的可见性，即读到的值一定是最近一次修改的值。它同时也会禁止指令重拍。在Java SE5以后，上述代码就是线程安全的了，因为在Java SE5之前的Java内存模型不能保证volatile关键字禁止指令重拍。</p>
+<p>上面的代码实现不够简洁，一种更简洁的实现如下所示。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;&#10;    private static final Singleton instance = new Singleton();&#10;    private Singleton() &#123; &#125;&#10;    public static Singleton getInstance() &#123;&#10;           return instance;&#10;      &#125;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上述代码虽然简洁但是有一个问题是它会在类加载时就被创建，如果这个对象依赖于一些配置文件，就不能使用这种方式实现单例模式了。</p>
+<p>在《Effective Java》中推荐的实现方式是使用静态内部类来实现的。利用的JVM的实现机制。SingletonHolder类是私有的，只有Singleton才能访问。也是在第一次使用时才创建对象，而且不需要使用同步。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;&#10;       private static class SingletonHolder &#123;&#10;             private static final Singleton INSTANCE = new Singleton();&#10;       &#125;&#10;       private Singleton() &#123; &#125;&#10;       public static Singleton getInstance() &#123;&#10;              return SingletonHolder.INSTANCE;&#10;       &#125;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>推荐的另外一种实现是使用Java的enmu类型，也是使用JVM的实现机制来保证线程安全性的。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public enum Singleton &#123;&#10;     INSTANCE;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码实现的Singleton可以通过Singleton.INSTANCE来访问。</p>
+<h3 id="一些特殊应用场景下的实现">一些特殊应用场景下的实现</h3><h4 id="多ClassLoader环境下的实现">多ClassLoader环境下的实现</h4><p>在多个ClassLoader的环境中，由于Java中每个ClassLoader具有隔离性，即同一个类可以被多个ClassLoader加载并创建实例。为了实现单例模式，就要保证所有的单例类使用相同的ClassLoader。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private static Class getClass(String classname) throws ClassNotFoundException &#123;&#10;      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();&#10;      if(classLoader == null)&#10;         classLoader = Singleton.class.getClassLoader();&#10;      return (classLoader.loadClass(classname));&#10;   &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="需要序列化时的实现">需要序列化时的实现</h4><p>要在单例类的方法中加入readResolve方法保证反序列化的对象仍然是原来的对象。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private Object readResolve() &#123;&#10;     return getInstance();&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="参考文献">参考文献</h3><ol>
+<li>《Effective Java》</li>
+<li><a href="http://wuchong.me/blog/2014/08/28/how-to-correctly-write-singleton-pattern/" target="_blank" rel="external">http://wuchong.me/blog/2014/08/28/how-to-correctly-write-singleton-pattern/</a><br>3.</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在设计模式中，单例模式解决的是创建对象实例的数量及创建时间的问题。该模式保证一个类只有一个实例，并提供一个全局的访问点访问对象。之所以需要单例模式一个原因是在某些业务背景下，一个对象只能有一个实例，如金融相关的交易管理引擎；另外一个原因是有的对象创建所需要的内存和CPU开销]]>
+    </summary>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/tags/Java/"/>
+    
+      <category term="马上有OFFER" scheme="http://zhangmin.name/blog/tags/%E9%A9%AC%E4%B8%8A%E6%9C%89OFFER/"/>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/categories/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[服务提供者架构]]></title>
+    <link href="http://zhangmin.name/blog/2014/10/08/%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9B%E8%80%85%E6%9E%B6%E6%9E%84/"/>
+    <id>http://zhangmin.name/blog/2014/10/08/服务提供者架构/</id>
+    <published>2014-10-08T09:26:37.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p>服务提供者架构（Service Provider Framework）在Java的类库中被广泛使用，如JDBC，JMS，Java Security，等等。</p>
+<p>多个服务提供者实现一个服务，系统为客户端提供多个实现，并把他们从多个实现中解耦出来。<br>服务提供者对实现的修改对客户端是透明的，这样提供了更好的扩展性。<br>该框架有四个重要组成部分：<br>1 服务接口（Service Interface），通过抽象统一声明，由服务提供者进行实现。</p>
+<p>2 服务提供者注册API（Provider Registration API），用于系统注册服务提供者，可以方便让客户端访问。</p>
+<p>3 服务访问API（Service Access API），客户端可以用来获取服务的实例。</p>
+<p>4 服务者提供接口（Service Provider Interface）（可选），提供负责创建服务实现的实例。如果没有该部分，可以通过类名进行注册，并通过反射进行实例化。</p>
+<p>例如在JDBC中：</p>
+<p>Connection 是服务接口，Oracle，MySQL等是服务提供者，它们实现了相对应的服务接口。</p>
+<p>DriverManager.registerDriver是服务提供者注册API。<br>DriverManager.getConnection()是服务访问API。</p>
+<p>Driver就是服务提供者接口,并把自己注册到DriverManager。</p>
+<p>下面通过一个例子说明服务者提供者框架的实现：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//&#26381;&#21153;&#25509;&#21475;&#10;public interface Service &#123;&#10;     public void serve();&#10;&#125;&#10;//&#26381;&#21153;&#25552;&#20379;&#32773;&#25509;&#21475;&#10;public interface ServiceProvider &#123;&#10;     public Service getService();&#10;&#125;&#10;//&#26381;&#21153;&#27880;&#20876;&#31649;&#29702;&#10;public class ServiceManager &#123;&#10;    private ServiceManager() &#123;&#125;&#10;    private static final Map&#38;lt;String, ServiceProvider&#38;gt; registry = &#10;          new ConcurrentHashMap&#38;lt;String, ServiceProvider&#38;gt;();&#10;    public static void registerProvider(String serviceName, ServiceProvider provider) &#123;&#10;          registry.put(serviceName, provider);&#10;    &#125;&#10;    public static Service getServiceByName(String name) &#123;&#10;         ServiceProvider sp = registry.get(name);&#10;         if (p == null) throw new IllegalArgumentException(&#38;quot;Given service not registered&#38;quot;);&#10;         return sp.getService();&#10;    &#125;&#10;&#125;&#10;//&#26381;&#21153;&#20855;&#20307;&#25552;&#20379;&#32773;&#65292;&#24182;&#36827;&#34892;&#27880;&#20876;&#10;public class MyServiceProvider implements ServiceProvider &#123;&#10;      static &#123;&#10;          ServiceManager.register(&#38;quot;myProvider&#38;quot;, new MyServiceProvider());&#10;       &#125;&#10;       public Service getService() &#123;&#10;           return new ServiceImpl();&#10;       &#125;&#10;       class ServiceImpl implements Service &#123;&#10;            public void serve() &#123;&#10;                System.out.println(&#38;quot;Good Morning, My Lord&#38;quot;);&#10;            &#125;&#10;        &#125;&#10;&#125;&#10;//&#23458;&#25143;&#31471;&#20351;&#29992;&#26381;&#21153;&#10;public class Client &#123;&#10;        public static void main(String[] args) throws Exception &#123;&#10;               Class.forName(&#38;quot;MyServiceProvider&#38;quot;);&#10;               Service service = ServiceManager.getServiceByName(&#38;quot;myProvider&#38;quot;);&#10;               service.serve();&#10;        &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p><em>参考文献</em></p>
+<p><em>Effective Java</em></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>服务提供者架构（Service Provider Framework）在Java的类库中被广泛使用，如JDBC，JMS，Java Security，等等。</p>
+<p>多个服务提供者实现一个服务，系统为客户端提供多个实现，并把他们从多个实现中解耦出来。<br>服务提供者对]]>
+    </summary>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/tags/Java/"/>
+    
+      <category term="马上有OFFER" scheme="http://zhangmin.name/blog/tags/%E9%A9%AC%E4%B8%8A%E6%9C%89OFFER/"/>
+    
+      <category term="学习笔记" scheme="http://zhangmin.name/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[最荒唐]]></title>
+    <link href="http://zhangmin.name/blog/2014/10/07/%E6%9C%80%E8%8D%92%E5%94%90/"/>
+    <id>http://zhangmin.name/blog/2014/10/07/最荒唐/</id>
+    <published>2014-10-06T16:40:34.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p>世界上最遥远的距离<br>是我们爱得要死  你却在玩手机<br>世界上最遥远的距离<br>是我非常地爱你  却不能在一起<br>最荒唐的是什么？<br>最荒唐的又是什么？<br>最最荒唐的又是什么？<br>最最最荒唐的还能是什么？</p>
+<p>明明我都已知道了真相，<br>你还在那里撒谎，你还在那里撒谎<br>明明我都已知道了真相，<br>你也知道我知道真相，你还在那里撒谎<br>最荒唐的是什么？<br>最荒唐的又是什么？<br>最最荒唐的又是什么？<br>最最最荒唐的还能是什么？</p>
+<p>左小祖咒; 黄耀明<br>吉他：刘巨然<br>贝斯：李强<br><a id="more"></a></p>
+<embed src="http://www.xiami.com/widget/8073646_1773518107,_235_346_FF8719_494949_1/multiPlayer.swf" type="application/x-shockwave-flash" width="235" height="346" wmode="opaque">
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>世界上最遥远的距离<br>是我们爱得要死  你却在玩手机<br>世界上最遥远的距离<br>是我非常地爱你  却不能在一起<br>最荒唐的是什么？<br>最荒唐的又是什么？<br>最最荒唐的又是什么？<br>最最最荒唐的还能是什么？</p>
+<p>明明我都已知道了真相，<br>你还在那里撒谎，你还在那里撒谎<br>明明我都已知道了真相，<br>你也知道我知道真相，你还在那里撒谎<br>最荒唐的是什么？<br>最荒唐的又是什么？<br>最最荒唐的又是什么？<br>最最最荒唐的还能是什么？</p>
+<p>左小祖咒; 黄耀明<br>吉他：刘巨然<br>贝斯：李强<br>]]>
+    
+    </summary>
+    
+      <category term="生活" scheme="http://zhangmin.name/blog/tags/%E7%94%9F%E6%B4%BB/"/>
+    
+      <category term="MSE" scheme="http://zhangmin.name/blog/categories/MSE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Java对象创建初始化顺序]]></title>
+    <link href="http://zhangmin.name/blog/2014/08/26/Java%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%BA%E5%BA%8F/"/>
+    <id>http://zhangmin.name/blog/2014/08/26/Java对象创建初始化顺序/</id>
+    <published>2014-08-26T06:34:14.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p>Java对象初始化关乎程序的安全运行，所以理解Java的初始化过程非常必要。Java中对象的初始化和创建是捆绑在一起的，两者不能分离。Java尽力保证所有变量在使用前都能够得到恰当的初始化。与C++一样，Java也通过构造器确保初始化。构造器是一种特殊类型的方法，它没有返回值。这与返回值为空的方法是不同的，虽然是空的返回值，但它仍然可以返回其他内容。构造器不返回任何东西。即使是用new表达式创建对象，也是new表达式返回新对象的引用，构造器没有返回任何东西。</p>
+<p>本文将从一个实例分析Java中对象创建的初始化顺序。</p>
+<p>假设有一个Horse的类，其对象的创建过程一般如下：</p>
+<ol>
+<li>当首次创建类型为Horse的对象时（构造器可以看成是静态方法）或者Horse的静态方法、静态域首次被访问时，Java解释器会查找类路径，定位Horse.class文件。如果有Horse继承自某一个类，还要查找并加载相应类的Class文件。</li>
+<li>载入Horse.class（即创建一个Class对象，如果有基类还要载入基类的Class），有关静态初始化的所有动作都会执行。静态初始化只在Class对象首次加载的时候进行一次。</li>
+<li>当用new Horse(）创建对象时，首先在堆上分配足够的存储空间。如果有父类，先执行父类的变量初始化和构造器。</li>
+<li>这块存储空间清零，自动将所有基本类型数据设置为默认值，引用为null。</li>
+<li>执行所有出现于字段定义处的初始化动作。</li>
+<li>执行构造器。</li>
+</ol>
+<p>在初始化过程中要注意两点：一是基本类型会有一个默认的初始值。这种自动初始化是无法阻止的。<br>二是非静态程序初始化块也会在构造函数之前执行。且在每次对象创建时都会执行。（常用语匿名内部类的初始化）。</p>
+<p>下面是一个实列，Horse类继承了Animal类，具体代码如下所示。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package name.zhangmin.java;&#10;public class Animal &#123;&#10; private int i = 9;&#10; protected int j;&#10; static &#123;&#10; System.out.println(&#38;quot;Animal&#39;s static block&#38;quot;);&#10; &#125;&#10; &#123;&#10; System.out.println(&#38;quot;Animal&#39;s non-static block&#38;quot;);&#10; &#125;&#10; Animal() &#123;&#10; System.out.println(&#38;quot;Animal&#39;s constructor&#38;quot;);&#10; System.out.println(&#38;quot;i = &#38;quot; + i + &#38;quot;, j = &#38;quot; + j);&#10; &#125;&#10; static int printInit(String s) &#123;&#10; System.out.println(s);&#10; return 16;&#10; &#125;&#10; private static int x1 = printInit(&#38;quot;static Animal.x1 initialized&#38;quot;);&#10;&#125;&#8203;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package name.zhangmin.java;&#10;public class Horse extends Animal &#123;&#10; private int k = printInit(&#38;quot;Horse.k initialized&#38;quot;);&#10; Horse() &#123;&#10; System.out.println(&#38;quot;Horse&#39;s constructor&#38;quot;);&#10; System.out.println(&#38;quot;k = &#38;quot; + k + &#38;quot;, j = &#38;quot; + j);&#10; &#125;&#10; public static void main(String[] args) &#123;&#10; System.out.println(&#38;quot;Horse&#39;s Main&#38;quot;);&#10; Horse h = new Horse();&#10; System.out.println(&#38;quot;Creating another Horse&#38;quot;);&#10; new Horse();&#10; &#125;&#10; static int x2 = printInit(&#38;quot;static Horse.x2 initialized&#38;quot;);&#10; &#123;&#10; System.out.println(&#38;quot;Horse&#39;s non-static block&#38;quot;);&#10; &#125;&#10; static &#123;&#10; System.out.println(&#38;quot;Horse&#39;s static block&#38;quot;);&#10; &#125;&#10;&#125;&#8203;</span><br></pre></td></tr></table></figure>
+<p>上述代码的运行结果如下所示：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Animal&#39;s static block&#10;static Animal.x1 initialized&#10;static Horse.x2 initialized&#10;Horse&#39;s static block&#10;Horse&#39;s Main&#10;Animal&#39;s non-static block&#10;Animal&#39;s constructor&#10;i = 9, j = 0&#10;Horse.k initialized&#10;Horse&#39;s non-static block&#10;Horse&#39;s constructor&#10;k = 16, j = 0&#10;Creating another Horse&#10;Animal&#39;s non-static block&#10;Animal&#39;s constructor&#10;i = 9, j = 0&#10;Horse.k initialized&#10;Horse&#39;s non-static block&#10;Horse&#39;s constructor&#10;k = 16, j = 0&#8203;</span><br></pre></td></tr></table></figure>
+<p>首先会执行Animal的静态域，静态块的初始化。执行的顺序就是域或块声明的顺序。执行完父类静态域的初始化后执行Horse的静态域初始化。类加载完成后，开始执行对象的创建过程。在这个过程中先执行父类Animal的非静态域或者块的初始化，然后是父类的构造器，之后才是子类Horse的非静态域或块的初始化，构造器。</p>
+<p>当第二次创建Horse对象时我们可以看到只执行父类非静态域或者块的初始化，父类Animal构造器，之后才是子类的非静态域，构造器。</p>
+<p>从上述的初始化过程可知，Java尽力保证了每个变量、对象在使用前能够正确的初始化。类的静态域只初始化一次，而非静态域则在每次对象创建时都进行初始化。如果有继承关系，要先完成父类的初始化和构造函数后才执行子类的初始化和构造函数。</p>
+<p><em>参考资料：《Java编程思想》第五章初始化与清理</em></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Java对象初始化关乎程序的安全运行，所以理解Java的初始化过程非常必要。Java中对象的初始化和创建是捆绑在一起的，两者不能分离。Java尽力保证所有变量在使用前都能够得到恰当的初始化。与C++一样，Java也通过构造器确保初始化。构造器是一种特殊类型的方法，它没有返回]]>
+    </summary>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/tags/Java/"/>
+    
+      <category term="马上有OFFER" scheme="http://zhangmin.name/blog/tags/%E9%A9%AC%E4%B8%8A%E6%9C%89OFFER/"/>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/categories/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[标准的软件面试准备过程]]></title>
+    <link href="http://zhangmin.name/blog/2014/08/07/%E6%A0%87%E5%87%86%E7%9A%84%E8%BD%AF%E4%BB%B6%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E8%BF%87%E7%A8%8B/"/>
+    <id>http://zhangmin.name/blog/2014/08/07/标准的软件面试准备过程/</id>
+    <published>2014-08-07T08:23:48.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>要把基本的都掌握了后，再去准备比较难得问题：如动态规划。而且要是工业上经常用的知识，其余你知道就行了。</p>
+</blockquote>
+<h3 id="行为面试">行为面试</h3><p>行为面试存在的作用就是：面试官想认识你，了解你，也是你让你放松下来。回答问题时不要自大，内容要具体，举出具体的示例。但也只是要点即可。不可以侃侃而谈。</p>
+<p>准备的话就可以问自己一下的问题：</p>
+<p>最有挑战的事？<br>学到的东西？<br>最有趣的事？<br>最难的bug？<br>最喜欢的事？<br>与组员的冲突？</p>
+<p>回答这种类型的问题的方式一般为：S（situation）A（action）R（response）Issue1 Issue2 etc. 即开始描述你所处的情境，解释你采取了什么行动，最后解释结果是什么。如果面试官愿意，你可以继续讲存在的其他问题。</p>
+<p>在行为面试时问好的问题很重要，下面是几个例子可供参考：</p>
+<p>真实的问题：一天多长时间编码？每周开几次会？项目组测试人员和开发人员的比列？交互是如何进行的？</p>
+<p>启发性问题：你们使用了X技术，如果遇到其他问题会怎么样？</p>
+<p>学习型问题：我对可扩展性很感兴趣，我可以从哪里进一步学到相关知识</p>
+<h3 id="五步准备法">五步准备法</h3><p>1.试着自己解决问题。认真地尝试，如果解决了，要考虑时间空间复杂度，及是否还有改进的可能。</p>
+<p>2.在纸上写下自己的代码。没有编译器的自动补全，纠错，警告，你的代码会变成什么样？</p>
+<p>3.测试你的代码。</p>
+<p>4.将你的代码输入电脑，测试已有的用例和一些儿新的用例。</p>
+<p>5.列一份你犯的错误清单，分析你最常犯的错误，并尝试改正。</p>
+<p>如果遇到了一个我知道的问题我该怎么办？当然是告诉你的面试官，这是正确的做法，也是聪明的做法。诚信在职场还是非常有份量的。<br>你不一定做出所有的面试题目，如果你被问到的问题越来越难，这说明面试官只是在履行他的职责而已。他要测试你解决问题的能力及遇到难题时的应对策略。遇到难题，你要尽力解决，只有你的面试官说可以了，你才可以停止，否则，你就应该继续努力。</p>
+<h4 id="我必须掌握的">我必须掌握的</h4><p>数据结构：列表，二叉树，Tries，栈，队列，向量，哈希表。</p>
+<p>算法：BFS，DFS，二分搜索，归并排序，快速排序，树插入，查找等。</p>
+<p>概念：位操作，单体模式，工厂模式，内存（堆栈），递归，大O分析法。</p>
+<p>要知道如何实现，以及时间空间复杂度分析，并且实现地越熟练越好。</p>
+<h4 id="五步法示例">五步法示例</h4><p>向你的面试官提问，消除题目相关的歧义。问好的问题，如：数据类型是什么？数据量多大，即输入多大？解决问题前的假设是什么？用户是谁？</p>
+<p>设计算法。这个过程中要说出自己的思路，要考虑时空复杂度。如果数据量很大时该怎么办？会不会引起其它的问题？折中是什么？有没有提供特殊的信息可以帮助进行算法设计？</p>
+<p>写出伪代码。要告诉你的面试官你写的是伪代码。</p>
+<p>不紧不慢的写出代码。大胆的使用数据结构，节省你写代码的白纸空间。</p>
+<p>测试程序，修正错误。特殊情况：0， 空，最大值，负数；用户操作错误：用户输入null或者负数；一般情形：正常的用例。如果有错误，我是如何应对的？要停下来想清楚，不要去乱试，随意改动代码。</p>
+<h3 id="创建一个算法的五种方法">创建一个算法的五种方法</h3><p>这些只是最基本的方法，去柔和它们，实践它们，你就可以解决大部分编程问题了。</p>
+<h4 id="方法一：举例">方法一：举例</h4><p>举些儿具体的例子，看你如何处理他们，能不能因此得到一个一般的规则。</p>
+<p>例如：给定一个时间如5:10分，计算分针和时针之间的角度。画一个表盘，想象时针和分针的运动。分钟数和从12点的角度的关系：360 <em> minutes / 60。小时数和从12点的角度的关系：360 </em> (hour % 12) / 12 + 360 <em> (minutes / 60) </em> (1 / 12)。相减即可。</p>
+<h4 id="方法二：模式匹配">方法二：模式匹配</h4><p>将现在的问题与已经知道的方法进行匹配，如果相似，进行一些修改就可以了。</p>
+<p>例如：找一个旋转的有序数组中的最小值？找最小的值的方法。不好，没有利用有序这个事实。二分查找，找到第一个违反升序的元素就是最小值。</p>
+<h4 id="方法三：简化与泛化">方法三：简化与泛化</h4><p>简化条件来尝试解答，如果有答案，返回原有的问题看能不能解决。</p>
+<p>例子：一个字符串是由一本杂志中的单词组成的。那么，如何确定一个字符串是由一个给定的杂志产生的呢？先简化，如果是字符怎么办？使用字符的基数排序，创建一个数组，统计这个字符串中出现的字符的个数。然后我们在杂志中寻找这些字符是否都在就可以了。那么回到原来的问题，如果是单词该怎么办？一样的思路，使用一个Map来统计每个单词的数量不就可以了么。</p>
+<h4 id="方法四：使用基本情况构建算法">方法四：使用基本情况构建算法</h4><p>一个元素时如何解决，两个元素呢，三个，四个……通常这种方法会导致一个递归的算法。</p>
+<p>例子：产生一个字符串的所有排列。考虑字符串abcdef。基本情况{a} -&gt; {a}；{ab}-&gt;{ab}{ba}；{abc}-&gt;merge(c, ab) = cab, acb, abc；merge(c, ba) = cba,bca,bac先产生s[1..n- 1],然后将s[n]插入每个可能的位置。</p>
+<h4 id="方法五：数据结构头脑风暴">方法五：数据结构头脑风暴</h4><p>尝试使用每一种数据结构来解决。</p>
+<p>例子：随机产生的数被存储到一个可以扩展的数组，如何跟踪中位数？<br>列表：列表不适合访问和排序。</p>
+<p>数组：已经有数组了，能维持数组有序，但代价有点大。</p>
+<p>二叉树：二叉树适用排序，如果树是平衡的，可能根节点就是，到那时如果是偶数个元素，则是中间两个元素的平均值。</p>
+<p>堆：适合排序和保持最大或者最小值，如果有两个堆，可以跟踪较大的一半和较小的一半。较大的一半保存在最小堆。这样我们就有可能的中位数在根节点，如果两个堆大小不一样可以从中一个取下一个，放到另一个堆中。</p>
+<h3 id="面向对象设计">面向对象设计</h3><p>你的目标是什么？<br>你的核心对象是什么？<br>每一个对象之间的联系是什么样的？<br>对象之间如何交互？<br>有没有比较难的算法？</p>
+<p>设计过程中多考虑 各种权衡，多交流。</p>
+<h3 id="扩展性问题">扩展性问题</h3><p>先解决小规模数据时的问题。再考虑大数据量时如何处理。然后考虑把原来的解决方案转化到大数据量时的情况。可能遇到的问题是内存耗尽，你需要分割文件放到不同的机器上，通常使用哈希来进行分配。你的数据量决定你需要多少台机器。一个机器如何知道另一台机器可以访问，或者有相关数据；各个机器之间的数据会不会不同步；在不同机器之间通信的代价是什么等等。</p>
+<h3 id="测试类问题">测试类问题</h3><h4 id="如何测试日常的物品？">如何测试日常的物品？</h4><p>如何测试一支笔？<br>问清这个物品是什么？是什么样的笔，小孩用的，宇航员用的，还是普通的笔。</p>
+<p>谁在用它？使用人的特质。</p>
+<p>意料之外的使用？会不会被小孩吃到嘴里。</p>
+<p>极端情形有哪些？在低温条件下。</p>
+<p>坏了能不能很好的恢复？</p>
+<p>测试的用例是什么？</p>
+<h4 id="如何测试一个软件？">如何测试一个软件？</h4><p>测试一个邮箱客户端？</p>
+<p>问问题消除歧义，确定要测试的到底是什么？</p>
+<p>谁是用户？</p>
+<p>功能集合是什么？</p>
+<p>异常使用情形是什么？</p>
+<p>失败了会怎么样，能不能友好的结束？</p>
+<p>什么可以自动化测试，什么需要手动测试？</p>
+<h4 id="测试一个方法">测试一个方法</h4><p>测试一个排序函数。</p>
+<p>消除歧义。升序，降序，时空复杂度，什么样的数据类型。<br>需要测什么。结果，内存消耗。<br>期望的用例。一个没有排序的数组。<br>极端的情况。空值，大树组，已经排序的等等。</p>
+<h3 id="十大面试准备误区">十大面试准备误区</h3><p>1.在电脑上练习<br>2.不去排练行为面试问题<br>3.不进行模拟面试<br>4.试着记忆答案<br>5.话太多<br>6.话太少<br>7.仓促的回答<br>8.不进行调试（大脑中调试）<br>9.草率的写代码<br>10.放弃</p>
+<h3 id="肢体语言助你一臂之力">肢体语言助你一臂之力</h3><p><img src="http://a.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=ab1e980e9145d688a702b2a194f90c23/fd039245d688d43fef77c0cf7e1ed21b0ef43b34.jpg?referer=930ecf69004f78f0d91caec385ea&amp;x=.jpg" alt="面试肢体语言"></p>
+<p>【译者：华华甜品，原文来源：lifehack.org，原文标题：Getting ahead in business with body language】</p>
+<h3 id="参考资料">参考资料</h3><ol>
+<li><em>The Google Resume</em> Gayle Laakmann McDowell2.  <em>CRACKING THE CODING INTERVIEW -150 Programming Interview Questions and Solutions</em> GAYLE LAAKMANN</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>要把基本的都掌握了后，再去准备比较难得问题：如动态规划。而且要是工业上经常用的知识，其余你知道就行了。</p>
+</blockquote>
+<h3 id="行为面试">行为面试</h3><p>行为面试存在的作用就是：面试官想认识你，了解你，也是你让]]>
+    </summary>
+    
+      <category term="马上有OFFER" scheme="http://zhangmin.name/blog/tags/%E9%A9%AC%E4%B8%8A%E6%9C%89OFFER/"/>
+    
+      <category term="原创" scheme="http://zhangmin.name/blog/categories/%E5%8E%9F%E5%88%9B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[准备一份对得起自己的简历]]></title>
+    <link href="http://zhangmin.name/blog/2014/08/06/%E5%87%86%E5%A4%87%E4%B8%80%E4%BB%BD%E5%AF%B9%E5%BE%97%E8%B5%B7%E8%87%AA%E5%B7%B1%E7%9A%84%E7%AE%80%E5%8E%86/"/>
+    <id>http://zhangmin.name/blog/2014/08/06/准备一份对得起自己的简历/</id>
+    <published>2014-08-06T08:22:50.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p>简历的作用就是要凸显出你相关方面的能力，而这些能力可以向招聘者证明你就是他要找的人。<br>简历中所有内容的核心就是：说服招聘者：“我就是你们想找的人！”。</p>
+<h3 id="六个优秀简历的标志">六个优秀简历的标志</h3><p>1.成就定位</p>
+<p>你的简历中的内容应该集中体现你做了什么，而不是你应该做的。写的是做的具体的事情，而不是你所负责的内容。<br>证明你是一个做事的人。当你在简历中使用“贡献”，“参加”时，这可能是个好兆头。</p>
+<p>2.可以量化的结果</p>
+<p>用数字说话。量化的结果可以帮助招聘人员了解你做的事，及其做的效果。量化的结果对招聘人员会很有吸引力。</p>
+<p>3.简历的目的性要强</p>
+<p>根据应聘的职位进行简历内容的调整。不要想着一份简历走遍天下，除非你找的职位都是一样的。</p>
+<p>4.内容通俗易懂</p>
+<p>语言要通俗易懂，避免使用生僻的专业词汇。要使一般人都能够领略简历中的要点。</p>
+<p>5.简洁</p>
+<p>避免有任何的语法错误和常识性的错误。排版合理，段落的内容不要太多。有关简历的设计可以参考博文<a href="http://www.zhangmin.name/blog/2014/05/%E6%87%82%E7%82%B9%E8%AE%BE%E8%AE%A1%E5%8F%8A%E5%9C%A8%E7%AE%80%E5%8E%86%E8%AE%BE%E8%AE%A1%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" target="_blank" rel="external">懂点设计及在简历设计中的应用</a>,简单几个原则就可以使你的简历变的简洁，设计友好。</p>
+<p>6.良好的结构，清晰</p>
+<p>一般的简历包括教育，工作经验，项目，专业技能，奖励等，你可以根据具体需求进行组合。下面的内容讨论这些内容。</p>
+<h3 id="简历的结构">简历的结构</h3><p>一般简历都采用时间顺序，但你也可以使用功能顺序。使用功能顺序多是因为工作的职位不能体现你的成就，或者有工作间隔。<br>但在阅“历”无数的招聘者哪里，什么都一清二楚。所以一般还是使用反向时间顺序，最近优先。</p>
+<p>标准的简历结构：工作经验，教育，总结，技能，项目，背景，期望的职位等等。</p>
+<p>对于没有工作经验的学生来说教育应该放到第一个部分。内容包括学位，学校，专业，成绩，你认为重要的活动，相关课程。<br>奖励也可以放到教育经历下面，如果你认为单独列出很浪费空间的话，或者没有必要进行格外的强调。<br>一般高中经历没有必要写，只要写到大学就可以了。当然除非你是新生，或者向一个校友求职想增强联系，或者有非常好的表现时，也可以写。</p>
+<p>对于工作经验这一项，一般内容包括工作单位，职位名称，时间，具体的组，突出你的成就，用数字说话。没有工作的学生可以写自己的项目经验作为替代。</p>
+<p>对于技能一般包括语言，技术。要进行分类。不要写明显的技能，如Office，Windows使用之类的。​当然只有技术类的工作需要这一项。</p>
+<p>另外，如果你想找一份与已有工作经验或者项目经历不同的领域的工作，你可以加一项“求职目标”来进行说明。除此之外，没必要写这一项。</p>
+<h3 id="精简简历">精简简历</h3><p>没有多少年工作经验的人简历一页就够了，当然一般情况下是如此。精简的简历无非就是删掉无关的内容。<br>最后要确保留下的内容能够区分与他人的不同，帮助说服招聘者你就是他要找的人。<br>浏览简历上的每句话，不断的大声问自己它可以说服招聘人员来面试你吗？若果没有好的答案，你最好删掉它。​</p>
+<h3 id="参考资料">参考资料</h3><p>《The Google Resume》 Gayle Laakmann McDowell</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>简历的作用就是要凸显出你相关方面的能力，而这些能力可以向招聘者证明你就是他要找的人。<br>简历中所有内容的核心就是：说服招聘者：“我就是你们想找的人！”。</p>
+<h3 id="六个优秀简历的标志">六个优秀简历的标志</h3><p>1.成就定位</p>
+<p>你的简历]]>
+    </summary>
+    
+      <category term="马上有OFFER" scheme="http://zhangmin.name/blog/tags/%E9%A9%AC%E4%B8%8A%E6%9C%89OFFER/"/>
+    
+      <category term="原创" scheme="http://zhangmin.name/blog/categories/%E5%8E%9F%E5%88%9B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[真伪球迷的2014巴西世界杯]]></title>
+    <link href="http://zhangmin.name/blog/2014/07/23/%E7%9C%9F%E4%BC%AA%E7%90%83%E8%BF%B7%E7%9A%842014%E5%B7%B4%E8%A5%BF%E4%B8%96%E7%95%8C%E6%9D%AF/"/>
+    <id>http://zhangmin.name/blog/2014/07/23/真伪球迷的2014巴西世界杯/</id>
+    <published>2014-07-23T14:25:04.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=78d85ae138292df593c3ac108c0a2d5d/f11f3a292df5e0fe751316cf5e6034a85fdf72f1.jpg?referer=9308cdf7cb3d70cf15ed9e3dbeaf&amp;x=.jpg" alt="2014 巴西世界杯"></p>
+<h3 id="真伪球迷">真伪球迷</h3><p>我算是真正的伪球迷，只关心比赛。塞外的新闻一概不看，球员历史也不看。只看在世界杯赛场上的表现。<br>我所有关于足球的记忆只有中国队和世界杯，可是最悲剧的莫过于中国队进不了世界杯。<br>记得最早看世界杯是2006年，当时仅有的印象就是罗纳尔多了。<br>2010年世界杯是在大学时，当时支持巴西队，喜欢卡卡。可是巴西不给力，很快就淘汰了。记得早上起来看西班牙和荷兰的决赛，加时赛伊涅斯塔绝杀荷兰。</p>
+<h3 id="我的2014世界杯">我的2014世界杯</h3><h4 id="揭幕战">揭幕战</h4><p>3点多起来看巴西世界杯揭幕战，巴西对阵克罗地亚。刚开始马塞洛的乌龙球给比赛增加了不少乐趣。大家猜的不错，第一个进球终究是巴西的。随后内马尔被黄牌警告，但是很快内马尔扳平了比分。下半场，巴西的点球，内马尔梅开二度。克罗地亚现在已经是明显处于劣势，最后奥斯卡的捅射，彻底锁定了胜局。全场比分3比1，相当的精彩。巴西队进了四个球！</p>
+<h4 id="错过的复仇之战">错过的复仇之战</h4><p>看了一场比赛，墨西哥对阵喀麦隆，墨西哥一个球员的两个好球都没裁判吹了越位。看完上半场就睡觉了。晚上两点的50的闹钟响了，朦胧中听到。可是在当时，睡眠的功用远远大于看一场球带来的，遂睡去。但是就没想这可是上届世界杯冠亚军的比赛。</p>
+<p>早上起来看新闻，才知道荷兰大胜西班牙，报了上届世界杯的仇。范佩西的鱼跃射门，罗本的进球，卡西利亚斯的失误。如此精彩的一场比赛我居然错过了，可惜可惜。</p>
+<h4 id="欧洲中国队英格兰">欧洲中国队英格兰</h4><p>早上看英格兰和意大利，英格兰果然又是悲剧了。接下来又看了科特迪瓦和日本的比赛，又是一个逆转，这届世界杯好多逆转。德罗巴不愧时科特迪瓦的精神偶像。上场后立马改变了场上的局势，扳平，反超比分。</p>
+<h4 id="悲情的C罗">悲情的C罗</h4><p>德国狂虐葡萄牙，葡萄牙丢球又丢人，受伤的受伤，英雄c罗也只能望洋兴叹。毕竟足球不是一个人的足球。</p>
+<h4 id="黑马哥斯达黎加和不靠谱的意大利人">黑马哥斯达黎加和不靠谱的意大利人</h4><p>0点开看意大利和哥斯达的比赛，最终意大利零比一告负，造成了英格兰的航班返航，自己还得努力争出线名额。意大利整场比赛总是那两个点，中场总是被断球，前场总是越位。</p>
+<h4 id="再顽强的伊朗，终究不敌梅球王的一脚绝杀">再顽强的伊朗，终究不敌梅球王的一脚绝杀</h4><p>伊朗队踢得确实顽强，曾经一度有超越阿根廷的可能，天意弄人，最后一两分钟，梅西进球了。我看到抱头无奈的伊朗后卫，对于他们来说坚持了整整九十分钟，他们打得都非常好，可是最后一两分钟却丢球了。这就是悲剧，当你眼看着就要成功时，却失败了。正因为如此，这场比赛才会长留于记忆深处。对于球迷来说，我感觉到整栋楼都震动了一下。仿佛云雨之欢最后的一刻，男人们最想要的快感。世界杯如男人，因为这就是一场男人的盛宴。</p>
+<h4 id="战术荷兰">战术荷兰</h4><p>荷兰和智力的比赛，最后时刻，荷兰队的年轻球员连进两球。荷兰队的战术是成功的。</p>
+<h4 id="第一场淘汰赛">第一场淘汰赛</h4><p>巴西对阵智力看的真是揪心，1比1常规时间，0比0加时赛，直到点球大战才3比2赢了对手。赢得真是危险，可以说是悬崖边上的胜利。</p>
+<p>我看到了十号内马尔这个小伙子，92年的年轻球员的抗压能力真是强，最后一个点球罚的如此淡定。</p>
+<h4 id="英雄斯内德">英雄斯内德</h4><p>本以为荷兰就要回家了，结果斯内德的射门挽救了荷兰队，而罗本创造的点球，则把墨西哥对送回了家。真是一场精彩的比赛。墨西哥离进八强破纪录只有十五分钟的时间，可是就在这十五分钟，他们输了。这就是足球的魅力之处，让无数球迷激动，流泪的原因。</p>
+<h4 id="没有啥感情的法国">没有啥感情的法国</h4><p>法国的比赛就不看了，没看几场比赛，没啥感情。德国的太早了，明早就废了。休整，看阿根廷和瑞士的比赛。</p>
+<h4 id="进球使人清醒">进球使人清醒</h4><p>先看了德国对阵法国。感觉两队势均力敌。但总有输赢，因此德国赢了。<br>定闹钟，看巴西对阵哥伦比亚。幸亏进球快，不然就要睡着了。看完球的早上拉住窗帘补觉，睡醒后不觉太累。</p>
+<h4 id="和小伙伴一起看球">和小伙伴一起看球</h4><p>阿根廷对阵比利的比赛，和田总，波妹，勇哥一块看球。看点却各不同，他人盼“弱队”胜，我盼强队胜。又看了荷兰和哥斯达黎加的比赛，本以为也像巴西对阵哥伦比亚，也是上半场进球，最终2比1，可是竟然打平，点球大战决出胜负。哥斯达黎加虽然练过点球，终究是开天辟地第一次参加四分之一决赛，终究遗憾离开。</p>
+<p>至今为止，四强产生，都是传统强队，巴西，德国，荷兰，阿根廷。现在选择倾向于那个球队，还真是困难。只是希望比赛一如既往的精彩。毕竟哪个队夺冠，和我的关系其实也没多大关系。只求世界杯给我带来时光的美好，不必感叹蹉跎光阴。</p>
+<h4 id="巴西被虐！">巴西被虐！</h4><p>当四点的闹钟响时，我没有及时的起床。再等意识到时，已经是四点半了，打开电视，发现比分是五比零，第一反应是看错了。看了一会儿发现真是这个比分。真是不可思议，居然被德国虐成这样。基本就可以去睡觉了。但是心里还是妄想巴西能够扳回来。至少再进几个球。最终七比一，巴西由奥斯卡打进安慰球。老天如此不公，在巴西，东道主，半决赛，这样悬殊的，令人震惊的比分！<br>正所谓越想得到的，越得不到，反而会意想不到的失去。</p>
+<h4 id="无聊的半决赛，斯内德英雄变“鬼雄”">无聊的半决赛，斯内德英雄变“鬼雄”</h4><p>去勇哥寝室看世界杯第二场半决赛。看之前就有一种预感，不会很快进球的。果不如然，到九十分钟仍然没有结束比赛的意思。阿根廷有个机会，只是头球力道较小，被守门员没收。到这时，真像解说所说，不希望那一队被绝杀。因为两队都踢得不错，就让点球大战决出胜负吧。</p>
+<p>荷兰的第一个点球由弗拉尔主罚，但就阿根廷的守门员罗梅罗扑出了。阿根廷第一个梅西稳稳的罚进。第三个斯内德又被扑出。结束了，两个点球被扑出。阿根廷胜出，和德国争夺冠军。荷兰和巴西争第三。</p>
+<h4 id="最无聊的三四名比赛">最无聊的三四名比赛</h4><p>晚上睡着后，中途就没听到闹钟响。早上虽然没熬夜，但是依然睡到九点多十点。才起来看新闻，巴西零比三输了。幸亏没看，看完心情更差。巴西是要彻底完了，没了内马尔，踢的和中国队一个水平！</p>
+<h4 id="《大话世界杯》《翻转巴西》">《大话世界杯》《翻转巴西》</h4><p>中午看《大话世界杯》，又看直播。两位巴西球迷灯叔颜晓华和黄健翔痛斥巴西队的表现，令人失望之极，连中国队都不如。两个年纪大的球迷，对什么大多都是感慨，对昔日精彩足球的追忆，以及经历过太多后对复杂世界的深刻理解。没有了年轻人的狂热激情，只有对人生终极的思考。</p>
+<p>看《翻转巴西》，巴西女神带着王涛看比赛，游巴西。体验现在真实的巴西是什么养的。</p>
+<h4 id="英雄末路，战车赢得大力神杯">英雄末路，战车赢得大力神杯</h4><p>凌晨三点世界杯决赛，到底是一个王朝还是一代球王？睡不着，躺在床上看书。还是睡不着，看视频。很长时间过去后，终于到两点四十了，看看手机，准备看决赛。起来洗把脸，漱口。</p>
+<p>刚开始阿根廷踢的非常好，伊瓜因有个单刀的机会，可是来的太突然，没有把握住。后来德国也有很有威胁的射门，上半场零比零。下半场也差不多，双方各有机会，只不过德国控球率占绝对的优势。</p>
+<p>加时，上半场很快结束。下半场113分钟，格策一球绝杀阿根廷。一个王朝，24年后德国再次夺冠。梅西得了金球奖，可是闷闷不乐，遗憾，伤心，苦涩的微笑。大力神杯，那么近，那么远。</p>
+<p>当德国捧起大力神杯时，我真希望时梅西举起奖杯。梅西没有了迪玛利亚这个好搭档，终究还是不能夺冠。其他队友都有很好的机会，可是都浪费了。</p>
+<p>六点，睡觉。这个过程居然和四年前的南非世界杯非常相像，也是一百三十多分钟，伊涅斯塔的一球绝杀荷兰。一个月的狂欢结束，下一个轮回开始。</p>
+<h4 id="汉字的神奇预测是不是能助中国队一臂之力？！">汉字的神奇预测是不是能助中国队一臂之力？！</h4><p>世界杯四强的排名顺序还真应验了网友的预测：</p>
+<p><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=a78e60e36f224f4a5399731639cce16f/42166d224f4a20a453562a0292529822730ed0ae.jpg?referer=fc2516dfc45c10387d69faf21064&amp;x=.jpg" alt="2014巴西世界杯四强结果"></p>
+<h4 id="属于我所在时代的球王">属于我所在时代的球王</h4><p>球王贝利，一代传奇马拉多纳，忧郁王子巴乔，和我又有什么关系。在属于我的时代中，内马尔，梅西，c罗，J罗才是对我有意义的。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=78d85ae138292df593c3ac108c0a2d5d/f11f3a292df5]]>
+    </summary>
+    
+      <category term="生活" scheme="http://zhangmin.name/blog/tags/%E7%94%9F%E6%B4%BB/"/>
+    
+      <category term="MSE" scheme="http://zhangmin.name/blog/categories/MSE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Java实现RESTful Service]]></title>
+    <link href="http://zhangmin.name/blog/2014/07/16/Java%E5%AE%9E%E7%8E%B0RESTful-Service/"/>
+    <id>http://zhangmin.name/blog/2014/07/16/Java实现RESTful-Service/</id>
+    <published>2014-07-16T06:41:24.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p>原文地址：<a href="http://www.vogella.com/tutorials/REST/article.html" target="_blank" rel="external">http://www.vogella.com/tutorials/REST/article.html</a></p>
+<p>本教程介绍了如何使用JAX-RS的参考实现Jersey来实现REST Web Service。<br>本教程使用Eclipse 4.4，Java 1.6，Tomcat 6.0 及JAX-RS 1.1 (Jersey 1.5)。</p>
+<h3 id="1-REST-Representational_State_Transfer">1.REST-Representational State Transfer</h3><h4 id="1-1_什么是REST">1.1 什么是REST</h4><p>REST是一种基于web标准和http协议的架构风格。REST是由Roy Fielding在2000年提出的。<br>在REST中一切都是resource，resource的访问是通过Http的标准接口来实现的。有一个REST服务器提供相关REST的服务，如<br>访问resource，修改resource。<br>每种resource都有一个唯一的URI标识，且都应该支持标准的http操作。REST允许resource使用不同的表示方法，如文本，XML，JSON等。<br>REST客户端可以通过Http请求使用特定的表示。</p>
+<h4 id="1-2_Http方法">1.2 Http方法</h4><p>PUT，GET，POST，DELETE是REST中常用的Http方法。它们分别表示：<br>1. GET 定义resource的读取。没有任何的副作用，即不会改变resource。要满足幂等这个性质（自己重复运算得到的结果仍然是自己）。<br>2. PUT 创建一个resource。也是幂等的。<br>3. DELETE 移除一个resource。幂等，可以执行多次而不会产生不同的结果。<br>4. POST 更新一个已经存在的resource或者创建一个新的resource。</p>
+<h4 id="1-3_RESTful_web_Service">1.3 RESTful web Service</h4><p>RESTful web Service是使用REST的基本概念及Http的方法实现的。一个典型的RESTful web Service定义了服务的基本的resource，支持的MIME Type（XML，JSON，用户自定义等），及支持的操作集合（GET，POST，PUT，DELETE）。</p>
+<h3 id="2-JAX-RS">2.JAX-RS</h3><h4 id="2-1_JAX-RS">2.1 JAX-RS</h4><p>Java通过JSR 311提供了REST支持。全名是The Java API for RESTful Web Service）。JAX-RS使用朱姐来定义REST相关的Java类。</p>
+<h4 id="2-2_JAX-RS的参考实现Jersey">2.2 JAX-RS的参考实现Jersey</h4><p>Jersey是JAX-RS的参考实现。在Java Servlet容器中实现RESTful web Service。在服务端，Jersey提供了一个Servlet实现用来扫描可识别的resource。需要在web.xml中进行配置，即对这个Servlet进行注册和配置。<br>Jersey也提供了一个客户端程序用于与服务端的交互。<br>这个Servlet的基本的URL是<br>[java]<br><a href="http://your_domain:port/display-name/url-pattern/path_from_rest_class" target="_blank" rel="external">http://your_domain:port/display-name/url-pattern/path_from_rest_class</a><br>[/java]<br>这个Servlet分析Http请求，并选择正确的类和方法来响应请求。这些选择是基于每个提供resource的类的注解。<br>一个REST web Service包括数据类（resource）和服务。这两种类型要在不同的包中进行维护，这样可以方便Jersey的Servlet进行查找特定的数据类。<br>JAX-RS支持使用Java Architecture for XML Binding（[JAXB教程](<a href="http://www.vogella.com/tutorials/JAXB/article.html）创建XML，JSON。" target="_blank" rel="external">http://www.vogella.com/tutorials/JAXB/article.html）创建XML，JSON。</a></p>
+<h4 id="2-3_JRX-RS注解">2.3 JRX-RS注解</h4><p>@PATH(your_path) 将访问路径设置为基本的URL+/your_path。基本路径取决于web.xml中配置的应用名称，Servlet的URL。<br>@POST 指示下面的方法将响应http POST请求。<br>@GET  指示下面的方法将响应http GET请求。<br>@PUT  指示下面的方法将响应http PUT请求。<br>@DELETE  指示下面的方法将响应http DELETE请求。<br>@Produces(MediaType.TEXT_PLAIN[, more-types])  @Produces 定义被注解为@GET的方法将要使用的MIME Type。d<br>@Consumes(type[, more-types])  @Consumes 定义这个方法将消费什么样的MIME Type。<br>@PathParam  用于从URL中提取参数并注入为方法的参数。</p>
+<h3 id="3-Jersey">3.Jersey</h3><p>在<a href="http://jersey.java.net/" target="_blank" rel="external">http://jersey.java.net/</a>下载Jersey。</p>
+<h3 id="4-创建一个REST示例服务">4.创建一个REST示例服务</h3><p>在Eclipse中创建Dynamic Web Project。将下载的jars放入WEB-INF/lib目录下。</p>
+<p>创建下面的Java类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.first;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.GET;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Path;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Produces;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.MediaType;</span><br><span class="line"><span class="comment">// Plain old Java Object it does not extend as class or implements </span></span><br><span class="line"><span class="comment">// an interface</span></span><br><span class="line"><span class="comment">// The class registers its methods for the HTTP GET request using the @GET annotation. </span></span><br><span class="line"><span class="comment">// Using the @Produces annotation, it defines that it can deliver several MIME types,</span></span><br><span class="line"><span class="comment">// text, XML and HTML. </span></span><br><span class="line"><span class="comment">// The browser requests per default the HTML MIME type.</span></span><br><span class="line"><span class="comment">//Sets the path to base URL + /hello</span></span><br><span class="line"><span class="annotation">@Path</span>(&amp;quot;/hello&amp;quot;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> </span>&#123;</span><br><span class="line">  <span class="comment">// This method is called if TEXT_PLAIN is request</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_PLAIN)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">sayPlainTextHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;quot;Hello Jersey&amp;quot;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// This method is called if XML is request</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_XML)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">sayXMLHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;quot;&amp;lt;?xml version=\&amp;quot;<span class="number">1.0</span>\&amp;quot;?&amp;gt;&amp;quot; + &amp;quot;&amp;lt;hello&amp;gt; Hello Jersey&amp;quot; + &amp;quot;&amp;lt;/hello&amp;gt;&amp;quot;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// This method is called if HTML is request</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_HTML)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">sayHtmlHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &amp;quot;&amp;lt;html&amp;gt; &amp;quot; + &amp;quot;&amp;lt;title&amp;gt;&amp;quot; + &amp;quot;Hello Jersey&amp;quot; + &amp;quot;&amp;lt;/title&amp;gt;&amp;quot;</span><br><span class="line">        + &amp;quot;&amp;lt;body&amp;gt;&amp;lt;h1&amp;gt;&amp;quot; + &amp;quot;Hello Jersey&amp;quot; + &amp;quot;&amp;lt;/body&amp;gt;&amp;lt;/h1&amp;gt;&amp;quot; + &amp;quot;&amp;lt;/html&amp;gt; &amp;quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在web.xml中进行配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;?xml version=&amp;quot;<span class="number">1.0</span>&amp;quot; encoding=&amp;quot;UTF-<span class="number">8</span>&amp;quot;?&amp;gt;</span><br><span class="line">&amp;lt;web-app xmlns:xsi=&amp;quot;http:<span class="comment">//www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns=&amp;quot;http://java.sun.com/xml/ns/javaee&amp;quot; xmlns:web=&amp;quot;http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot; xsi:schemaLocation=&amp;quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot; id=&amp;quot;WebApp_ID&amp;quot; version=&amp;quot;2.5&amp;quot;&amp;gt;</span></span><br><span class="line">  &amp;lt;display-name&amp;gt;de.vogella.jersey.first&amp;lt;/display-name&amp;gt;</span><br><span class="line">  &amp;lt;servlet&amp;gt;</span><br><span class="line">    &amp;lt;servlet-name&amp;gt;Jersey REST Service&amp;lt;/servlet-name&amp;gt;</span><br><span class="line">    &amp;lt;servlet-<span class="class"><span class="keyword">class</span>&amp;<span class="title">gt</span></span>;com.sun.jersey.spi.container.servlet.ServletContainer&amp;lt;/servlet-<span class="class"><span class="keyword">class</span>&amp;<span class="title">gt</span></span>;</span><br><span class="line">    &amp;lt;init-param&amp;gt;</span><br><span class="line">      &amp;lt;param-name&amp;gt;com.sun.jersey.config.property.packages&amp;lt;/param-name&amp;gt;</span><br><span class="line">      &amp;lt;param-value&amp;gt;de.vogella.jersey.first&amp;lt;/param-value&amp;gt;</span><br><span class="line">    &amp;lt;/init-param&amp;gt;</span><br><span class="line">    &amp;lt;load-on-startup&amp;gt;<span class="number">1</span>&amp;lt;/load-on-startup&amp;gt;</span><br><span class="line">  &amp;lt;/servlet&amp;gt;</span><br><span class="line">  &amp;lt;servlet-mapping&amp;gt;</span><br><span class="line">    &amp;lt;servlet-name&amp;gt;Jersey REST Service&amp;lt;/servlet-name&amp;gt;</span><br><span class="line">    &amp;lt;url-pattern&amp;gt;/rest<span class="comment">/*&amp;lt;/url-pattern&amp;gt;</span><br><span class="line">  &amp;lt;/servlet-mapping&amp;gt;</span><br><span class="line">&amp;lt;/web-app&amp;gt; </span><br><span class="line">``` </span><br><span class="line">访问网址测试： http://localhost:8080/de.vogella.jersey.first/rest/hello.</span><br><span class="line">或者使用Jersey的客户端测试，当然你也可以使用Apache HttpClient。</span><br><span class="line">``` java</span><br><span class="line">package de.vogella.jersey.first.client;</span><br><span class="line">import java.net.URI;</span><br><span class="line">import javax.ws.rs.core.MediaType;</span><br><span class="line">import javax.ws.rs.core.UriBuilder;</span><br><span class="line">import com.sun.jersey.api.client.Client;</span><br><span class="line">import com.sun.jersey.api.client.ClientResponse;</span><br><span class="line">import com.sun.jersey.api.client.WebResource;</span><br><span class="line">import com.sun.jersey.api.client.config.ClientConfig;</span><br><span class="line">import com.sun.jersey.api.client.config.DefaultClientConfig;</span><br><span class="line">public class Test &#123;</span><br><span class="line">  public static void main(String[] args) &#123;</span><br><span class="line">    ClientConfig config = new DefaultClientConfig();</span><br><span class="line">    Client client = Client.create(config);</span><br><span class="line">    WebResource service = client.resource(getBaseURI());</span><br><span class="line">    // Fluent interfaces</span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;hello&amp;quot;).accept(MediaType.TEXT_PLAIN).get(ClientResponse.class).toString());</span><br><span class="line">    // Get plain text</span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;hello&amp;quot;).accept(MediaType.TEXT_PLAIN).get(String.class));</span><br><span class="line">    // Get XML</span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;hello&amp;quot;).accept(MediaType.TEXT_XML).get(String.class));</span><br><span class="line">    // The HTML</span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;hello&amp;quot;).accept(MediaType.TEXT_HTML).get(String.class));</span><br><span class="line">  &#125;</span><br><span class="line">  private static URI getBaseURI() &#123;</span><br><span class="line">    return UriBuilder.fromUri(&amp;quot;http://localhost:8080/de.vogella.jersey.first&amp;quot;).build();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="5-RESTful_Web_Service与JAXB">5.RESTful Web Service与JAXB</h3><h4 id="5-1创建项目">5.1创建项目</h4><p>新建项目方法如上。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.jaxb.model;</span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.annotation.XmlRootElement;</span><br><span class="line"><span class="annotation">@XmlRootElement</span></span><br><span class="line"><span class="comment">// JAX-RS supports an automatic mapping from JAXB annotated class to XML and JSON</span></span><br><span class="line"><span class="comment">// Isn't that cool?</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Todo</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> String summary;</span><br><span class="line">  <span class="keyword">private</span> String description;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getSummary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> summary;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSummary</span><span class="params">(String summary)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.summary = summary;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> description;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDescription</span><span class="params">(String description)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.description = description;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.jaxb;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.GET;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Path;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Produces;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.MediaType;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.jaxb.model.Todo;</span><br><span class="line"><span class="annotation">@Path</span>(&amp;quot;/todo&amp;quot;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TodoResource</span> </span>&#123;</span><br><span class="line">  <span class="comment">// This method is called if XMLis request</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(&#123; MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON &#125;)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Todo <span class="title">getXML</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Todo todo = <span class="keyword">new</span> Todo();</span><br><span class="line">    todo.setSummary(&amp;quot;This is my first todo&amp;quot;);</span><br><span class="line">    todo.setDescription(&amp;quot;This is my first todo&amp;quot;);</span><br><span class="line">    <span class="keyword">return</span> todo;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// This can be used to test the integration with the browser</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(&#123; MediaType.TEXT_XML &#125;)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Todo <span class="title">getHTML</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Todo todo = <span class="keyword">new</span> Todo();</span><br><span class="line">    todo.setSummary(&amp;quot;This is my first todo&amp;quot;);</span><br><span class="line">    todo.setDescription(&amp;quot;This is my first todo&amp;quot;);</span><br><span class="line">    <span class="keyword">return</span> todo;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;?xml version=&amp;quot;<span class="number">1.0</span>&amp;quot; encoding=&amp;quot;UTF-<span class="number">8</span>&amp;quot;?&amp;gt;</span><br><span class="line">&amp;lt;web-app xmlns:xsi=&amp;quot;http:<span class="comment">//www.w3.org/2001/XMLSchema-instance&amp;quot;</span></span><br><span class="line">  xmlns=&amp;quot;http:<span class="comment">//java.sun.com/xml/ns/javaee&amp;quot; xmlns:web=&amp;quot;http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot;</span></span><br><span class="line">  xsi:schemaLocation=&amp;quot;http:<span class="comment">//java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot;</span></span><br><span class="line">  id=&amp;quot;WebApp_ID&amp;quot; version=&amp;quot;<span class="number">2.5</span>&amp;quot;&amp;gt;</span><br><span class="line">  &amp;lt;display-name&amp;gt;de.vogella.jersey.jaxb&amp;lt;/display-name&amp;gt;</span><br><span class="line">  &amp;lt;servlet&amp;gt;</span><br><span class="line">    &amp;lt;servlet-name&amp;gt;Jersey REST Service&amp;lt;/servlet-name&amp;gt;</span><br><span class="line">    &amp;lt;servlet-<span class="class"><span class="keyword">class</span>&amp;<span class="title">gt</span></span>;com.sun.jersey.spi.container.servlet.ServletContainer&amp;lt;/servlet-<span class="class"><span class="keyword">class</span>&amp;<span class="title">gt</span></span>;</span><br><span class="line">    &amp;lt;init-param&amp;gt;</span><br><span class="line">      &amp;lt;param-name&amp;gt;com.sun.jersey.config.property.packages&amp;lt;/param-name&amp;gt;</span><br><span class="line">      &amp;lt;param-value&amp;gt;de.vogella.jersey.jaxb&amp;lt;/param-value&amp;gt;</span><br><span class="line">    &amp;lt;/init-param&amp;gt;</span><br><span class="line">    &amp;lt;load-on-startup&amp;gt;<span class="number">1</span>&amp;lt;/load-on-startup&amp;gt;</span><br><span class="line">  &amp;lt;/servlet&amp;gt;</span><br><span class="line">  &amp;lt;servlet-mapping&amp;gt;</span><br><span class="line">    &amp;lt;servlet-name&amp;gt;Jersey REST Service&amp;lt;/servlet-name&amp;gt;</span><br><span class="line">    &amp;lt;url-pattern&amp;gt;/rest<span class="comment">/*&amp;lt;/url-pattern&amp;gt;</span><br><span class="line">  &amp;lt;/servlet-mapping&amp;gt;</span><br><span class="line">&amp;lt;/web-app&amp;gt;</span></span><br></pre></td></tr></table></figure>
+<p>访问网址：<a href="http://localhost:8080/de.vogella.jersey.jaxb/rest/todo" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.jaxb/rest/todo</a><br>创建客户端访问<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.jaxb.client;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.MediaType;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.UriBuilder;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.Client;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.WebResource;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.config.ClientConfig;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.config.DefaultClientConfig;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    ClientConfig config = <span class="keyword">new</span> DefaultClientConfig();</span><br><span class="line">    Client client = Client.create(config);</span><br><span class="line">    WebResource service = client.resource(getBaseURI());</span><br><span class="line">    <span class="comment">// Get XML  System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todo&amp;quot;).accept(MediaType.TEXT_XML).get(String.class));</span></span><br><span class="line">    <span class="comment">// Get XML for application  System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todo&amp;quot;).accept(MediaType.APPLICATION_JSON).get(String.class));</span></span><br><span class="line">    <span class="comment">// Get JSON for application</span></span><br><span class="line"> System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todo&amp;quot;).accept(MediaType.APPLICATION_XML).get(String.class));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> URI <span class="title">getBaseURI</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> UriBuilder.fromUri(&amp;quot;http:<span class="comment">//localhost:8080/de.vogella.jersey.jaxb&amp;quot;).build();</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="6-创建CURD的RESTful_web_service">6.创建CURD的RESTful web service</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;?xml version=&amp;quot;<span class="number">1.0</span>&amp;quot; encoding=&amp;quot;UTF-<span class="number">8</span>&amp;quot;?&amp;gt;</span><br><span class="line">&amp;lt;web-app xmlns:xsi=&amp;quot;http:<span class="comment">//www.w3.org/2001/XMLSchema-instance&amp;quot; xmlns=&amp;quot;http://java.sun.com/xml/ns/javaee&amp;quot; xmlns:web=&amp;quot;http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot; xsi:schemaLocation=&amp;quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&amp;quot; id=&amp;quot;WebApp_ID&amp;quot; version=&amp;quot;2.5&amp;quot;&amp;gt;</span></span><br><span class="line">  &amp;lt;display-name&amp;gt;de.vogella.jersey.todo&amp;lt;/display-name&amp;gt;</span><br><span class="line">  &amp;lt;servlet&amp;gt;</span><br><span class="line">    &amp;lt;servlet-name&amp;gt;Jersey REST Service&amp;lt;/servlet-name&amp;gt;</span><br><span class="line">    &amp;lt;servlet-<span class="class"><span class="keyword">class</span>&amp;<span class="title">gt</span></span>;com.sun.jersey.spi.container.servlet.ServletContainer&amp;lt;/servlet-<span class="class"><span class="keyword">class</span>&amp;<span class="title">gt</span></span>;</span><br><span class="line">    &amp;lt;init-param&amp;gt;</span><br><span class="line">      &amp;lt;param-name&amp;gt;com.sun.jersey.config.property.packages&amp;lt;/param-name&amp;gt;</span><br><span class="line">      &amp;lt;param-value&amp;gt;de.vogella.jersey.todo.resources&amp;lt;/param-value&amp;gt;</span><br><span class="line">    &amp;lt;/init-param&amp;gt;</span><br><span class="line">    &amp;lt;load-on-startup&amp;gt;<span class="number">1</span>&amp;lt;/load-on-startup&amp;gt;</span><br><span class="line">  &amp;lt;/servlet&amp;gt;</span><br><span class="line">  &amp;lt;servlet-mapping&amp;gt;</span><br><span class="line">    &amp;lt;servlet-name&amp;gt;Jersey REST Service&amp;lt;/servlet-name&amp;gt;</span><br><span class="line">    &amp;lt;url-pattern&amp;gt;/rest<span class="comment">/*&amp;lt;/url-pattern&amp;gt;</span><br><span class="line">  &amp;lt;/servlet-mapping&amp;gt;</span><br><span class="line">&amp;lt;/web-app&amp;gt;</span></span><br></pre></td></tr></table></figure>
+<p>创建下面的数据模型作为数据模型及一个单体提供这个模型。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.todo.model;</span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.annotation.XmlRootElement;</span><br><span class="line"><span class="annotation">@XmlRootElement</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Todo</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> String id;</span><br><span class="line">  <span class="keyword">private</span> String summary;</span><br><span class="line">  <span class="keyword">private</span> String description;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Todo</span><span class="params">()</span></span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Todo</span> <span class="params">(String id, String summary)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.id = id;</span><br><span class="line">    <span class="keyword">this</span>.summary = summary;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> id;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(String id)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.id = id;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getSummary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> summary;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSummary</span><span class="params">(String summary)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.summary = summary;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> description;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDescription</span><span class="params">(String description)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.description = description;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.todo.dao;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.todo.model.Todo;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> TodoDao &#123;</span><br><span class="line">  instance;</span><br><span class="line">  <span class="keyword">private</span> Map&amp;lt;String, Todo&amp;gt; contentProvider = <span class="keyword">new</span> HashMap&amp;lt;String, Todo&amp;gt;();</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">TodoDao</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    Todo todo = <span class="keyword">new</span> Todo(&amp;quot;<span class="number">1</span>&amp;quot;, &amp;quot;Learn REST&amp;quot;);</span><br><span class="line">    todo.setDescription(&amp;quot;Read http:<span class="comment">//www.vogella.com/tutorials/REST/article.html&amp;quot;);</span></span><br><span class="line">    contentProvider.put(&amp;quot;<span class="number">1</span>&amp;quot;, todo);</span><br><span class="line">    todo = <span class="keyword">new</span> Todo(&amp;quot;<span class="number">2</span>&amp;quot;, &amp;quot;Do something&amp;quot;);</span><br><span class="line">    todo.setDescription(&amp;quot;Read complete http:<span class="comment">//www.vogella.com&amp;quot;);</span></span><br><span class="line">    contentProvider.put(&amp;quot;<span class="number">2</span>&amp;quot;, todo); </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> Map&amp;lt;String, Todo&amp;gt; getModel()&#123;</span><br><span class="line">    <span class="keyword">return</span> contentProvider;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建一个简单地html页面POST数据到Service。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;!DOCTYPE html&amp;gt;</span><br><span class="line">&amp;lt;html&amp;gt;</span><br><span class="line"> &amp;lt;head&amp;gt;</span><br><span class="line">  &amp;lt;title&amp;gt;Form to create a <span class="keyword">new</span> resource&amp;lt;/title&amp;gt;</span><br><span class="line"> &amp;lt;/head&amp;gt;</span><br><span class="line">&amp;lt;body&amp;gt;</span><br><span class="line">  &amp;lt;form action=&amp;quot;../de.vogella.jersey.todo/rest/todos&amp;quot; method=&amp;quot;POST&amp;quot;&amp;gt;</span><br><span class="line">  &amp;lt;label <span class="keyword">for</span>=&amp;quot;id&amp;quot;&amp;gt;ID&amp;lt;/label&amp;gt;</span><br><span class="line">  &amp;lt;input name=&amp;quot;id&amp;quot; /&amp;gt;</span><br><span class="line">  &amp;lt;br/&amp;gt;</span><br><span class="line">  &amp;lt;label <span class="keyword">for</span>=&amp;quot;summary&amp;quot;&amp;gt;Summary&amp;lt;/label&amp;gt;</span><br><span class="line">  &amp;lt;input name=&amp;quot;summary&amp;quot; /&amp;gt;</span><br><span class="line">  &amp;lt;br/&amp;gt;</span><br><span class="line">  Description:</span><br><span class="line">  &amp;lt;TEXTAREA NAME=&amp;quot;description&amp;quot; COLS=<span class="number">40</span> ROWS=<span class="number">6</span>&amp;gt;&amp;lt;/TEXTAREA&amp;gt;</span><br><span class="line">  &amp;lt;br/&amp;gt;</span><br><span class="line">  &amp;lt;input type=&amp;quot;submit&amp;quot; value=&amp;quot;Submit&amp;quot; /&amp;gt;</span><br><span class="line">  &amp;lt;/form&amp;gt;</span><br><span class="line">&amp;lt;/body&amp;gt;</span><br><span class="line">&amp;lt;/html&amp;gt;</span><br></pre></td></tr></table></figure></p>
+<p>REST Service<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.todo.resources;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Consumes;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.DELETE;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.GET;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.PUT;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Produces;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.Context;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.MediaType;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.Request;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.Response;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.UriInfo;</span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.JAXBElement;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.todo.dao.TodoDao;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.todo.model.Todo;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TodoResource</span> </span>&#123;</span><br><span class="line">  <span class="annotation">@Context</span></span><br><span class="line">  UriInfo uriInfo;</span><br><span class="line">  <span class="annotation">@Context</span></span><br><span class="line">  Request request;</span><br><span class="line">  String id;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">TodoResource</span><span class="params">(UriInfo uriInfo, Request request, String id)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.uriInfo = uriInfo;</span><br><span class="line">    <span class="keyword">this</span>.request = request;</span><br><span class="line">    <span class="keyword">this</span>.id = id;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//Application integration</span></span><br><span class="line"></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(&#123;MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON&#125;)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Todo <span class="title">getTodo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Todo todo = TodoDao.instance.getModel().get(id);</span><br><span class="line">    <span class="keyword">if</span>(todo==<span class="keyword">null</span>)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(&amp;quot;Get: Todo with &amp;quot; + id +  &amp;quot; not found&amp;quot;);</span><br><span class="line">    <span class="keyword">return</span> todo;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// for the browser</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_XML)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Todo <span class="title">getTodoHTML</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Todo todo = TodoDao.instance.getModel().get(id);</span><br><span class="line">    <span class="keyword">if</span>(todo==<span class="keyword">null</span>)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(&amp;quot;Get: Todo with &amp;quot; + id +  &amp;quot; not found&amp;quot;);</span><br><span class="line">    <span class="keyword">return</span> todo;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="annotation">@PUT</span></span><br><span class="line">  <span class="annotation">@Consumes</span>(MediaType.APPLICATION_XML)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Response <span class="title">putTodo</span><span class="params">(JAXBElement&amp;lt;Todo&amp;gt; todo)</span> </span>&#123;</span><br><span class="line">    Todo c = todo.getValue();</span><br><span class="line">    <span class="keyword">return</span> putAndGetResponse(c);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="annotation">@DELETE</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteTodo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Todo c = TodoDao.instance.getModel().remove(id);</span><br><span class="line">    <span class="keyword">if</span>(c==<span class="keyword">null</span>)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(&amp;quot;Delete: Todo with &amp;quot; + id +  &amp;quot; not found&amp;quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> Response <span class="title">putAndGetResponse</span><span class="params">(Todo todo)</span> </span>&#123;</span><br><span class="line">    Response res;</span><br><span class="line">  <span class="keyword">if</span>(TodoDao.instance.getModel().containsKey(todo.getId())) &#123;</span><br><span class="line">      res = Response.noContent().build();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      res = Response.created(uriInfo.getAbsolutePath()).build();</span><br><span class="line">    &#125;</span><br><span class="line">    TodoDao.instance.getModel().put(todo.getId(), todo);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.todo.resources;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Consumes;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.FormParam;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.GET;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.POST;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Path;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.PathParam;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.Produces;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.Context;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.MediaType;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.Request;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.Response;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.UriInfo;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.todo.dao.TodoDao;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.todo.model.Todo;</span><br><span class="line"><span class="comment">// Will map the resource to the URL todos</span></span><br><span class="line"><span class="annotation">@Path</span>(&amp;quot;/todos&amp;quot;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TodosResource</span> </span>&#123;</span><br><span class="line">  <span class="comment">// Allows to insert contextual objects into the class, </span></span><br><span class="line">  <span class="comment">// e.g. ServletContext, Request, Response, UriInfo</span></span><br><span class="line">  <span class="annotation">@Context</span></span><br><span class="line">  UriInfo uriInfo;</span><br><span class="line">  <span class="annotation">@Context</span></span><br><span class="line">  Request request;</span><br><span class="line">  <span class="comment">// Return the list of todos to the user in the browser</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_XML)</span><br><span class="line">  <span class="keyword">public</span> List&amp;lt;Todo&amp;gt; getTodosBrowser() &#123;</span><br><span class="line">    List&amp;lt;Todo&amp;gt; todos = <span class="keyword">new</span> ArrayList&amp;lt;Todo&amp;gt;();</span><br><span class="line">    todos.addAll(TodoDao.instance.getModel().values());</span><br><span class="line">    <span class="keyword">return</span> todos; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Return the list of todos for applications</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Produces</span>(&#123;MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON&#125;)</span><br><span class="line">  <span class="keyword">public</span> List&amp;lt;Todo&amp;gt; getTodos() &#123;</span><br><span class="line">    List&amp;lt;Todo&amp;gt; todos = <span class="keyword">new</span> ArrayList&amp;lt;Todo&amp;gt;();</span><br><span class="line">    todos.addAll(TodoDao.instance.getModel().values());</span><br><span class="line">    <span class="keyword">return</span> todos; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// retuns the number of todos</span></span><br><span class="line">  <span class="comment">// use http://localhost:8080/de.vogella.jersey.todo/rest/todos/count</span></span><br><span class="line">  <span class="comment">// to get the total number of records</span></span><br><span class="line">  <span class="annotation">@GET</span></span><br><span class="line">  <span class="annotation">@Path</span>(&amp;quot;count&amp;quot;)</span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_PLAIN)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = TodoDao.instance.getModel().size();</span><br><span class="line">    <span class="keyword">return</span> String.valueOf(count);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="annotation">@POST</span></span><br><span class="line">  <span class="annotation">@Produces</span>(MediaType.TEXT_HTML)</span><br><span class="line">  <span class="annotation">@Consumes</span>(MediaType.APPLICATION_FORM_URLENCODED)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">newTodo</span><span class="params">(@FormParam(&amp;quot;id&amp;quot;)</span> String id,</span><br><span class="line">      @<span class="title">FormParam</span><span class="params">(&amp;quot;summary&amp;quot;)</span> String summary,</span><br><span class="line">      @<span class="title">FormParam</span><span class="params">(&amp;quot;description&amp;quot;)</span> String description,</span><br><span class="line">      @Context HttpServletResponse servletResponse) <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    Todo todo = <span class="keyword">new</span> Todo(id,summary);</span><br><span class="line">    <span class="keyword">if</span> (description!=<span class="keyword">null</span>)&#123;</span><br><span class="line">      todo.setDescription(description);</span><br><span class="line">    &#125;</span><br><span class="line">    TodoDao.instance.getModel().put(id, todo);</span><br><span class="line">    servletResponse.sendRedirect(&amp;quot;../create_todo.html&amp;quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Defines that the next path parameter after todos is</span></span><br><span class="line">  <span class="comment">// treated as a parameter and passed to the TodoResources</span></span><br><span class="line">  <span class="comment">// Allows to type http://localhost:8080/de.vogella.jersey.todo/rest/todos/1</span></span><br><span class="line">  <span class="comment">// 1 will be treaded as parameter todo and passed to TodoResource</span></span><br><span class="line">  <span class="annotation">@Path</span>(&amp;quot;&#123;todo&#125;&amp;quot;)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> TodoResource <span class="title">getTodo</span><span class="params">(@PathParam(&amp;quot;todo&amp;quot;)</span> String id) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> TodoResource(uriInfo, request, id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建客户端<br>运行：<a href="http://localhost:8080/de.vogella.jersey.todo/rest/todos" target="_blank" rel="external">http://localhost:8080/de.vogella.jersey.todo/rest/todos</a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> de.vogella.jersey.todo.client;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.MediaType;</span><br><span class="line"><span class="keyword">import</span> javax.ws.rs.core.UriBuilder;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.Client;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.ClientResponse;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.WebResource;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.config.ClientConfig;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.client.config.DefaultClientConfig;</span><br><span class="line"><span class="keyword">import</span> com.sun.jersey.api.representation.Form;</span><br><span class="line"><span class="keyword">import</span> de.vogella.jersey.todo.model.Todo;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tester</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    ClientConfig config = <span class="keyword">new</span> DefaultClientConfig();</span><br><span class="line">    Client client = Client.create(config);</span><br><span class="line">    WebResource service = client.resource(getBaseURI());</span><br><span class="line">    <span class="comment">// create one todo</span></span><br><span class="line">    Todo todo = <span class="keyword">new</span> Todo(&amp;quot;<span class="number">3</span>&amp;quot;, &amp;quot;Blabla&amp;quot;);</span><br><span class="line">    ClientResponse response = service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">      .path(todo.getId()).accept(MediaType.APPLICATION_XML)</span><br><span class="line">        .put(ClientResponse.class, todo);</span><br><span class="line">    <span class="comment">// Return code should be 201 == created resource</span></span><br><span class="line">    System.out.println(response.getStatus());</span><br><span class="line">    <span class="comment">// Get the Todos</span></span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">        .accept(MediaType.TEXT_XML).get(String.class));</span><br><span class="line">    <span class="comment">// Get JSON for application</span></span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">.accept(MediaType.APPLICATION_JSON).get(String.class));</span><br><span class="line">    <span class="comment">// Get XML for application</span></span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">     .accept(MediaType.APPLICATION_XML).get(String.class));</span><br><span class="line">    <span class="comment">// Get the Todo with id 1</span></span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos/<span class="number">1</span>&amp;quot;)</span><br><span class="line">     .accept(MediaType.APPLICATION_XML).get(String.class));</span><br><span class="line">    <span class="comment">// get Todo with id 1</span></span><br><span class="line">    service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos/<span class="number">1</span>&amp;quot;).delete();</span><br><span class="line">    <span class="comment">// Get the all todos, id 1 should be deleted</span></span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">    .accept(MediaType.APPLICATION_XML).get(String.class));</span><br><span class="line">    <span class="comment">// create a Todo</span></span><br><span class="line">    Form form = <span class="keyword">new</span> Form();</span><br><span class="line">    form.add(&amp;quot;id&amp;quot;, &amp;quot;<span class="number">4</span>&amp;quot;);</span><br><span class="line">    form.add(&amp;quot;summary&amp;quot;, &amp;quot;Demonstration of the client lib <span class="keyword">for</span> forms&amp;quot;);</span><br><span class="line">    response = service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">        .type(MediaType.APPLICATION_FORM_URLENCODED)</span><br><span class="line">        .post(ClientResponse.class, form);</span><br><span class="line">    System.out.println(&amp;quot;Form response &amp;quot; + response.getEntity(String.class));</span><br><span class="line">    <span class="comment">// Get the all todos, id 4 should be created</span></span><br><span class="line">    System.out.println(service.path(&amp;quot;rest&amp;quot;).path(&amp;quot;todos&amp;quot;)</span><br><span class="line">     .accept(MediaType.APPLICATION_XML).get(String.class));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> URI <span class="title">getBaseURI</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> UriBuilder.fromUri(&amp;quot;http:<span class="comment">//localhost:8080/de.vogella.jersey.todo&amp;quot;).build();</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>原文地址：<a href="http://www.vogella.com/tutorials/REST/article.html" target="_blank" rel="external">http://www.vogella.com/tutorials/REST/ar]]>
+    </summary>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/tags/Java/"/>
+    
+      <category term="Web Service" scheme="http://zhangmin.name/blog/tags/Web-Service/"/>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/categories/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[可爱又可敬的苏轼]]></title>
+    <link href="http://zhangmin.name/blog/2014/07/13/%E5%8F%AF%E7%88%B1%E5%8F%88%E5%8F%AF%E6%95%AC%E7%9A%84%E8%8B%8F%E8%BD%BC/"/>
+    <id>http://zhangmin.name/blog/2014/07/13/可爱又可敬的苏轼/</id>
+    <published>2014-07-13T14:47:20.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p>在唐宋诗人当中，可爱的人有很多，如李白，天真浪漫，率性可爱。可敬的人也很多，如杜甫，深沉悲悯，忠义可敬。可是又可爱又可敬的恐怕也只有苏轼一人了。</p>
+<p>苏轼的才情自不用说，当他考取进士时，主考官欧阳修看了苏东坡的考卷，就大为称叹：此人一出，吾当避人一头地。欧阳修果然是伯乐，苏轼可以说是宋朝第一大才子。他的诗歌在宋代水平应该是最高的；散文的水平在宋代文人中也应该是最高的；词的水平也不差；书法是宋代四大书法家之首；绘画水平也是宋代文人画中的佼佼者。一个人在这么多的领域都有这么高的造诣，古今也实属罕见。然而最伟大之处还在于他的人格的魅力，在于他超脱旷达的情怀。</p>
+<h3 id="可爱的苏轼">可爱的苏轼</h3><p>从下面的例子可以看出苏轼的可爱:</p>
+<p>有一次，当朝廷派人来抓时，他为穿官服还是囚服而焦急。“我是湖州太守，应该穿官服接旨，但我又是犯人则应该穿囚服。”为此他竟不知所措。</p>
+<p>还有一次，苏轼因乌台诗案下狱之后因为生死未卜，一日数惊，曾以极度悲伤之心，给弟弟苏辙写下了诀别诗：“是处青山可埋骨，他年夜雨独伤神。与君世世为兄弟，便结来生未了因。”可以看出他也是一个普通人，既重情也怕死。</p>
+<p>当他被贬岭南，写下“日啖荔枝三百颗，不辞长作岭南人。”可见他的豁达，乐观。</p>
+<h3 id="可敬的苏轼">可敬的苏轼</h3><p>苏轼的可敬之处则体现在他的政治方面，他有自己的原则，为国家着想，而不是只为自己的仕途着想。苏轼是属于旧党司马光一派的。当年宋神宗让王安石变法时，苏东坡就多有反对，因而遭贬谪。后来王安石被罢相，司马光上位，要尽费王安石变法。苏东坡又认为不应该尽费，有很多内容还是需要保留的，因此又遭外放贬官。这说明他心中有自己的原则，绝不随波逐流。</p>
+<p>话说又一次苏轼问自己的周边的人，“我肚子里都有什么？”其他人都说是满腹诗书。苏东坡笑而不语，当听到侍妾王朝云说：“是一肚子不合时宜。”他哈哈大笑，“知我者朝云也”。</p>
+<h3 id="面对人生逆旅的苏轼">面对人生逆旅的苏轼</h3><p>苏东坡虽然早年名动京师，但却一生仕途坎坷。尤其是后半生，都是在被贬的路上。从岭南到称为蛮荒之地的儋州，最终病死在返京的船上。一生坎坷的经历既是他文学创作的基础，又成就了他超脱旷达的人生态度。</p>
+<p>面对人生逆旅有很多选择，如逃避，如执着。</p>
+<p>逃避。或醉酒，如李白，“古来圣贤皆寂寞，惟有饮者留其名”；或寻梦，如晏几道，在梦中求得解脱，是一种对往日美好时光的追忆，“梦魂惯得无拘检，又踏杨花过谢桥”。</p>
+<p>执着。或落寞，如柳宗元，他的《江雪》，每句第一字连起来就是千万孤独。“千山鸟飞绝，万径人踪灭，孤舟蓑笠翁，独钓寒江雪”。或洒脱，如刘禹锡，“自古逢秋悲寂寥，我言秋日胜春朝；晴空一鹤排云上，便引诗情到碧霄”。（古人悲秋，从宋玉《九辩》“悲哉，秋之为气也。萧瑟兮，草木摇落而变衰”开始，一发不可收拾。这是因为 中国古代的时间，空间，和五行是一一对应的。春对应冬木，秋对应西金。所以常说金秋十月。西一般指西天，象征着死亡。秋天虽然对于人类来说是收获的季节，但对于植物来说是死亡的季节）</p>
+<p>苏轼的选择也如刘禹锡一样，是洒脱。无论多么恶劣的条件，他都能随遇而安，乐观豁达。</p>
+<p>林语堂的《苏东坡传》如此评价苏东坡：“苏东坡是一个无可救药的乐天派……苏东坡比中国其他诗人更具有多面性天才的丰富感，变化感和幽默感，智能优异，心灵却像个天真的小孩——这种混合等于耶稣所谓蛇的智慧加上鸽子的温文”。</p>
+<h3 id="超脱旷达的苏轼">超脱旷达的苏轼</h3><p>苏轼的超脱旷达主要体现在下面三个方面：</p>
+<p>关于离别。中国人对离别都很伤感，江郎才尽的江淹有“黯然销魂者，唯别而已矣”；李商隐也有诗云“相见时难别亦难”；柳永有“多情自古伤离别”。苏轼却说”人生如逆旅，我亦是行人”（临江仙·送钱穆父）。人生就像一段旅程，我们每个人只不过是这个旅程上的行人而已。因此，离别时常态，相聚是例外。</p>
+<p>关于思乡。古代由于交通，资讯的落后，使得离家在外的游子都一种弄弄的思乡之情。如崔颢的“日暮乡关何处是？烟波江上使人愁”；李觏的乡思”人言落日是天涯，望极天涯不是家。已恨碧山相阻隔，碧山还被暮云遮”;更知名的是马致远的“夕阳西下，断肠人在天涯”。</p>
+<p>自从考中进士之后，总共只回过两趟四川老家。一次是因为父亲去世，回家守孝三年；一次是因为母亲去世，回家守孝三年。他的“此心安处是吾乡”将故乡由地理概念上升到心理概念。但是“此心安处便是吾乡”这一说法源于白居易的《种杏桃》：无论海角与天涯，大抵心安即是家。所以他到那里就说那里是他的故乡，到杭州就说吾本杭人，到海南就说吾本海南人。超脱旷达到了那里都能安之若素，随遇而安。</p>
+<p>关于年华。论语中有“ 子在川上曰，逝者如斯夫，不舍昼夜”；蒋捷有词云“流光容易把人抛，红了樱桃，绿了芭蕉”。而苏轼却说：“谁道人生无再少，门前流水尚能西，休将白发唱黄鸡”。人不能改变时光流转，却可以改变对时光流转的态度。</p>
+<p>苏轼有一首词《定风波》内容是：</p>
+<p>莫听穿林打叶声，何妨吟啸且徐行。<br>竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。<br>料峭春风吹酒醒，微冷，山头斜照却相迎。<br>回首向来萧瑟处，归去，也无风雨也无晴。</p>
+<p>这种也无风雨也无晴的态度就是一种达观的态度。得之坦然，失之淡然。荣辱全无，胜败两忘。也可以说是：因为无所畏，所以无所谓；或者是：因为无所谓，所以无所为畏。</p>
+<p>人的一生就应该争其必然，顺其自然。以出世的心态干入世的事业。做事要兢兢业业，认认真真，对于结果则要抱着不在乎的态度。</p>
+<h3 id="我喜爱苏轼">我喜爱苏轼</h3><p>这就是苏轼，我喜爱的苏轼。从早时看林语堂的《苏东坡传》，到近日看完了陆毅主演的《苏东坡》，也算有缘，连点成线，苏轼成了我最喜欢的中国古代文人。</p>
+<p>参考资料：</p>
+<p>Coursera上海交通大学的《唐诗宋词人文解读》课程。（这么课程讲的非常好，喜欢唐诗宋词的小伙伴一定要去看看）</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在唐宋诗人当中，可爱的人有很多，如李白，天真浪漫，率性可爱。可敬的人也很多，如杜甫，深沉悲悯，忠义可敬。可是又可爱又可敬的恐怕也只有苏轼一人了。</p>
+<p>苏轼的才情自不用说，当他考取进士时，主考官欧阳修看了苏东坡的考卷，就大为称叹：此人一出，吾当避人一头地。欧阳修果然]]>
+    </summary>
+    
+      <category term="札记" scheme="http://zhangmin.name/blog/tags/%E6%9C%AD%E8%AE%B0/"/>
+    
+      <category term="生活" scheme="http://zhangmin.name/blog/tags/%E7%94%9F%E6%B4%BB/"/>
+    
+      <category term="原创" scheme="http://zhangmin.name/blog/categories/%E5%8E%9F%E5%88%9B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[OSGi Event Admin Service]]></title>
+    <link href="http://zhangmin.name/blog/2014/07/03/OSGi-Event-Admin-Service/"/>
+    <id>http://zhangmin.name/blog/2014/07/03/OSGi-Event-Admin-Service/</id>
+    <published>2014-07-03T08:10:38.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p>Event Admin是OSGi中用于bundles之间通信的手段,是处理事件的一种通用机制。采用的是pub/sub架构。</p>
+<h3 id="发布订阅模型">发布订阅模型</h3><p>发布订阅模型应满足的需求：</p>
+<p>1. 发布者不应该拥有订阅者的信息。<br>2. 新的发布者或者新的订阅者的动态增加或者删除不能影响这个发布订阅系统<br>3. 订阅者不应该阻塞发布者。</p>
+<p>在发布订阅模型需要一个中间人来解耦发布者和订阅者。在Event Admin Service中这个中间人就是EventAdmin。</p>
+<p>Event Admin service使用Topic来定义分发通道，类似于JMS。发布者发送事件到Topic，订阅者从Topic中接受信息。向Topic发送事件的发布者可以是多个，从Topic接受的订阅者也可以是多个。也就是说是一种多对多的关系。</p>
+<p>下面是示例代码：</p>
+<p>[java]<br>SimpleSubscriber subscriber = new SimpleSubscriber();<br>Dictionary dict = new Properties();<br>dict.put(EventConstants.EVENT_TOPIC,<br>&quot;manning/osgi/LoginEvent&quot;);<br>context.registerService(EventHandler.class.getName(),<br>subscriber, dict);​<br>[/java]<br>[java]<br>public class SimpleSubscriber implements EventHandler {<br>public void handleEvent(Event event) {<br>System.out.println(&quot;Received event on topic = &quot; +<br>event.getTopic());<br>for (String propertyName :<br>event.getPropertyNames()) {<br>System.out.println(&quot;\t&quot; + propertyName + &quot; = &quot; +<br>event.getProperty(propertyName));<br>​}<br>}<br>}<br>[/java]</p>
+<h3 id="Topic">Topic</h3><p>Topic一般使用类似于java的包名的命名方法，只不过使用右斜杠替换点号。</p>
+<p>如果使用”manning/osgi/TravelAgent/*”，则会匹配四层的事件，如<br>“manning/osgi/TravelAgent/CarEvent”<br>“manning/osgi/TravelAgent/HotelEvent”<br>“manning/osgi/TravelAgent/FlightEvent”<br>但不会匹配<br>​”manning/osgi/TravelAgent/HotelEvent/USA”<br>“manning/osgi/TravelAgent”<br>因为它们一个是五层一个是四层。</p>
+<p>一个空的或者不存在的EVENT_TOPIC表示不接受任何事件，一个通配符”*”表示接收所有事件。</p>
+<p>指定多个订阅者接收多种事件的方法是使用Sring[]。</p>
+<p>[java]<br>Dictionary dict = new Properties();<br>dict.put(EventConstants.EVENT_TOPIC,<br>new String [] {&quot;manning/osgi/TravelAgent/CarEvent&quot;,<br>&quot;manning/osgi/TravelAgent/HotelEvent&quot;,<br>&quot;manning/osgi/TravelAgent/FlightEvent&quot;});<br>context.registerService(EventHandler.class.getName(),<br>subscriber, dict);<br>[/java]​</p>
+<h3 id="Event">Event</h3><p>Event对象包含Topic名和时间相关的属性信息。自定义事件对象必须继承Event。关于事件的常量最好放到一个Property对象中，而不是写在代码中。</p>
+<h4 id="OSGi框架的事件">OSGi框架的事件</h4><p>框架变化：包括启动类路径变化，包刷新，异常，被停止等等。<br>bundle变化：包括安装，更新，卸载。<br>服务变化：服务注册，修改，删除。</p>
+<p>这些事件可以通过bundle context进行监听。事件会按照注册的顺序进行发送。<br>[java]<br>public void start(BundleContext bundleContext) throws Exception {<br>BundleListener bundleListener = // …<br>bundleContext.addBundleListener(bundleListener);<br>// …<br>}<br>[/java]​</p>
+<p>[java]<br>public class MyBundleListener implements BundleListener {<br>public void bundleChanged(BundleEvent bundleEvent) {<br>if (bundleEvent.getType() == BundleEvent.INSTALLED) {<br>// …<br>}<br>}<br>}<br>[/java]​</p>
+<p>BundleEvent 包含一个Bundle类的实例，可以通过这个类来获取bundle的任何内容。</p>
+<h3 id="事件处理">事件处理</h3><p>EventAdmin的post方法异步发送事件，是非阻塞的；而send则是同步发送事件，是阻塞的。</p>
+<p>要注意EvenHandler的handleEvent方法要尽快返回，而且该方法有可能被阻塞。</p>
+<p>事件的传递顺序也受发布者发布方式的影响。如果是多线程发送，则无法保证事件的顺序。</p>
+<p>如果handleEvent抛出一个异常，该异常并不会传递到发布者，EventAdmin会处理下一个订阅者。</p>
+<p>EventAdmin在发送事件时会将所有可用的订阅者做一份拷贝，这就避免了订阅者收到在它存在之前的事件。同时，EventAdmin也会确保订阅者仍然注册并愿意接收事件。</p>
+<p>由于发布者和订阅者的解耦，要特别注意发生死锁的情况。</p>
+<h3 id="事件过滤">事件过滤</h3><p>使用EVENT_FILTERE来进行事件过滤。</p>
+<p>[java]<br>Dictionary payload = new Properties();<br>payload.put(&quot;price&quot;, 80);<br>Event event =<br>new Event(&quot;manning/osgi/TravelAgent/HotelEvent&quot;, payload);<br>admin.postEvent(event);<br>[/java]<br>[java]<br>Dictionary dict = new Properties();<br>dict.put(EventConstants.EVENT_TOPIC,<br>&quot;manning/osgi/TravelAgent/HotelEvent&quot;);<br>dict.put(EventConstants.EVENT_FILTER, &quot;(price&lt;100)&quot;);<br>context.registerService(EventHandler.class.getName(),<br>travelAgentEventHandler, dict);<br>[/java]​</p>
+<h3 id="Event_Admin的缺点">Event Admin的缺点</h3><p>​1. 事件丢失</p>
+<p>如果Event Admin突然挂掉，事件就会丢失。解决的办法是可以通过配置让Event Admin对事件进行持久化存储。</p>
+<ol>
+<li>过滤能力有限</li>
+</ol>
+<p>基于LDAP的过滤机制很难实现复杂的事件过滤。解决的方法是通过插入复杂事件处理引擎来实现。<br>另一个问题是对于大型系统事件的关联属性可能很多，处理起来会非常复杂，而且有可能导致事件内容过大。解决的办法是直接发送<br>java 对象，然后再接收端进行相应的处理。<br>另一个缺点是服务保证订阅者接受事件的顺序。解决的方法是扩展EventAdmin。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Event Admin是OSGi中用于bundles之间通信的手段,是处理事件的一种通用机制。采用的是pub/sub架构。</p>
+<h3 id="发布订阅模型">发布订阅模型</h3><p>发布订阅模型应满足的需求：</p>
+<p>1. 发布者不应该拥有订阅者的信息。<b]]>
+    </summary>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/tags/Java/"/>
+    
+      <category term="OSGi" scheme="http://zhangmin.name/blog/tags/OSGi/"/>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/categories/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Java并发编程入门]]></title>
+    <link href="http://zhangmin.name/blog/2014/06/13/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/"/>
+    <id>http://zhangmin.name/blog/2014/06/13/Java并发编程入门/</id>
+    <published>2014-06-13T07:12:02.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p>并发编程可以大大提高程序的执行速度。但是当并发执行的任务彼此开始产生互相干涉时，实际的并发问题就会接踵而至。因此，理解并发不经可以帮你写出优秀的并发程序，而且可以解开为什么那些明显正确的程序却展示出不正确的行为。只有当你自己变的多疑而自信，才能用java编写出可靠地多线程代码。</p>
+<h3 id="并发的多面性">并发的多面性</h3><p>并发编程令人困惑的主要原因：使用并发是需要解决问题有多个，而实现并发的方式也有很多种，并且在这两者之间没有明显的映射关系。</p>
+<p>并发解决的问题有两个，一个是更快的执行，另一个是设计可管理性。</p>
+<p>并发通常是提高运行在单处理器上的程序的性能。尽管并发的开销大（需要上下文切换），但是并发依然具有优势，这是因为如果程序中某个任务因为改程序控制范围之外的某些条件（I/O)就会阻塞，而当阻塞时，并发程序仍然可以继续执行，而顺序性程序就需要等待了。事实上，如果没有阻塞，在单处理器上开发并发程序并没有意义。</p>
+<p>提高并发的一个最常见示例：事件驱动编程。产生具有可响应的用户界面。</p>
+<h3 id="并发的实现方式">并发的实现方式</h3><p>实现并发最直接的方式就是使用操作系统的进程。进程是运行在自己的地址空间的自包容程序。操作系统负责进程之间的调度。Java所使用的多线程并发系统会共享诸如内存和I/O这样的资源，因此编写多线程程序最基本的困难在于协调不同任务之间对这些资源的使用，以使得这些资源不会同时被多任务访问。</p>
+<p>Java在顺序性语言基础上提供对线程的支持。线程机制是在执行程序表示的单一进程中创建任务。Java的线程机制是抢占式的，这表示调度机制会周期性的中断线程，将上下文切换到另一个线程，从而每一个线程都提供时间片，是的每个线程都分配到数量合理的时间去驱动它的任务。当然你也可以创建协作式多线程，每个任务都会自动放弃控制，这要求程序员要有意识的在每个任务插入某种让步语句。</p>
+<p>理论上使用顺序性程序可以完成所有的任务，因为处理器在任意时刻只执行一项工作。但是并发可以简化程序的开发。并发的复杂性代价，想比并发对程序设计，资源负载均衡以及用户方便的改进相比，就显得微不足道了。</p>
+<p>如果你发的程序需要大量的并发，就可以考虑使用Erlang这样的语言来开发这一部分。Erlang是一种函数型语言，每个函数调用不会产生任何副作用。语言提供任务之间彼此通信的安全机制。</p>
+<h3 id="监视器（Monitor)的概念">监视器（Monitor)的概念</h3><p>锁和条件能够解决线程同步问题，但是它们不是面向对象的。研究者们提出了监视器的概念，有如下几个特性：<br>1. 一个监视器就是一个只有private方法的类。<br>2. 每一个类的对象都有一个锁。<br>3. 所有的方法都可以使用对象的锁来进行同步。<br>4. 锁可以有其他附属的条件。</p>
+<p>Java中只使用了部分监视器的概念，如每个对象都有锁和条件；如果一个方法使用synchronized关键词，那么它就是监视器方法；条件变量的访问是通过调用wait(),notify(),notifyAll()来实现。</p>
+<h3 id="基本的线程机制">基本的线程机制</h3><p>并发编程可以使我们将程序划分成多个分离的、独立运行的任务。通过使用多线程机制，这些独立任务中的每一个都将由执行线程来驱动。一个线程就是在进程中的单一顺序控制流，因此单个进程可以拥有多个并发执行的任务。</p>
+<p>线程一大好处就是可以使你不必知道它是运行在一个还是多个CPU上。所以，使用线程是一种建立透明的、可扩展的程序的方法。如果程序运行的太慢，为机器增加一个CPU能够很容易的加快程序的运行速度。多任务和多线程往往是使用多处理器的最合理的方式。</p>
+<h4 id="定义任务">定义任务</h4><p>可以使用Runnable接口来描述任务，任务的run()方法通常是某种形式的循环，使得任务一直运行下去直到不再需要。如果希望完成任务是能够返回一个值，可以用Callable接口来实现。</p>
+<h4 id="运行任务">运行任务</h4><p>运行任务有以下几种方式：</p>
+<ol>
+<li>直接运行，接在main()线程中运行。</li>
+<li>使用Thread运行。在使用Thread类时，每个Thread都注册了自己，因此在其任务退出其run()并死亡之前，垃圾回收器无法清除它。</li>
+<li>使用Executor运行。Executor将为你管理Thread对象，从而简化并发编程。Executor在客户端和人物之间提供了一个中间层，从而允许你管理异步任务，而无需显示管理线程的生命周期。ExecutorService是具有生命周期的Executor，它知道如何恰当切换上下文来执行Runnable对象。<br>CachedThreadPool:创建新线程时如果有旧线程可用就是用旧线程，否则才去创建新线程。如果一个线程60s都没有被使用将会被移除。<br>FixedThreadPool：固定线程数量的线程池，一次性执行代价高昂的线程分配。总是保证有指定数量的线程来运行任务。其他任务将保存在队列中。如果有线程失败，则会创建新线程替换。<br>SingleThreadPool：保证顺序执行的只有一个线程的线程池，并维护自己的悬挂任务队列。如果有线程失败，则会创建新线程替换。</li>
+</ol>
+<p>要执行的任务与驱动它的线程之间有一个差异。因为你对Thread没有任何控制权。你创建一个任务，并通过某种方式将一个线程附着到任务上，以使的这个线程可以驱动任务。</p>
+<h3 id="共享受限资源">共享受限资源</h3><p>解决线程时的一个基本问题是：你永远都不知道一个线程在何时再运行。防止资源使用冲突的方法就是加锁。基本上所有并发模式在解决线程冲突问题时，都采用的是序列化访问共享资源。</p>
+<p>Java提供关键字synchronized为防止资源冲突提供内置的支持。当执行到synchronized保护的代码时，它先检查锁是否可用，然后获取锁，执行完代码后释放锁。</p>
+<p>synchronized可以在一个方法上使用，也可以在代码块上使用。在使用synchronized时一定要注意把变量设为private，否则synchronized就无法限制其他任务访问该变量。synchronized有对象锁，即对当前对象或者其他对象的方法进行保护。但要确保所有任务都在同一个对象上同步。synchronized也有类锁，即对类的静态方法防止并发访问。<br>同步代码块儿。相对于同步整个方法，时间性能更好。</p>
+<p>除了使用关键词synchronized，也可以使用显式的Lock锁。Lock对象必须被显式的创建，锁定和释放。虽然对吗缺乏优雅性，到那时对于某些特定问题，它更灵活。所以一般情况下还是使用synchronized来进行同步控制。</p>
+<p>一些特殊情况下，你可以使用原子类。如AtomicInteger,AtomicLong,AtomicReference等。这些类具有机器级别的原子性。对于常规编程来说很少派上用场，但是对于性能调优就有用武之地了。</p>
+<p>你也可以使用线程本地存储。线程本地存储是一种自动化机制，可以使用相同的变量的每个不同线程都创建不同的存储。</p>
+<p><strong>什么时候使用同步（Brian原则）</strong></p>
+<blockquote>
+<p>如果你正在写一个变量，它可能接下来被另一个线程读取，坐着正在读取上一次已经被另一个线程写过的变量，那么你不许使用同步，并且，读写线程都必须使用相同的监视器锁。</p>
+</blockquote>
+<h4 id="原子性和易变性">原子性和易变性</h4><p>依赖于原子性来解决同步问题是非常危险的，如果你是一个并发专家，或者你得到了这样专家的帮助，你才应该使用原子性来替代同步。</p>
+<blockquote>
+<p>Goetz测试：如果你可以编写用于现代微处理器的高性能JVM，那么你就有资格去考虑是否可以避免同步。</p>
+</blockquote>
+<p>原子性可以应用于除long和double的其他简单操作（如赋值，返回操作，但自增自减不是原子操作）。这是因为对于读取和写入long和double这样的64位会被当做两个32位操作来执行，这就是产生了一个读取和写入的上下文切换，从而导致不同任务可以看到不正确的结果。如果对于long和double使用volatile关键词，就会获得原子性。</p>
+<p>因此原子操作可由线程机制保证其不可中断，专家级的程序员可以利用这一点来编写无锁的代码，这些代码不需要同步。一般而言，尝试着移除同步是一种不成熟优化的信号，并且会带来大量的麻烦。</p>
+<p>在多处理器系统上，相对于单处理器而言，可视性问题比原子性问题多的多。一个任务做出了修改，即使在不中断的意义上是原子性的，对其他任务也可能是不可视的，因此不同的任务就有应用状态的不同视图。另外一个方面同步机制强制在处理器系统中一个任务作出的修改必须在应用中是可视的。volatile确保了应用中的可视性。如果你将一个变量声明为volatile的，那么只要对这个变量修改，那么所有的读操作都可以看到这个修改。<br>一个任务的所作的任何修改对于这个任务都是可视的，因此如果它只需要在这个任务内部可视，就没有必要使用volatile关键字。</p>
+<p>要注意的是，当一个域的值依赖于它之前的值时（++操作），volatile就无法工作了。另外，如果某个域受到其他域的值的限制，也无法工作。</p>
+<p>使用volatile而不是synchronized唯一安全的情况是类中只有一个可变的域。通常使用synchronized是最安全的做法。</p>
+<h3 id="终结任务">终结任务</h3><p>首先介绍一下线程的状态：<br>1. 新建。线程被创建时，短暂处于这一状态，获取了必须的系统资源并且初始化也完成了。<br>2. 就绪。只要调度器给分配时间片，线程就可以运行。<br>3. 阻塞。线程能够运行，但是由于某个条件阻止了它的运行。此时，线程调度器将忽略线程，不会分配给线程任何时间片。直到线程重新进入就绪状态才能够运行。<br>4. 死亡。不再能够被调度的状态。任务死亡的方式可以是run()方法返回，也可以是被中断。</p>
+<p>进入阻塞状态的可能原因有：</p>
+<ol>
+<li>通过sleep。指定时间内阻塞。</li>
+<li>wait()。直到线程得到notify()或notifyAll消息，才会就绪。</li>
+<li>任务等待输入或者输出完成。</li>
+<li>任务试图调用其他同步控制方法，但对象锁不可用。</li>
+</ol>
+<p>终结一个任务你可以通过一个变量cancel来控制，但是如果你的任务需要更加突然的终止，你就可能需要用到下面的方法。</p>
+<p>使用Thread的interrupt方法。这个方法设置线程的中断状态。如果线程已经被阻塞，或者试图执行一个阻塞操作，那么设置这个状态将抛出InterruptedException。当抛出异常或者任务调用interrupted时，中断状态被复位。<br>Thread.interrupted()提供了离开run()循环而不抛出异常的第二种方式。<br>调用interrupt就必须持有Thread对象，一般尽量使用Executor来执行所有操作。<br>interrupted可以中断互斥所导致的阻塞调用（f-&gt;g-&gt;f)。</p>
+<p>调用submit返回的Future&lt;?&gt;可以用于中断任务，调用其cancel方法就可以。这是中断由Executor启动的单个线程的方法。</p>
+<p>sleep阻塞可以中断，但是对于获取synchronized锁导致的阻塞和I/O阻塞则是不可中断的。一个有效的解决方案是关闭任务在其上阻塞的底层资源。</p>
+<h3 id="线程之间的协作">线程之间的协作</h3><p>当任务之间协作时，关键问题是这些任务之间的握手，而实现握手的方法仍然是互斥。在这种情况下，互斥能够保证只有一个任务可以响应某一个信号，这样就根除了任何可能的竞态条件。在互斥的基础上，我们添加一种途经，可以将自身挂起，直到某些外部条件发生变化，表示是时候让这个任务向前开动为止。</p>
+<p>wait()使你可以等待某一个条件的变化，而改变这个条件超出了当前方法的控制能力。只有在notify()或者notifyAll()发生时，才会被唤醒.</p>
+<p>wait()会释放对象锁，这意味着另一个任务可以获得对象锁，并调用该对象的其他同步方法。而sleep()和yield()则不会释放锁。<br>wait(),notify(),notifyAll()这些方法是在Object中的,但是只能在同步方法，或者同步控制 语句块中调用，否则在运行时会抛出<br>IllegalMonitorStateException。</p>
+<h4 id="如何使用wait()">如何使用wait()</h4><p>必须使用一个while循环包围wait()。因为：<br>1. 可能有多个任务出于相同的原因等待同一个锁，而第一个唤醒的任务可能改变这种情况。<br>2. 在这个任务从其wait()唤醒的时刻，可能有其他任务已经做出了改变，从而使该任务暂时不能执行。<br>3. 也有可能有其他任务出于不同的原因等待对象的锁。<br>总之，就是要检查所有感兴趣的特定条件，并在条件不满足时返回到wait()中。</p>
+<p>代码模板<br>[java]<br>synchronized (sharedMonitor) {<br>    while (someCondition) {<br>        wait();<br>    }<br>}<br>[/java]</p>
+<h4 id="如何使用notify()">如何使用notify()</h4><p>使用notify而不是notifyAll是一种优化。使用notify时，在众多等待同一个锁的任务中，只有一个任务唤醒，因此如果你想使用notify，你必须保证被唤醒的是恰当的任务。另外，你还要保证所有的任务都等待相同的条件才能使用notify。最后，上述的条件必须在子类中也是起作用的。<br>如果有任意一条不满足，那么你就必须使用notifyAll。需要注意的是，当notifyAll因为某个特定的锁而被调用时，只有等待这个锁的任务才会被唤醒。</p>
+<h3 id="死锁">死锁</h3><p>当某个任务等待另一个任务，而后者又在等待其他任务，以此类推，最后形成一种循环等待的状态，这种状态就是死锁。</p>
+<p>形成死锁的四个必备条件：</p>
+<ol>
+<li>互斥条件。资源不能共享。</li>
+<li>至少有个任务持有一个其他任务需要的资源，同时在等待另一个资源。</li>
+<li>资源任务不能被强占。</li>
+<li>循环等待。</li>
+</ol>
+<p>只要破坏一个条件就可以解除死锁。</p>
+<h3 id="类库中的并发构件">类库中的并发构件</h3><ul>
+<li>BlockingQueue。从空队列移除和往满队列添加都将被阻塞。相关的有ArrayBlockingQueue，PriorityBlockingQueue。</li>
+<li>线程安全的集合。ConcurrentHashMap, ConcurrentSkipListMap, ConcurrentSkipListSet，ConcurrentLinkedQueue等。Copy Write Array 通过维护一个副本来保证线程安全。</li>
+<li>CountDownLatch。用来同步一个或者多个任务，强制它们等待直到其他任务执行的操作完成。典型用法是将一个程序分为n个独立的任务，当每个任务完成时，都会在这个锁存器上调用countDown()。等待被解决的任务在这个锁存器上调用await()，将自己阻塞，直至锁存器技术结束。CountDownLatch只触发一次，计数值不能重置。如果需要重置，可以选择CyclicBarrier。</li>
+<li>CyclicBarrier。当你希望创建一组任务，它们并行的工作，然后再进行下一个工作之前等待，直至所有任务都完成。</li>
+<li>DelayQueue。无界的BlockingQueue，用于放置实现了Delayed接口的对象，其中的对象只有在其到期时才能从队列中取走。</li>
+<li>Semaphore。允许n个任务同时访问某一共享资源。</li>
+<li>Exchanger。在两个任务之间交换对象的栅栏。当这些任务进入栅栏时，他们各自拥有一个对象，当它们离开时，他们都拥有之前由对象持有的对象。典型的应用场景是：一个任务创建对象，这些对象的生产代价高昂，而另一个任务消费这些对象。</li>
+</ul>
+<h3 id="参考资料">参考资料</h3><p>《编程思想》<br>《Java核心技术》</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>并发编程可以大大提高程序的执行速度。但是当并发执行的任务彼此开始产生互相干涉时，实际的并发问题就会接踵而至。因此，理解并发不经可以帮你写出优秀的并发程序，而且可以解开为什么那些明显正确的程序却展示出不正确的行为。只有当你自己变的多疑而自信，才能用java编写出可靠地多线程代]]>
+    </summary>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/tags/Java/"/>
+    
+      <category term="马上有OFFER" scheme="http://zhangmin.name/blog/tags/%E9%A9%AC%E4%B8%8A%E6%9C%89OFFER/"/>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/categories/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[back-of-the-envelope估算技术]]></title>
+    <link href="http://zhangmin.name/blog/2014/06/05/back-of-the-envelope%E4%BC%B0%E7%AE%97%E6%8A%80%E6%9C%AF/"/>
+    <id>http://zhangmin.name/blog/2014/06/05/back-of-the-envelope估算技术/</id>
+    <published>2014-06-05T08:36:48.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p>back-of-the-envelope指的是一个粗略的，不精确的计算，但可以被用作对某个观点的支持或论据。简单的说，是介于猜测和铁证之间的一个概念。常用在数学，物理，及某些工程领域中。</p>
+<h3 id="基本的技巧">基本的技巧</h3><p>两种估算方法总比一种好，可以相互验证。<br>估算的快速检查<br>规则1：和的单位和被加数，加数的单位是一致的。<br>规则2：乘法的单位是乘数或者被乘数单位的乘积。<br>常识。</p>
+<h3 id="经验法则">经验法则</h3><p>1.72法则（Rule of 72）</p>
+<p>假设你将一笔钱以年利率r投资y年，如果r*y=72，那么你的钱会大致翻倍。</p>
+<p>2.利特尔法则（Little’s Law）</p>
+<p>排队论认为，在任何一个有进有出的系统中，留在系统中对象的数量等于平均离开率乘以对象在系统的平均停留时间。</p>
+<p>使用Little’s law对多用户系统的响应时间进行建模：<br>假设有n个用户，平均思考时间为z，连接到任意的一个系统的响应时间为r。<br>每一个用户的状态只有两个：思考和等待响应。因此，系统中总的服务数量为n，即负载为n。假设系统的吞吐率（单位时间的服务数）为x。<br>根据Little’s law可得：n = x * (z + r), r = n/x - z；</p>
+<h3 id="安全因素（Safety_Factors)">安全因素（Safety Factors)</h3><p>一个好的工程师应该承认自己知识的有限性。使用一个较大的安全系数来弥补我们的无知及我们容易犯的错误。（employing a huge<br>safety factor to compensate for ignorance).<br>同样的，在估计大小，花费，计划时，我们应该保守的使用2到4倍与正常值来弥补我们对自己的无知。</p>
+<p>一个典型的例子就是John Roebling 在建造Brooklyn Bridge时，他知道自己知识的限度，知道不能完整、准确的建模，所以他使用了六倍的安全系数。至今为止，他的桥仍然矗立在纽约的东河，连接着曼哈顿与布鲁克林。</p>
+<h3 id="面试中的估算题">面试中的估算题</h3><p>1.一辆学校班车里面能​​​​​​​​装多少个高尔夫球​</p>
+<p>大一个高尔夫球大致直径为5厘米，体积大致为125立方厘米。一辆校车的长度为10米，宽和高都为2米，则体积为40立方米。则可以装下的高尔夫球数为<br>40 * 10^6/ 125 约为30万个。考虑到球可以挤压，最终约为40万左右。</p>
+<p>2.全世界有多少个钢琴调音师？</p>
+<p>美国共有3亿人口，按三口之家计算，全美国共有1亿个家庭，如果一半家庭即5000万个家庭属于富裕阶层，拥有钢琴比例按10％,这个比例可能有点偏高，但在推算大致比例时是允许的.那么就有500万个家庭拥有钢琴，这样全美国就有500万架钢琴。 如果每架钢琴一年调音一次，一个调音师一年调音1000架次的话，那么全美国调音师的数量就是500万除以1000，等于5000人。世界人口有60多亿，是美国的20倍，但调音师应该不足美国的20倍。大体推算一下可知，美国的调音师数量约占全世界的1/4，全世界的调音师应该有2万人。</p>
+<p>​<br>3.擦遍西雅图所有窗户能挣多少钱</p>
+<p>假如西雅图有1万栋建筑物，每栋建筑物有600个窗户，擦一个窗户需要5分钟，收费标准为每小时20美元，那么一共可以挣1000万美元。</p>
+<p>4.美国有多少个加油站​</p>
+<p>看看该国有多少人口，一般一个家庭拥有多少辆汽车或者多少个家庭拥有一辆车，一般人凭日常常识就知道大概；然后算一算一辆车加油的频率，或者考虑多少人口、多少街区需要一个加油站，最后能得出答案。不一定正确，只要你足够自信、运用一套逻辑推导的方法、能自圆其说，就成功了。咨询公司招人也常用这一招儿，他们最需要的就是这种人才——能把一个“难题”用一堆复杂而逻辑严密的、每一步推论看起来都正确无比的报告解答开。​</p>
+<p>5.2的64次方是多少<br>2^10 ~1,000 一千<br>2^20 ~1,000,000 一百万<br>2^30 ~1,000,000,000 十亿<br>2^64 ~10^18*10=10 ^19​</p>
+<p>6.一万亿个数排序需要多少时间</p>
+<p>归并排序，O(nlogn)， 2GHz处理器。秒2*10^9约20亿次运算，大约3000秒。10^12log10^12 ~ 4乘以10^13<br>最后结果为2000s。<br>​</p>
+<h3 id="更多资料">更多资料</h3><p><a href="http://www.vendian.org/envelope/" target="_blank" rel="external">A view from the back of the envelope</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>back-of-the-envelope指的是一个粗略的，不精确的计算，但可以被用作对某个观点的支持或论据。简单的说，是介于猜测和铁证之间的一个概念。常用在数学，物理，及某些工程领域中。</p>
+<h3 id="基本的技巧">基本的技巧</h3><p>两种估算方法总比一种好]]>
+    </summary>
+    
+      <category term="马上有OFFER" scheme="http://zhangmin.name/blog/tags/%E9%A9%AC%E4%B8%8A%E6%9C%89OFFER/"/>
+    
+      <category term="原创" scheme="http://zhangmin.name/blog/categories/%E5%8E%9F%E5%88%9B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[一个问题的解决之路]]></title>
+    <link href="http://zhangmin.name/blog/2014/06/04/%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E4%B9%8B%E8%B7%AF/"/>
+    <id>http://zhangmin.name/blog/2014/06/04/一个问题的解决之路/</id>
+    <published>2014-06-04T07:27:48.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="问题定义">问题定义</h3><p>输入：N个浮点数组成的一个向量<br>输出：求和值最大的连续的子向量<br>约束条件：当所有向量元素都是负数时，定义最大和子向量为零向量。</p>
+<p>问题分析：<br>如果所有的向量元素都是正数，则结果输出就是整个输入向量。<br>如果所有的向量元素都是负数，则结果输出是零向量。<br>如果既有正数又有负数，则需要进行搜索。</p>
+<h3 id="暴力解法">暴力解法</h3><p>遍历所有的连续子向量，找出其中和最大的子向量。</p>
+<p>[java]<br>    public float algorithm1(float[] x) {<br>        float max = 0, sum;<br>        for (int i = 0; i &lt; x.length; i++) {<br>            for (int j = i; j &lt; x.length; j++) {<br>                sum = 0;<br>                for (int k = i; k &lt;= j; k++) {<br>                    sum += x[k];<br>                }<br>                max = Math.max(sum, max);<br>            }<br>        }<br>        return max;<br>    }<br>[/java]</p>
+<p>该算法最外层的循环执行N次，中间的循环最多执行N次，最里层的循环执行小于N次。<br>因此此算法的复杂度为O(n^3)。</p>
+<h3 id="一个较好的解法">一个较好的解法</h3><p>在暴力算法中，计算x[i..j]之间的和需要i-j+1次加法运算。可以通过优化使计算代价为常数。这样就会得到一个<br>O(n^2)的算法。</p>
+<p>可以看出x[i..j]的和与x[i..j-1]之间是有关系的，即sum[i,j] = sum[i,j-1] + input[j]。</p>
+<p>[java]<br>    public float algorithm21(float[] x) {<br>        float max = 0, sum;<br>        for (int i = 0; i &lt; x.length; i++) {<br>            // sum[i,j] = sum[i,j-1] + input[j]<br>            sum = 0;<br>            for (int j = i; j &lt; x.length; j++) {<br>                sum += x[j];<br>                max = Math.max(sum, max);<br>            }<br>        }<br>        return max;<br>    }<br>[/java]</p>
+<p>还可以使用一个累积数组cumarr,cumarr[i]代表x[0..i]之间元素的和。这样Sum[i..j] = cumarr[j]-cumarr[i-1].</p>
+<p>[java]<br> public float algorithm22(float[] x) {<br>        float max = 0, sum;<br>        //cumarr[i] = sum of values x[0..i]<br>        float[] cumarr = new float[x.length + 1];<br>        assert cumarr[0] == 0 : &quot;cumarr[0] is not 0&quot;;<br>        for (int i = 0; i &lt; x.length; i++)<br>            cumarr[i + 1] = cumarr[i] + x[i];<br>        for (int i = 0; i &lt; x.length; i++) {<br>            for (int j = i; j &lt; x.length; j++) {<br>                sum = cumarr[j + 1] - cumarr[i];<br>                max = Math.max(sum, max);<br>            }<br>        }<br>        return max;<br>    }<br>[/java]</p>
+<h3 id="一个更好的解法">一个更好的解法</h3><p>回顾上面的几个算法，解决问题的思路是检查所有子向量的和。因为n维向量的子向量的个数为n^2。所以按照这个思路得到的解法的复杂度都是O(n^2)。可以换一种思路，用分治的思想来解决这个问题。分治算法的思想很简单：</p>
+<blockquote>
+<p>将一个大小为n的问题分为两个大小接近或者等于n/2的问题并递归的解决它们，最后将两个子问题的解合并成为整个问题的解。</p>
+</blockquote>
+<p><img src="http://h.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=684484ea99504fc2a65fb000d5e6962c/b8389b504fc2d562c25fd80fe51190ef77c66cf8.jpg?referer=2bebbdd81bd8bc3e9f1f32facc96&amp;x=.jpg" alt="分治解法"><br>最后的结果可能有三种情况：<br>最大和向量是子问题a的解ma；<br>最大和向量是子问题b的解mb；<br>最大和向量是子问题a,b合并后的解mc。</p>
+<p>[java]<br>    public float algorithm3(float[] x) {<br>        return algorithm3(x, 0, x.length - 1);<br>    }<br>    private float algorithm3(float[] x, int lo, int hi) {<br>        // handle small vectors<br>        if (lo &gt; hi) return 0;   // zero elements<br>        if (lo == hi) return x[lo] &gt; 0 ? x[lo] : 0; // one elements<br>        int mid = lo + (hi - lo) / 2;<br>        float lmax = algorithm3(x, lo, mid);<br>        float rmax = algorithm3(x, mid + 1, hi);<br>        float cmax = Math.max(lmax, rmax);<br>        float sum = lmax = 0;<br>        // find max crossing to left<br>        for (int i = mid; i &gt;= lo; i–) {<br>            sum += x[i];<br>            lmax = Math.max(sum, lmax);<br>        }<br>        rmax = sum = 0;<br>        // find max crossing to right<br>        for (int i = mid + 1; i &lt;= hi; i++) {<br>            sum += x[i];<br>            rmax = Math.max(sum, rmax);<br>        }<br>        return Math.max(cmax, lmax + rmax);</p>
+<pre><code>}
+</code></pre><p>[/java]</p>
+<p>该算法在递归的O(logn)层做O(n)的工作，所以算法的复杂度为O(nlogn)。<br>更精确的表示方式为：T(n)=2T(n/2)+O(n)，推导后的结果为O(nlogn)。<br>该算法可以通过返回最大和子向量结束信息将复杂度降到O(n)。</p>
+<h3 id="最好的解法">最好的解法</h3><p>我们能不能通过只扫描一遍数组，并记录当前最大和子向量，就可以得到问题的解呢？<br>如果我们已经解决了问题x[0..i-1]，我们如何扩展到问题x[0..i]呢？<br>我们可以使用类似于分治算法的思路：x[0..i]的最大和子向量要么是在问题x[0..i-1]中，要么子向量包括第i个元素。<br><img src="http://h.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=7f5eecd2b8a1cd1101b672258929b9c1/d000baa1cd11728bc09284c0cafcc3cec2fd2c90.jpg?referer=4f17ec91af4bd1135dda83028c8e&amp;x=.jpg" alt="扫描算法"><br>我们将x[0..i-1]的解保存到maxsofar变量中，将扩展到第i个元素的解保存在变量maxextendinghere中。如果重新计算maxextendinghere将会是算法的复杂度为O(n^2)。我们可以使用问题x[0..i-1]的解来得到maxextendinghere.此算法最关键的部分就是maxextendingere，初始时maxextendinghere保存着到i-1的最大子向量的和。接下来的赋值语句将这个解扩展到了位置i。<br>[java]<br>    public float algorithm4(float[] x) {<br>        float maxsofar = 0;<br>        float maxendinghere = 0;<br>        for (int i = 0; i &lt; x.length; i++) {<br>            maxendinghere = Math.max(maxendinghere + x[i], 0);<br>            maxsofar= Math.max(maxendinghere, maxsofar);<br>        }<br>        return maxsofar;<br>    }<br>[/java]</p>
+<h3 id="四种类型的算法运行时间比较表">四种类型的算法运行时间比较表</h3><p><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=1f5f5e27e2fe9925cf0c695504932fe2/2cf5e0fe9925bc317916477a5cdf8db1ca13708c.jpg?referer=ec4b031d39c79f3dd6f6d000b082&amp;x=.jpg" alt="运行时间图"></p>
+<h3 id="算法设计技术">算法设计技术</h3><p>在整个算法的设计过程中我们可以看到如下的设计技术：<br>1. 保存状态来避免重复计算。使用额外的空间保存计算结果，如cumarr数组及maxsofar和maxextendinghere。<br>2. 将预处理信息保存到数据结构中提高计算效率。如cumarr数组的应用。<br>3. 分治算法。大事化小，小事化了。<br>4. 扫描算法。我们如何将问题x[0..i-1]的解扩展到问题x[0..i]。<br>5. 累积素组。cumarr保存了前i个数的和，这样可以方便解决有关范围的问题。<br>6. 复杂度下限。当我们可以把一个算法优化到复杂度的下限，我们就可以安心睡觉了。</p>
+<h3 id="参考资料">参考资料</h3><p>Jon Bentley.Programming Pearls.Column 8.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="问题定义">问题定义</h3><p>输入：N个浮点数组成的一个向量<br>输出：求和值最大的连续的子向量<br>约束条件：当所有向量元素都是负数时，定义最大和子向量为零向量。</p>
+<p>问题分析：<br>如果所有的向量元素都是正数，则结果输出就是整个输入向量。]]>
+    </summary>
+    
+      <category term="问题与算法" scheme="http://zhangmin.name/blog/tags/%E9%97%AE%E9%A2%98%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="马上有OFFER" scheme="http://zhangmin.name/blog/tags/%E9%A9%AC%E4%B8%8A%E6%9C%89OFFER/"/>
+    
+      <category term="学习笔记" scheme="http://zhangmin.name/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Java程序内存使用估计]]></title>
+    <link href="http://zhangmin.name/blog/2014/05/18/Java%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E4%BC%B0%E8%AE%A1/"/>
+    <id>http://zhangmin.name/blog/2014/05/18/Java程序内存使用估计/</id>
+    <published>2014-05-18T13:49:19.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p>虽然Java最显著的优点就是其内存管理系统，但对于一个追求完美的程序员来说，理解程序的内存需求是非常必要的。需要注意的是，由于各个Java版本的实现可能不同，所以这里使用典型的64位内存模型，在这个模型中每个指针大小为8 byte。在分析过程中只需要把复杂的类型分解到基本类型，然后将每一项的大小进行相加就可以得到最后占用内存的大小。另外，由于方法的动态调用比较复杂，涉及到栈的操作和堆内存的分配，所以本文不考虑方法调用占用的内存，只考虑静态的内存占用大小。</p>
+<h3 id="Java基本类型占用内存大小">Java基本类型占用内存大小</h3><p>boolean byte 1<br>char 2<br>int float 4<br>long double 8</p>
+<h3 id="Java对象占用内存大小">Java对象占用内存大小</h3><p>对象由对象头，类属性字段，实例属性字段及方法。对象头包含类的引用，垃圾回收信息及同步信息。对象头一般占用16 byte，引用为8 byte。每个对象都是8 byte的整数倍，所以要有一个填充。如果类中包含内部类，还要包括指向内部类的指针大小为8 byte。</p>
+<p>Java中数组实现为对象。包括数组的长度。所以一个数组的头信息包括16 byte对象头信息，4 byte 数组长度变量 及4 byte 填充，共24 byte。<br>一维数组(N为数组大小）：<br>char[] 2N + 24<br>int[] 4N + 24<br>double[] 8N + 24</p>
+<p>二维数组是数组的数组，每一个数组都是一个对象。对于一个double[M][N]数组，包括二维数组的头信息24 bytes加上8M bytes（指向行数组的引用）加上16M bytes(行数组对象的头部信息）加8MN bytes的数组内容的引用。<br>总的大小为23M + 8NM + 24 bytes ~ 8NM bytes。</p>
+<p>char[][] 2MN<br>int[][] 4MN<br>double[][] 8MN<br>对象数组只计算对象引用的大小即8 byte。</p>
+<p>Java中String对象占用内存大小分析示例</p>
+<p><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=503b32b2324e251fe6f7e4fd97bdb82a/960a304e251f95cac0c7023ecb177f3e67095203.jpg?referer=436975ae0b24ab18b901d4079e01&amp;x=.jpg" alt="Java String 对象"></p>
+<p>String对象总的内存大小为40 + 24 + 2N bytes。其中24 + 2N bytes是value数组的开销。String代表的字符串代为value[offset] 到value[offset + count - 1]之间的字符（包括端点）。对于String的常用操作都是subString，由于String是不可变的，一般value数组在各个String对象之间共享。使用subString时只需要40bytes，因为value数组可以共享。这样可以提高内存使用率。也就是说对于一个较长的字符串，创建子字符串只需要常数时间和常数空间。这种时空复杂度和字符串长度无关的设计对于字符处理算法是非常有效的。<br><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=913c29fce9f81a4c2232eccce7111164/8644ebf81a4c510f44f679926259252dd42aa50c.jpg?referer=91fb9f15c9ef7609651cacaf0302&amp;x=.jpg" alt=""></p>
+<p><em>参考文献</em></p>
+<p><em>Algorithms 4th Edition by Robert Sedgewick and Kevin Wayne </em></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>虽然Java最显著的优点就是其内存管理系统，但对于一个追求完美的程序员来说，理解程序的内存需求是非常必要的。需要注意的是，由于各个Java版本的实现可能不同，所以这里使用典型的64位内存模型，在这个模型中每个指针大小为8 byte。在分析过程中只需要把复杂的类型分解到基本类]]>
+    </summary>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/tags/Java/"/>
+    
+      <category term="马上有OFFER" scheme="http://zhangmin.name/blog/tags/%E9%A9%AC%E4%B8%8A%E6%9C%89OFFER/"/>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/categories/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[懂点设计及在简历设计中的应用]]></title>
+    <link href="http://zhangmin.name/blog/2014/05/18/%E6%87%82%E7%82%B9%E8%AE%BE%E8%AE%A1%E5%8F%8A%E5%9C%A8%E7%AE%80%E5%8E%86%E8%AE%BE%E8%AE%A1%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/"/>
+    <id>http://zhangmin.name/blog/2014/05/18/懂点设计及在简历设计中的应用/</id>
+    <published>2014-05-18T13:34:43.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="你有没有注意到">你有没有注意到</h3><p>在《给大家看的设计书》中的第一章，作者提到了一个故事：<br>圣诞节作者收到的礼物是一本关于如何识别各种树的书。在书中提到一种作者认为很怪异的约书亚树，作者对自己说：”哦，北加利福尼亚绝对没有这种树。这树太怪异了，如果我见过，肯定会有印象的，可是我从来没有见过。“<br>可是当作者拿着树在所住的街区转了转后，作者发现至少有80%的住户都种有这种树！</p>
+<p>生活中有些事或者物，不是它们不存在而只是因为我们没有注意到。对于设计原则也是如此，优秀的设计其实很容易，只需三步：学习设计的基本原则；认识到自己没有应用这些原则；应用这些原则。</p>
+<h3 id="四大基本原则">四大基本原则</h3><ol>
+<li><p>对比。对比的基本思想是要避免页面上的元素太过相似。如果元素（字体，颜色，大小，形状，空间）不相同，那就干脆让它们截然不同。这样可以达到引人注目的效果。</p>
+</li>
+<li><p>重复。让设计中的的视觉要素在整个作品中重复出现。这样可以增加条理性，加强统一性。</p>
+</li>
+<li><p>对齐。每个元素都应当与页面上某个元素有某种视觉联系。这样能建立一种清晰，精巧且清爽的外观。</p>
+</li>
+<li><p>亲密性。彼此相关的元素应当靠近，归组在一起。这样有助于组织信息，减少混乱，为读者提供清晰的结构。</p>
+</li>
+</ol>
+<h3 id="实例分析">实例分析</h3><p><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=3bd888d3708b4710ca2ffdc9f3f5b2c0/cc11728b4710b9124985860cc1fdfc03934522ff.jpg?referer=2c3294d171f082027485a50f8e95&amp;x=.jpg" alt="moderncv 简历"></p>
+<p>对齐：使用左对齐<br>对比：标题加粗，要点突出<br>亲密性：段之间的间隔比段内文本之间的间隔大。<br>重复：字体的重复，颜色的重复使用。</p>
+<p><em>参考文献</em></p>
+<p><em>1. Robin Williams 《给大家看的设计书》</em><br><em>2. Latex 简历模板<a href="http://www.ctan.org/tex-archive/macros/latex/contrib/moderncv/" target="_blank" rel="external">moderncv </a></em></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="你有没有注意到">你有没有注意到</h3><p>在《给大家看的设计书》中的第一章，作者提到了一个故事：<br>圣诞节作者收到的礼物是一本关于如何识别各种树的书。在书中提到一种作者认为很怪异的约书亚树，作者对自己说：”哦，北加利福尼亚绝对没有这种树。这树太怪异了，如]]>
+    </summary>
+    
+      <category term="读书·旅行" scheme="http://zhangmin.name/blog/tags/%E8%AF%BB%E4%B9%A6%C2%B7%E6%97%85%E8%A1%8C/"/>
+    
+      <category term="MSE" scheme="http://zhangmin.name/blog/categories/MSE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Java版本BitMap实现]]></title>
+    <link href="http://zhangmin.name/blog/2014/05/13/Java%E7%89%88%E6%9C%ACBitMap%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://zhangmin.name/blog/2014/05/13/Java版本BitMap实现/</id>
+    <published>2014-05-13T07:05:43.000Z</published>
+    <updated>2015-12-02T05:35:05.000Z</updated>
+    <content type="html"><![CDATA[<p>BitMap即位图数据结构。此数据结构代表了有限域中的一个稠密集合，每个元素在集合中出现至多一次。<br>这一数据结构在《编程珠玑》一书中用于高效解决一定范围内无重复整数的排序问题。</p>
+<p>比如一个小于10的整数集合如{1,2,3,4,8}可以用下面的二进制字符串表示：<br>0 1 1 1 1 0 0 0 1 0</p>
+<p>如果整数在集合中，则其相应位置为1，否则为0。</p>
+<p>可以通过对int的位操作来实现BitMap。实现的思路是先找到相应位的存储位置，然后把该位设为0或1.<br>由于Java中int为32位，所以每次通过右移5位来找到i所在的整数在int[]中的位置（右移5位相当于除以32），然后将相应的位置设为1.</p>
+<p>具体的实现代码如下：</p>
+<pre>
+[java]
+/**
+ *
+ * BitMap.java
+ * ZhangMin.name - zhangmin@zhangmin.name
+ * name.zhangmin.java
+ *
+ */
+package name.zhangmin.java.bop;
+
+import name.zhangmin.util.StdOut;
+
+/**
+ * The &lt;tt&gt;BitMap&lt;/tt&gt; class represents a bit map.
+ * It supports operations such as &lt;em&gt;set&lt;/em&gt;, &lt;em&gt;test&lt;/em&gt;,
+ * &lt;em&gt;clear&lt;/em&gt;.
+ * &lt;p&gt;
+ * This implementation use bitwise logical operations (such as
+ * and, or, shift).
+ * 
+ * @author ZhangMin.name
+ *
+ */
+public class BitMap {
+    private static final int BITPERWORD = 32;
+    private static final int SHIFT = 5;
+    private static final int MASK = 0x1F;
+    private int[] a;
+
+    /**
+     * Initialize a empty bitmap.
+     * @param N the bitmap size
+     */
+    public BitMap(int N) {
+        if (N &lt; 0 || N &gt; Integer.MAX_VALUE)
+            throw new IllegalArgumentException(N + &quot; shoule be in [0,2147483647)&quot;);
+        this.a = new int[1 + N / BITPERWORD];
+        for (int i = 0; i &lt; a.length; i++)
+            a[i] &amp;= 0x0;
+    }
+    /**
+     * Set the i&lt;em&gt;th&lt;/em&gt; bit to 1.
+     * @param i
+     */
+    public void set(int i) {
+        if (i &lt; 0 || i &gt; Integer.MAX_VALUE)
+            throw new IllegalArgumentException(i + &quot; shoule be in [0,2147483647]&quot;);
+        a[i &gt;&gt; SHIFT] |= (1 &lt;&lt; (i &amp; MASK));
+    }
+    /**
+     * Clear the i&lt;em&gt;th&lt;/em&gt; bit to 0.
+     * @param i
+     */
+    public void clear(int i) {
+        if (i &lt; 0 || i &gt; Integer.MAX_VALUE)
+            throw new IllegalArgumentException(i + &quot; shoule be in [0,2147483647]&quot;);
+        a[i &gt;&gt; SHIFT] &amp;= ~(1 &lt;&lt; (i &amp; MASK));
+    }
+    /**
+     * Test the i&lt;em&gt;th&lt;/em&gt; bit.
+     * @param i
+     * @return 0 if the i&lt;em&gt;th&lt;/em&gt; bit is 0, non-zero otherwise.
+     */
+    public int test(int i) {
+        if (i &lt; 0 || i &gt; Integer.MAX_VALUE)
+            throw new IllegalArgumentException(i + &quot; shoule be in [0,2147483647]&quot;);
+        return a[i &gt;&gt; SHIFT] &amp; (1 &lt;&lt; (i &amp; MASK));
+    }
+    /**
+     * Unit test.
+     */
+    public static void main(String[] args) {
+        int N = 100;
+        BitMap bm = new BitMap(N);
+        for (int i = 0; i &lt; N; i += 3) {
+            bm.set(i);
+            StdOut.printf(&quot;%dth value is %d\n&quot;, i, bm.test(i));
+            bm.clear(i);
+            StdOut.printf(&quot;%dth value is %d\n&quot;, i, bm.test(i));
+        }
+    }
+
+}
+[/java]
+</pre>
+
+<p><em>参考文献</em><br>1. 《编程珠玑》第一章</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>BitMap即位图数据结构。此数据结构代表了有限域中的一个稠密集合，每个元素在集合中出现至多一次。<br>这一数据结构在《编程珠玑》一书中用于高效解决一定范围内无重复整数的排序问题。</p>
+<p>比如一个小于10的整数集合如{1,2,3,4,8}可以用下面的二进制字符串表]]>
+    </summary>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/tags/Java/"/>
+    
+      <category term="马上有OFFER" scheme="http://zhangmin.name/blog/tags/%E9%A9%AC%E4%B8%8A%E6%9C%89OFFER/"/>
+    
+      <category term="Java" scheme="http://zhangmin.name/blog/categories/Java/"/>
+    
+  </entry>
+  
+</feed>
