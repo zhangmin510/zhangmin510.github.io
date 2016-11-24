@@ -5,9 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="ZhangMin.name's blog">
-        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
-        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="atom.xml">
-        <link rel="canonical" href="http://zhangmin.name/">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
 
         <title>CVS常用命令速查 | ZhangMin.name</title>
         <meta name="description" content="{{meta_description}}">
@@ -29,7 +29,7 @@
 	
 
         <header id="header">
-            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
             <h1><a href="/blog/">ZhangMin.name</a></h1>
             <p>勤思敏行 思行合一</p>
             <div id="follow-icons">
@@ -39,10 +39,10 @@
 	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
 	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
 	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
-	<a href="atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
 </div>
+<h6><a href="/blog/about">About</a></h6>
 <h6><a href="/blog/readings">Readings</a></h6>
-
         </header>
 
         <main id="content">
@@ -56,12 +56,12 @@
   <h1 class="post-title">CVS常用命令速查</h1>
   <section class="post-content article-entry">
     <p>作者： 车东 chedong@bigfoot.com<br>版权声明：可以任意转载，转载时请务必以超链接形式标明文章原始出处和作者信息及本声明<br><a href="http://www.chedong.com/tech/cvs_card.html" target="_blank" rel="external">http://www.chedong.com/tech/cvs_card.html</a><br>关键词：CVS CVSWeb CVSTrac WinCVS CVSROOT<br>内容提要：<br>CVS环境初始化：CVS环境的搭建 管理员<br>CVS的日常使用：日常开发中最常用的CVS命令， 开发人员 管理员<br>CVS的分支开发：项目按照不同进度和目标并发进行 管理员<br>CVS的用户认证：通过SSH的远程用户认证，安全，简单 管理员<br>CVSWEB：CVS的WEB访问界面大大提高代码版本比较的效率 管理员<br>CVS TAG：将$Header$加入代码注释中，方便开发过程的跟踪 开发人员<br>CVS vs VSS: CVS和Virsual SourceSafe的比较 开发人员 管理员<br>WinCVS: 通过SSH认证的WinCVS认证设置<br>基于CVSTrac的小组开发环境搭建：通过CVSTrac实现web界面的CVS用户管理及集成的BUG跟踪和WIKI交流。<br>一个系统20%的功能往往能够满足80%的需求，CVS也不例外，以下是CVS最常用的功能，可能还不到它全部命令选项的20%，更多的功能在实际应用过程中体会，你想用多少就学多少，不时回头看看经常有意外的收获。</p>
-<h1 id="CVS环境初始化">CVS环境初始化</h1><p>环境设置：指定CVS库的路径CVSROOT<br>tcsh<br>setenv CVSROOT /path/to/cvsroot<br>bash<br>CVSROOT=/path/to/cvsroot ; export CVSROOT</p>
+<h1 id="CVS环境初始化"><a href="#CVS环境初始化" class="headerlink" title="CVS环境初始化"></a>CVS环境初始化</h1><p>环境设置：指定CVS库的路径CVSROOT<br>tcsh<br>setenv CVSROOT /path/to/cvsroot<br>bash<br>CVSROOT=/path/to/cvsroot ; export CVSROOT</p>
 <p>后面还提到远程CVS服务器的设置：<br>CVSROOT=:extUSER@test.server.address#port:/path/to/cvsroot CVS_RSH=ssh; export CVSROOT CVS_RSH</p>
 <p>初始化：CVS版本库的初始化。<br>cvs init</p>
 <p>一个项目的首次导入<br>cvs import -m “write some comments here” project_name vendor_tag release_tag<br>执行后：会将所有源文件及目录导入到/path/to/cvsroot/project_name目录下<br>vender_tag: 开发商标记<br>release_tag: 版本发布标记</p>
 <p>项目导出：将代码从CVS库里导出<br>cvs checkout project_name<br>cvs 将创建project_name目录，并将最新版本的源代码导出到相应目录中。这个checkout和Virvual SourceSafe中的check out不是一个概念，相对于Virvual SourceSafe的check out是cvs update， check in是cvs commit。</p>
-<h1 id="CVS的日常使用">CVS的日常使用</h1><p>注意：第一次导出以后，就不是通过cvs checkout来同步文件了，而是要进入刚才cvs checkout project_name导出的project_name目录下进行具体文件的版本同步（添加，修改，删除）操作。</p>
+<h1 id="CVS的日常使用"><a href="#CVS的日常使用" class="headerlink" title="CVS的日常使用"></a>CVS的日常使用</h1><p>注意：第一次导出以后，就不是通过cvs checkout来同步文件了，而是要进入刚才cvs checkout project_name导出的project_name目录下进行具体文件的版本同步（添加，修改，删除）操作。</p>
 <p>将文件同步到最新的版本<br>cvs update<br>不制定文件名，cvs将同步所有子目录下的文件，也可以制定某个文件名/目录进行同步<br>cvs update file_name<br>最好每天开始工作前或将自己的工作导入到CVS库里前都要做一次，并养成“先同步 后修改”的习惯，和Virvual SourceSafe不同，CVS里没有文件锁定的概念，所有的冲突是在commit之前解决，如果你修改过程中，有其他人修改并commit到了CVS库中，CVS会通知你文件冲突，并自动将冲突部分用</p>
 <blockquote>
 <p>;&gt;;&gt;;&gt;;&gt;;&gt;;<br>content on cvs server<br>&lt;&lt;&lt;&lt;&lt;&lt;<br>content in your file<br>;&gt;;&gt;;&gt;;&gt;;&gt;;<br>标记出来，由你确认冲突内容的取舍。<br>版本冲突一般是在多个人修改一个文件造成的，但这种项目管理上的问题不应该指望由CVS来解决。</p>
@@ -79,14 +79,14 @@
 <p>移动文件/文件重命名<br>cvs里没有cvs move或cvs rename，因为这两个操作是可以由先cvs remove old_file_name，然后cvs add new_file_name实现的。</p>
 <p>删除/移动目录<br>最方便的方法是让管理员直接移动，删除CVSROOT里相应目录（因为CVS一个项目下的子目录都是独立的，移动到$CVSROOT目录下都可以作为新的独立项目：好比一颗树，其实砍下任意一枝都能独立存活），对目录进行了修改后，要求其开发人员重新导出项目cvs checkout project_name 或者用cvs update -dP同步。</p>
 <p>项目发布导出不带CVS目录的源文件<br>做开发的时候你可能注意到了，每个开发目录下，CVS都创建了一个CVS/目录。里面有文件用于记录当前目录和CVS库之间的对应信息。但项目发布的时候你一般不希望把文件目录还带着含有CVS信息的CVS目录吧，这个一次性的导出过程使用cvs export命令，不过export只能针对一个TAG或者日期导出，比如：<br>cvs export -r release1 project_name<br>cvs export -D 20021023 project_name<br>cvs export -D now project_name</p>
-<h1 id="CVS_Branch：项目多分支同步开发">CVS Branch：项目多分支同步开发</h1><p>确认版本里程碑：多个文件各自版本号不一样，项目到一定阶段，可以给所有文件统一指定一个阶段里程碑版本号，方便以后按照这个阶段里程碑版本号导出项目，同时也是项目的多个分支开发的基础。<br>cvs tag release_1_0</p>
+<h1 id="CVS-Branch：项目多分支同步开发"><a href="#CVS-Branch：项目多分支同步开发" class="headerlink" title="CVS Branch：项目多分支同步开发"></a>CVS Branch：项目多分支同步开发</h1><p>确认版本里程碑：多个文件各自版本号不一样，项目到一定阶段，可以给所有文件统一指定一个阶段里程碑版本号，方便以后按照这个阶段里程碑版本号导出项目，同时也是项目的多个分支开发的基础。<br>cvs tag release_1_0</p>
 <p>开始一个新的里程碑：<br>cvs commit -r 2 标记所有文件开始进入2.x的开发</p>
 <p>注意：CVS里的revsion和软件包的发布版本可以没有直接的关系。但所有文件使用和发布版本一致的版本号比较有助于维护。</p>
 <p>版本分支的建立<br>在开发项目的2.x版本的时候发现1.x有问题，但2.x又不敢用，则从先前标记的里程碑：release_1_0导出一个分支release_1_0_patch<br>cvs rtag -b -r release_1_0 release_1_0_patch proj_dir</p>
 <p>一些人先在另外一个目录下导出release_1_0_patch这个分支：解决1.0中的紧急问题，<br>cvs checkout -r release_1_0_patch<br>而其他人员仍旧在项目的主干分支2.x上开发</p>
 <p>在release_1_0_patch上修正错误后，标记一个1.0的错误修正版本号<br>cvs tag release_1_0_patch_1</p>
 <p>如果2.0认为这些错误修改在2.0里也需要，也可以在2.0的开发目录下合并release_1_0_patch_1中的修改到当前代码中：<br>cvs update -j release_1_0_patch_1</p>
-<h1 id="CVS的远程认证：通过SSH远程访问CVS">CVS的远程认证：通过SSH远程访问CVS</h1><p>使用cvs本身基于pserver的远程认证很麻烦,需要定义服务器和用户组，用户名，设置密码等，<br>常见的登陆格式如下：<br>cvs -d :pserver:cvs_user_name@cvs.server.address:/path/to/cvsroot login<br>例子：<br>cvs -d :pserver:cvs@samba.org:/cvsroot login</p>
+<h1 id="CVS的远程认证：通过SSH远程访问CVS"><a href="#CVS的远程认证：通过SSH远程访问CVS" class="headerlink" title="CVS的远程认证：通过SSH远程访问CVS"></a>CVS的远程认证：通过SSH远程访问CVS</h1><p>使用cvs本身基于pserver的远程认证很麻烦,需要定义服务器和用户组，用户名，设置密码等，<br>常见的登陆格式如下：<br>cvs -d :pserver:cvs_user_name@cvs.server.address:/path/to/cvsroot login<br>例子：<br>cvs -d :pserver:cvs@samba.org:/cvsroot login</p>
 <p>不是很安全，因此一般是作为匿名只读CVS访问的方式。从安全考虑，通过系统本地帐号认证并通过SSH传输是比较好的办法，通过在客户机的/etc/profile里设置一下内容：<br>CVSROOT=:extUSER@cvs.server.address#port:/path/to/cvsroot CVS_RSH=ssh; export CVSROOT CVS_RSH<br>所有客户机所有本地用户都可以映射到CVS服务器相应同名帐号了。</p>
 <p>比如:</p>
 <p>CVS服务器是192.168.0.3，上面CVSROOT路径是/home/cvsroot，另外一台开发客户机是192.168.0.4，如果tom在2台机器上都有同名的帐号，那么从192.168.0.4上设置了：<br>export CVSROOT=:ext:tom@192.168.0.3:/home/cvsroot<br>export CVS_RSH=ssh<br>tom就可以直接在192.168.0.4上对192.168.0.3的cvsroot进行访问了（如果有权限的话）<br>cvs checkout project_name<br>cd project_name<br>cvs update<br>…<br>cvs commit</p>
@@ -95,29 +95,29 @@
 <p>解决的方法是做一个脚本指定端口转向（不能使用alias，会出找不到文件错误）：<br>创建一个/usr/bin/ssh_cvs文件：</p>
 <p>#!/usr/bin/sh<br>/path/to/ssh -p 34567 “$@”<br>然后：chmod +x /usr/bin/ssh_cvs<br>并CVS_RSH=ssh_cvs; export CVS_RSH</p>
 <p>注意：port是指相应服务器SSH的端口，不是cvs pserver的端口</p>
-<h1 id="CVSWEB：提高文件浏览效率">CVSWEB：提高文件浏览效率</h1><p>CVSWEB就是CVS的WEB界面，可以大大提高程序员定位修改的效率:<br>使用的样例可以看：<a href="http://www.freebsd.org/cgi/cvsweb.cgi" target="_blank" rel="external">http://www.freebsd.org/cgi/cvsweb.cgi</a></p>
+<h1 id="CVSWEB：提高文件浏览效率"><a href="#CVSWEB：提高文件浏览效率" class="headerlink" title="CVSWEB：提高文件浏览效率"></a>CVSWEB：提高文件浏览效率</h1><p>CVSWEB就是CVS的WEB界面，可以大大提高程序员定位修改的效率:<br>使用的样例可以看：<a href="http://www.freebsd.org/cgi/cvsweb.cgi" target="_blank" rel="external">http://www.freebsd.org/cgi/cvsweb.cgi</a></p>
 <p>CVSWEB的下载：CVSWEB从最初的版本已经演化出很多功能界面更丰富的版本，这个是我个人感觉安装设置比较方便的：<br><a href="http://www.spaghetti-code.de/software/linux/cvsweb/" target="_blank" rel="external">http://www.spaghetti-code.de/software/linux/cvsweb/</a></p>
 <p>下载解包：<br>tar zxf cvsweb.tgz<br>把配置文件cvsweb.conf放到安全的地方（比如和apache的配置放在同一个目录下），<br>修改：cvsweb.cgi让CGI找到配置文件：<br>$config = $ENV{‘CVSWEB_CONFIG’} || ‘/path/to/apache/conf/cvsweb.conf’;</p>
 <p>转到/path/to/apache/conf下并修改cvsweb.conf：</p>
 <p>修改CVSROOT路径设置：<br>%CVSROOT = (<br>‘Development’ =&gt;; ‘/path/to/cvsroot’, #&lt;==修改指向本地的CVSROOT<br>);<br>缺省不显示已经删除的文档：<br>“hideattic” =&gt;; “1”,#&lt;==缺省不显示已经删除的文档<br>在配置文件cvsweb.conf中还可以定制页头的描述信息，你可以修改$long_intro成你需要的文字<br>CVSWEB可不能随便开放给所有用户，因此需要使用WEB用户认证：<br>先生成 passwd:<br>/path/to/apache/bin/htpasswd -c cvsweb.passwd user</p>
 <p>修改httpd.conf: 增加</p>
 <p><directory "="" path="" to="" apache="" cgi-bin="" cvsweb="">;<br>AuthName “CVS Authorization”<br>AuthType Basic<br>AuthUserFile /path/to/cvsweb.passwd<br>require valid-user<br></directory>;</p>
-<h1 id="CVS_TAGS:_who?_when?">CVS TAGS: who? when?</h1><p>将$Id$ 加在程序文件开头的注释里是一个很好的习惯，cvs能够自动解释更新其中的内容成：file_name version time user_name 的格式，比如：cvs_card.txt,v 1.1 2002/04/05 04:24:12 chedong Exp，可以这些信息了解文件的最后修改人和修改时间</p>
+<h1 id="CVS-TAGS-who-when"><a href="#CVS-TAGS-who-when" class="headerlink" title="CVS TAGS: who? when?"></a>CVS TAGS: who? when?</h1><p>将$Id$ 加在程序文件开头的注释里是一个很好的习惯，cvs能够自动解释更新其中的内容成：file_name version time user_name 的格式，比如：cvs_card.txt,v 1.1 2002/04/05 04:24:12 chedong Exp，可以这些信息了解文件的最后修改人和修改时间</p>
 <p>几个常用的缺省文件：default.php&lt;?php/<em> </em> Copyright (c) 2002 Company Name. <em> $Header$ </em>/?&gt;;====================================Default.java: 注意文件头一般注释用 /<em> 开始 JAVADOC注释用 /** 开始的区别/</em> <em> Copyright (c) 2002 MyCompany Name. </em> $Header$ <em>/package com.mycompany;import java.;/** </em> comments here <em>/public class Default {    /**     </em> Comments here     <em> @param     </em> @return     */    public toString() {    }}====================================default.pl:#!/usr/bin/perl -w# Copyright (c) 2002 Company Name.# $Header$# file comments hereuse strict;</p>
-<h1 id="CVS_vs_VSS">CVS vs VSS　</h1><p>CVS没有文件锁定模式，VSS在check out同时，同时记录了文件被导出者锁定。</p>
+<h1 id="CVS-vs-VSS"><a href="#CVS-vs-VSS" class="headerlink" title="CVS vs VSS　"></a>CVS vs VSS　</h1><p>CVS没有文件锁定模式，VSS在check out同时，同时记录了文件被导出者锁定。</p>
 <p>CVS的update和commit， VSS是get_lastest_version和check in</p>
 <p>对应VSS的check out/undo check out的CVS里是edit和unedit</p>
 <p>在CVS中，标记自动更新功能缺省是打开的，这样也带来一个潜在的问题，就是不用-kb方式添加binary文件的话在cvs自动更新时可能会导致文件失效。</p>
 <p>$Header$ $Date$这样的标记在Virsual SourceSafe中称之为Keyword Explaination，缺省是关闭的，需要通过OPITION打开，并指定需要进行源文件关键词扫描的文件类型：<em>.txt,</em>.java,*.html…</p>
 <p>对于Virsual SourceSafe和CVS都通用的TAG有：<br>$Header$<br>$Author$<br>$Date$<br>$Revision$</p>
 <p>我建议尽量使用通用的关键词保证代码在CVS和VSS都能方便的跟踪。</p>
-<h1 id="WinCVS">WinCVS</h1><p>下载：<br>cvs Windows客户端：目前稳定版本为1.2<br><a href="http://www.wincvs.org/" target="_blank" rel="external">http://www.wincvs.org/</a><br>ssh Windows客户端<br><a href="http://www.networksimplicity.com/openssh/" target="_blank" rel="external">http://www.networksimplicity.com/openssh/</a></p>
+<h1 id="WinCVS"><a href="#WinCVS" class="headerlink" title="WinCVS"></a>WinCVS</h1><p>下载：<br>cvs Windows客户端：目前稳定版本为1.2<br><a href="http://www.wincvs.org/" target="_blank" rel="external">http://www.wincvs.org/</a><br>ssh Windows客户端<br><a href="http://www.networksimplicity.com/openssh/" target="_blank" rel="external">http://www.networksimplicity.com/openssh/</a></p>
 <p>安装好以上2个软件以后：<br>WinCVS客户端的admin==&gt;;preference设置<br>1 在general选单里<br>设置CVSROOT： username@192.168.0.123:/home/cvsroot<br>设置Authorization: 选择SSH server</p>
 <p>2 Port选单里<br>钩上：check for alternate rsh name<br>并设置ssh.exe的路径，缺省是装在 C:Program FilesNetworkSimplicitysshssh.exe</p>
 <p>然后就可以使用WinCVS进行cvs操作了，所有操作都会跳出命令行窗口要求你输入服务器端的认证密码。</p>
 <p>当然，如果你觉得这样很烦的话，还有一个办法就是生成一个没有密码的公钥/私钥对，并设置CVS使用基于公钥/私钥的SSH认证（在general选单里）。</p>
 <p>可以选择的diff工具：examdiff<br>下载：<br><a href="http://www.prestosoft.com/examdiff/examdiff.htm" target="_blank" rel="external">http://www.prestosoft.com/examdiff/examdiff.htm</a><br>还是在WinCVS菜单admin==&gt;;preference的WinCVS选单里<br>选上：Externel diff program<br>并设置diff工具的路径，比如：C:Program Filesed16iExamDiff.exe<br>在对文件进行版本diff时，第一次需要将窗口右下角的use externel diff选上。</p>
-<h1 id="基于CVSTrac的小组开发环境搭建">基于CVSTrac的小组开发环境搭建</h1><p>作为一个小组级的开发环境，版本控制系统和BUG跟踪系统等都涉及到用户认证部分。如何方便的将这些系统集成起来是一个非常困难的事情，毕竟我们不能指望Linux下有像Source Offsite那样集成度很高的版本控制/BUG跟踪集成系统。</p>
+<h1 id="基于CVSTrac的小组开发环境搭建"><a href="#基于CVSTrac的小组开发环境搭建" class="headerlink" title="基于CVSTrac的小组开发环境搭建"></a>基于CVSTrac的小组开发环境搭建</h1><p>作为一个小组级的开发环境，版本控制系统和BUG跟踪系统等都涉及到用户认证部分。如何方便的将这些系统集成起来是一个非常困难的事情，毕竟我们不能指望Linux下有像Source Offsite那样集成度很高的版本控制/BUG跟踪集成系统。</p>
 <p>我个人是很反对使用pserver模式的远程用户认证的，但如果大部分组员使用WINDOWS客户端进行开发的话，总体来说使用CVSROOT/passwd认证还是很难避免的，但CVS本身用户的管理比较麻烦。本来我打算自己用perl写一个管理界面的，直到我发现了CVSTrac：一个基于WEB界面的BUG跟踪系统，它外挂在CVS系统上的BUG跟踪系统，其中就包括了WEB界面的CVSROOT/passwd文件的管理，甚至还集成了WIKIWIKI讨论组功能。</p>
 <p>这里首先说一下CVS的pserver模式下的用户认证，CVS的用户认证服务是基于inetd中的：<br>cvspserver stream tcp nowait nobody /usr/bin/cvs cvs –allow-root=/home/cvsroot pserver<br>一般在2401端口</p>
 <p>CVS用户数据库是基于CVSROOT/passwd文件，文件格式：</p>
@@ -176,7 +176,7 @@
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-CVS常用命令速查" data-title="CVS常用命令速查" data-url="http://zhangmin.name/blog/2012/03/19/CVS常用命令速查/"></div>
+	 <div class="ds-thread" data-thread-key="post-CVS常用命令速查" data-title="CVS常用命令速查" data-url="http://www.zhangmin.name/blog/blog/2012/03/19/CVS常用命令速查/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -197,7 +197,7 @@ var duoshuoQuery = {short_name:"zhangmin"};
 
         </main>
         <footer id="footer">
-            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+            <section id="footer-message">&copy; 2016 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
         </footer>
     </body>
 </html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>关于Nodejs的core文件 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  December 29, 2015
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/nodejs/'>nodejs</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">关于Nodejs的core文件</h1>
+  <section class="post-content article-entry">
+    <h2 id="关于Core文件"><a href="#关于Core文件" class="headerlink" title="关于Core文件"></a>关于Core文件</h2><p>当进程崩溃或者终止时会产生core dump文件。该文件包含了进程在终止前得内存信息。core文件可以在gdb中打开，可以检查进程终止时程序<br>的状态。在node.js开发中，core文件可以帮助开发人员调试程序崩溃和内存泄露等问题。</p>
+<h2 id="如何产生core文件"><a href="#如何产生core文件" class="headerlink" title="如何产生core文件"></a>如何产生core文件</h2><p>不同的系统中生成core文件得方法是不同的。Joyent公司（nodejs的运营公司）建议所有的生产系统都应该打开–abort-on-uncaught-exception选项。<br>在Unix系统中，还需要使用ulimit -c unlimited命令设置产生的core文件的大小为任意大小。<br>如果没有抛出异常，在Linux系统中，你可以使用系统工具gcore来产生core文件。</p>
+<p>如果是正常运行Node程序，但程序自己奔溃退出。这是最糟糕的情况，或者是Node，或者是它的依赖，二进制模块有编程错误。如果出现这种情况<br>向Node团队报告问题，或者向模块作者报告问题。</p>
+<p>你也可以调用process.abort()方法也可以产生core文件。</p>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">var obj = &#123;</div><div class="line">  myproperty: &quot;Hello World&quot;,</div><div class="line">  count: 0,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">function increment() &#123;</div><div class="line">  obj.count++;</div><div class="line">  if (obj.count === 1000)</div><div class="line">    throw new Error(&quot;sad trombone&quot;);</div><div class="line">  setImmediate(increment);</div><div class="line">&#125;</div><div class="line"></div><div class="line">setImmediate(increment);</div><div class="line"></div><div class="line">$ uname -a</div><div class="line">Linux 7527bd77-ab3e-474b-ace7-eed6053931e7 3.1.10joyent-ubuntu-10-opt #1 SMP Fri Jan 20 09:55:31 PST 2012 x86_64 GNU/Linux</div><div class="line">$ ulimit -c unlimited</div><div class="line">$ node --abort-on-uncaught-exception t.js</div><div class="line">Uncaught Error: sad trombone</div><div class="line"></div><div class="line">FROM</div><div class="line">Object.increment [as _onImmediate] (/data/test/t.js:10:5)</div><div class="line">processImmediate [as _immediateCallback] (timers.js:330:15)</div><div class="line">Trace/breakpoint trap (core dumped)</div><div class="line">$ ls -alh core</div><div class="line">-rw------- 1 root root 12M 2014-01-28 18:37 core</div></pre></td></tr></table></figure>
+<h2 id="使用core文件诊断node内存泄漏"><a href="#使用core文件诊断node内存泄漏" class="headerlink" title="使用core文件诊断node内存泄漏"></a>使用core文件诊断node内存泄漏</h2><p>可以一定间隔产生core文件，分析v8的heap以及进程的调用栈。<br>可以分析所有的JavaScript对象，从而分析内存泄漏的代码。<br>对core文件的分析可以使用gdb（linux平台），也可以使用mdb（SmartOS）。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2016/01/03/时间的朋友2015演讲笔记/">
+        ← prev <!--时间的朋友2015演讲笔记-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2015/12/02/nodejs菜鸟需跨过的坎/">
+        <!--nodejs菜鸟需跨过的坎--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-关于Nodejs的core文件" data-title="关于Nodejs的core文件" data-url="http://www.zhangmin.name/blog/blog/2015/12/29/关于Nodejs的core文件/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2016 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

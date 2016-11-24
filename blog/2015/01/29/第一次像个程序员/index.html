@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>第一次像个程序员 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  January 29, 2015
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/札记/'>札记</a>
+    
+      <a href='/blog/tags/Java/'>Java</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">第一次像个程序员</h1>
+  <section class="post-content article-entry">
+    <p>以前看到过一篇文章说优秀的程序员有一个特点就是懒。由于懒，不想做重复的事情，让程序去做重复的事情。在这个过程中，也许写程序的时间比去做重复的事情花费的时间还多。但是这个过程中的乐趣确实无穷的。与其经历那份煎熬，不如做些有挑战的，有成就感的事情。</p>
+<p>避免做重复的事，这是每个程序员都应该去做的事。</p>
+<h1 id="无聊的任务"><a href="#无聊的任务" class="headerlink" title="无聊的任务"></a>无聊的任务</h1><p>一个已经用PowerDesigner设计好的数据库，还要去补充数据库表结构的详细文档。讨厌为了文档而文档的文档撰写工作。这是一个无聊，无趣，浪费生命的工作。</p>
+<h1 id="偷懒"><a href="#偷懒" class="headerlink" title="偷懒"></a>偷懒</h1><p>能不能导出？这是我的第一个想法。但是PowerDesigner只导出SQL语句。无奈，文档需要更详细的内容。项目文件能不能直接用文本打开？用记事本打开，可以。而且我看到了程序员都喜欢看到的格式XML。剩下的工作就是解析XML，提取关于数据库表的内容，转成CSV文件，然后在复制粘贴到WORD中。</p>
+<h1 id="Show-Time"><a href="#Show-Time" class="headerlink" title="Show Time"></a>Show Time</h1><p>不修改文档只解析，用SAX就好了。<br><a id="more"></a></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">&lt;c:Tables&gt;</div><div class="line">&lt;o:Table Id=&quot;o83&quot;&gt;</div><div class="line">&lt;a:ObjectID&gt;11195183-1EF0-4FDB-BC9F-5F45A42D3200&lt;/a:ObjectID&gt;</div><div class="line">&lt;a:Name&gt;用户表&lt;/a:Name&gt;</div><div class="line">&lt;a:Code&gt;TBL_USER&lt;/a:Code&gt;</div><div class="line">&lt;a:CreationDate&gt;1407122337&lt;/a:CreationDate&gt;</div><div class="line">&lt;a:Creator&gt;Administrator&lt;/a:Creator&gt;</div><div class="line">&lt;a:ModificationDate&gt;1422326992&lt;/a:ModificationDate&gt;</div><div class="line">&lt;a:Modifier&gt;Administrator&lt;/a:Modifier&gt;</div><div class="line">&lt;a:Comment&gt;用户表&lt;/a:Comment&gt;</div><div class="line">&lt;a:TotalSavingCurrency/&gt;</div><div class="line">&lt;c:Columns&gt;</div><div class="line">&lt;o:Column Id=&quot;o112&quot;&gt;</div><div class="line">&lt;a:ObjectID&gt;46BD538A-51A2-4ED0-83DA-4840413F2993&lt;/a:ObjectID&gt;</div><div class="line">&lt;a:Name&gt;用户编号&lt;/a:Name&gt;</div><div class="line">&lt;a:Code&gt;U_ID&lt;/a:Code&gt;</div><div class="line">&lt;a:CreationDate&gt;1407122416&lt;/a:CreationDate&gt;</div><div class="line">&lt;a:Creator&gt;Administrator&lt;/a:Creator&gt;</div><div class="line">&lt;a:ModificationDate&gt;1421802615&lt;/a:ModificationDate&gt;</div><div class="line">&lt;a:Modifier&gt;Administrator&lt;/a:Modifier&gt;</div><div class="line">&lt;a:DataType&gt;int&lt;/a:DataType&gt;</div><div class="line">&lt;a:Mandatory&gt;1&lt;/a:Mandatory&gt;</div><div class="line">&lt;/o:Column&gt;</div><div class="line">&lt;o:Column Id=&quot;o113&quot;&gt;...&lt;/o:Column&gt;</div><div class="line">&lt;o:Column Id=&quot;o114&quot;&gt;...&lt;/o:Column&gt;</div><div class="line">&lt;o:Column Id=&quot;o115&quot;&gt;...&lt;/o:Column&gt;</div><div class="line">&lt;o:Column Id=&quot;o116&quot;&gt;...&lt;/o:Column&gt;</div><div class="line">&lt;o:Column Id=&quot;o117&quot;&gt;...&lt;/o:Column&gt;</div><div class="line">&lt;o:Column Id=&quot;o118&quot;&gt;...&lt;/o:Column&gt;</div><div class="line">&lt;o:Column Id=&quot;o119&quot;&gt;...&lt;/o:Column&gt;</div><div class="line">&lt;o:Column Id=&quot;o120&quot;&gt;...&lt;/o:Column&gt;</div><div class="line">&lt;o:Column Id=&quot;o121&quot;&gt;...&lt;/o:Column&gt;</div><div class="line">&lt;o:Column Id=&quot;o122&quot;&gt;...&lt;/o:Column&gt;</div><div class="line">&lt;o:Column Id=&quot;o123&quot;&gt;...&lt;/o:Column&gt;</div><div class="line">&lt;/c:Columns&gt;</div><div class="line">&lt;c:Keys&gt;...&lt;/c:Keys&gt;</div><div class="line">&lt;c:PrimaryKey&gt;...&lt;/c:PrimaryKey&gt;</div><div class="line">&lt;/o:Table&gt;</div></pre></td></tr></table></figure>
+<p>对于如此工整，完美，结构化的数据，一定是程序的最爱。Java SAX解析主要代码如下：</p>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div></pre></td><td class="code"><pre><div class="line">public class PDMHandler extends DefaultHandler&#123;</div><div class="line">trueprivate List&lt;Table&gt; tables = null;</div><div class="line">trueprivate Table table = null;</div><div class="line">trueprivate List&lt;Column&gt; columns = null;</div><div class="line">trueprivate Column column = null;</div><div class="line"></div><div class="line">trueprivate boolean inTables = false;</div><div class="line">trueprivate boolean inTable = false;</div><div class="line">trueprivate boolean inColumns = false;</div><div class="line">trueprivate boolean inColumn = false;</div><div class="line"></div><div class="line">trueprivate String cur = null;</div><div class="line"></div><div class="line">truepublic List&lt;Table&gt; getTables(InputStream is) throws Exception &#123;</div><div class="line">truetrueSAXParserFactory factory = SAXParserFactory.newInstance();</div><div class="line">truetrueSAXParser parser = factory.newSAXParser();</div><div class="line">truetruePDMHandler handler = new PDMHandler();</div><div class="line">truetrueparser.parse(is, handler);</div><div class="line">truetruereturn handler.getTables();</div><div class="line">true&#125;</div><div class="line"></div><div class="line">truepublic List&lt;Table&gt; getTables() &#123;</div><div class="line">truetruereturn tables;</div><div class="line">true&#125;</div><div class="line"></div><div class="line">true@Override</div><div class="line">truepublic void startDocument() throws SAXException &#123;</div><div class="line">truetrueSystem.out.println(&quot;Start parsing...&quot;);</div><div class="line">truetruethis.tables = new ArrayList&lt;Table&gt;();</div><div class="line">true&#125;</div><div class="line"></div><div class="line">true@Override</div><div class="line">truepublic void endDocument() throws SAXException &#123;</div><div class="line">truetrueSystem.out.println(&quot;Parsing finished.&quot;);</div><div class="line">true&#125;</div><div class="line"></div><div class="line">true@Override</div><div class="line">truepublic void startElement(String uri, String localName, String qName,</div><div class="line">truetruetrueAttributes attributes) throws SAXException &#123;</div><div class="line">truetrueif (&quot;c:Tables&quot;.equals(qName)) inTables = true;</div><div class="line"></div><div class="line">truetrueif (inTables) &#123;</div><div class="line">truetruetrueif (&quot;o:Table&quot;.equals(qName)) &#123;</div><div class="line">truetruetruetrueinTable = true;</div><div class="line">truetruetruetruetable = new Table();</div><div class="line">truetruetrue&#125;</div><div class="line"></div><div class="line">truetruetrueif (inTable) &#123;</div><div class="line">truetruetruetrueif (&quot;c:Columns&quot;.equals(qName)) &#123;</div><div class="line">truetruetruetruetrueinColumns = true;</div><div class="line">truetruetruetruetruecolumns = new ArrayList&lt;Column&gt;();</div><div class="line">truetruetruetrue&#125;</div><div class="line"></div><div class="line">truetruetruetrueif (inColumns) &#123;</div><div class="line">truetruetruetruetrueif (&quot;o:Column&quot;.equals(qName)) &#123;</div><div class="line">truetruetruetruetruetrueinColumn = true;</div><div class="line">truetruetruetruetruetruecolumn = new Column();</div><div class="line">truetruetruetruetrue&#125;</div><div class="line">truetruetruetrue&#125;</div><div class="line">truetruetrue&#125;</div><div class="line">truetrue&#125;</div><div class="line">truetruecur = qName;</div><div class="line">true&#125;</div><div class="line"></div><div class="line">true@Override</div><div class="line">truepublic void characters(char[] ch, int start, int length)</div><div class="line">truetruetruethrows SAXException &#123;</div><div class="line">truetrueString content = new String(ch, start, length);</div><div class="line">truetrue//&lt;a:code&gt;Name&lt;/a:code&gt;</div><div class="line">truetrue//First visit value is Name, second visit value is LF(10)</div><div class="line">truetrueboolean first = (int) content.charAt(0) != 10;</div><div class="line">truetrueif (inColumn) &#123;</div><div class="line">truetruetrueif (first) &#123;</div><div class="line">truetruetruetrueif (&quot;a:Name&quot;.equals(cur)) column.setName(content);</div><div class="line">truetruetruetrueelse if (&quot;a:Code&quot;.equals(cur)) column.setDataItem(content);</div><div class="line">truetruetruetrueelse if (&quot;a:DataType&quot;.equals(cur)) column.setType(&quot;\&quot;&quot; + content + &quot;\&quot;&quot;);</div><div class="line">truetruetruetrueelse if (&quot;a:Length&quot;.equals(cur)) column.setLength(content);</div><div class="line">truetruetruetrueelse if (&quot;a:Comment&quot;.equals(cur)) column.setComment(content);</div><div class="line">truetruetruetrueelse &#123; &#125;</div><div class="line">truetruetrue&#125;</div><div class="line"></div><div class="line">truetrue&#125;  else if (inTable)&#123;</div><div class="line">truetruetrueif (first) &#123;</div><div class="line">truetruetruetrueif (&quot;a:Name&quot;.equals(cur)) table.setTableName(content);</div><div class="line">truetruetruetrueelse if (&quot;a:Code&quot;.equals(cur)) table.setTableCode(content);</div><div class="line">truetruetruetrueelse &#123; &#125;</div><div class="line">truetruetrue&#125;</div><div class="line"></div><div class="line">truetrue&#125; else &#123; &#125;</div><div class="line">true&#125;</div><div class="line"></div><div class="line">true@Override</div><div class="line">truepublic void endElement(String uri, String localName, String qName)</div><div class="line">truetruetruethrows SAXException &#123;</div><div class="line">truetrueif (&quot;o:Column&quot;.equals(qName)) &#123;</div><div class="line">truetruetrueinColumn = false;</div><div class="line">truetruetrueif (inColumns) columns.add(column);</div><div class="line">truetrue&#125;</div><div class="line">truetrueif (&quot;c:Columns&quot;.equals(qName)) &#123;</div><div class="line">truetruetrueinColumns = false;</div><div class="line">truetruetrueinTable = false;</div><div class="line">truetruetruetable.setColumns(columns);</div><div class="line">truetruetruetables.add(table);</div><div class="line">truetrue&#125;</div><div class="line">truetrueif (&quot;c:Tables&quot;.equals(qName)) inTables = false;</div><div class="line">true&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后对格式稍加处理，就可以得到CSV文件，可以非常方便的复制粘贴到WORD中。</p>
+<h2 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">用户表(TBL_USER)</div><div class="line">1,用户编号,U_ID,&quot;int&quot;,,,</div><div class="line">2,用户名,U_NAME,&quot;varchar(20)&quot;,20,,</div><div class="line">3,用户密码,U_PWD,&quot;varchar(20)&quot;,20,,</div><div class="line">4,机构代码,ORG_CODE,&quot;varchar(50)&quot;,50,,</div><div class="line">5,员工工号,U_NUM,&quot;varchar(20)&quot;,20,,</div><div class="line">6,状态,U_STATUS,&quot;varchar(2)&quot;,2,,</div><div class="line">7,最后登录时间,U_LAST_LOGIN_TIME,&quot;datetime&quot;,,,</div><div class="line">8,创建人,U_CREATER,&quot;int&quot;,,,</div><div class="line">9,创建时间,U_CREATE_TIME,&quot;datetime&quot;,,,</div><div class="line">10,备注,U_REMARK,&quot;varchar(200)&quot;,200,,</div><div class="line">11,最后密码更新时间,U_LAST_UPDATE_PWD_TIME,&quot;datetime&quot;,,,</div><div class="line">12,离职日期,U_DEL_TIME,&quot;date&quot;,,,</div></pre></td></tr></table></figure>
+<h1 id="Further-and-beyond"><a href="#Further-and-beyond" class="headerlink" title="Further and beyond"></a>Further and beyond</h1><p>写代码的过程中感觉到用java写这段简单的文本处理程序是比较费力的。如果用一些脚本语言如Python或者基于JVM的Groovy，会更方便、更快捷，更高效的。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2015/12/02/nodejs菜鸟需跨过的坎/">
+        ← prev <!--nodejs菜鸟需跨过的坎-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2015/01/27/2015-1-27-RESTful-Java-with-JAX-RS/">
+        <!--RESTful Java with JAX-RS Reading Note--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-第一次像个程序员" data-title="第一次像个程序员" data-url="http://www.zhangmin.name/blog/blog/2015/01/29/第一次像个程序员/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2016 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

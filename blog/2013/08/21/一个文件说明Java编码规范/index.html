@@ -5,9 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="ZhangMin.name's blog">
-        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
-        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="atom.xml">
-        <link rel="canonical" href="http://zhangmin.name/">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
 
         <title>一个文件说明Java编码规范 | ZhangMin.name</title>
         <meta name="description" content="{{meta_description}}">
@@ -29,7 +29,7 @@
 	
 
         <header id="header">
-            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
             <h1><a href="/blog/">ZhangMin.name</a></h1>
             <p>勤思敏行 思行合一</p>
             <div id="follow-icons">
@@ -39,10 +39,10 @@
 	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
 	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
 	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
-	<a href="atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
 </div>
+<h6><a href="/blog/about">About</a></h6>
 <h6><a href="/blog/readings">Readings</a></h6>
-
         </header>
 
         <main id="content">
@@ -88,31 +88,31 @@
 <p> public    int     id;                /<em> id标识 </em>/<br> protected String  name;                /<em> 名字 </em>/<br> private   Date    birthday;            /<em> 生日 </em>/</p>
 <p> int level; // indentation level<br> int size; // size of table</p>
 <p> /<em> 构造器 </em>/<br> public JavaCodeConvention(String name){</p>
-<pre><code>this.<span class="property">name</span> = <span class="property">name</span>;
+<pre><code>this.name = name;
 </code></pre><p> }</p>
 <p> /<em> 方法应该按照功能进行排序，而不是按照可访问性来进行排序 </em>/<br> public void setBirthday(Date birth){</p>
-<pre><code><span class="keyword">this</span>.birthday = birth;
+<pre><code>this.birthday = birth;
 </code></pre><p> }</p>
 <p> /<em> 将过长的代码行进行分解 </em>/<br> public void function(String longExpression1, String longExpression2, String longExpression3,</p>
-<pre><code>    <span class="built_in">String</span> longExpression4, <span class="built_in">String</span> longExpression5){
+<pre><code>    String longExpression4, String longExpression5){
 name = longExpression1 + longExpression2 + longExpression3 + longExpression4
-         + longExpression5; <span class="comment">// PREFER</span>
+         + longExpression5; // PREFER
 </code></pre><p> }</p>
 <p> //传统的缩进<br> public void someMethod(int anArg, Object anotherArg, String yetAnotherArg,<br>  Object andStillAnother) {</p>
 <p> }</p>
 <p> public void emptyMethod(){ }</p>
 <p> //八个空格的缩进<br> private synchronized void horkingLongMethodName(int anArg,</p>
-<pre><code><span class="built_in">Object</span> anotherArg, <span class="built_in">String</span> yetAnotherArg,
-<span class="built_in">Object</span> andStillAnother) {
+<pre><code>Object anotherArg, String yetAnotherArg,
+Object andStillAnother) {
 </code></pre><p> }</p>
 <p> private void doSomethingAboutIt(){</p>
-<pre><code><span class="comment">//变量声明放到方法的第一行</span>
-Integer alpha = <span class="keyword">new</span> Integer(<span class="number">0</span>);
-<span class="keyword">int</span> condition = <span class="number">1</span>;
+<pre><code>//变量声明放到方法的第一行
+Integer alpha = new Integer(0);
+int condition = 1;
 
-<span class="comment">//过长三元运算语句的处理方法</span>
-String aLongBooleanExpression = <span class="keyword">new</span> String(&amp;quot;world&amp;quot;);
-<span class="keyword">int</span> beta = <span class="number">1</span>,gamma = <span class="number">2</span>;
+//过长三元运算语句的处理方法
+String aLongBooleanExpression = new String(&amp;quot;world&amp;quot;);
+int beta = 1,gamma = 2;
 alpha = (aLongBooleanExpression.equals(&amp;quot;hello&amp;quot;)) ? beta : gamma;
 alpha = (aLongBooleanExpression.equals(&amp;quot;hello&amp;quot;)) ? beta
                                                  : gamma;
@@ -120,49 +120,49 @@ alpha = (aLongBooleanExpression.equals(&amp;quot;hello&amp;quot;))
         ? beta
         : gamma;
 
-<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &amp;lt; <span class="number">1000</span>; i++);
-<span class="keyword">while</span> (condition == <span class="number">1</span>) {
+for (int i = 1; i &amp;lt; 1000; i++);
+while (condition == 1) {
 
 }
-<span class="keyword">switch</span> (condition) {
-    <span class="keyword">case</span> <span class="number">1</span>:
-        System.out.println(<span class="number">1</span>);
-        <span class="comment">/* falls through */</span>
-    <span class="keyword">case</span> <span class="number">2</span>:
-        System.out.println(<span class="number">2</span>);
-        <span class="keyword">break</span>;
-    <span class="keyword">default</span>:
-        System.out.println(<span class="number">3</span>);
-        <span class="keyword">break</span>;
+switch (condition) {
+    case 1:
+        System.out.println(1);
+        /* falls through */
+    case 2:
+        System.out.println(2);
+        break;
+    default:
+        System.out.println(3);
+        break;
 }
-<span class="comment">//if (bar &amp;gt; 1) {</span>
-<span class="comment">//</span>
-<span class="comment">// // Do a triple-flip.</span>
-<span class="comment">// ...</span>
-<span class="comment">//}</span>
-<span class="comment">//else</span>
-<span class="comment">// return false;</span>
+//if (bar &amp;gt; 1) {
+//
+// // Do a triple-flip.
+// ...
+//}
+//else
+// return false;
 </code></pre><p> }</p>
 <p> protected void ifStatement(){</p>
-<pre><code>int a=1,b=2,c=2,<span class="keyword">d</span>=1;
+<pre><code>int a=1,b=2,c=2,d=1;
 
-a += c + <span class="keyword">d</span>;
-a = (a + b) / (c * <span class="keyword">d</span>);
+a += c + d;
+a = (a + b) / (c * d);
 
-<span class="comment">//过长条件语句的处理方法</span>
-<span class="keyword">if</span> ((a &amp;gt; b &amp;amp;&amp;amp; c &amp;gt; <span class="keyword">d</span>)
-        || (b == <span class="keyword">d</span> &amp;amp;&amp;amp; a &amp;lt; <span class="keyword">d</span>)
-        ||!(a == c &amp;amp;&amp;amp; <span class="keyword">d</span> == b)) {
+//过长条件语句的处理方法
+if ((a &amp;gt; b &amp;amp;&amp;amp; c &amp;gt; d)
+        || (b == d &amp;amp;&amp;amp; a &amp;lt; d)
+        ||!(a == c &amp;amp;&amp;amp; d == b)) {
  doSomethingAboutIt();
-}<span class="keyword">else</span> <span class="keyword">if</span>( b == <span class="keyword">d</span>){
+}else if( b == d){
 
-}<span class="keyword">else</span>{
+}else{
 
 }
 
-<span class="comment">//或者</span>
-<span class="keyword">if</span> ((a &amp;gt; b &amp;amp;&amp;amp; c &amp;gt; <span class="keyword">d</span>) || ((b == <span class="keyword">d</span> &amp;amp;&amp;amp; a &amp;lt; <span class="keyword">d</span>)
-        ||!(a == c &amp;amp;&amp;amp; <span class="keyword">d</span> == b))) {
+//或者
+if ((a &amp;gt; b &amp;amp;&amp;amp; c &amp;gt; d) || ((b == d &amp;amp;&amp;amp; a &amp;lt; d)
+        ||!(a == c &amp;amp;&amp;amp; d == b))) {
  doSomethingAboutIt();
 }
 </code></pre><p> }<br>}<br>[/java]</p>
@@ -182,7 +182,7 @@ a = (a + b) / (c * <span class="keyword">d</span>);
 
 <nav class="pagination" role="pagination">
     
-    <a class="newer-posts" href="/blog/2013/08/29/-转-25个让Java程序员更高效的Eclipse插件/">
+    <a class="newer-posts" href="/blog/2013/08/29/转-25个让Java程序员更高效的Eclipse插件/">
         ← prev <!--[转]25个让Java程序员更高效的Eclipse插件-->
     </a>
     
@@ -197,7 +197,7 @@ a = (a + b) / (c * <span class="keyword">d</span>);
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-一个文件说明Java编码规范" data-title="一个文件说明Java编码规范" data-url="http://zhangmin.name/blog/2013/08/21/一个文件说明Java编码规范/"></div>
+	 <div class="ds-thread" data-thread-key="post-一个文件说明Java编码规范" data-title="一个文件说明Java编码规范" data-url="http://www.zhangmin.name/blog/blog/2013/08/21/一个文件说明Java编码规范/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -218,7 +218,7 @@ var duoshuoQuery = {short_name:"zhangmin"};
 
         </main>
         <footer id="footer">
-            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+            <section id="footer-message">&copy; 2016 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
         </footer>
     </body>
 </html>

@@ -5,9 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="ZhangMin.name's blog">
-        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
-        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="atom.xml">
-        <link rel="canonical" href="http://zhangmin.name/">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
 
         <title>nodejs菜鸟需跨过的坎 | ZhangMin.name</title>
         <meta name="description" content="{{meta_description}}">
@@ -29,7 +29,7 @@
 	
 
         <header id="header">
-            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
             <h1><a href="/blog/">ZhangMin.name</a></h1>
             <p>勤思敏行 思行合一</p>
             <div id="follow-icons">
@@ -39,10 +39,10 @@
 	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
 	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
 	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
-	<a href="atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
 </div>
+<h6><a href="/blog/about">About</a></h6>
 <h6><a href="/blog/readings">Readings</a></h6>
-
         </header>
 
         <main id="content">
@@ -62,26 +62,26 @@
 
   <h1 class="post-title">nodejs菜鸟需跨过的坎</h1>
   <section class="post-content article-entry">
-    <h3 id="作用域">作用域</h3><p>javascript的作用域是函数作用域，不是以大括号为起始的块级作用域。在一个函数中定义的变量只在这个函数的内部可见。在函数中引用变量时，会一级一级去搜索变量，直到全局作用域。</p>
+    <h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>javascript的作用域是函数作用域，不是以大括号为起始的块级作用域。在一个函数中定义的变量只在这个函数的内部可见。在函数中引用变量时，会一级一级去搜索变量，直到全局作用域。</p>
 <p>在访问未定义的变量或者未初始化的变量获得的值是undefined。</p>
-<pre><code><span class="keyword">var</span> scope = <span class="string">'global'</span>
-    <span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-                <span class="built_in">console</span>.log(scope) <span class="comment">// undefined</span>
-                            <span class="keyword">var</span> scope = <span class="string">'f'</span>
+<pre><code>var scope = &apos;global&apos;
+    var f = function() {
+                console.log(scope) // undefined
+                            var scope = &apos;f&apos;
                                 }
 f();
 
 javascript 的作用域是静态作用域，即在定义时决定的，而不是在调用时决定的。
 
-    <span class="keyword">var</span> scope = <span class="string">'top'</span>
-        <span class="keyword">var</span> f1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-                    <span class="built_in">console</span>.log(scope) <span class="comment">// global</span>
+    var scope = &apos;top&apos;
+        var f1 = function() {
+                    console.log(scope) // global
                             }
-<span class="keyword">var</span> f2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-            scope = <span class="string">'f2'</span>;
+var f2 = function() {
+            scope = &apos;f2&apos;;
                     f1();
                         }
-f2(); <span class="comment">//top</span>
+f2(); //top
 
 全局作用域的变量在任何地方都可以直接引用。全局变量满足一下三点：
 
@@ -89,101 +89,101 @@ f2(); <span class="comment">//top</span>
 * 全局对象global的属性
 * 未定义直接赋值的变量
 
-不通过<span class="keyword">var</span>声明的就是属于上面的第三种全局变量。通过<span class="keyword">var</span>声明的是局部变量。
-</code></pre><h3 id="闭包">闭包</h3><pre><code>闭包是由函数（环境）以及其封闭的自由变量组成的集合体。当一个函数返回一个它内部定义的函数时，就产生了一个闭包，闭包不但包含返回的参数，还包括这个函数的定义环境。
+不通过var声明的就是属于上面的第三种全局变量。通过var声明的是局部变量。
+</code></pre><h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><pre><code>闭包是由函数（环境）以及其封闭的自由变量组成的集合体。当一个函数返回一个它内部定义的函数时，就产生了一个闭包，闭包不但包含返回的参数，还包括这个函数的定义环境。
 
-    <span class="keyword">var</span> genClosure = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-                <span class="keyword">var</span> count = <span class="number">0</span>;
-                        <span class="keyword">var</span> <span class="keyword">get</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+    var genClosure = function() {
+                var count = 0;
+                        var get = function() {
                                         count++;
-                                                    <span class="keyword">return</span> count;
+                                                    return count;
                                                             }
-                                <span class="keyword">return</span> <span class="keyword">get</span>;
+                                return get;
                                     }
-<span class="keyword">var</span> c1 = genClosure();
-    <span class="keyword">var</span> c2 = genClosure();
-        console.log(c1());<span class="comment">//1</span>
-            console.log(c2());<span class="comment">//1</span>
-                console.log(c1());<span class="comment">//2</span>
-                    console.log(c2());<span class="comment">//2</span>
+var c1 = genClosure();
+    var c2 = genClosure();
+        console.log(c1());//1
+            console.log(c2());//1
+                console.log(c1());//2
+                    console.log(c2());//2
 
-                    genClosure 返回<span class="keyword">get</span>函数时，将<span class="keyword">get</span>可能引用到的变量也返回了，并在内存中生成了一个副本。c1和c2就是相互独立的了。
+                    genClosure 返回get函数时，将get可能引用到的变量也返回了，并在内存中生成了一个副本。c1和c2就是相互独立的了。
 
                     闭包主要有两个用途：
 
                     * 实现嵌套回调函数。
                     * 隐藏对象的细节。
-</code></pre><h3 id="上下文对象this">上下文对象this</h3><pre><code>                    this表示被调用函数所处的环境。this的作用就是在一个函数内部引用调用它的对象本身。Javascript任何函数都是某个对象调用的，包括全局对象。
+</code></pre><h3 id="上下文对象this"><a href="#上下文对象this" class="headerlink" title="上下文对象this"></a>上下文对象this</h3><pre><code>                    this表示被调用函数所处的环境。this的作用就是在一个函数内部引用调用它的对象本身。Javascript任何函数都是某个对象调用的，包括全局对象。
                     函数类型的变量是指向函数实体的一个引用,引用之间的赋值不会复制整个对象。this指针永远是这个引用所属的对象。
 
                         var someuse = {
-                                   name: <span class="string">'javascript'</span>,
-                                                <span class="function"><span class="keyword">func</span>: <span class="title">function</span><span class="params">()</span> {</span>
-                                                              console.<span class="built_in">log</span>(this.name)<span class="comment">;</span>
+                                   name: &apos;javascript&apos;,
+                                                func: function() {
+                                                              console.log(this.name);
                                                                      }
                                              }
 var foo = {
-            name = <span class="string">'foo'</span>
+            name = &apos;foo&apos;
                     }
-someuser.<span class="keyword">func</span>()<span class="comment">;// javascript</span>
-    foo.<span class="keyword">func</span> = someuser.<span class="keyword">func</span><span class="comment">;</span>
-        foo.<span class="keyword">func</span>()<span class="comment">;//foo</span>
-            name = <span class="string">'global'</span>
-                <span class="function"><span class="keyword">func</span> = <span class="title">someuser</span>.<span class="title">func</span>;</span>
-                    <span class="function"><span class="keyword">func</span><span class="params">()</span>;//<span class="title">global</span></span>
-</code></pre><h4 id="call和apply">call和apply</h4><pre><code>                    这两个函数的作用就是以不同的对象作为上下文来调用某个函数。简而言之，就是允许一个对象去掉用另外一个对象的成员函数。
-                    <span class="built_in">call</span>与apply的差别就是<span class="built_in">call</span>以参数表来接受调用的参数，而apply以数组来接受被调用函数的参数。
+someuser.func();// javascript
+    foo.func = someuser.func;
+        foo.func();//foo
+            name = &apos;global&apos;
+                func = someuser.func;
+                    func();//global
+</code></pre><h4 id="call和apply"><a href="#call和apply" class="headerlink" title="call和apply"></a>call和apply</h4><pre><code>                    这两个函数的作用就是以不同的对象作为上下文来调用某个函数。简而言之，就是允许一个对象去掉用另外一个对象的成员函数。
+                    call与apply的差别就是call以参数表来接受调用的参数，而apply以数组来接受被调用函数的参数。
 
-                         <span class="function"><span class="keyword">func</span>.<span class="title">call</span><span class="params">(thisArg[, arg1[, arg2,[...]]])</span></span>
-     <span class="function"><span class="keyword">func</span>.<span class="title">apply</span><span class="params">(thisArg[, argsArray])</span></span>
+                         func.call(thisArg[, arg1[, arg2,[...]]])
+     func.apply(thisArg[, argsArray])
 
-<span class="function"><span class="keyword">func</span>是函数的引用，<span class="title">thisArg</span>是<span class="title">func</span>的被调用时的上下文对象，<span class="title">arg1</span>,<span class="title">arg2</span>和<span class="title">argsArray</span>是传入<span class="title">func</span>的参数。</span>
+func是函数的引用，thisArg是func的被调用时的上下文对象，arg1,arg2和argsArray是传入func的参数。
 
     var someuse = {
-               name: <span class="string">'say'</span>,
-                            <span class="function"><span class="keyword">func</span>: <span class="title">function</span><span class="params">(word)</span> {</span>
-                                          console.<span class="built_in">log</span>(this.name + <span class="string">' '</span> + word)<span class="comment">;</span>
+               name: &apos;say&apos;,
+                            func: function(word) {
+                                          console.log(this.name + &apos; &apos; + word);
                                                  }
                          }
 var foo = {
-            name = <span class="string">'foo'</span>
+            name = &apos;foo&apos;
                     }
 
-someuse.<span class="keyword">func</span>.apply(foo, <span class="string">'hello'</span>)<span class="comment">;// foo hello</span>
+someuse.func.apply(foo, &apos;hello&apos;);// foo hello
 
 bind方法可以永久绑定上下文，这样其无论被谁调用，上下文都是固定的。
 
-    <span class="function"><span class="keyword">func</span>.<span class="title">bind</span><span class="params">(thisArg[, arg1[, arg2[, ....]]])</span></span>
+    func.bind(thisArg[, arg1[, arg2[, ....]]])
 
 bind还可以绑定参数列表，从而省略重复的参数。
 
     var someuser = {
-               name: <span class="string">'i'</span>,
-                            <span class="function"><span class="keyword">func</span>: <span class="title">function</span><span class="params">(act,word)</span> {</span>
-                                          console.<span class="built_in">log</span>(this.name + <span class="string">' '</span> +  act + <span class="string">' '</span> + word)<span class="comment">;</span>
+               name: &apos;i&apos;,
+                            func: function(act,word) {
+                                          console.log(this.name + &apos; &apos; +  act + &apos; &apos; + word);
                                                  }
                          }
-someuser.<span class="keyword">func</span>(<span class="string">'love'</span>, <span class="string">'you'</span>)<span class="comment">;//i love you</span>
-    lfunc = someuser.<span class="keyword">func</span>.bind(someuser, <span class="string">'loves'</span>)<span class="comment">;</span>
-        lfunc(<span class="string">'her'</span>)<span class="comment">;//i love her</span>
-</code></pre><h3 id="循环">循环</h3><pre><code><span class="tag">var</span> js
-    <span class="tag">var</span> hello
-</code></pre><h3 id="原型">原型</h3><h3 id="编程风格">编程风格</h3><pre><code><span class="comment">* 缩进。两格，因为函数嵌套较多。</span>
-<span class="comment">* 行宽。最佳80。在任何设备都能方便阅读。</span>
-<span class="comment">* 语句分隔符。分号';'。</span>
-<span class="comment">* 变量定义。一行一个变量定义。</span>
-<span class="comment">* 变量名。小驼峰式命名。youNameIs。</span>
-<span class="comment">* 函数。构造函数大驼峰，一般小驼峰。</span>
-<span class="comment">* 引号。统一用单引号，双引号和单引号语义上一样，但是JSON和XML都规定了双引号，这样便于无歧义直接引用。</span>
-<span class="comment">* 关联数组初始化。var = {放在一行，下面没对键值一行。</span>
-<span class="comment">    * 等号。尽量使用三个=而不是两个=来判断相等。==包含了隐式类型转换。</span>
-<span class="comment">        * 命名函数。尽量给构造函数和回调函数命名，这样可以更清楚的追溯调用栈。</span>
-        回调函数的第一个参数是<span class="keyword">err</span>，如果没有为undefined。
-<span class="comment">        * 对象定义。尽量将所所有成员函数使用原型定义，将属性在构造函数内定义，然后对构造函数使用new关键词创建对象。</span>
-<span class="comment">        * 继承。避免复杂继承，使用util的inherits函数。</span>
+someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
+    lfunc = someuser.func.bind(someuser, &apos;loves&apos;);
+        lfunc(&apos;her&apos;);//i love her
+</code></pre><h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><pre><code>var js
+    var hello
+</code></pre><h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><h3 id="编程风格"><a href="#编程风格" class="headerlink" title="编程风格"></a>编程风格</h3><pre><code>* 缩进。两格，因为函数嵌套较多。
+* 行宽。最佳80。在任何设备都能方便阅读。
+* 语句分隔符。分号&apos;;&apos;。
+* 变量定义。一行一个变量定义。
+* 变量名。小驼峰式命名。youNameIs。
+* 函数。构造函数大驼峰，一般小驼峰。
+* 引号。统一用单引号，双引号和单引号语义上一样，但是JSON和XML都规定了双引号，这样便于无歧义直接引用。
+* 关联数组初始化。var = {放在一行，下面没对键值一行。
+    * 等号。尽量使用三个=而不是两个=来判断相等。==包含了隐式类型转换。
+        * 命名函数。尽量给构造函数和回调函数命名，这样可以更清楚的追溯调用栈。
+        回调函数的第一个参数是err，如果没有为undefined。
+        * 对象定义。尽量将所所有成员函数使用原型定义，将属性在构造函数内定义，然后对构造函数使用new关键词创建对象。
+        * 继承。避免复杂继承，使用util的inherits函数。
 
         (...待续...）
-</code></pre><h3 id="参考文献"><em>参考文献</em></h3><pre><code><span class="number">1</span>.《<span class="keyword">Node</span>.<span class="identifier"></span><span class="title">js</span>开发开发指南》 郭家宝
+</code></pre><h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a><em>参考文献</em></h3><pre><code>1.《Node.js开发开发指南》 郭家宝
 </code></pre>
   </section>
   <footer class="post-footer">
@@ -198,9 +198,13 @@ someuser.<span class="keyword">func</span>(<span class="string">'love'</span>, <
 
 <nav class="pagination" role="pagination">
     
+    <a class="newer-posts" href="/blog/2015/12/29/关于Nodejs的core文件/">
+        ← prev <!--关于Nodejs的core文件-->
+    </a>
+    
     <span class="page-number">•</span>
     
-    <a class="older-posts" href="/blog/2015/01/29/2015-01-29-第一次像个程序员/">
+    <a class="older-posts" href="/blog/2015/01/29/第一次像个程序员/">
         <!--第一次像个程序员--> next →
     </a>
     
@@ -209,7 +213,7 @@ someuser.<span class="keyword">func</span>(<span class="string">'love'</span>, <
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-nodejs菜鸟需跨过的坎" data-title="nodejs菜鸟需跨过的坎" data-url="http://zhangmin.name/blog/2015/12/02/nodejs菜鸟需跨过的坎/"></div>
+	 <div class="ds-thread" data-thread-key="post-nodejs菜鸟需跨过的坎" data-title="nodejs菜鸟需跨过的坎" data-url="http://www.zhangmin.name/blog/blog/2015/12/02/nodejs菜鸟需跨过的坎/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -230,7 +234,7 @@ var duoshuoQuery = {short_name:"zhangmin"};
 
         </main>
         <footer id="footer">
-            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+            <section id="footer-message">&copy; 2016 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
         </footer>
     </body>
 </html>

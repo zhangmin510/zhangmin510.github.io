@@ -5,9 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="ZhangMin.name's blog">
-        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
-        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="atom.xml">
-        <link rel="canonical" href="http://zhangmin.name/">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
 
         <title>Java内存区域及内存溢出处理 | ZhangMin.name</title>
         <meta name="description" content="{{meta_description}}">
@@ -29,7 +29,7 @@
 	
 
         <header id="header">
-            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
             <h1><a href="/blog/">ZhangMin.name</a></h1>
             <p>勤思敏行 思行合一</p>
             <div id="follow-icons">
@@ -39,10 +39,10 @@
 	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
 	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
 	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
-	<a href="atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
 </div>
+<h6><a href="/blog/about">About</a></h6>
 <h6><a href="/blog/readings">Readings</a></h6>
-
         </header>
 
         <main id="content">
@@ -55,9 +55,9 @@
     <span class="taglist">  &middot;
     
     
-      <a href='/blog/tags/Java/'>Java</a>
-    
       <a href='/blog/tags/马上有OFFER/'>马上有OFFER</a>
+    
+      <a href='/blog/tags/Java/'>Java</a>
     
     </span>
   
@@ -65,7 +65,7 @@
   <h1 class="post-title">Java内存区域及内存溢出处理</h1>
   <section class="post-content article-entry">
     <p>本文是学习Java内存管理的学习笔记。更详细的内容参见《深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）》第二章 Java内存区域及内存溢出异常。</p>
-<h2 id="Java内存划分">Java内存划分</h2><p>Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个不同的数据区域。每个区域都有各自的用途及各自创建和销毁的时间。这些区域可以分为两类：所有线程共享的区域（如方法区和堆）和线程私有的区域（如虚拟机栈，本地方法栈和程序计数器）。<br>​<br>各个区域的用途可以都可以用一句话进行概括：</p>
+<h2 id="Java内存划分"><a href="#Java内存划分" class="headerlink" title="Java内存划分"></a>Java内存划分</h2><p>Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个不同的数据区域。每个区域都有各自的用途及各自创建和销毁的时间。这些区域可以分为两类：所有线程共享的区域（如方法区和堆）和线程私有的区域（如虚拟机栈，本地方法栈和程序计数器）。<br>​<br>各个区域的用途可以都可以用一句话进行概括：</p>
 <p>先是线程私有的区域，它们和线程的生命周期相同。</p>
 <ol>
 <li><p>程序计数器（PC）：一块较小的内存，存放的是下一条执行指令的字节码地址；如果执行的是本地方法，则计数器值为undefined；该区域不会抛出OutOfMemoryError异常。</p>
@@ -83,7 +83,7 @@
 </li>
 </ol>
 <p>另外还有一块内存就是直接内存：该区域不是虚拟机运行时数据区的一部分，最常见的例子就是Java NIO。该去也会抛出OutOfMemoryError。</p>
-<h2 id="解决OutOfMemoryError">解决OutOfMemoryError</h2><p>先判断是那些内存区域出现了该异常，然后再根据可能在这些区域出现问题的代码中进行定位。</p>
+<h2 id="解决OutOfMemoryError"><a href="#解决OutOfMemoryError" class="headerlink" title="解决OutOfMemoryError"></a>解决OutOfMemoryError</h2><p>先判断是那些内存区域出现了该异常，然后再根据可能在这些区域出现问题的代码中进行定位。</p>
 <ol>
 <li><p>堆溢出。大量从GC Roots可达的对象在堆上被创建。可以同过VM Args来进行调试：-Xms20m -Xmx20 -XX:+HeapDumpOnOutOfMemoryError。让虚拟机在出现内存异常是Dump出当前的内存堆快照以便分析。可以通过Eclipse的内存映像分析工具分析Dump出的文件，重点确认内存中的对象是否是必要的，是内存溢出还是内存泄露。如果是内存泄露，可以查看泄露对象到GC Roots的引用链。找出了泄漏对象的类型信息及GC Roots引用链信息就可以定位泄露代码的位置。如果是内存溢出，则要看堆参数大小是否合适，从代码检查是否有某些对象生命周期过长，尝试减少程序运行时内存消耗。</p>
 </li>
@@ -123,7 +123,7 @@
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-Java内存区域及内存溢出处理" data-title="Java内存区域及内存溢出处理" data-url="http://zhangmin.name/blog/2014/10/13/Java内存区域及内存溢出处理/"></div>
+	 <div class="ds-thread" data-thread-key="post-Java内存区域及内存溢出处理" data-title="Java内存区域及内存溢出处理" data-url="http://www.zhangmin.name/blog/blog/2014/10/13/Java内存区域及内存溢出处理/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -144,7 +144,7 @@ var duoshuoQuery = {short_name:"zhangmin"};
 
         </main>
         <footer id="footer">
-            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+            <section id="footer-message">&copy; 2016 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
         </footer>
     </body>
 </html>

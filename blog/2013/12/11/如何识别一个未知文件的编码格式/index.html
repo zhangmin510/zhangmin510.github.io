@@ -5,9 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="ZhangMin.name's blog">
-        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
-        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="atom.xml">
-        <link rel="canonical" href="http://zhangmin.name/">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
 
         <title>如何识别一个未知文件的编码格式 | ZhangMin.name</title>
         <meta name="description" content="{{meta_description}}">
@@ -29,7 +29,7 @@
 	
 
         <header id="header">
-            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
             <h1><a href="/blog/">ZhangMin.name</a></h1>
             <p>勤思敏行 思行合一</p>
             <div id="follow-icons">
@@ -39,10 +39,10 @@
 	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
 	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
 	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
-	<a href="atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
 </div>
+<h6><a href="/blog/about">About</a></h6>
 <h6><a href="/blog/readings">Readings</a></h6>
-
         </header>
 
         <main id="content">
@@ -84,19 +84,19 @@
 <ul>
 <li>@param args</li>
 <li><p>@throws IOException<br>*/<br>public static void main(String[] args) throws IOException {<br> String base = &quot;C:\Users\ZhangMin.name\Desktop\EncodeTest&quot;;<br> File[] f = new File(base).listFiles();<br> for(int i = 0 ; i &lt; f.length ; i ++){</p>
-<pre><code>System.out.<span class="keyword">println</span>(&amp;quot;Detcting <span class="keyword">file</span> &amp;quot; + f[i].getName());
-FileInputStream fis = <span class="keyword">new</span> FileInputStream(f[i]);
-BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(fis);
-<span class="keyword">byte</span>[] content =  <span class="keyword">new</span> <span class="keyword">byte</span>[(<span class="keyword">int</span>) f[i].length()];
-bis.<span class="keyword">read</span>(content);
+<pre><code>System.out.println(&amp;quot;Detcting file &amp;quot; + f[i].getName());
+FileInputStream fis = new FileInputStream(f[i]);
+BufferedInputStream bis = new BufferedInputStream(fis);
+byte[] content =  new byte[(int) f[i].length()];
+bis.read(content);
 
-CharsetDetector detector = <span class="keyword">new</span> CharsetDetector();
+CharsetDetector detector = new CharsetDetector();
 detector.setText(content);
 
 CharsetMatch cm = detector.detect();
-<span class="keyword">if</span>(cm != <span class="keyword">null</span>){
-    <span class="keyword">int</span> confidence = cm.getConfidence();
-    System.out.<span class="keyword">println</span>(&amp;quot;Charset: &amp;quot; + cm.getName() + &amp;quot;, confidence: &amp;quot;
+if(cm != null){
+    int confidence = cm.getConfidence();
+    System.out.println(&amp;quot;Charset: &amp;quot; + cm.getName() + &amp;quot;, confidence: &amp;quot;
     + confidence + &amp;quot;%&amp;quot;);
 }
 </code></pre><p> }</p>
@@ -121,45 +121,45 @@ CharsetMatch cm = detector.detect();
 <ul>
 <li>@param args</li>
 <li><p>@throws IOException<br>*/<br>public static void main(String[] args) throws IOException {<br> String base = &quot;C:\Users\ZhangMin.name\Desktop\EncodeTest&quot;;<br> File[] f = new File(base).listFiles();<br> for(int i = 0 ; i &lt; f.length ; i ++){</p>
-<pre><code>System.out.<span class="keyword">println</span>(&amp;quot;Detcting <span class="keyword">file</span> &amp;quot; + f[i].getName());
-FileInputStream fis = <span class="keyword">new</span> FileInputStream(f[i]);
-BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(fis);
-<span class="comment">// Initalize the nsDetector() ;</span>
-nsDetector det = <span class="keyword">new</span> nsDetector(nsPSMDetector.ALL);
-<span class="comment">// Set an observer...</span>
-<span class="comment">// The Notify() will be called when a matching charset is found.</span>
-det.Init(<span class="keyword">new</span> nsICharsetDetectionObserver(){
-    <span class="keyword">public</span> <span class="keyword">void</span> Notify(String charset){
-        JchardetExample.found = <span class="keyword">true</span>;
-        System.out.<span class="keyword">println</span>(&amp;quot;CHARSET: &amp;quot; + charset);
+<pre><code>System.out.println(&amp;quot;Detcting file &amp;quot; + f[i].getName());
+FileInputStream fis = new FileInputStream(f[i]);
+BufferedInputStream bis = new BufferedInputStream(fis);
+// Initalize the nsDetector() ;
+nsDetector det = new nsDetector(nsPSMDetector.ALL);
+// Set an observer...
+// The Notify() will be called when a matching charset is found.
+det.Init(new nsICharsetDetectionObserver(){
+    public void Notify(String charset){
+        JchardetExample.found = true;
+        System.out.println(&amp;quot;CHARSET: &amp;quot; + charset);
     }
 });
 
-<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];
-<span class="keyword">int</span> len;
-<span class="keyword">boolean</span> done = <span class="keyword">false</span>;
-<span class="keyword">boolean</span> isAscii = <span class="keyword">true</span>;
+byte[] buf = new byte[1024];
+int len;
+boolean done = false;
+boolean isAscii = true;
 
-<span class="keyword">while</span>((len = bis.<span class="keyword">read</span>(buf, <span class="number">0</span>, buf.length)) != -<span class="number">1</span>){
-    <span class="comment">// Check if the stream is only ascii.</span>
-    <span class="keyword">if</span>(isAscii){
+while((len = bis.read(buf, 0, buf.length)) != -1){
+    // Check if the stream is only ascii.
+    if(isAscii){
         isAscii = det.isAscii(buf, len);
     }
-    <span class="comment">// DoIt if non-ascii and not done yet.</span>
-    <span class="keyword">if</span>(!isAscii &amp;amp;&amp;amp; !done){
-        done = det.DoIt(buf, len, <span class="keyword">false</span>);
+    // DoIt if non-ascii and not done yet.
+    if(!isAscii &amp;amp;&amp;amp; !done){
+        done = det.DoIt(buf, len, false);
     }
 }
 det.DataEnd();
 
-<span class="keyword">if</span>(isAscii){
-    System.out.<span class="keyword">println</span>(&amp;quot;CHARSET: ASCII&amp;quot;);
-    JchardetExample.found = <span class="keyword">true</span>;
+if(isAscii){
+    System.out.println(&amp;quot;CHARSET: ASCII&amp;quot;);
+    JchardetExample.found = true;
 }
-<span class="keyword">if</span>(!found){
+if(!found){
     String prob[] = det.getProbableCharsets();
-    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &amp;lt; prob.length ; j ++){
-        System.out.<span class="keyword">println</span>(&amp;quot;Probable Charset :&amp;quot; + prob[j]);
+    for(int j = 0 ; j &amp;lt; prob.length ; j ++){
+        System.out.println(&amp;quot;Probable Charset :&amp;quot; + prob[j]);
     }
 }
 </code></pre><p> }</p>
@@ -200,7 +200,7 @@ det.DataEnd();
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-如何识别一个未知文件的编码格式" data-title="如何识别一个未知文件的编码格式" data-url="http://zhangmin.name/blog/2013/12/11/如何识别一个未知文件的编码格式/"></div>
+	 <div class="ds-thread" data-thread-key="post-如何识别一个未知文件的编码格式" data-title="如何识别一个未知文件的编码格式" data-url="http://www.zhangmin.name/blog/blog/2013/12/11/如何识别一个未知文件的编码格式/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -221,7 +221,7 @@ var duoshuoQuery = {short_name:"zhangmin"};
 
         </main>
         <footer id="footer">
-            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+            <section id="footer-message">&copy; 2016 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
         </footer>
     </body>
 </html>

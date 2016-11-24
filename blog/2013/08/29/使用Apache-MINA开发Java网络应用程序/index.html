@@ -5,9 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="ZhangMin.name's blog">
-        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
-        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="atom.xml">
-        <link rel="canonical" href="http://zhangmin.name/">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
 
         <title>使用Apache MINA开发Java网络应用程序 | ZhangMin.name</title>
         <meta name="description" content="{{meta_description}}">
@@ -29,7 +29,7 @@
 	
 
         <header id="header">
-            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
             <h1><a href="/blog/">ZhangMin.name</a></h1>
             <p>勤思敏行 思行合一</p>
             <div id="follow-icons">
@@ -39,10 +39,10 @@
 	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
 	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
 	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
-	<a href="atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
 </div>
+<h6><a href="/blog/about">About</a></h6>
 <h6><a href="/blog/readings">Readings</a></h6>
-
         </header>
 
         <main id="content">
@@ -80,10 +80,10 @@
 <li>@author ZhangMin.name<br><em>
 </em>/<br>public class MinaTimeServer {<br> public static int PORT = 1234;<br> /**<ul>
 <li>一个Apache MINA</li>
-<li>@param args<br>*/<br>public static void main(String[] args) throws IOException{<br> //创建一个对象监听从客户端建立的连接<br> IoAcceptor acceptor = new NioSocketAcceptor();<br> //增加 一个filter，用于答应相关日志信息<br> acceptor.getFilterChain().addLast(&quot;logger&quot;, new LoggingFilter());<br> //增加一个filter用于将二进制数据或者协议特定数据翻译成为Message对象，或者相反<br> //本实例使用自带的TextLineFactory来处理文本信息<br> acceptor.getFilterChain().addLast(&quot;codec&quot;,<pre><code>new ProtocolCodecFilter<span class="list">(
-<span class="keyword">new</span> TextLineCodecFactory<span class="list">(
-    <span class="keyword">Charset</span>.forName<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;UTF-8&amp;quot;)</span>
-    )</span>)</span>)</span><span class="comment">;</span>
+<li>@param args<br>*/<br>public static void main(String[] args) throws IOException{<br> //创建一个对象监听从客户端建立的连接<br> IoAcceptor acceptor = new NioSocketAcceptor();<br> //增加 一个filter，用于答应相关日志信息<br> acceptor.getFilterChain().addLast(&quot;logger&quot;, new LoggingFilter());<br> //增加一个filter用于将二进制数据或者协议特定数据翻译成为Message对象，或者相反<br> //本实例使用自带的TextLineFactory来处理文本信息<br> acceptor.getFilterChain().addLast(&quot;codec&quot;,<pre><code>new ProtocolCodecFilter(
+new TextLineCodecFactory(
+    Charset.forName(&amp;quot;UTF-8&amp;quot;)
+    )));
 </code></pre> //设置处理请求的Handler<br> acceptor.setHandler(new TimeServerHandler());<br> //设置套接字相关的配置参数<br> acceptor.getSessionConfig().setReadBufferSize(2048);<br> acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);<br> //设置绑定的端口号<br> acceptor.bind(new InetSocketAddress(PORT));<br> System.out.println(&quot;Start listening to PORT: &quot; + PORT);<br>}</li>
 </ul>
 </li>
@@ -100,24 +100,24 @@
 </em>/<br>package name.zhangmin.java.mina;<br>import java.util.Date;<br>import org.apache.mina.core.service.IoHandlerAdapter;<br>import org.apache.mina.core.session.IdleStatus;<br>import org.apache.mina.core.session.IoSession;<br>/**</li>
 <li><p>@author ZhangMin.name<br><em>
 </em>/<br>public class TimeServerHandler extends IoHandlerAdapter {<br> //处理相关异常<br> @Override<br> public void exceptionCaught(IoSession session, Throwable cause)</p>
-<pre><code>    <span class="keyword">throws</span> Exception {
+<pre><code>    throws Exception {
 cause.printStackTrace();
 </code></pre><p> }<br>//处理从客户端发来的请求和向客户端发送数据<br> @Override<br> public void messageReceived(IoSession session, Object message)</p>
-<pre><code>    <span class="keyword">throws</span> Exception {
-<span class="keyword">String</span> <span class="built_in">str</span> = message.toString();
-System.out.<span class="built_in">println</span>(&amp;quot;Receiving Message :&amp;quot; + <span class="built_in">str</span>);
-<span class="keyword">if</span>(<span class="built_in">str</span>.<span class="built_in">trim</span>().equalsIgnoreCase(&amp;quot;quit&amp;quot;)){
-    session.close(<span class="keyword">true</span>);
-    System.<span class="built_in">exit</span>(<span class="number">0</span>);
-    <span class="keyword">return</span>;
+<pre><code>    throws Exception {
+String str = message.toString();
+System.out.println(&amp;quot;Receiving Message :&amp;quot; + str);
+if(str.trim().equalsIgnoreCase(&amp;quot;quit&amp;quot;)){
+    session.close(true);
+    System.exit(0);
+    return;
 }
-Date date = <span class="keyword">new</span> Date();
+Date date = new Date();
 session.write(date.toString());
-System.out.<span class="built_in">println</span>(&amp;quot;Messge written...&amp;quot;);
+System.out.println(&amp;quot;Messge written...&amp;quot;);
 </code></pre><p> }</p>
 <p> @Override<br> public void sessionIdle(IoSession session, IdleStatus status)</p>
-<pre><code>    <span class="annotation">throws</span> Exception {
-System.<span class="keyword">out</span>.println(&amp;quot;IDLE: &amp;quot; + session.getIdleCount(status));
+<pre><code>    throws Exception {
+System.out.println(&amp;quot;IDLE: &amp;quot; + session.getIdleCount(status));
 </code></pre><p> }</p>
 </li>
 </ul>
@@ -143,7 +143,7 @@ System.<span class="keyword">out</span>.println(&amp;quot;IDLE: &amp;quot; + ses
     
     <span class="page-number">•</span>
     
-    <a class="older-posts" href="/blog/2013/08/29/-转-25个让Java程序员更高效的Eclipse插件/">
+    <a class="older-posts" href="/blog/2013/08/29/转-25个让Java程序员更高效的Eclipse插件/">
         <!--[转]25个让Java程序员更高效的Eclipse插件--> next →
     </a>
     
@@ -152,7 +152,7 @@ System.<span class="keyword">out</span>.println(&amp;quot;IDLE: &amp;quot; + ses
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-使用Apache-MINA开发Java网络应用程序" data-title="使用Apache MINA开发Java网络应用程序" data-url="http://zhangmin.name/blog/2013/08/29/使用Apache-MINA开发Java网络应用程序/"></div>
+	 <div class="ds-thread" data-thread-key="post-使用Apache-MINA开发Java网络应用程序" data-title="使用Apache MINA开发Java网络应用程序" data-url="http://www.zhangmin.name/blog/blog/2013/08/29/使用Apache-MINA开发Java网络应用程序/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -173,7 +173,7 @@ var duoshuoQuery = {short_name:"zhangmin"};
 
         </main>
         <footer id="footer">
-            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+            <section id="footer-message">&copy; 2016 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
         </footer>
     </body>
 </html>

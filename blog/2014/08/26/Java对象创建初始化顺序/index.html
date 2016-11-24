@@ -5,9 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="ZhangMin.name's blog">
-        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
-        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="atom.xml">
-        <link rel="canonical" href="http://zhangmin.name/">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
 
         <title>Java对象创建初始化顺序 | ZhangMin.name</title>
         <meta name="description" content="{{meta_description}}">
@@ -29,7 +29,7 @@
 	
 
         <header id="header">
-            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
             <h1><a href="/blog/">ZhangMin.name</a></h1>
             <p>勤思敏行 思行合一</p>
             <div id="follow-icons">
@@ -39,10 +39,10 @@
 	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
 	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
 	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
-	<a href="atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
 </div>
+<h6><a href="/blog/about">About</a></h6>
 <h6><a href="/blog/readings">Readings</a></h6>
-
         </header>
 
         <main id="content">
@@ -55,9 +55,9 @@
     <span class="taglist">  &middot;
     
     
-      <a href='/blog/tags/Java/'>Java</a>
-    
       <a href='/blog/tags/马上有OFFER/'>马上有OFFER</a>
+    
+      <a href='/blog/tags/Java/'>Java</a>
     
     </span>
   
@@ -76,10 +76,10 @@
 <li>执行构造器。</li>
 </ol>
 <p>在初始化过程中要注意两点：一是基本类型会有一个默认的初始值。这种自动初始化是无法阻止的。<br>二是非静态程序初始化块也会在构造函数之前执行。且在每次对象创建时都会执行。（常用语匿名内部类的初始化）。</p>
-<p>下面是一个实列，Horse类继承了Animal类，具体代码如下所示。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package name.zhangmin.java;&#10;public class Animal &#123;&#10; private int i = 9;&#10; protected int j;&#10; static &#123;&#10; System.out.println(&#38;quot;Animal&#39;s static block&#38;quot;);&#10; &#125;&#10; &#123;&#10; System.out.println(&#38;quot;Animal&#39;s non-static block&#38;quot;);&#10; &#125;&#10; Animal() &#123;&#10; System.out.println(&#38;quot;Animal&#39;s constructor&#38;quot;);&#10; System.out.println(&#38;quot;i = &#38;quot; + i + &#38;quot;, j = &#38;quot; + j);&#10; &#125;&#10; static int printInit(String s) &#123;&#10; System.out.println(s);&#10; return 16;&#10; &#125;&#10; private static int x1 = printInit(&#38;quot;static Animal.x1 initialized&#38;quot;);&#10;&#125;&#8203;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package name.zhangmin.java;&#10;public class Horse extends Animal &#123;&#10; private int k = printInit(&#38;quot;Horse.k initialized&#38;quot;);&#10; Horse() &#123;&#10; System.out.println(&#38;quot;Horse&#39;s constructor&#38;quot;);&#10; System.out.println(&#38;quot;k = &#38;quot; + k + &#38;quot;, j = &#38;quot; + j);&#10; &#125;&#10; public static void main(String[] args) &#123;&#10; System.out.println(&#38;quot;Horse&#39;s Main&#38;quot;);&#10; Horse h = new Horse();&#10; System.out.println(&#38;quot;Creating another Horse&#38;quot;);&#10; new Horse();&#10; &#125;&#10; static int x2 = printInit(&#38;quot;static Horse.x2 initialized&#38;quot;);&#10; &#123;&#10; System.out.println(&#38;quot;Horse&#39;s non-static block&#38;quot;);&#10; &#125;&#10; static &#123;&#10; System.out.println(&#38;quot;Horse&#39;s static block&#38;quot;);&#10; &#125;&#10;&#125;&#8203;</span><br></pre></td></tr></table></figure>
+<p>下面是一个实列，Horse类继承了Animal类，具体代码如下所示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">package name.zhangmin.java;</div><div class="line">public class Animal &#123;</div><div class="line"> private int i = 9;</div><div class="line"> protected int j;</div><div class="line"> static &#123;</div><div class="line"> System.out.println(&amp;quot;Animal&apos;s static block&amp;quot;);</div><div class="line"> &#125;</div><div class="line"> &#123;</div><div class="line"> System.out.println(&amp;quot;Animal&apos;s non-static block&amp;quot;);</div><div class="line"> &#125;</div><div class="line"> Animal() &#123;</div><div class="line"> System.out.println(&amp;quot;Animal&apos;s constructor&amp;quot;);</div><div class="line"> System.out.println(&amp;quot;i = &amp;quot; + i + &amp;quot;, j = &amp;quot; + j);</div><div class="line"> &#125;</div><div class="line"> static int printInit(String s) &#123;</div><div class="line"> System.out.println(s);</div><div class="line"> return 16;</div><div class="line"> &#125;</div><div class="line"> private static int x1 = printInit(&amp;quot;static Animal.x1 initialized&amp;quot;);</div><div class="line">&#125;​</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">package name.zhangmin.java;</div><div class="line">public class Horse extends Animal &#123;</div><div class="line"> private int k = printInit(&amp;quot;Horse.k initialized&amp;quot;);</div><div class="line"> Horse() &#123;</div><div class="line"> System.out.println(&amp;quot;Horse&apos;s constructor&amp;quot;);</div><div class="line"> System.out.println(&amp;quot;k = &amp;quot; + k + &amp;quot;, j = &amp;quot; + j);</div><div class="line"> &#125;</div><div class="line"> public static void main(String[] args) &#123;</div><div class="line"> System.out.println(&amp;quot;Horse&apos;s Main&amp;quot;);</div><div class="line"> Horse h = new Horse();</div><div class="line"> System.out.println(&amp;quot;Creating another Horse&amp;quot;);</div><div class="line"> new Horse();</div><div class="line"> &#125;</div><div class="line"> static int x2 = printInit(&amp;quot;static Horse.x2 initialized&amp;quot;);</div><div class="line"> &#123;</div><div class="line"> System.out.println(&amp;quot;Horse&apos;s non-static block&amp;quot;);</div><div class="line"> &#125;</div><div class="line"> static &#123;</div><div class="line"> System.out.println(&amp;quot;Horse&apos;s static block&amp;quot;);</div><div class="line"> &#125;</div><div class="line">&#125;​</div></pre></td></tr></table></figure>
 <p>上述代码的运行结果如下所示：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Animal&#39;s static block&#10;static Animal.x1 initialized&#10;static Horse.x2 initialized&#10;Horse&#39;s static block&#10;Horse&#39;s Main&#10;Animal&#39;s non-static block&#10;Animal&#39;s constructor&#10;i = 9, j = 0&#10;Horse.k initialized&#10;Horse&#39;s non-static block&#10;Horse&#39;s constructor&#10;k = 16, j = 0&#10;Creating another Horse&#10;Animal&#39;s non-static block&#10;Animal&#39;s constructor&#10;i = 9, j = 0&#10;Horse.k initialized&#10;Horse&#39;s non-static block&#10;Horse&#39;s constructor&#10;k = 16, j = 0&#8203;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Animal&apos;s static block</div><div class="line">static Animal.x1 initialized</div><div class="line">static Horse.x2 initialized</div><div class="line">Horse&apos;s static block</div><div class="line">Horse&apos;s Main</div><div class="line">Animal&apos;s non-static block</div><div class="line">Animal&apos;s constructor</div><div class="line">i = 9, j = 0</div><div class="line">Horse.k initialized</div><div class="line">Horse&apos;s non-static block</div><div class="line">Horse&apos;s constructor</div><div class="line">k = 16, j = 0</div><div class="line">Creating another Horse</div><div class="line">Animal&apos;s non-static block</div><div class="line">Animal&apos;s constructor</div><div class="line">i = 9, j = 0</div><div class="line">Horse.k initialized</div><div class="line">Horse&apos;s non-static block</div><div class="line">Horse&apos;s constructor</div><div class="line">k = 16, j = 0​</div></pre></td></tr></table></figure>
 <p>首先会执行Animal的静态域，静态块的初始化。执行的顺序就是域或块声明的顺序。执行完父类静态域的初始化后执行Horse的静态域初始化。类加载完成后，开始执行对象的创建过程。在这个过程中先执行父类Animal的非静态域或者块的初始化，然后是父类的构造器，之后才是子类Horse的非静态域或块的初始化，构造器。</p>
 <p>当第二次创建Horse对象时我们可以看到只执行父类非静态域或者块的初始化，父类Animal构造器，之后才是子类的非静态域，构造器。</p>
 <p>从上述的初始化过程可知，Java尽力保证了每个变量、对象在使用前能够正确的初始化。类的静态域只初始化一次，而非静态域则在每次对象创建时都进行初始化。如果有继承关系，要先完成父类的初始化和构造函数后才执行子类的初始化和构造函数。</p>
@@ -113,7 +113,7 @@
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-Java对象创建初始化顺序" data-title="Java对象创建初始化顺序" data-url="http://zhangmin.name/blog/2014/08/26/Java对象创建初始化顺序/"></div>
+	 <div class="ds-thread" data-thread-key="post-Java对象创建初始化顺序" data-title="Java对象创建初始化顺序" data-url="http://www.zhangmin.name/blog/blog/2014/08/26/Java对象创建初始化顺序/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -134,7 +134,7 @@ var duoshuoQuery = {short_name:"zhangmin"};
 
         </main>
         <footer id="footer">
-            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+            <section id="footer-message">&copy; 2016 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
         </footer>
     </body>
 </html>

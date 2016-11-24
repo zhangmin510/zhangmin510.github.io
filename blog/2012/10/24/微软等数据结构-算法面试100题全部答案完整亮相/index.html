@@ -5,9 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="ZhangMin.name's blog">
-        <link rel="shortcut icon" href="http://zhangmin.name/images/horse.jpg"/>
-        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="atom.xml">
-        <link rel="canonical" href="http://zhangmin.name/">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
 
         <title>微软等数据结构+算法面试100题全部答案完整亮相 | ZhangMin.name</title>
         <meta name="description" content="{{meta_description}}">
@@ -29,7 +29,7 @@
 	
 
         <header id="header">
-            <a id="logo" href="/blog/"><img src="http://zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
             <h1><a href="/blog/">ZhangMin.name</a></h1>
             <p>勤思敏行 思行合一</p>
             <div id="follow-icons">
@@ -39,10 +39,10 @@
 	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
 	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
 	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
-	<a href="atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
 </div>
+<h6><a href="/blog/about">About</a></h6>
 <h6><a href="/blog/readings">Readings</a></h6>
-
         </header>
 
         <main id="content">
@@ -114,7 +114,7 @@
 </em>j++ = <em>i++;<br>}
 </em>j = ‘ ’;<br>return strDest;<br>}<br>Maybe you need to check if src and dest overlaps, then decide whether to copy from tail to head.</p>
 <p>最后压轴之戏，终结此微软等100 题系列V0.1 版。<br>那就，</p>
-<h1 id="连续来几组微软公司的面试题，让你一次爽个够：">连续来几组微软公司的面试题，让你一次爽个够：</h1><p>97.第1 组微软较简单的算法面试题<br>1.编写反转字符串的程序，要求优化速度、优化空间。<br>ANSWER<br>Have done this.</p>
+<h1 id="连续来几组微软公司的面试题，让你一次爽个够："><a href="#连续来几组微软公司的面试题，让你一次爽个够：" class="headerlink" title="连续来几组微软公司的面试题，让你一次爽个够："></a>连续来几组微软公司的面试题，让你一次爽个够：</h1><p>97.第1 组微软较简单的算法面试题<br>1.编写反转字符串的程序，要求优化速度、优化空间。<br>ANSWER<br>Have done this.</p>
 <p>2.在链表里如何发现循环链接？<br>ANSWER<br>Have done this.</p>
 <p>3.编写反转字符串的程序，要求优化速度、优化空间。<br>ANSWER<br>Have done this.</p>
 <p>4.给出洗牌的一个算法，并将洗好的牌存储在一个整形数组里。<br>ANSWER<br>Have done this.</p>
@@ -133,7 +133,7 @@
 <p>2.在9 个点上画10 条直线，要求每条直线上至少有三个点？（3 分钟-20 分钟）</p>
 <p>3.在一天的24 小时之中，时钟的时针、分针和秒针完全重合在一起的时候有几次？都分别是什么时间？你怎样算出来的？（5 分钟-15 分钟）</p>
 <p>30<br>终结附加题：</p>
-<h1 id="微软面试题，挑战你的智商">微软面试题，挑战你的智商</h1><p>说明：如果你是第一次看到这种题，并且以前从来没有见过类似的题型，<br>并且能够在半个小时之内做出答案，说明你的智力超常..）<br>1.第一题. 五个海盗抢到了100 颗宝石，每一颗都一样大小和价值连城。他们决定这么分：<br>抽签决定自己的号码（1、2、3、4、5）<br>首先，由1 号提出分配方案，然后大家表决，当且仅当超过半数的人同意时，<br>按照他的方案进行分配，否则将被扔进大海喂鲨鱼<br>如果1 号死后，再由2 号提出分配方案，然后剩下的4 人进行表决，<br>当且仅当超过半数的人同意时，按照他的方案进行分配，否则将被扔入大海喂鲨鱼。<br>依此类推<br>条件：每个海盗都是很聪明的人，都能很理智地做出判断，从而做出选择。<br>问题：第一个海盗提出怎样的分配方案才能使自己的收益最大化？<br>Answer:<br>A traditional brain teaser.<br>Consider #5, whatever #4 proposes, he won’t agree, so #4 must agree whatever #3 proposes. So if there are only #3-5, #3 should propose (100, 0, 0). So the expected income of #3 is 100, and #4 and #5 is 0 for 3 guy problem. So whatever #2 proposes, #3 won’t agree, but if #2 give #4 and #5 $1, they can get more than 3-guy subproblem. So #2 will propose (98, 0, 1, 1). So for #1, if give #2 less than $98, #2 won’t agree. But he can give #3 $1 and #4 or #5 $2, so this is a (97, 0, 1, 2, 0) solution.</p>
+<h1 id="微软面试题，挑战你的智商"><a href="#微软面试题，挑战你的智商" class="headerlink" title="微软面试题，挑战你的智商"></a>微软面试题，挑战你的智商</h1><p>说明：如果你是第一次看到这种题，并且以前从来没有见过类似的题型，<br>并且能够在半个小时之内做出答案，说明你的智力超常..）<br>1.第一题. 五个海盗抢到了100 颗宝石，每一颗都一样大小和价值连城。他们决定这么分：<br>抽签决定自己的号码（1、2、3、4、5）<br>首先，由1 号提出分配方案，然后大家表决，当且仅当超过半数的人同意时，<br>按照他的方案进行分配，否则将被扔进大海喂鲨鱼<br>如果1 号死后，再由2 号提出分配方案，然后剩下的4 人进行表决，<br>当且仅当超过半数的人同意时，按照他的方案进行分配，否则将被扔入大海喂鲨鱼。<br>依此类推<br>条件：每个海盗都是很聪明的人，都能很理智地做出判断，从而做出选择。<br>问题：第一个海盗提出怎样的分配方案才能使自己的收益最大化？<br>Answer:<br>A traditional brain teaser.<br>Consider #5, whatever #4 proposes, he won’t agree, so #4 must agree whatever #3 proposes. So if there are only #3-5, #3 should propose (100, 0, 0). So the expected income of #3 is 100, and #4 and #5 is 0 for 3 guy problem. So whatever #2 proposes, #3 won’t agree, but if #2 give #4 and #5 $1, they can get more than 3-guy subproblem. So #2 will propose (98, 0, 1, 1). So for #1, if give #2 less than $98, #2 won’t agree. But he can give #3 $1 and #4 or #5 $2, so this is a (97, 0, 1, 2, 0) solution.</p>
 <p>2.一道关于飞机加油的问题，已知：<br>每个飞机只有一个油箱，<br>飞机之间可以相互加油（注意是相互，没有加油机）<br>一箱油可供一架飞机绕地球飞半圈，<br>问题：<br>为使至少一架飞机绕地球一圈回到起飞时的飞机场，至少需要出动几架飞机？<br>（所有飞机从同一机场起飞，而且必须安全返回机场，不允许中途降落，中间没有飞机场）</p>
 <hr>
 <p>更多面试题，请参见：<br>微软、谷歌、百度等公司经典面试100题[第1-60题] （微软100题第二版前60题）<br>微软、Google等公司非常好的面试题及解答[第61-70题] （微软100题第二版第61-70题）<br>十道海量数据处理面试题与十个方法大总结 （十道海量数据处理面试题）<br>海量数据处理面试题集锦与Bit-map详解 （十七道海量数据处理面试题）<br>九月腾讯，创新工场，淘宝等公司最新面试十三题（2011年度9月最新面试30题）<br>十月百度，阿里巴巴，迅雷搜狗最新面试十一题（2011年度十月最新面试题集锦）<br>一切的详情，可看此文：<br>横空出世，席卷Csdn–评微软等数据结构+算法面试100题 （在此文中，你能找到与微软100题所有一切相关的东西）<br>所有的资源下载（题目+答案）地址：<br><a href="http://v_july_v.download.csdn.net/" target="_blank" rel="external">http://v_july_v.download.csdn.net/</a></p>
@@ -169,7 +169,7 @@
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-微软等数据结构-算法面试100题全部答案完整亮相" data-title="微软等数据结构+算法面试100题全部答案完整亮相" data-url="http://zhangmin.name/blog/2012/10/24/微软等数据结构-算法面试100题全部答案完整亮相/"></div>
+	 <div class="ds-thread" data-thread-key="post-微软等数据结构-算法面试100题全部答案完整亮相" data-title="微软等数据结构+算法面试100题全部答案完整亮相" data-url="http://www.zhangmin.name/blog/blog/2012/10/24/微软等数据结构-算法面试100题全部答案完整亮相/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -190,7 +190,7 @@ var duoshuoQuery = {short_name:"zhangmin"};
 
         </main>
         <footer id="footer">
-            <section id="footer-message">&copy; 2015 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+            <section id="footer-message">&copy; 2016 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
         </footer>
     </body>
 </html>
