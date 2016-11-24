@@ -202,7 +202,7 @@
     <link href="http://www.zhangmin.name/blog/2016/10/31/hexo%E7%94%A8%E8%B5%B7%E6%9D%A5/"/>
     <id>http://www.zhangmin.name/blog/2016/10/31/hexo用起来/</id>
     <published>2016-10-31T15:15:47.000Z</published>
-    <updated>2016-10-31T15:18:29.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="hexo-介绍"><a href="#hexo-介绍" class="headerlink" title="hexo 介绍"></a>hexo 介绍</h1><p>Hexo是一个简单，快速，功能强大的静态博客框架。有以下特性：</p>
 <ul>
@@ -241,7 +241,7 @@
     <link href="http://www.zhangmin.name/blog/2016/01/06/%E6%B7%B7%E6%B2%8C%E5%AD%A6%E9%99%A2%E4%BA%A7%E5%93%81%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/"/>
     <id>http://www.zhangmin.name/blog/2016/01/06/混沌学院产品课程笔记/</id>
     <published>2016-01-06T14:08:27.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="第一课《狠挖需求与用户分析》郝志中"><a href="#第一课《狠挖需求与用户分析》郝志中" class="headerlink" title="第一课《狠挖需求与用户分析》郝志中"></a>第一课《狠挖需求与用户分析》郝志中</h2><h3 id="真正的用户需求其实就是一个更字。"><a href="#真正的用户需求其实就是一个更字。" class="headerlink" title="真正的用户需求其实就是一个更字。"></a>真正的用户需求其实就是一个更字。</h3><p>不是满足用户需求，而是更好地满足用户需求。更快，更多，更便宜，更好玩。</p>
 <p>用户需求从自己出发，也要跳出自我。</p>
@@ -374,7 +374,7 @@
     <link href="http://www.zhangmin.name/blog/2016/01/03/%E6%97%B6%E9%97%B4%E7%9A%84%E6%9C%8B%E5%8F%8B2015%E6%BC%94%E8%AE%B2%E7%AC%94%E8%AE%B0/"/>
     <id>http://www.zhangmin.name/blog/2016/01/03/时间的朋友2015演讲笔记/</id>
     <published>2016-01-03T14:08:27.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>时间不断地像我们提醒，尤其是跨年这种时刻，它提醒我们，有些事再不做，就来不及了。过去一年过得不爽，2016年还有许多事情需要做。</p>
 <p>动物有三种情绪愉悦，愤怒，恐惧。人有三种新的情绪爱、恨和忧伤，这三种都和记忆有关。</p>
@@ -478,7 +478,7 @@
     <link href="http://www.zhangmin.name/blog/2015/12/29/%E5%85%B3%E4%BA%8ENodejs%E7%9A%84core%E6%96%87%E4%BB%B6/"/>
     <id>http://www.zhangmin.name/blog/2015/12/29/关于Nodejs的core文件/</id>
     <published>2015-12-29T05:54:27.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="关于Core文件"><a href="#关于Core文件" class="headerlink" title="关于Core文件"></a>关于Core文件</h2><p>当进程崩溃或者终止时会产生core dump文件。该文件包含了进程在终止前得内存信息。core文件可以在gdb中打开，可以检查进程终止时程序<br>的状态。在node.js开发中，core文件可以帮助开发人员调试程序崩溃和内存泄露等问题。</p>
 <h2 id="如何产生core文件"><a href="#如何产生core文件" class="headerlink" title="如何产生core文件"></a>如何产生core文件</h2><p>不同的系统中生成core文件得方法是不同的。Joyent公司（nodejs的运营公司）建议所有的生产系统都应该打开–abort-on-uncaught-exception选项。<br>在Unix系统中，还需要使用ulimit -c unlimited命令设置产生的core文件的大小为任意大小。<br>如果没有抛出异常，在Linux系统中，你可以使用系统工具gcore来产生core文件。</p>
@@ -506,7 +506,7 @@
     <link href="http://www.zhangmin.name/blog/2015/12/02/nodejs%E8%8F%9C%E9%B8%9F%E9%9C%80%E8%B7%A8%E8%BF%87%E7%9A%84%E5%9D%8E/"/>
     <id>http://www.zhangmin.name/blog/2015/12/02/nodejs菜鸟需跨过的坎/</id>
     <published>2015-12-02T05:57:10.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>javascript的作用域是函数作用域，不是以大括号为起始的块级作用域。在一个函数中定义的变量只在这个函数的内部可见。在函数中引用变量时，会一级一级去搜索变量，直到全局作用域。</p>
 <p>在访问未定义的变量或者未初始化的变量获得的值是undefined。</p>
@@ -650,7 +650,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2015/01/29/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%83%8F%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98/"/>
     <id>http://www.zhangmin.name/blog/2015/01/29/第一次像个程序员/</id>
     <published>2015-01-29T01:15:40.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>以前看到过一篇文章说优秀的程序员有一个特点就是懒。由于懒，不想做重复的事情，让程序去做重复的事情。在这个过程中，也许写程序的时间比去做重复的事情花费的时间还多。但是这个过程中的乐趣确实无穷的。与其经历那份煎熬，不如做些有挑战的，有成就感的事情。</p>
 <p>避免做重复的事，这是每个程序员都应该去做的事。</p>
@@ -689,7 +689,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2015/01/27/2015-1-27-RESTful-Java-with-JAX-RS/"/>
     <id>http://www.zhangmin.name/blog/2015/01/27/2015-1-27-RESTful-Java-with-JAX-RS/</id>
     <published>2015-01-27T02:38:51.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="REST-Theory"><a href="#REST-Theory" class="headerlink" title="REST Theory"></a>REST Theory</h1><p>REpresentation State Transfer(REST) principles:</p>
 <ul>
@@ -741,7 +741,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2014/10/13/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E5%8F%8A%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%A4%84%E7%90%86/"/>
     <id>http://www.zhangmin.name/blog/2014/10/13/Java内存区域及内存溢出处理/</id>
     <published>2014-10-13T07:22:19.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文是学习Java内存管理的学习笔记。更详细的内容参见《深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）》第二章 Java内存区域及内存溢出异常。</p>
 <h2 id="Java内存划分"><a href="#Java内存划分" class="headerlink" title="Java内存划分"></a>Java内存划分</h2><p>Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个不同的数据区域。每个区域都有各自的用途及各自创建和销毁的时间。这些区域可以分为两类：所有线程共享的区域（如方法区和堆）和线程私有的区域（如虚拟机栈，本地方法栈和程序计数器）。<br>​<br>各个区域的用途可以都可以用一句话进行概括：</p>
@@ -796,7 +796,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2014/10/13/%E6%AD%A3%E7%A1%AE%E5%9C%B0%E7%94%A8Java%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B-Singleton-%E6%A8%A1%E5%BC%8F/"/>
     <id>http://www.zhangmin.name/blog/2014/10/13/正确地用Java实现单例-Singleton-模式/</id>
     <published>2014-10-13T06:26:15.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>在设计模式中，单例模式解决的是创建对象实例的数量及创建时间的问题。该模式保证一个类只有一个实例，并提供一个全局的访问点访问对象。之所以需要单例模式一个原因是在某些业务背景下，一个对象只能有一个实例，如金融相关的交易管理引擎；另外一个原因是有的对象创建所需要的内存和CPU开销较大，为了优化程序，只在内存中保存一个对象实例。</p>
 <h3 id="单例模式实现的特点"><a href="#单例模式实现的特点" class="headerlink" title="单例模式实现的特点"></a>单例模式实现的特点</h3><p>单例模式实现的特点有：</p>
@@ -849,7 +849,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2014/10/08/%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9B%E8%80%85%E6%9E%B6%E6%9E%84/"/>
     <id>http://www.zhangmin.name/blog/2014/10/08/服务提供者架构/</id>
     <published>2014-10-08T09:26:37.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>服务提供者架构（Service Provider Framework）在Java的类库中被广泛使用，如JDBC，JMS，Java Security，等等。</p>
 <p>多个服务提供者实现一个服务，系统为客户端提供多个实现，并把他们从多个实现中解耦出来。<br>服务提供者对实现的修改对客户端是透明的，这样提供了更好的扩展性。<br>该框架有四个重要组成部分：<br>1 服务接口（Service Interface），通过抽象统一声明，由服务提供者进行实现。</p>
@@ -887,7 +887,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2014/10/07/%E6%9C%80%E8%8D%92%E5%94%90/"/>
     <id>http://www.zhangmin.name/blog/2014/10/07/最荒唐/</id>
     <published>2014-10-06T16:40:34.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>世界上最遥远的距离<br>是我们爱得要死  你却在玩手机<br>世界上最遥远的距离<br>是我非常地爱你  却不能在一起<br>最荒唐的是什么？<br>最荒唐的又是什么？<br>最最荒唐的又是什么？<br>最最最荒唐的还能是什么？</p>
 <p>明明我都已知道了真相，<br>你还在那里撒谎，你还在那里撒谎<br>明明我都已知道了真相，<br>你也知道我知道真相，你还在那里撒谎<br>最荒唐的是什么？<br>最荒唐的又是什么？<br>最最荒唐的又是什么？<br>最最最荒唐的还能是什么？</p>
@@ -915,7 +915,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2014/08/26/Java%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%BA%E5%BA%8F/"/>
     <id>http://www.zhangmin.name/blog/2014/08/26/Java对象创建初始化顺序/</id>
     <published>2014-08-26T06:34:14.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>Java对象初始化关乎程序的安全运行，所以理解Java的初始化过程非常必要。Java中对象的初始化和创建是捆绑在一起的，两者不能分离。Java尽力保证所有变量在使用前都能够得到恰当的初始化。与C++一样，Java也通过构造器确保初始化。构造器是一种特殊类型的方法，它没有返回值。这与返回值为空的方法是不同的，虽然是空的返回值，但它仍然可以返回其他内容。构造器不返回任何东西。即使是用new表达式创建对象，也是new表达式返回新对象的引用，构造器没有返回任何东西。</p>
 <p>本文将从一个实例分析Java中对象创建的初始化顺序。</p>
@@ -959,7 +959,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2014/08/07/%E6%A0%87%E5%87%86%E7%9A%84%E8%BD%AF%E4%BB%B6%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E8%BF%87%E7%A8%8B/"/>
     <id>http://www.zhangmin.name/blog/2014/08/07/标准的软件面试准备过程/</id>
     <published>2014-08-07T08:23:48.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>要把基本的都掌握了后，再去准备比较难得问题：如动态规划。而且要是工业上经常用的知识，其余你知道就行了。</p>
@@ -1048,7 +1048,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2014/08/06/%E5%87%86%E5%A4%87%E4%B8%80%E4%BB%BD%E5%AF%B9%E5%BE%97%E8%B5%B7%E8%87%AA%E5%B7%B1%E7%9A%84%E7%AE%80%E5%8E%86/"/>
     <id>http://www.zhangmin.name/blog/2014/08/06/准备一份对得起自己的简历/</id>
     <published>2014-08-06T08:22:50.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>简历的作用就是要凸显出你相关方面的能力，而这些能力可以向招聘者证明你就是他要找的人。<br>简历中所有内容的核心就是：说服招聘者：“我就是你们想找的人！”。</p>
 <h3 id="六个优秀简历的标志"><a href="#六个优秀简历的标志" class="headerlink" title="六个优秀简历的标志"></a>六个优秀简历的标志</h3><p>1.成就定位</p>
@@ -1092,7 +1092,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2014/07/23/%E7%9C%9F%E4%BC%AA%E7%90%83%E8%BF%B7%E7%9A%842014%E5%B7%B4%E8%A5%BF%E4%B8%96%E7%95%8C%E6%9D%AF/"/>
     <id>http://www.zhangmin.name/blog/2014/07/23/真伪球迷的2014巴西世界杯/</id>
     <published>2014-07-23T14:25:04.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=78d85ae138292df593c3ac108c0a2d5d/f11f3a292df5e0fe751316cf5e6034a85fdf72f1.jpg?referer=9308cdf7cb3d70cf15ed9e3dbeaf&amp;x=.jpg" alt="2014 巴西世界杯"></p>
 <h3 id="真伪球迷"><a href="#真伪球迷" class="headerlink" title="真伪球迷"></a>真伪球迷</h3><p>我算是真正的伪球迷，只关心比赛。塞外的新闻一概不看，球员历史也不看。只看在世界杯赛场上的表现。<br>我所有关于足球的记忆只有中国队和世界杯，可是最悲剧的莫过于中国队进不了世界杯。<br>记得最早看世界杯是2006年，当时仅有的印象就是罗纳尔多了。<br>2010年世界杯是在大学时，当时支持巴西队，喜欢卡卡。可是巴西不给力，很快就淘汰了。记得早上起来看西班牙和荷兰的决赛，加时赛伊涅斯塔绝杀荷兰。</p>
@@ -1145,7 +1145,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2014/07/16/Java%E5%AE%9E%E7%8E%B0RESTful-Service/"/>
     <id>http://www.zhangmin.name/blog/2014/07/16/Java实现RESTful-Service/</id>
     <published>2014-07-16T06:41:24.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>原文地址：<a href="http://www.vogella.com/tutorials/REST/article.html" target="_blank" rel="external">http://www.vogella.com/tutorials/REST/article.html</a></p>
 <p>本教程介绍了如何使用JAX-RS的参考实现Jersey来实现REST Web Service。<br>本教程使用Eclipse 4.4，Java 1.6，Tomcat 6.0 及JAX-RS 1.1 (Jersey 1.5)。</p>
@@ -1194,7 +1194,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2014/07/13/%E5%8F%AF%E7%88%B1%E5%8F%88%E5%8F%AF%E6%95%AC%E7%9A%84%E8%8B%8F%E8%BD%BC/"/>
     <id>http://www.zhangmin.name/blog/2014/07/13/可爱又可敬的苏轼/</id>
     <published>2014-07-13T14:47:20.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>在唐宋诗人当中，可爱的人有很多，如李白，天真浪漫，率性可爱。可敬的人也很多，如杜甫，深沉悲悯，忠义可敬。可是又可爱又可敬的恐怕也只有苏轼一人了。</p>
 <p>苏轼的才情自不用说，当他考取进士时，主考官欧阳修看了苏东坡的考卷，就大为称叹：此人一出，吾当避人一头地。欧阳修果然是伯乐，苏轼可以说是宋朝第一大才子。他的诗歌在宋代水平应该是最高的；散文的水平在宋代文人中也应该是最高的；词的水平也不差；书法是宋代四大书法家之首；绘画水平也是宋代文人画中的佼佼者。一个人在这么多的领域都有这么高的造诣，古今也实属罕见。然而最伟大之处还在于他的人格的魅力，在于他超脱旷达的情怀。</p>
@@ -1245,7 +1245,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2014/07/03/OSGi-Event-Admin-Service/"/>
     <id>http://www.zhangmin.name/blog/2014/07/03/OSGi-Event-Admin-Service/</id>
     <published>2014-07-03T08:10:38.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>Event Admin是OSGi中用于bundles之间通信的手段,是处理事件的一种通用机制。采用的是pub/sub架构。</p>
 <h3 id="发布订阅模型"><a href="#发布订阅模型" class="headerlink" title="发布订阅模型"></a>发布订阅模型</h3><p>发布订阅模型应满足的需求：</p>
@@ -1301,7 +1301,7 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
     <link href="http://www.zhangmin.name/blog/2014/06/13/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/"/>
     <id>http://www.zhangmin.name/blog/2014/06/13/Java并发编程入门/</id>
     <published>2014-06-13T07:12:02.000Z</published>
-    <updated>2016-09-11T07:58:11.000Z</updated>
+    <updated>2016-11-24T12:25:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>并发编程可以大大提高程序的执行速度。但是当并发执行的任务彼此开始产生互相干涉时，实际的并发问题就会接踵而至。因此，理解并发不经可以帮你写出优秀的并发程序，而且可以解开为什么那些明显正确的程序却展示出不正确的行为。只有当你自己变的多疑而自信，才能用java编写出可靠地多线程代码。</p>
 <h3 id="并发的多面性"><a href="#并发的多面性" class="headerlink" title="并发的多面性"></a>并发的多面性</h3><p>并发编程令人困惑的主要原因：使用并发是需要解决问题有多个，而实现并发的方式也有很多种，并且在这两者之间没有明显的映射关系。</p>

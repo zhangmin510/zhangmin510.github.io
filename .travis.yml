@@ -1,0 +1,44 @@
+language: node_js
+node_js:
+  - "0.12"
+
+sudo: required
+
+services:
+  - docker
+
+env:
+  global:
+  - IMAGE_NAME: zhangmin510/zhangmin.name
+
+branches:
+  only:
+    - master
+
+addons:
+  ssh_known_hosts:
+  - github.com
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_3ba5678e770b_key -iv $encrypted_3ba5678e770b_iv -in .travis/travis.enc -out ~/.ssh/id_rsa -d
+  - chmod 600 ~/.ssh/id_rsa
+  - eval $(ssh-agent)
+  - ssh-add ~/.ssh/id_rsa
+  - git config --global user.name "zhangmin.name"
+  - git config --global user.email "zhangmin@zhangmin.name"
+
+install:
+  - npm install
+
+script:
+  - ./node_modules/hexo/bin/hexo g
+  - ./node_modules/hexo/bin/hexo d
+  - cp .travis/Dockerfile ./Dockerfile
+  - cp .travis/nginx.conf ./nginx.conf
+  - docker build -t $IMAGE_NAME:latest .
+  - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$(date +%Y%m%d%H%M%S)
+  - docker images
+
+after_success:
+  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker push $IMAGE_NAME

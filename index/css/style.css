@@ -1,0 +1,235 @@
+/**
+Description: ZM Corp个人主页样式文件
+Version: 1.0
+Author:ZhangMin
+Author URI: http://www.zhangmin.name 
+*/
+
+/* =Reset default browser CSS. Based on work by Eric Meyer: http://meyerweb.com/eric/tools/css/reset/index.html
+-------------------------------------------------------------- */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	border: 0;
+	font-family: inherit;
+	font-size: 100%;
+	font-style: inherit;
+	font-weight: inherit;
+	margin: 0;
+	outline: 0;
+	padding: 0;
+	vertical-align: baseline;
+}
+:focus {/* remember to define focus styles! */
+	outline: 0;
+}
+body {
+	/*background: #fff;*/
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+table {/* tables still need 'cellspacing="0"' in the markup */
+	border-collapse: separate;
+	border-spacing: 0;
+}
+caption, th, td {
+	font-weight: normal;
+	text-align: left;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: "";
+}
+blockquote, q {
+	quotes: "" "";
+}
+a img {
+	border: 0;
+}
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+/*样式表结构*/
+ @font-face {
+      font-family: "fzjl";
+      src: url("http://zhangmin.name/fzjl.ttf");
+    }
+html{
+	background:url(../images/bg-header.png) left top repeat-x;
+	color:#333;
+	height:100%;
+	margin:0 auto;
+	max-width:960px;
+	font: 16px/24px "微软雅黑",arial,sans-serif；
+ 
+}
+a{
+	color:#15c;
+	text-decoration:none;
+}
+/*顶部导航*/
+header#header{
+	height:66px;
+	margin-top:6px;
+	padding:6px;
+ }
+#header #logo{
+	float:left;
+	margin-left:16px;
+	margin-top:8px;
+
+}
+#header div#nav{
+	float:right;
+	width:720px;
+	padding:10px;
+	margin-top:20px;
+}
+div#nav a{
+	color:#666;
+}
+
+div#nav ul#navitem li{
+	display:inline;
+	margin-top:15px;
+	margin-left:30px;
+}
+div#nav a:active ,div#nav a:focus,div#nav a:hover,div#nav li.current a{
+	color:#dd4b39;/*红色*/
+}
+/*首页样式*/
+section#home{
+	clear:both;
+	font-size:14px;
+	line-height:24px;
+	margin:24px 0 0;
+	padding:0;
+	position:relative;
+	overflow:hidden
+}
+section#home h1{
+	margin-left:300px;
+	padding:10px;
+	color:#DD4B39;
+	display:block;
+	font-size:48px;
+	font-weight:300;
+	line-height:48px;
+}
+#themes{
+	float:right;
+	margin:24px 0;
+	clear:both;
+	margin:0 -2.5%;
+	padding:12px 2.5% 11px;
+}
+#themes li{
+	display:block;
+	float:left;
+	padding:0px;
+	width:230px;
+}
+#themes li a:active,#themes li a:focus,#themes li a:hover,#themes li.current a{
+	color:#dd4b39;
+}
+#themes li a{
+	color:#666;
+	white-space:nowrap;
+}
+#themes h2,#themes h2 a{
+	text-decoration:none;
+	font-size:18px;
+	color:#15c;
+	margin:0;
+	min-height:72px;
+	padding:0 10%;
+}
+#themes p a{
+	text-decoration:none;
+	padding:24px 0;
+	color:#333;
+}
+#themes img{
+	width:75.83%;
+	display:block;
+	margin:auto;
+	max-height:240px;
+	max-width:75.83%;
+	padding:12px 0 36px;
+}
+#themes:hover li{
+	opacity:.5;
+}
+#themes:hover li:hover{
+	opacity:1;
+}
+/*侧边栏样式*/
+aside#aside{
+    text-decoration:none;
+	float:left;
+	width:210px;
+	height:100%;
+	margin-top:20px;
+	padding:10px;
+}
+aside#aside ul{
+   margin:0 0 24px;
+}
+aside#aside ul li{
+	border-bottom:1px solid #e0e0e0;
+	padding:6px 0 5px;
+	color:#15c;
+}
+aside#aside ul li.current a,#aside li a:hover{
+    color:#DD4B39;
+}
+
+/*底部*/
+footer#footer{
+    clear:both;
+    color:#666;
+	font-size:12px;
+	line-height:12px;
+	margin-left:100px;
+	padding:24px 2.5% 24px 27.5%;
+}
+#footer li+li:before{
+	content:'·';
+}
+#footer li{
+	float:left;
+	margin:0 12px 0 0;
+}
+	
+/*main 内样式*/
+#main{
+	float:right;
+	width:700px;
+	min-height:160px;
+	padding:10px;
+	margin-top:20px;
+	line-height:normal;
+}
+
+h2{
+	font-size:20px;
+}
+h4{
+	font-size:16px;
+	font-weight:bold;
+	margin-top:9px;
+	margin-bottom:9px;
+	color:#666;
+}
+article#article h2 a{
+	color:#DD4B39;
+}
