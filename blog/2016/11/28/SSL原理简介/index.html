@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>SSL原理简介 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  November 28, 2016
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/SSL/'>SSL</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">SSL原理简介</h1>
+  <section class="post-content article-entry">
+    <h1 id="SSL原理"><a href="#SSL原理" class="headerlink" title="SSL原理"></a>SSL原理</h1><p>SSL (Secure Sockets Layer) 是一个标准的用于在Web服务端和浏览器端建立安全连接的技术。这一连接保证Web服务器和浏览器之间的数据传输都是私密的，不会被黑客窃取。SSL是一个工业标准，广泛用于各大网站保护用户的交易数据。</p>
+<p>如果网站使用SSL，则会在浏览器的地址栏显示锁形标志，如果使用的是EV证书，那么地址栏会是绿色的。</p>
+<p>Transport Layer Security (TLS) 是SSL的升级版协议。和SSL的加密方式类似，用于加密传输的数据和信息。<br>SSL是在TCP层之上，作为一个安全层工作。上层的协议不需要修改，底层的协议也可以按照通常的方式运行。<br>如果SSL证书被正确的使用，一个攻击者只能看到这个连接的IP和端口信息，以及有多少数据发送，但无法知道其他的URL地址，因为这些地址是被加密的。他们可能会中断连接，但是服务端和客户端可以感知到这一破坏。攻击者是无法截获任何信息，即使他们有很强的计算能力。</p>
+<p>使用SSL除了可以保护敏感信息的传输，如信用卡信息，密码，注册登陆信息。还可以：</p>
+<ol>
+<li>确保服务器之间的数据安全传输。</li>
+<li>提高网站的Google排名</li>
+<li>建立或者增强客户的信任。</li>
+<li>提高转化率。</li>
+</ol>
+<p>SSL使用公钥加密技术。公钥和私钥是成对存在的，公钥和私钥都是随机生成的超长数字串。如果Alice想要向Bob发送加密数据，Alice就使用Bob的公钥对数据进行加密，Bob收到加密的数据后，使用自己的私钥进行解密。<br>SSL连接的流程是：</p>
+<ol>
+<li>TCP连接建立后，SSL开始工作，第一步是SSL握手。</li>
+<li>服务端发送证书给用户以及一些参数（如使用哪个版本的SSL/TLS以及使用的加密/解密的方法）</li>
+<li>客户端验证证书的合法性，选择服务端和客户端都支持的、最高级别的加密方法对数据进行加密。</li>
+<li>为了保证传输消息的一致性和真实性，SSL/TLS协议会包含一个安全认证的过程</li>
+</ol>
+<h1 id="SSL证书"><a href="#SSL证书" class="headerlink" title="SSL证书"></a>SSL证书</h1><p>SSL证书包括域名，公司名称，地址，城市，地区，国家等信息。还包括证书的失效时间。证书发行机构（Certification Authority）需要保证证书信息的有效性，有增加了一层安全性。</p>
+<p>SSL证书类型包括以下几种：</p>
+<ol>
+<li>标准SSL证书。单个域名。</li>
+<li>扩展验证的证书。会显示绿色的地址栏。</li>
+<li>多域名证书。</li>
+<li>扩展验证的多域名证书。</li>
+<li>通配符证书。某个域名的二级域名及三级域名</li>
+</ol>
+<p>赛门铁克提供的证书根据证书验证的级别分为三种类型：</p>
+<ol>
+<li>域名验证SSL证书(Domain Validation SSL Certificates)。需要组织或者机构提供对域名的控制权。因为这种证书不对组织和机构进行检查，所以这种证书一般用于服务器测试以及内部连接。</li>
+<li>组织验证的SSL证书(Organisation Validation SSL Certificates)。这种证书不仅需要提供对域名的控制权，还需要公司或者组织的注册信息。这种证书适用于公开的网站。个人无法获取这类证书。</li>
+<li>扩展认证的SSL证书(Extended Validation SSL Certificates)。这类证书除了需要提供上述两类证书的信息外，还需要提供额外的关于SSL证书属于该机构的核实步骤。关于公司的额外信息会显示在浏览器的地址栏，可以通过点击地址栏的锁形图标获取这些信息。一般当浏览器访问使用个人信息。这类证书个人也不能获取。</li>
+</ol>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><a href="https://en.wikipedia.org/wiki/Transport_Layer_Security" target="_blank" rel="external">SSL wikipedia</a></li>
+<li><a href="https://www.symantec.com/page.jsp?id=ssl-information-center" target="_blank" rel="external">SSL info</a></li>
+<li><a href="https://www.symantec.com/content/en/us/enterprise/html/infographic/ssl-certificates-explained/" target="_blank" rel="external">ssl-certificates-explained/</a></li>
+</ul>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2016/11/08/杭州西湖故事/">
+        <!--杭州西湖故事--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-SSL原理简介" data-title="SSL原理简介" data-url="http://www.zhangmin.name/blog/blog/2016/11/28/SSL原理简介/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2016 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>
