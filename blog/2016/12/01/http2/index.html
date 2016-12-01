@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>http2 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  December 1, 2016
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/HTTP/'>HTTP</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">http2</h1>
+  <section class="post-content article-entry">
+    <h1 id="http-2-由来"><a href="#http-2-由来" class="headerlink" title="http/2 由来"></a>http/2 由来</h1><p>HTTP 1.1协议是当前使用最广泛协议之一。但当前的HTTP 1.1协议存在很多问题。</p>
+<ol>
+<li>协议过于庞大。1996年的HTTP 1.0的RFC 1945只有60页，而HTTP 1.1的RFC 2616就增加到了176页。HTTP 1.1协议包含了过多的细节。</li>
+<li>可选内容过多。HTTP 1.1协议包含了过多的技术细节。没有任何HTTP 1.1的实现真正实现了协议中规定的内容。</li>
+<li>未能充分利用TCP。HTTP 1.1很难充分利用TCP的性能。没有充分利用已经建立的TCP连接去发送更多的数据，从而减少页面载入的时间。使用一个TCP连接发送多个请求时，需要按照客户端发送请求的顺序接收响应。如果你想提供性能，只能新建一个TCP连接，但新建连接的代价巨大，不能解决延迟的问题，因为要三次握手。</li>
+</ol>
+<p>目前大部分网站的首页的大小超过了1.9M，传输的文件数超过了100个。目前降低延迟的方法有：</p>
+<ol>
+<li>Spriting。将多个小图合并成一张大图，然后使用JS或者CSS将图片切割显示。</li>
+<li>Inlining。将图片嵌入到CSS文件中，从而减少传送的图片数目。</li>
+<li>Concatenation。将多个JS文件合并成一个。</li>
+<li>Sharding。将你的内容分散到不同的服务器上。</li>
+</ol>
+<h1 id="http-2-优化内容"><a href="#http-2-优化内容" class="headerlink" title="http/2 优化内容"></a>http/2 优化内容</h1><p>HTTP/2的优化内容主要是降低协议对延迟的敏感，修复同一个TCP连接传送多个请求的顺序等待响应问题，防止主机需要更多的TCP连接数，以及保留所有现有协议的接口、内容、URL格式和结构。另外考虑了HTTP 1.1到HTTP/2的过渡。HTTP/2不在使用小版本号，一个客户端或者服务器只能选择是否完全兼容HTTP/2。</p>
+<p>HTTP/2协议由HTTPbis（bis在拉丁语中是“二”的意思）工作组完成初稿。HTTP/2协议源于Google开发的SPDY协议。HTTP/2协议的主要内容有：</p>
+<ol>
+<li>二进制协议。使用帧结构，可以更快的组帧和解帧。发送的不同类型的二进制帧的公共字段有Type、Length、Flags、Stream Identifier和Frame payload</li>
+<li>多路复用的流。每个帧关联到流。</li>
+<li>优先级和依赖性。帧的优先级和依赖关系可以动态改变。</li>
+<li>头压缩。HTTP是一个无状态的协议，每次都需要携带所有需要的信息。使用HPACK对头部进行压缩。</li>
+<li>重置。可以随时重置，开始发送新数据。</li>
+<li>服务器推送。</li>
+<li>流量控制。</li>
+</ol>
+<p>使用HTTP/2可以大大降低页面的载入时间，从而提升浏览网页的体验。目前主流的浏览器和服务端程序都支持HTTP/2协议。</p>
+<p>比HTTP/2更好的可能就是Google的QUIC(Quick UDP Internet Connection)。是一个UDP版本的TCP+TLS+HTTP/2的替代实现。解决了MPTCP想解决的问题。</p>
+<h1 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h1><ul>
+<li>Daniel Stenberg 《http2 explained》</li>
+<li>正式版http2 <a href="https://tools.ietf.org/html/rfc7540" target="_blank" rel="external">rfc7540</a></li>
+</ul>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2016/11/28/SSL原理简介/">
+        <!--SSL原理简介--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-http2" data-title="http2" data-url="http://www.zhangmin.name/blog/blog/2016/12/01/http2/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2016 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>
