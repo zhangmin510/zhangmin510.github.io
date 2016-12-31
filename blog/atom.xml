@@ -5,7 +5,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://www.zhangmin.name/blog/"/>
-  <updated>2016-12-01T15:02:57.000Z</updated>
+  <updated>2016-12-31T07:34:27.000Z</updated>
   <id>http://www.zhangmin.name/blog/</id>
   
   <author>
@@ -14,6 +14,130 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Openstack了解</title>
+    <link href="http://www.zhangmin.name/blog/2016/12/31/Openstack%E4%BA%86%E8%A7%A3/"/>
+    <id>http://www.zhangmin.name/blog/2016/12/31/Openstack了解/</id>
+    <published>2016-12-31T07:34:27.000Z</published>
+    <updated>2016-12-31T07:34:27.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h1><p>云计算通常包含一个服务责任协议（Service Level Agreement），表示云计算服务商承诺给用户的性能、规格和可用率等。使用共享的计算、网路和存储提供服务，并按照用量计费。</p>
+<p>云计算服务的特点：</p>
+<ol>
+<li>按需自助服务。</li>
+<li>网络访问。访问异构设备的能力。</li>
+<li>资源池。</li>
+<li>弹性。垂直或者横向扩展。</li>
+<li>按照用量计费。</li>
+</ol>
+<h1 id="Openstack开发原则"><a href="#Openstack开发原则" class="headerlink" title="Openstack开发原则"></a>Openstack开发原则</h1><p>Open（开源，开放）+Stack（多个模块组成）。<br>最初是NASA和Rackspace合作开发的项目，在2010年以Apache 2.0许可证开源。</p>
+<p>Openstack是一个分散式结构的开源框架，是一个通用开源的云计算平台。</p>
+<p>Openstack的优势：解除厂商绑定；可扩展，可定制IaaS；良好的社区氛围。<br>Openstack的劣势：学习曲线高；偏底层，需要大量的二次开发。</p>
+<p>可扩展和可伸缩性是Openstack的主要目标。任何影响这两点的都是可选的。<br>一起都是异步的，分布式的，接收最终一致性。<br>测试一切。</p>
+<p>Openstack是基于Python写的。</p>
+<p>Openstack组件特点：</p>
+<ol>
+<li>分布式。可以分开部署在多个服务器上，通过网络互连。</li>
+<li>无状态。请求之间独立。</li>
+<li>RESTful。API接口都是REST风格的。</li>
+<li>RPC。开发网路分布式程序更容易。</li>
+<li>Plugin。插件式设计。框架和扩展功能分离。</li>
+</ol>
+<h1 id="Openstack-API介绍"><a href="#Openstack-API介绍" class="headerlink" title="Openstack API介绍"></a>Openstack API介绍</h1><p>整个API框架结构是以WSGI标准为入口，加上routes，webob和paste等python组件构成的。<br>Web服务器网关接口（Web Server Gateway Interface:WSGI）是Python应用和web服务器之间的一种接口协议。<br>在WSGI中有application，server和client三个角色。client发送请求给server，server转发请求给application。application处理完请求后，讲响应发送给server，server再将响应转发给client。server是一个转发的作用。</p>
+<p>webob是python上的WSGI容器。类似于Java web中的tomcat。paste是一个方便WSGI服务配置和部署的组件，通过一个loadapp函数和配置文件或者egg包。routes是一个简单的url路由组件，完成url到action的映射。</p>
+<p>分页查询。作用一是方便查看，而是限定查询返回数目。marker表示从那条记录开始返回，limit为每次返回的记录数，end_marker为标记到那条记录结束。还可以使用changes_since限制指定时间改变后的对象。</p>
+<p>Nova对API请求有一定的限制。获取限制详情GET /v2/{tenant_id}/limits。</p>
+<p>Eventlet。 协程是一条执行序列，拥有自己独立的栈，局部变量，指令指针，同时又与其他协程共享全局变量和大部分应用数据。线程可以多个并行执行，而多个协程同时只能运行一个。</p>
+<p>协程特点：</p>
+<ol>
+<li>每个协程有自己私有栈和局部变量。</li>
+<li>同一时间只有一个协程在执行，无需全局加锁。</li>
+<li>执行顺序可控，完全有程序控制执行。</li>
+</ol>
+<p>Eventlet是一个用于处理和网络相关的Python库。依赖于greenlet和select.epoll。greenlet是eventlet并发的基础，<br>select库的epoll则是网络通信模型。eventlet通过协程并发。把协程封装成greenthread。所谓并发，即启动多个greenthread，并对这些greenthread进行管理，以实现非阻塞式IO。<br>Python库不支持协程，通过对Python网络几个库进行改写，以补丁的方式导入程序中。</p>
+<p>协程就是运行在一个线程内的伪并发方式，最终只有一个协程在运行，有应用程序来控制执行的顺序。</p>
+<h1 id="Openstack模块介绍"><a href="#Openstack模块介绍" class="headerlink" title="Openstack模块介绍"></a>Openstack模块介绍</h1><p>Openstack包括计算（computing）、网络（networking）和存储（storing）三个基础元素。</p>
+<p>计算模块负责管理不同类型的虚拟资源，允许用户通过API来使用。<br>网络模块提供可插拨，可扩展的网络系统。<br>存储模块提供对象和块存储功能。</p>
+<h2 id="Nova（Compute-as-a-service）"><a href="#Nova（Compute-as-a-service）" class="headerlink" title="Nova（Compute as a service）"></a>Nova（Compute as a service）</h2><p>Nova的设计遵循基于组件架构，高可用，容错，可恢复性，开放标准，API兼容等原则。Nova是无共享，基于消息的架构，所有组件可以分布式运行。为了避免消息队列等待的阻塞情况，每个组件都是异步响应的，只有收到消息才触发回调。</p>
+<p>Nova支持多种后端Hypervisor创建虚拟机，如KVM，Xen，LXC，VMware等。Nova使用libvirt来管理多种Hypervisor。</p>
+<p>Nova创建的虚拟机有多种状态，分别是vm_state（nova-api调用，与用户操作期望相匹配，自上而下的实现），task_state（API调用最终实现的过渡态）, power_state（hypervisor中的虚拟机状态，自下而上的实现）。</p>
+<p>Nova是由多个组件构成的分布式应用程序。组件工作者守护进程（Worker daemon）执行复杂任务。</p>
+<p>nova-api。有Web服务网关接口（Web Server Gateway Interface:WSGI），负责接收和解释API调用。部署在控制节点。<br>nova-scheduler。从队列中取出一个虚拟机创建请求，并决定在那一台物理机上进行创建。涉及资源的调度。<br>用户可以自定义调度算法。部署在控制节点。<br>nova-compute。用于创建和终止虚拟机实例。部署在具体部署虚拟机的物理节点上，称为计算节点。<br>nova-conduct。新版本用于代理nova-compute节点对数据库的读写操作。nova-compute将数据库读写请求发送到消协队列中。nova-conduct从消协队列中去消息进行操作。</p>
+<h2 id="Neutron（Networking-as-a-service）"><a href="#Neutron（Networking-as-a-service）" class="headerlink" title="Neutron（Networking as a service）"></a>Neutron（Networking as a service）</h2><p>Neutron接收来自虚拟机的指令来定义虚拟机所需的网络，然后发送指令给交换机和路由器来创建这些网络。Neutron通过plug-in的方式扩展。核心功能是提供虚拟机与外界网络的连接。</p>
+<ol>
+<li>neutron-server。接收API请求，储存数据，然后将请求路由到各个agent组件，执行具体操作。</li>
+<li>neutron-plugin-xxx。底层网路虚拟化技术的插件。必须和neutron-server安装在一个节点上。</li>
+<li>neutron-plugin-xxx-agent。plugin的agent。agent负责在虚拟网络上的数据包进行处理。通过消息队列与plugin和neutron-server交互。收到指令后在相应的节点上执行底层网络命令。agent必须安装在那些需要处理虚拟机网络数据包的节点上，如虚拟机的计算节点，在安装了neutron-dhcp-agent和neutron-l3<br>-agent， neutron-lbaas-agent服务的节点上，因为它们乣处理流入或者流出虚拟机的网络数据。</li>
+</ol>
+<p>neutron-dhcp-agent是给虚拟机提供dhcp功能的一个服务。在一个环境中可以有多个，因为为特定的网络指定dhcp-agent。<br>neutron-l3-agent是提供虚拟机访问外部网络的功能，结合floating ip可以使外部网络访问平台上的虚拟机。在原理上是利用linux的ip栈和iptables来实现三层路由的转发和NAT功能。</p>
+<p>另外还有提供元数据注入，负载均衡和防火墙功能的agent。</p>
+<p>Neutron中的核心概念：</p>
+<ol>
+<li>network。一个网络。</li>
+<li>subnet。一个子网就像在交换机使用vlan划分出来的一样。</li>
+<li>router。在不同子网或者网络之间转发数据。</li>
+<li>port。交换机上用来插入网线的口。</li>
+</ol>
+<p>虚拟出来的这些设备可以实现物理设备同样的功能。</p>
+<p>Neutron还可以设置一个以上的外部网络，外部网络和上面的网络不同，不是软件定义的网络。这个网络所分配的IP地址，都是可以从外部访问。</p>
+<p>如果一个Internet用户要访问Openstack云平台一个SDN虚拟网络IP，则需要创建一个router，把这两个网络连起来，转发数据。同时，neutron也会把外部IP地址绑定到这个虚拟网络连接的端口上。</p>
+<p>neutron也支持防火墙和安全组的功能。安全组可以定义开发端口的范围，从进入和外出两个方向进行控制。</p>
+<p>三种网络管理器：</p>
+<ol>
+<li>flat。基础网络，每个应用实例分配一个固定的ip地址，并连接到一个共同的网桥。该种模式最大缺陷是不能进行网络隔离。</li>
+<li>flatdhcp。使用dhcp来分配ip。其他同flat。</li>
+<li>vlan。支持大部分物理vlan特性。虚拟子网和独立网桥。有隔离作用但是缺少QoS，ACL，监控等功能。而且需要物理的vlan交换机参与，不能实现跨机房二层通信。</li>
+</ol>
+<p>Open vSwitch（OVS）是一个开源的虚拟交换机软件，可以在系统的管理程序中运行，还可以控制物理机的交换设备。OVS的plugin在neutron-server运行时被载入，负责处理API请求和后端数据库中保存网络逻辑数据。OVS的agent在每个计算节点和网络节点运行，负责从配置文件和数据库收集数据，并与本地的OVS实例通信，并把执行的网络流程操作发送给实例。</p>
+<p>OVS可以在内和空间，也可以在用户空间。OVS与物理交换机类似，会根据端口上的配置，给流经的数据打上合适的标签并转发。<br>除了一开始需要手动建立几个网桥，其他大多数是neutron和OVS通信都是通过plugin来完成的。</p>
+<p>Neutron创建的网络可以分为：</p>
+<ol>
+<li>provider网络。由管理员创建，直接映射到所在数据中心的物理网络。可以给虚拟机使用，也能给router使用。provider网络可以被设置为flat（扁平网络，没有任何tagged），vlan（符合802.1Q tagged的网络），GRE（tunnel技术进行数据传送）。</li>
+<li>tenant网络。租户tenant创建的网络，不同租户之间是相互独立和隔离的。</li>
+</ol>
+<h2 id="Cinder（Block-Storage-as-a-service"><a href="#Cinder（Block-Storage-as-a-service" class="headerlink" title="Cinder（Block Storage as a service)"></a>Cinder（Block Storage as a service)</h2><p>架构和实现与nova类似。</p>
+<p>cinder-api。接收和分发API。<br>cinder-volume。多个后端存储支持。<br>cinder-scheduler。决定在那个存储节点创建cinder-volume实例。</p>
+<h2 id="Swift（Object-Storage-as-a-service）"><a href="#Swift（Object-Storage-as-a-service）" class="headerlink" title="Swift（Object Storage as a service）"></a>Swift（Object Storage as a service）</h2><p>Swift是一种高可用、分布式的一致性对象存储软件，提供云方式的存储和管理。</p>
+<p>提供文件的对象存储及服务。才用对象级别的复制，以保障数据。ext4和xfs作为文件系统存储对象。</p>
+<p>swift-proxy。<br>swift-account。<br>swift-container。<br>swift-object。</p>
+<h2 id="Glance（Image-as-a-service）"><a href="#Glance（Image-as-a-service）" class="headerlink" title="Glance（Image as a service）"></a>Glance（Image as a service）</h2><p>Glance模块为存储和查询镜像服务，用于发现，注册和检索云平台中的虚拟磁盘镜像。</p>
+<p>Glance包括glance-api和glance-registry。</p>
+<p>Openstack支持不同的虚拟化技术，每种虚拟化技术使用不同格式的虚拟机镜像文件格式。常见的格式有RAW（裸格式），qcow2（可以动态变化）等。</p>
+<p>Glance可以配置不同的镜像后端存储，如本地，CEPH。</p>
+<h2 id="Keystone（Identity-as-a-service）"><a href="#Keystone（Identity-as-a-service）" class="headerlink" title="Keystone（Identity as a service）"></a>Keystone（Identity as a service）</h2><p>Keystone提供两个关键功能：</p>
+<ol>
+<li>用户管理。控制管理追踪用户访问权限。</li>
+<li>服务目录管理。提供哪些服务目录可以访问。</li>
+</ol>
+<p>Keystone核心概念：</p>
+<ol>
+<li>用户（user）。谁来使用openstack。用户从Keystone获取token来访问openstack服务。用户可以分配给某个租户，访问租户下的资源。</li>
+<li>证书（credentials）。只被所有者知道的数据。数据所有者可以通过证书证明自己。如匹配的用户名和密码，匹配的用户名和API访问秘钥，通信令牌（token）。</li>
+<li>认证（authentication）。使用用户的证书确认用户的真实身份。首次通过用户名和密码，之后可以通过使用token实现。</li>
+<li>令牌（token）。任意比特位的文本，每个令牌都有一个访问范围，时间限制，持续时间，可被撤销。</li>
+<li>租户（tenant）。用于分组和分离资源。租户可以映射到一个团体，组织或者项目。</li>
+<li>服务（service）。一个服务提供一个或者多个访问点，通过访问点访问资源和执行操作。</li>
+<li>访问点（endpoint）。可以网络访问的url。</li>
+<li>角色（role）。每个角色有一组权力和特权。可以被继承。</li>
+</ol>
+<p>访问任何服务都要通过Keystone来进行认证。</p>
+<h2 id="Horizon（Dashboard-as-a-service）"><a href="#Horizon（Dashboard-as-a-service）" class="headerlink" title="Horizon（Dashboard as a service）"></a>Horizon（Dashboard as a service）</h2><p>提供用户界面操作Openstack计算，网络，存储资源。</p>
+<h2 id="其他项目"><a href="#其他项目" class="headerlink" title="其他项目"></a>其他项目</h2><p>Openstack孵化的项目有：Ceilometer 计费和监控服务，Heat编排服务，Ironic物理设备服务，Marconi消息队列服务。<br>Savannna大数据处理服务，Trove数据库服务。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;云计算&quot;&gt;&lt;a href=&quot;#云计算&quot; class=&quot;headerlink&quot; title=&quot;云计算&quot;&gt;&lt;/a&gt;云计算&lt;/h1&gt;&lt;p&gt;云计算通常包含一个服务责任协议（Service Level Agreement），表示云计算服务商承诺给用户的性能、规格和可用率等。
+    
+    </summary>
+    
+      <category term="练笔" scheme="http://www.zhangmin.name/blog/categories/%E7%BB%83%E7%AC%94/"/>
+    
+    
+      <category term="练笔" scheme="http://www.zhangmin.name/blog/tags/%E7%BB%83%E7%AC%94/"/>
+    
+  </entry>
   
   <entry>
     <title>http2</title>
@@ -1297,57 +1421,6 @@ someuser.func(&apos;love&apos;, &apos;you&apos;);//i love you
       <category term="Java" scheme="http://www.zhangmin.name/blog/tags/Java/"/>
     
       <category term="Web Service" scheme="http://www.zhangmin.name/blog/tags/Web-Service/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>可爱又可敬的苏轼</title>
-    <link href="http://www.zhangmin.name/blog/2014/07/13/%E5%8F%AF%E7%88%B1%E5%8F%88%E5%8F%AF%E6%95%AC%E7%9A%84%E8%8B%8F%E8%BD%BC/"/>
-    <id>http://www.zhangmin.name/blog/2014/07/13/可爱又可敬的苏轼/</id>
-    <published>2014-07-13T14:47:20.000Z</published>
-    <updated>2016-11-24T12:25:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在唐宋诗人当中，可爱的人有很多，如李白，天真浪漫，率性可爱。可敬的人也很多，如杜甫，深沉悲悯，忠义可敬。可是又可爱又可敬的恐怕也只有苏轼一人了。</p>
-<p>苏轼的才情自不用说，当他考取进士时，主考官欧阳修看了苏东坡的考卷，就大为称叹：此人一出，吾当避人一头地。欧阳修果然是伯乐，苏轼可以说是宋朝第一大才子。他的诗歌在宋代水平应该是最高的；散文的水平在宋代文人中也应该是最高的；词的水平也不差；书法是宋代四大书法家之首；绘画水平也是宋代文人画中的佼佼者。一个人在这么多的领域都有这么高的造诣，古今也实属罕见。然而最伟大之处还在于他的人格的魅力，在于他超脱旷达的情怀。</p>
-<h3 id="可爱的苏轼"><a href="#可爱的苏轼" class="headerlink" title="可爱的苏轼"></a>可爱的苏轼</h3><p>从下面的例子可以看出苏轼的可爱:</p>
-<p>有一次，当朝廷派人来抓时，他为穿官服还是囚服而焦急。“我是湖州太守，应该穿官服接旨，但我又是犯人则应该穿囚服。”为此他竟不知所措。</p>
-<p>还有一次，苏轼因乌台诗案下狱之后因为生死未卜，一日数惊，曾以极度悲伤之心，给弟弟苏辙写下了诀别诗：“是处青山可埋骨，他年夜雨独伤神。与君世世为兄弟，便结来生未了因。”可以看出他也是一个普通人，既重情也怕死。</p>
-<p>当他被贬岭南，写下“日啖荔枝三百颗，不辞长作岭南人。”可见他的豁达，乐观。</p>
-<h3 id="可敬的苏轼"><a href="#可敬的苏轼" class="headerlink" title="可敬的苏轼"></a>可敬的苏轼</h3><p>苏轼的可敬之处则体现在他的政治方面，他有自己的原则，为国家着想，而不是只为自己的仕途着想。苏轼是属于旧党司马光一派的。当年宋神宗让王安石变法时，苏东坡就多有反对，因而遭贬谪。后来王安石被罢相，司马光上位，要尽费王安石变法。苏东坡又认为不应该尽费，有很多内容还是需要保留的，因此又遭外放贬官。这说明他心中有自己的原则，绝不随波逐流。</p>
-<p>话说又一次苏轼问自己的周边的人，“我肚子里都有什么？”其他人都说是满腹诗书。苏东坡笑而不语，当听到侍妾王朝云说：“是一肚子不合时宜。”他哈哈大笑，“知我者朝云也”。</p>
-<h3 id="面对人生逆旅的苏轼"><a href="#面对人生逆旅的苏轼" class="headerlink" title="面对人生逆旅的苏轼"></a>面对人生逆旅的苏轼</h3><p>苏东坡虽然早年名动京师，但却一生仕途坎坷。尤其是后半生，都是在被贬的路上。从岭南到称为蛮荒之地的儋州，最终病死在返京的船上。一生坎坷的经历既是他文学创作的基础，又成就了他超脱旷达的人生态度。</p>
-<p>面对人生逆旅有很多选择，如逃避，如执着。</p>
-<p>逃避。或醉酒，如李白，“古来圣贤皆寂寞，惟有饮者留其名”；或寻梦，如晏几道，在梦中求得解脱，是一种对往日美好时光的追忆，“梦魂惯得无拘检，又踏杨花过谢桥”。</p>
-<p>执着。或落寞，如柳宗元，他的《江雪》，每句第一字连起来就是千万孤独。“千山鸟飞绝，万径人踪灭，孤舟蓑笠翁，独钓寒江雪”。或洒脱，如刘禹锡，“自古逢秋悲寂寥，我言秋日胜春朝；晴空一鹤排云上，便引诗情到碧霄”。（古人悲秋，从宋玉《九辩》“悲哉，秋之为气也。萧瑟兮，草木摇落而变衰”开始，一发不可收拾。这是因为 中国古代的时间，空间，和五行是一一对应的。春对应冬木，秋对应西金。所以常说金秋十月。西一般指西天，象征着死亡。秋天虽然对于人类来说是收获的季节，但对于植物来说是死亡的季节）</p>
-<p>苏轼的选择也如刘禹锡一样，是洒脱。无论多么恶劣的条件，他都能随遇而安，乐观豁达。</p>
-<p>林语堂的《苏东坡传》如此评价苏东坡：“苏东坡是一个无可救药的乐天派……苏东坡比中国其他诗人更具有多面性天才的丰富感，变化感和幽默感，智能优异，心灵却像个天真的小孩——这种混合等于耶稣所谓蛇的智慧加上鸽子的温文”。</p>
-<h3 id="超脱旷达的苏轼"><a href="#超脱旷达的苏轼" class="headerlink" title="超脱旷达的苏轼"></a>超脱旷达的苏轼</h3><p>苏轼的超脱旷达主要体现在下面三个方面：</p>
-<p>关于离别。中国人对离别都很伤感，江郎才尽的江淹有“黯然销魂者，唯别而已矣”；李商隐也有诗云“相见时难别亦难”；柳永有“多情自古伤离别”。苏轼却说”人生如逆旅，我亦是行人”（临江仙·送钱穆父）。人生就像一段旅程，我们每个人只不过是这个旅程上的行人而已。因此，离别时常态，相聚是例外。</p>
-<p>关于思乡。古代由于交通，资讯的落后，使得离家在外的游子都一种弄弄的思乡之情。如崔颢的“日暮乡关何处是？烟波江上使人愁”；李觏的乡思”人言落日是天涯，望极天涯不是家。已恨碧山相阻隔，碧山还被暮云遮”;更知名的是马致远的“夕阳西下，断肠人在天涯”。</p>
-<p>自从考中进士之后，总共只回过两趟四川老家。一次是因为父亲去世，回家守孝三年；一次是因为母亲去世，回家守孝三年。他的“此心安处是吾乡”将故乡由地理概念上升到心理概念。但是“此心安处便是吾乡”这一说法源于白居易的《种杏桃》：无论海角与天涯，大抵心安即是家。所以他到那里就说那里是他的故乡，到杭州就说吾本杭人，到海南就说吾本海南人。超脱旷达到了那里都能安之若素，随遇而安。</p>
-<p>关于年华。论语中有“ 子在川上曰，逝者如斯夫，不舍昼夜”；蒋捷有词云“流光容易把人抛，红了樱桃，绿了芭蕉”。而苏轼却说：“谁道人生无再少，门前流水尚能西，休将白发唱黄鸡”。人不能改变时光流转，却可以改变对时光流转的态度。</p>
-<p>苏轼有一首词《定风波》内容是：</p>
-<p>莫听穿林打叶声，何妨吟啸且徐行。<br>竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。<br>料峭春风吹酒醒，微冷，山头斜照却相迎。<br>回首向来萧瑟处，归去，也无风雨也无晴。</p>
-<p>这种也无风雨也无晴的态度就是一种达观的态度。得之坦然，失之淡然。荣辱全无，胜败两忘。也可以说是：因为无所畏，所以无所谓；或者是：因为无所谓，所以无所为畏。</p>
-<p>人的一生就应该争其必然，顺其自然。以出世的心态干入世的事业。做事要兢兢业业，认认真真，对于结果则要抱着不在乎的态度。</p>
-<h3 id="我喜爱苏轼"><a href="#我喜爱苏轼" class="headerlink" title="我喜爱苏轼"></a>我喜爱苏轼</h3><p>这就是苏轼，我喜爱的苏轼。从早时看林语堂的《苏东坡传》，到近日看完了陆毅主演的《苏东坡》，也算有缘，连点成线，苏轼成了我最喜欢的中国古代文人。</p>
-<p>参考资料：</p>
-<p>Coursera上海交通大学的《唐诗宋词人文解读》课程。（这么课程讲的非常好，喜欢唐诗宋词的小伙伴一定要去看看）</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在唐宋诗人当中，可爱的人有很多，如李白，天真浪漫，率性可爱。可敬的人也很多，如杜甫，深沉悲悯，忠义可敬。可是又可爱又可敬的恐怕也只有苏轼一人了。&lt;/p&gt;
-&lt;p&gt;苏轼的才情自不用说，当他考取进士时，主考官欧阳修看了苏东坡的考卷，就大为称叹：此人一出，吾当避人一头地。欧阳修果然
-    
-    </summary>
-    
-      <category term="原创" scheme="http://www.zhangmin.name/blog/categories/%E5%8E%9F%E5%88%9B/"/>
-    
-    
-      <category term="札记" scheme="http://www.zhangmin.name/blog/tags/%E6%9C%AD%E8%AE%B0/"/>
-    
-      <category term="生活" scheme="http://www.zhangmin.name/blog/tags/%E7%94%9F%E6%B4%BB/"/>
     
   </entry>
   

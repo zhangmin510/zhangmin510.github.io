@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>Openstack了解 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  December 31, 2016
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/练笔/'>练笔</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">Openstack了解</h1>
+  <section class="post-content article-entry">
+    <h1 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h1><p>云计算通常包含一个服务责任协议（Service Level Agreement），表示云计算服务商承诺给用户的性能、规格和可用率等。使用共享的计算、网路和存储提供服务，并按照用量计费。</p>
+<p>云计算服务的特点：</p>
+<ol>
+<li>按需自助服务。</li>
+<li>网络访问。访问异构设备的能力。</li>
+<li>资源池。</li>
+<li>弹性。垂直或者横向扩展。</li>
+<li>按照用量计费。</li>
+</ol>
+<h1 id="Openstack开发原则"><a href="#Openstack开发原则" class="headerlink" title="Openstack开发原则"></a>Openstack开发原则</h1><p>Open（开源，开放）+Stack（多个模块组成）。<br>最初是NASA和Rackspace合作开发的项目，在2010年以Apache 2.0许可证开源。</p>
+<p>Openstack是一个分散式结构的开源框架，是一个通用开源的云计算平台。</p>
+<p>Openstack的优势：解除厂商绑定；可扩展，可定制IaaS；良好的社区氛围。<br>Openstack的劣势：学习曲线高；偏底层，需要大量的二次开发。</p>
+<p>可扩展和可伸缩性是Openstack的主要目标。任何影响这两点的都是可选的。<br>一起都是异步的，分布式的，接收最终一致性。<br>测试一切。</p>
+<p>Openstack是基于Python写的。</p>
+<p>Openstack组件特点：</p>
+<ol>
+<li>分布式。可以分开部署在多个服务器上，通过网络互连。</li>
+<li>无状态。请求之间独立。</li>
+<li>RESTful。API接口都是REST风格的。</li>
+<li>RPC。开发网路分布式程序更容易。</li>
+<li>Plugin。插件式设计。框架和扩展功能分离。</li>
+</ol>
+<h1 id="Openstack-API介绍"><a href="#Openstack-API介绍" class="headerlink" title="Openstack API介绍"></a>Openstack API介绍</h1><p>整个API框架结构是以WSGI标准为入口，加上routes，webob和paste等python组件构成的。<br>Web服务器网关接口（Web Server Gateway Interface:WSGI）是Python应用和web服务器之间的一种接口协议。<br>在WSGI中有application，server和client三个角色。client发送请求给server，server转发请求给application。application处理完请求后，讲响应发送给server，server再将响应转发给client。server是一个转发的作用。</p>
+<p>webob是python上的WSGI容器。类似于Java web中的tomcat。paste是一个方便WSGI服务配置和部署的组件，通过一个loadapp函数和配置文件或者egg包。routes是一个简单的url路由组件，完成url到action的映射。</p>
+<p>分页查询。作用一是方便查看，而是限定查询返回数目。marker表示从那条记录开始返回，limit为每次返回的记录数，end_marker为标记到那条记录结束。还可以使用changes_since限制指定时间改变后的对象。</p>
+<p>Nova对API请求有一定的限制。获取限制详情GET /v2/{tenant_id}/limits。</p>
+<p>Eventlet。 协程是一条执行序列，拥有自己独立的栈，局部变量，指令指针，同时又与其他协程共享全局变量和大部分应用数据。线程可以多个并行执行，而多个协程同时只能运行一个。</p>
+<p>协程特点：</p>
+<ol>
+<li>每个协程有自己私有栈和局部变量。</li>
+<li>同一时间只有一个协程在执行，无需全局加锁。</li>
+<li>执行顺序可控，完全有程序控制执行。</li>
+</ol>
+<p>Eventlet是一个用于处理和网络相关的Python库。依赖于greenlet和select.epoll。greenlet是eventlet并发的基础，<br>select库的epoll则是网络通信模型。eventlet通过协程并发。把协程封装成greenthread。所谓并发，即启动多个greenthread，并对这些greenthread进行管理，以实现非阻塞式IO。<br>Python库不支持协程，通过对Python网络几个库进行改写，以补丁的方式导入程序中。</p>
+<p>协程就是运行在一个线程内的伪并发方式，最终只有一个协程在运行，有应用程序来控制执行的顺序。</p>
+<h1 id="Openstack模块介绍"><a href="#Openstack模块介绍" class="headerlink" title="Openstack模块介绍"></a>Openstack模块介绍</h1><p>Openstack包括计算（computing）、网络（networking）和存储（storing）三个基础元素。</p>
+<p>计算模块负责管理不同类型的虚拟资源，允许用户通过API来使用。<br>网络模块提供可插拨，可扩展的网络系统。<br>存储模块提供对象和块存储功能。</p>
+<h2 id="Nova（Compute-as-a-service）"><a href="#Nova（Compute-as-a-service）" class="headerlink" title="Nova（Compute as a service）"></a>Nova（Compute as a service）</h2><p>Nova的设计遵循基于组件架构，高可用，容错，可恢复性，开放标准，API兼容等原则。Nova是无共享，基于消息的架构，所有组件可以分布式运行。为了避免消息队列等待的阻塞情况，每个组件都是异步响应的，只有收到消息才触发回调。</p>
+<p>Nova支持多种后端Hypervisor创建虚拟机，如KVM，Xen，LXC，VMware等。Nova使用libvirt来管理多种Hypervisor。</p>
+<p>Nova创建的虚拟机有多种状态，分别是vm_state（nova-api调用，与用户操作期望相匹配，自上而下的实现），task_state（API调用最终实现的过渡态）, power_state（hypervisor中的虚拟机状态，自下而上的实现）。</p>
+<p>Nova是由多个组件构成的分布式应用程序。组件工作者守护进程（Worker daemon）执行复杂任务。</p>
+<p>nova-api。有Web服务网关接口（Web Server Gateway Interface:WSGI），负责接收和解释API调用。部署在控制节点。<br>nova-scheduler。从队列中取出一个虚拟机创建请求，并决定在那一台物理机上进行创建。涉及资源的调度。<br>用户可以自定义调度算法。部署在控制节点。<br>nova-compute。用于创建和终止虚拟机实例。部署在具体部署虚拟机的物理节点上，称为计算节点。<br>nova-conduct。新版本用于代理nova-compute节点对数据库的读写操作。nova-compute将数据库读写请求发送到消协队列中。nova-conduct从消协队列中去消息进行操作。</p>
+<h2 id="Neutron（Networking-as-a-service）"><a href="#Neutron（Networking-as-a-service）" class="headerlink" title="Neutron（Networking as a service）"></a>Neutron（Networking as a service）</h2><p>Neutron接收来自虚拟机的指令来定义虚拟机所需的网络，然后发送指令给交换机和路由器来创建这些网络。Neutron通过plug-in的方式扩展。核心功能是提供虚拟机与外界网络的连接。</p>
+<ol>
+<li>neutron-server。接收API请求，储存数据，然后将请求路由到各个agent组件，执行具体操作。</li>
+<li>neutron-plugin-xxx。底层网路虚拟化技术的插件。必须和neutron-server安装在一个节点上。</li>
+<li>neutron-plugin-xxx-agent。plugin的agent。agent负责在虚拟网络上的数据包进行处理。通过消息队列与plugin和neutron-server交互。收到指令后在相应的节点上执行底层网络命令。agent必须安装在那些需要处理虚拟机网络数据包的节点上，如虚拟机的计算节点，在安装了neutron-dhcp-agent和neutron-l3<br>-agent， neutron-lbaas-agent服务的节点上，因为它们乣处理流入或者流出虚拟机的网络数据。</li>
+</ol>
+<p>neutron-dhcp-agent是给虚拟机提供dhcp功能的一个服务。在一个环境中可以有多个，因为为特定的网络指定dhcp-agent。<br>neutron-l3-agent是提供虚拟机访问外部网络的功能，结合floating ip可以使外部网络访问平台上的虚拟机。在原理上是利用linux的ip栈和iptables来实现三层路由的转发和NAT功能。</p>
+<p>另外还有提供元数据注入，负载均衡和防火墙功能的agent。</p>
+<p>Neutron中的核心概念：</p>
+<ol>
+<li>network。一个网络。</li>
+<li>subnet。一个子网就像在交换机使用vlan划分出来的一样。</li>
+<li>router。在不同子网或者网络之间转发数据。</li>
+<li>port。交换机上用来插入网线的口。</li>
+</ol>
+<p>虚拟出来的这些设备可以实现物理设备同样的功能。</p>
+<p>Neutron还可以设置一个以上的外部网络，外部网络和上面的网络不同，不是软件定义的网络。这个网络所分配的IP地址，都是可以从外部访问。</p>
+<p>如果一个Internet用户要访问Openstack云平台一个SDN虚拟网络IP，则需要创建一个router，把这两个网络连起来，转发数据。同时，neutron也会把外部IP地址绑定到这个虚拟网络连接的端口上。</p>
+<p>neutron也支持防火墙和安全组的功能。安全组可以定义开发端口的范围，从进入和外出两个方向进行控制。</p>
+<p>三种网络管理器：</p>
+<ol>
+<li>flat。基础网络，每个应用实例分配一个固定的ip地址，并连接到一个共同的网桥。该种模式最大缺陷是不能进行网络隔离。</li>
+<li>flatdhcp。使用dhcp来分配ip。其他同flat。</li>
+<li>vlan。支持大部分物理vlan特性。虚拟子网和独立网桥。有隔离作用但是缺少QoS，ACL，监控等功能。而且需要物理的vlan交换机参与，不能实现跨机房二层通信。</li>
+</ol>
+<p>Open vSwitch（OVS）是一个开源的虚拟交换机软件，可以在系统的管理程序中运行，还可以控制物理机的交换设备。OVS的plugin在neutron-server运行时被载入，负责处理API请求和后端数据库中保存网络逻辑数据。OVS的agent在每个计算节点和网络节点运行，负责从配置文件和数据库收集数据，并与本地的OVS实例通信，并把执行的网络流程操作发送给实例。</p>
+<p>OVS可以在内和空间，也可以在用户空间。OVS与物理交换机类似，会根据端口上的配置，给流经的数据打上合适的标签并转发。<br>除了一开始需要手动建立几个网桥，其他大多数是neutron和OVS通信都是通过plugin来完成的。</p>
+<p>Neutron创建的网络可以分为：</p>
+<ol>
+<li>provider网络。由管理员创建，直接映射到所在数据中心的物理网络。可以给虚拟机使用，也能给router使用。provider网络可以被设置为flat（扁平网络，没有任何tagged），vlan（符合802.1Q tagged的网络），GRE（tunnel技术进行数据传送）。</li>
+<li>tenant网络。租户tenant创建的网络，不同租户之间是相互独立和隔离的。</li>
+</ol>
+<h2 id="Cinder（Block-Storage-as-a-service"><a href="#Cinder（Block-Storage-as-a-service" class="headerlink" title="Cinder（Block Storage as a service)"></a>Cinder（Block Storage as a service)</h2><p>架构和实现与nova类似。</p>
+<p>cinder-api。接收和分发API。<br>cinder-volume。多个后端存储支持。<br>cinder-scheduler。决定在那个存储节点创建cinder-volume实例。</p>
+<h2 id="Swift（Object-Storage-as-a-service）"><a href="#Swift（Object-Storage-as-a-service）" class="headerlink" title="Swift（Object Storage as a service）"></a>Swift（Object Storage as a service）</h2><p>Swift是一种高可用、分布式的一致性对象存储软件，提供云方式的存储和管理。</p>
+<p>提供文件的对象存储及服务。才用对象级别的复制，以保障数据。ext4和xfs作为文件系统存储对象。</p>
+<p>swift-proxy。<br>swift-account。<br>swift-container。<br>swift-object。</p>
+<h2 id="Glance（Image-as-a-service）"><a href="#Glance（Image-as-a-service）" class="headerlink" title="Glance（Image as a service）"></a>Glance（Image as a service）</h2><p>Glance模块为存储和查询镜像服务，用于发现，注册和检索云平台中的虚拟磁盘镜像。</p>
+<p>Glance包括glance-api和glance-registry。</p>
+<p>Openstack支持不同的虚拟化技术，每种虚拟化技术使用不同格式的虚拟机镜像文件格式。常见的格式有RAW（裸格式），qcow2（可以动态变化）等。</p>
+<p>Glance可以配置不同的镜像后端存储，如本地，CEPH。</p>
+<h2 id="Keystone（Identity-as-a-service）"><a href="#Keystone（Identity-as-a-service）" class="headerlink" title="Keystone（Identity as a service）"></a>Keystone（Identity as a service）</h2><p>Keystone提供两个关键功能：</p>
+<ol>
+<li>用户管理。控制管理追踪用户访问权限。</li>
+<li>服务目录管理。提供哪些服务目录可以访问。</li>
+</ol>
+<p>Keystone核心概念：</p>
+<ol>
+<li>用户（user）。谁来使用openstack。用户从Keystone获取token来访问openstack服务。用户可以分配给某个租户，访问租户下的资源。</li>
+<li>证书（credentials）。只被所有者知道的数据。数据所有者可以通过证书证明自己。如匹配的用户名和密码，匹配的用户名和API访问秘钥，通信令牌（token）。</li>
+<li>认证（authentication）。使用用户的证书确认用户的真实身份。首次通过用户名和密码，之后可以通过使用token实现。</li>
+<li>令牌（token）。任意比特位的文本，每个令牌都有一个访问范围，时间限制，持续时间，可被撤销。</li>
+<li>租户（tenant）。用于分组和分离资源。租户可以映射到一个团体，组织或者项目。</li>
+<li>服务（service）。一个服务提供一个或者多个访问点，通过访问点访问资源和执行操作。</li>
+<li>访问点（endpoint）。可以网络访问的url。</li>
+<li>角色（role）。每个角色有一组权力和特权。可以被继承。</li>
+</ol>
+<p>访问任何服务都要通过Keystone来进行认证。</p>
+<h2 id="Horizon（Dashboard-as-a-service）"><a href="#Horizon（Dashboard-as-a-service）" class="headerlink" title="Horizon（Dashboard as a service）"></a>Horizon（Dashboard as a service）</h2><p>提供用户界面操作Openstack计算，网络，存储资源。</p>
+<h2 id="其他项目"><a href="#其他项目" class="headerlink" title="其他项目"></a>其他项目</h2><p>Openstack孵化的项目有：Ceilometer 计费和监控服务，Heat编排服务，Ironic物理设备服务，Marconi消息队列服务。<br>Savannna大数据处理服务，Trove数据库服务。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2016/12/01/http2/">
+        <!--http2--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-Openstack了解" data-title="Openstack了解" data-url="http://www.zhangmin.name/blog/blog/2016/12/31/Openstack了解/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2016 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>
