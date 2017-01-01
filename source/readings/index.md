@@ -7,19 +7,19 @@ date: 2013-09-08 11:21:36
 
 # 2013年
 
-*   《系统之美》德内拉·梅多斯  
-*   《大数据时代》Viktor Mayer-Schonberger/Kenneth Cukier  
-*   《黑客与画家》Paul Graham  
-*   《无器械健身：用自身体重锻炼》马克·劳伦  
-*   《撒旦篇章：二战德军窃听实录》海拉得·威尔泽/斯恩克·耐茨尔  
-*   《猫力乱步》猫力  
-*   《爆发》艾伯特·拉斯洛·巴拉巴西   
-*   《Modular Java》Craig Walls   
-*   《且听风吟》村上春树  
-*   《predictably irrational：The Hidden Forces That Shape Our Decisions》Dan Ariely  
-*   《罗辑思维》 罗振宇  
-*   《遇见未知的自己》张德芬  
-*   《信息简史》詹姆斯·格雷克  
+*   《系统之美》德内拉·梅多斯
+*   《大数据时代》Viktor Mayer-Schonberger/Kenneth Cukier
+*   《黑客与画家》Paul Graham
+*   《无器械健身：用自身体重锻炼》马克·劳伦
+*   《撒旦篇章：二战德军窃听实录》海拉得·威尔泽/斯恩克·耐茨尔
+*   《猫力乱步》猫力
+*   《爆发》艾伯特·拉斯洛·巴拉巴西
+*   《Modular Java》Craig Walls
+*   《且听风吟》村上春树
+*   《predictably irrational：The Hidden Forces That Shape Our Decisions》Dan Ariely
+*   《罗辑思维》 罗振宇
+*   《遇见未知的自己》张德芬
+*   《信息简史》詹姆斯·格雷克
 
 # 2014年
 
@@ -43,7 +43,7 @@ date: 2013-09-08 11:21:36
 *   《特斯拉自传》尼古拉·特斯拉
 *   《杉杉来吃》顾漫
 *	《极简欧洲史》【澳】约翰·赫斯特
-*   《互联网金融》李耀东 李钧 
+*   《互联网金融》李耀东 李钧
 *   《看懂财经新闻的第一本书》 陈思进 金蓓蕾
 
 # 2015年
@@ -69,4 +69,16 @@ date: 2013-09-08 11:21:36
 
 # 2016
 * 《时间的朋友2015》 罗振宇
+* 《道可道——<老子>的要义与诘难》 熊逸
+* 《贫穷的本质》（解读版）
+* 《OpenStack实战指南》黄凯，毛伟杰，顾俊杰
+* 《http2讲解》ye11ow
+* 《精通比特币》 Andreas M Antonopoulos
+* 《新生——七年就是一辈子》 李笑来
+* 《北京折叠》郝景芳
+* 《分布式系统原理介绍》 刘杰
+* 《通往财富自由之路》 李笑来
+
+# 2017
+
 
