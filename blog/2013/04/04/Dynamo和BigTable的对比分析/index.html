@@ -55,6 +55,9 @@
 
   <h1 class="post-title">Dynamo和BigTable的对比分析</h1>
   <section class="post-content article-entry">
+    
+  </section>
+  <section class="post-content article-entry">
     <p>本文将从实现这些系统的关键技术，如数据划分、数据一致性与可用性、负载均衡、容错控制，来对比分析Google的BigTable和Amazon的Dynamo。</p>
 <p><strong>数据划分</strong></p>
 <p>Dynamo采用一致性哈希的方式对数据进行划分。这种数据划分方式在数据存入时就将数据均匀地映射到系统的存储单元中，从而最大限度地避免系统单点存储的数据量过大的问题。同时，一致性哈希算法也为系统带来了良好的扩展性。</p>

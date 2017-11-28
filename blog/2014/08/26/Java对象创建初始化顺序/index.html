@@ -64,6 +64,9 @@
 
   <h1 class="post-title">Java对象创建初始化顺序</h1>
   <section class="post-content article-entry">
+    
+  </section>
+  <section class="post-content article-entry">
     <p>Java对象初始化关乎程序的安全运行，所以理解Java的初始化过程非常必要。Java中对象的初始化和创建是捆绑在一起的，两者不能分离。Java尽力保证所有变量在使用前都能够得到恰当的初始化。与C++一样，Java也通过构造器确保初始化。构造器是一种特殊类型的方法，它没有返回值。这与返回值为空的方法是不同的，虽然是空的返回值，但它仍然可以返回其他内容。构造器不返回任何东西。即使是用new表达式创建对象，也是new表达式返回新对象的引用，构造器没有返回任何东西。</p>
 <p>本文将从一个实例分析Java中对象创建的初始化顺序。</p>
 <p>假设有一个Horse的类，其对象的创建过程一般如下：</p>

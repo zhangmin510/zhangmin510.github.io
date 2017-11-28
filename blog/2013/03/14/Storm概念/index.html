@@ -62,6 +62,9 @@
 
   <h1 class="post-title">Storm概念</h1>
   <section class="post-content article-entry">
+    
+  </section>
+  <section class="post-content article-entry">
     <p><strong>流</strong></p>
 <p>流(stream)是storm的核心抽象。流是无限的元组序列以分布式的方式进行处理。流由模式定义，所谓模式就是流中元组的域的名称。默认情况下，元组可以包含integer，long，short，byte，string，double，float，boolean及byte array。当然也可以自定义Serializer来支持自定义类型或数据对象。声明流时会指定一个id，由于单流的spout和bolt非常常见，OutputFieldsDeclarer提供了便捷的方法声明一个指定id的单流。在这种情况下，流的默认id是“default”。</p>
 <p><strong>Spout</strong></p>

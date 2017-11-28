@@ -66,6 +66,9 @@
 
   <h1 class="post-title">Java 泛型一文搞定</h1>
   <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要引入泛型机制"><span class="toc-text">为什么要引入泛型机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型类"><span class="toc-text">泛型类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型方法"><span class="toc-text">泛型方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型参数的边界"><span class="toc-text">类型参数的边界</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型代码与虚拟机"><span class="toc-text">泛型代码与虚拟机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型擦除引起的问题"><span class="toc-text">类型擦除引起的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java泛型的限制和局限（多数是由于类型擦除）"><span class="toc-text">java泛型的限制和局限（多数是由于类型擦除）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型通配符"><span class="toc-text">类型通配符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#协变与泛型"><span class="toc-text">协变与泛型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型类型参数T-和Object之间的区别"><span class="toc-text">泛型类型参数T,?和Object之间的区别</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
     <h3 id="为什么要引入泛型机制"><a href="#为什么要引入泛型机制" class="headerlink" title="为什么要引入泛型机制"></a>为什么要引入泛型机制</h3><p>你可以使用泛型机制写出更安全、更简单易读的代码，而不是使用Object变量和强制转换。<br>泛型编程意味着你可以写出对不同类型都可以重用的代码。</p>
 <p>先看在Java SE 5.0之前，java的泛型编程是通过继承实现的。如一个ArrayList的实现：<br>[java]<br>public class ArrayList{<br>    public Object get(int i){…}<br>    public void add(Object o){…}<br>    …<br>    private Object[] elementData;<br>[/java]</p>
 <p>这种方法有两个问题：</p>

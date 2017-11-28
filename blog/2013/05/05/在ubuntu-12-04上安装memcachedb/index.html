@@ -64,6 +64,9 @@
 
   <h1 class="post-title">在ubuntu 12.04上安装memcachedb</h1>
   <section class="post-content article-entry">
+    
+  </section>
+  <section class="post-content article-entry">
     <p>在Ubuntu上安装memcachedb非常简单:<br>[java]<br>sudo apt-get install memcachedb<br>[/java]<br><strong>测试memcachedb</strong><br>[java]<br>telnet 127.0.0.1 21201<br>Trying 127.0.0.1…<br>Connected to 127.0.0.1.<br>Escape character is ’^]’.<br>set test 0 0 4<br>1234<br>STORED<br>get test<br>VALUE test 0 4<br>1234<br>END<br>[/java]<br><strong>php测试</strong><br>[java]<br>&lt;?php<br>$mem = new Memcache;<br>$mem-&gt;connect(&quot;127.0.0.1&quot;, 21201);<br>$mem-&gt;set(‘key1’, ‘This is a memcachedb test!’, 0, 60);<br>$val = $mem-&gt;get(‘key1’);<br>echo $val;<br>echo $mem-&gt;get(‘test’);<br>?&gt;<br>[/java]<br>以上测试输出结果为：</p>
 <p>This is a memcachedb test!</p>
 <p>1234</p>

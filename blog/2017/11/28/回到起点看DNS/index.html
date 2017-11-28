@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>回到起点看DNS | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  November 28, 2017
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/DNS/'>DNS</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">回到起点看DNS</h1>
+  <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#互联网发展历史进程中的DNS"><span class="toc-text">互联网发展历史进程中的DNS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HOSTS-TXT文件"><span class="toc-text">HOSTS.TXT文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#假装由我们来设计DNS系统"><span class="toc-text">假装由我们来设计DNS系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS系统的设计目标"><span class="toc-text">DNS系统的设计目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS使用场景的假设"><span class="toc-text">DNS使用场景的假设</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS系统的组成元素"><span class="toc-text">DNS系统的组成元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三种视角下的DNS系统"><span class="toc-text">三种视角下的DNS系统</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
+    <blockquote>
+<p>The White Rabbit put on his spectacles. “Where shall I begin, please your Majesty?” he asked.<br>“Begin at the beginning,” the King said, very gravely, “and go on till you come to the end: then stop.”<br>— Lewis Carroll, Alice’s Adventures in Wonderland</p>
+</blockquote>
+<p>DNS(Domain Name System)作为互联网的一种基础设施，提供域名查询服务。我们每天上网冲浪，使用手机App，都无时无刻不在使用DNS服务。</p>
+<h1 id="互联网发展历史进程中的DNS"><a href="#互联网发展历史进程中的DNS" class="headerlink" title="互联网发展历史进程中的DNS"></a>互联网发展历史进程中的DNS</h1><p>为了理解DNS系统的诞生，需要对ARPAnet的历史有了解，因为DNS就是为了解决ARPAnet的特定问题而开发的。</p>
+<p>20世纪60年代，美国国防部高级研究所(Department of Defense’s Advanced Research Projects Agency, ARPA (later DARPA)资助了一种广域网，连接了不同的研究机构，叫ARAPnet。最初的目的是为了共享昂贵和稀有的计算机资源。但最初ARAPnet就是用于网络协作的，包括共享文件，软件和电子邮件。</p>
+<p>20世纪70年代，ARPAnet规模较小，由几百台主机组成，一个单独的文件<code>HOSTS.TXT</code>就包括了所有连接到ARPAnet的主机名和地址的对应关系。UNIX的主机表中的<code>/etc/hosts</code>就是编译自<code>HOSTS.TXT</code>文件，删掉UNIX不需要的字段。</p>
+<p>20世纪80年代TCP/IP协议开发完成，成为ARAPnet上的标准通信协议。网络的快速发展使得网络上的主机从几十个迅速发展到成千上万个。最初的ARPAnet也成为了主干网，基于TCP/IP连接不同的区域网络，叫互联网（Internet）。在1988年DARPA决定实验停止，ARPAnet停止运行，另外一个网络，由国家科学基金赞助的NSFNET替代ARPAnet成为互联网的主干网。</p>
+<p>1995年春天，互联网从使用NSFNET作为主干网过渡到使用多个商业的主干网，提供长距离通信的MCI和Sprint,以及长期商业互连的PSINet和UUNET。如今的互联网是指通过TCP/IP协议互连的网络，包括商业的主干网，区域主干网，企业和政府主干网，以及其他国家的主干网。</p>
+<h2 id="HOSTS-TXT文件"><a href="#HOSTS-TXT文件" class="headerlink" title="HOSTS.TXT文件"></a>HOSTS.TXT文件</h2><p>HOSTS.TXT由SRI(Standard Research Institute)的NIC(Network Information Center)维护，通过一台主机SRI-NIC来分发。ARPAnet的管理员将变化信息邮件给NIC，并定期同<code>HOSTS.TXT</code>。变化的信息会以一每周一到两次的频率编译到新的<code>HOSTS.TXT</code>中。然而随着网络的快速扩大，这种方式已经无法满足需求，因为<code>HOSTS.TXT</code>文件随着ARPAnet的主机数量增长而增长。另外，更新的流量也在不断的增加，因为一个新的主机不仅是<code>HOSTS.TXT</code>文件中的一行记录，也是一个新的拉取最新<code>HOSTS.TXT</code>数据的主机。随着ARPAnet使用TCP/IP协议，网络容量爆炸性增长。</p>
+<p>与此同时，网络也发生了变化，由原来的分时系统组成的ARPANet变成了由工作站组成的本地网络。本地的管理员管理本地的主机名到地址的映射。但是需要等待NIC修改<code>HOSTS.TXT</code>文件来使起在更大的范围可见。各个组织也想在整个命名空间中有自己的本地子命名空间。互联网上的应用变得越来越复杂，需要一个通用的名称服务。</p>
+<blockquote>
+<p>有兴趣的读者可以在网站点击这里 <a href="https://emaillab.jp/dns/hosts/" target="_blank" rel="noopener">https://emaillab.jp/dns/hosts/</a> 查看不同时期的<code>HOSTS.TXT</code>文件格式。</p>
+</blockquote>
+<p>随着网络规模和结构的变化，使用<code>HOSTS.TXT</code>文件管理主机到地址的映射逐渐显现出以下几个问题：</p>
+<ol>
+<li>高流量和负载。网络流量和主机的处理器无法处理这么多的主机更新<code>HOSTS.TXT</code>请求。</li>
+<li>主机名冲突。虽然NIC可以唯一分配地址，但是没有机构可以权威分配主机名。导致主机名冲突。</li>
+<li>一致性。在一个不断扩张的网络中维护<code>HOSTS.TXT</code>文件的一致性变的越来越难。当新的<code>HOSTS.TXT</code>到达最远主机，整个网络的主机已经改变地址了，或者新的主机被加进去了。</li>
+</ol>
+<p>最基本的问题是<code>HOSTS.TXT</code>文件这种方式无法扩展。<strong>ARPAnet的成功导致了<code>HOSTS.TXT</code>文件的失败和弃用。</strong></p>
+<p>为了解决<code>HOSTS.TXT</code>存在的问题，就需要设计和开发<code>HOSTS.TXT</code>的后继系统。这个系统需要允许本地的数据管理，同时全球可达。分布式的管理将移除单台主机的性能瓶颈，并解决网络流量问题和扩展性问题。本地管理使得保持数据更新比较容易。另外，需要使用层次化的命名空间来解决唯一性。</p>
+<p>Paul Mockapetris负责设计新系统。1984年发布了RFC-882和RFC-883，描述了域名系统。这两个RFC被RFC -1034和RFC-1035更新，即当前的域名系统标准。这两个RFC也被扩展和增加内容，包括安全性，实现问题，管理方法，动态更新以及保护域名安全等。</p>
+<h1 id="假装由我们来设计DNS系统"><a href="#假装由我们来设计DNS系统" class="headerlink" title="假装由我们来设计DNS系统"></a>假装由我们来设计DNS系统</h1><p>上文中我们了解了<code>HOSTS.TXT</code>文件作为管理主机名到地址的映射方法存在问题，我们也知道了将要设计的DNS系统是一个分布式的系统，允许本地管理数据，也知道了使用层次化的命名空间来解决主机名的唯一性问题。为了更好地设计DNS系统，我们需要进一步明确DNS系统的设计目标、使用场景及系统组成元素。</p>
+<h2 id="DNS系统的设计目标"><a href="#DNS系统的设计目标" class="headerlink" title="DNS系统的设计目标"></a>DNS系统的设计目标</h2><p>设计目标会影响DNS系统的结构：</p>
+<ol>
+<li>最重要的目标是要提供一致的命名空间，每个命名空间中的节点可以指向各种类型的资源。为了避免专门的的编码，域名空间中不应该要求包含网络标识符，地址，路由或者其他相似的信息。</li>
+<li>考虑到域名的数量，访问量以及更新的频率，域名数据库必须是分布式的，通过本地缓存来提高性能。如果想要获取整个域名数据库的信息，代价会异常的高和困难，应该避免。对于命名空间结构也是如此，创建和删除域名也是分布式的。</li>
+<li>由于是分布式的系统，就需要在在获取数据(可用性)和更新之间(一致性)有权衡，缓存会影响准确性，域名数据源应该控制这种权衡。</li>
+<li>由于实现这个系统的代价，要求不能限定于某一个程序，可以通过域名来获取主机地址，邮箱信息以及其他的信息。每个信息和一个域名关联，这种关联关系应该有类型可以区分，查询可以指定一中信息类型。</li>
+<li>由于我们想让整个命名空间在不同的、异构的网络和应用上使用，需要支持在不同的网络协议上使用。比如不同的网络协议使用不同的地址，每个域名中的数据都有一个网络协议类型，这样就可以允许有其他不同的格式和地址类型的数据。</li>
+<li>域名系统应该和承载它的底层的通信系统独立，有些系统可能使用UDP协议，只有需要高可靠的才使用TCP协议，如数据库更新，长的事务。</li>
+<li>域名系统应该可以在一个非常大的广度的主机上使用，无论是个人电脑，还是大型分时系统。</li>
+</ol>
+<h2 id="DNS使用场景的假设"><a href="#DNS使用场景的假设" class="headerlink" title="DNS使用场景的假设"></a>DNS使用场景的假设</h2><p>DNS域名的组织是通过社区的使用方式和需求来决定的。这些假设有：</p>
+<ol>
+<li>整个域名数据库的大小最初是和使用域名系统的主机数量成比例，但最终是和这些主机上的用户成比例的。如邮箱服务以及其他服务。</li>
+<li>在系统中的大部分数据的更新是缓慢的，频次低的，但也应该可以处理频繁更新的需求，如几秒或者几分钟。</li>
+<li>系统的管理边界应该和拥有一个或者多个主机的组织相关。每个组织可以管理自己的域名集合，可以提供额外的域名服务器。</li>
+<li>客户端可以识别可信的域名服务器并优先使用它们</li>
+<li>域名数据的可用性比一致性保证更重要。因此更新过程可以先更新到一部分副本，而不是保证所有的副本都同时更新。如果由于网络分区导致更新失败，这时应该相信老的数据，并继续尝试更新。通用的模型是分布式的副本会有超时时间，超时后会进行刷新。域名数据的发布者设置超时时间，接收者负责刷新。</li>
+<li>在整个域名系统中，一个特定的域名服务器可能只能回答一部分的请求，所以需要可以从其他的域名服务器来获取查询结果。两种通用的方法解决这个问题：<ul>
+<li>递归查询。接收到客户端到查询请求的域名服务器服务器代替客户端完成查询</li>
+<li>迭代查询。接收到客户端查询请求的域名服务器告诉客户端去哪里进行查询，需要客户端自己去进行新的查询。</li>
+<li>上述两种方法各有优缺点，但是在UDP协议下（请求-响应模式）更希望使用迭代查询。域名系统需要实现迭代查询，但是递归查询作为一个候选项。</li>
+</ul>
+</li>
+</ol>
+<p>域名系统假设所有的域名数据都是存储在master文件中，然后通过使用域名系统的主机进行分发。本地管理员更新master文件。master文件是文本文件，本地域名服务器读取该文件，这样这个域名服务器对域名系统的使用者就可见了。用户程序可以通过标准的解析器程序来访问域名服务器。</p>
+<p>对于域名服务器，需要设置本地master文件或者从哪些外部的域名服务器加载master文件，并设置权威域信息（zone）。对于解析器，则需要设置需要使用的域名服务器的地址。一般设置两个，一主一备。</p>
+<p>域名系统管理员需要提供：</p>
+<ol>
+<li>管理的域名系统的域名边界的定义</li>
+<li>master文件</li>
+<li>master文件的更新</li>
+<li>期望的数据刷新时间和缓存时间</li>
+</ol>
+<p>域名系统提供：</p>
+<ol>
+<li>标准的数据格式和资源数据</li>
+<li>标准的查询域名数据库的方法</li>
+<li>标准的从其他域名服务器获取数据，刷新本地数据的方法</li>
+</ol>
+<h2 id="DNS系统的组成元素"><a href="#DNS系统的组成元素" class="headerlink" title="DNS系统的组成元素"></a>DNS系统的组成元素</h2><p>明确了域名系统的设计目标和使用场景，我们就可以设计域名系统的组成结构。域名系统由以下三个部分组成：</p>
+<ol>
+<li>域名空间和资源记录(namespace and resource record)。它是一个树结构的，层次化的命名空间规范和域名相关联的数据格式。概念上来说，域名命名空间树上每一个节点和叶子节点命名了一组信息。而查询操作就是从这个信息集合获取特定类型的信息。一个查询请求指定需要查询的域名以及需要的资源信息类型。如在互联网上查询域对应的主机地址。</li>
+<li>域名服务器(nameserver)。它存储有域名命名空间树结构的信息并且提供数据更新的方法。可以缓存其他域名服务器管理的域名命名空间树的信息。一般的，一个特定的域名服务器拥有整个域名命名空间树的一个子集，同时指向其他域名服务器，用来获取域名空间树其他子集的数据。如果一个域名服务器有域名空间子集的完整的数据，则认为这个域名服务器是拥有的这些域名子集的权威域名服务器。权威域名信息被划分成不同的管理单元叫做区(zone)。区可以分不到不同的域名服务器来提供关于这个区的冗余数据从而实现高可用。</li>
+<li>解析器(resolver)。它从域名服务器获取信息，并回复用户域名查询请求。解析器必须可以至少连接一个域名服务器，并直接使用该域名服务器获取信息，或者通过这个域名服务器来获取其他域名服务器的数据来完成查询。解析器通常是一个系统库程序，可以由用户程序直接访问，一般通过系统调用的方式。</li>
+</ol>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Local Host                        |<span class="string">  Foreign</span></span><br><span class="line"><span class="string">                                                   </span>|</span><br><span class="line">    +---------+               +----------+         |<span class="string">  +--------+</span></span><br><span class="line"><span class="string">    </span>|<span class="string">         </span>|<span class="string"> user queries  </span>|<span class="string">          </span>|<span class="string">queries  </span>|<span class="string">  </span>|<span class="string">        </span>|</span><br><span class="line">    |<span class="string">  User   </span>|<span class="string">--------------&gt;</span>|<span class="string">          </span>|<span class="string">---------</span>|<span class="string">-&gt;</span>|<span class="string">Foreign </span>|</span><br><span class="line">    |<span class="string"> Program </span>|<span class="string">               </span>|<span class="string"> Resolver </span>|<span class="string">         </span>|<span class="string">  </span>|<span class="string">  Name  </span>|</span><br><span class="line">    |<span class="string">         </span>|<span class="string">&lt;--------------</span>|<span class="string">          </span>|<span class="string">&lt;--------</span>|<span class="string">--</span>|<span class="string"> Server </span>|</span><br><span class="line">    |<span class="string">         </span>|<span class="string"> user responses</span>|<span class="string">          </span>|<span class="string">responses</span>|<span class="string">  </span>|<span class="string">        </span>|</span><br><span class="line">    +---------+               +----------+         |<span class="string">  +--------+</span></span><br><span class="line"><span class="string">                                </span>|<span class="string">     A            </span>|</span><br><span class="line">                cache additions |<span class="string">     </span>|<span class="string"> references </span>|</span><br><span class="line">                                V     |<span class="string">            </span>|</span><br><span class="line">                              +----------+         |</span><br><span class="line"><span class="string">                              </span>|<span class="string">  cache   </span>|<span class="string">         </span>|</span><br><span class="line">                              +----------+         |</span><br></pre></td></tr></table></figure>
+<h2 id="三种视角下的DNS系统"><a href="#三种视角下的DNS系统" class="headerlink" title="三种视角下的DNS系统"></a>三种视角下的DNS系统</h2><p>组成域名系统的三个部分分别对应着域名系统三个层次：</p>
+<ol>
+<li>从用户的视角，域名系统有一个本地代理，叫做解析器，可以获取到域名关联的信息。如获取一个域名关联的邮箱信息，用于发送邮件。用户需要向解析器传入查询域名和想要查询的信息类型。对于用户来说域名树就是一个单独的信息空间。解析器需要对用户隐藏域名服务器上存储的分布式的数据。</li>
+<li>从解析器的视角，域名系统的数据分布在不同的域名服务器上。域名空间树中不同部分 的数据存储在不同的域名服务器上。有些服务器存储的是冗余存储，为了高可用。解析器从至少一个域名服务器开始， 第一次查询可能返回结果，也可能返回指向其他域名服务器的信息。使用这些信息解析器学习域名空间的分布并处理错误。</li>
+<li>从域名服务器的视角，域名系统有多个分隔的本地信息叫做区(zone)。域名服务器拥有一个或者多个区的本地的副本数据。域名服务器必须周期性的从master或者其他外部域名服务器获取区(zone)的信息；必须可以正确处理解析器的请求。域名服务器管理各种类型的数据。第一种类型的数据叫做区域数据，每个区域包含一个域名空间完整子树的所有信息，这些数据是权威的；域名服务器需要定期检查区域的数据是否是最新的，并从master本地文件保持更新这些区域数据。 第二种类型的数据是从本地解析器缓存的数据，可能不完整，但是可以优化对非本地域名数据的解析性能。缓存数据会在超时后 被丢弃。</li>
+</ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本文主要从互联网的发展历史出发，分析了<code>HOSTS.TXT</code>文件解决主机名到地址映射问题的不足，然后从DNS系统的设计目标和使用场景角度，讲述了DNS系统的组成以及不同视角下的DNS系统。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li>HOSTS.TXT文件规范：RFC-952, RFC-953</li>
+<li>DNS规范：RFC-1034，RFC-1035</li>
+<li>O’Reilly DNS and BIND</li>
+</ol>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2016/12/31/Openstack了解/">
+        <!--Openstack了解--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-回到起点看DNS" data-title="回到起点看DNS" data-url="http://www.zhangmin.name/blog/2017/11/28/回到起点看DNS/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2017 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

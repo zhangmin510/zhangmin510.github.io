@@ -64,6 +64,9 @@
 
   <h1 class="post-title">Java内存区域及内存溢出处理</h1>
   <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java内存划分"><span class="toc-text">Java内存划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决OutOfMemoryError"><span class="toc-text">解决OutOfMemoryError</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
     <p>本文是学习Java内存管理的学习笔记。更详细的内容参见《深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）》第二章 Java内存区域及内存溢出异常。</p>
 <h2 id="Java内存划分"><a href="#Java内存划分" class="headerlink" title="Java内存划分"></a>Java内存划分</h2><p>Java虚拟机在执行Java程序时会把它所管理的内存划分为若干个不同的数据区域。每个区域都有各自的用途及各自创建和销毁的时间。这些区域可以分为两类：所有线程共享的区域（如方法区和堆）和线程私有的区域（如虚拟机栈，本地方法栈和程序计数器）。<br>​<br>各个区域的用途可以都可以用一句话进行概括：</p>
 <p>先是线程私有的区域，它们和线程的生命周期相同。</p>

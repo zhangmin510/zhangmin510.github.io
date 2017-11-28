@@ -62,6 +62,9 @@
 
   <h1 class="post-title">Storm Topology的生命周期</h1>
   <section class="post-content article-entry">
+    
+  </section>
+  <section class="post-content article-entry">
     <p>本文将详细介绍topology的生命周期，从运行 storm jar命令把topology上传到Nimbus，到Supervisor启动和停止worker，再到worker和task的设置和运行。另外，本文还将介绍Nimbus如何监控topology及topology是如何被杀死的。</p>
 <p>首先，关于topology需要注意一下两点：</p>
 <p>1.实际运行的topology与用户提交的topology是不同的。实际运行的topology中包含隐式的流及一个acker bolt用于实现和管理storm的确认框架（保证消息处理）。隐式的topology是由system_topology!函数实现的。</p>

@@ -62,6 +62,9 @@
 
   <h1 class="post-title">关于Nodejs的core文件</h1>
   <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于Core文件"><span class="toc-text">关于Core文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何产生core文件"><span class="toc-text">如何产生core文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码示例"><span class="toc-text">代码示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用core文件诊断node内存泄漏"><span class="toc-text">使用core文件诊断node内存泄漏</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
     <h2 id="关于Core文件"><a href="#关于Core文件" class="headerlink" title="关于Core文件"></a>关于Core文件</h2><p>当进程崩溃或者终止时会产生core dump文件。该文件包含了进程在终止前得内存信息。core文件可以在gdb中打开，可以检查进程终止时程序<br>的状态。在node.js开发中，core文件可以帮助开发人员调试程序崩溃和内存泄露等问题。</p>
 <h2 id="如何产生core文件"><a href="#如何产生core文件" class="headerlink" title="如何产生core文件"></a>如何产生core文件</h2><p>不同的系统中生成core文件得方法是不同的。Joyent公司（nodejs的运营公司）建议所有的生产系统都应该打开–abort-on-uncaught-exception选项。<br>在Unix系统中，还需要使用ulimit -c unlimited命令设置产生的core文件的大小为任意大小。<br>如果没有抛出异常，在Linux系统中，你可以使用系统工具gcore来产生core文件。</p>
 <p>如果是正常运行Node程序，但程序自己奔溃退出。这是最糟糕的情况，或者是Node，或者是它的依赖，二进制模块有编程错误。如果出现这种情况<br>向Node团队报告问题，或者向模块作者报告问题。</p>

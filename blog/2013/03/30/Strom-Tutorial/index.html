@@ -62,6 +62,9 @@
 
   <h1 class="post-title">Strom Tutorial</h1>
   <section class="post-content article-entry">
+    
+  </section>
+  <section class="post-content article-entry">
     <p>本教程你将学到如何创建storm topology及如何将topology部署到storm集群。Java将是主要使用的语言，但有一些示例使用Python，用以说明storm的多语言特性。<br><strong>预备内容</strong><br>本教程将使用<a href="https://github.com/nathanmarz/storm-starter" title="storm starter" target="_blank" rel="noopener">storm-starter</a>项目，建议克隆该项目并了解该项目的最新情况。阅读<a href="http://www.zhangmin.name/blog/?p=997" title="配置storm环境">如何配置开发环境和创建新的storm项目</a>正确配置你的开发环境。</p>
 <p><strong>Storm集群的组成</strong><br>一个storm集群与hadoop集群在表面上相似，然而在hadoop上运行MapReduce jobs，在storm上运行topology。Jobs和topology是不同的。一个关键的不同之处就是一个MapReduce job最终会结束，而一个topology会不停地处理消息（直到你主动的停止它）。<br>Storm集群中有两种类型的节点：master节点和worker节点。Master节点运行一个叫守护进程叫Nimbus，该进程与hadoop的JobTracker相似.Nimbus 负责在集群分发代码，分配任务到机器，监控任务的执行。</p>
 <p>每一个worker节点运行一个守护进程叫Supervisor,监控Nimbus分配给本机worker的任务，按照需要开始和停止worker进程。每一个worker进程执行topology的一个子集，一个运行的topology包括多个worker进程且分布在多个机器上。</p>

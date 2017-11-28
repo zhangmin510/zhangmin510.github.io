@@ -64,6 +64,9 @@
 
   <h1 class="post-title">一个问题的解决之路</h1>
   <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题定义"><span class="toc-text">问题定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#暴力解法"><span class="toc-text">暴力解法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个较好的解法"><span class="toc-text">一个较好的解法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个更好的解法"><span class="toc-text">一个更好的解法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最好的解法"><span class="toc-text">最好的解法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四种类型的算法运行时间比较表"><span class="toc-text">四种类型的算法运行时间比较表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法设计技术"><span class="toc-text">算法设计技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
     <h3 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h3><p>输入：N个浮点数组成的一个向量<br>输出：求和值最大的连续的子向量<br>约束条件：当所有向量元素都是负数时，定义最大和子向量为零向量。</p>
 <p>问题分析：<br>如果所有的向量元素都是正数，则结果输出就是整个输入向量。<br>如果所有的向量元素都是负数，则结果输出是零向量。<br>如果既有正数又有负数，则需要进行搜索。</p>
 <h3 id="暴力解法"><a href="#暴力解法" class="headerlink" title="暴力解法"></a>暴力解法</h3><p>遍历所有的连续子向量，找出其中和最大的子向量。</p>

@@ -64,6 +64,9 @@
 
   <h1 class="post-title">OSGi Event Admin Service</h1>
   <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#发布订阅模型"><span class="toc-text">发布订阅模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Topic"><span class="toc-text">Topic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Event"><span class="toc-text">Event</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#OSGi框架的事件"><span class="toc-text">OSGi框架的事件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件处理"><span class="toc-text">事件处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件过滤"><span class="toc-text">事件过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Event-Admin的缺点"><span class="toc-text">Event Admin的缺点</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
     <p>Event Admin是OSGi中用于bundles之间通信的手段,是处理事件的一种通用机制。采用的是pub/sub架构。</p>
 <h3 id="发布订阅模型"><a href="#发布订阅模型" class="headerlink" title="发布订阅模型"></a>发布订阅模型</h3><p>发布订阅模型应满足的需求：</p>
 <p>1. 发布者不应该拥有订阅者的信息。<br>2. 新的发布者或者新的订阅者的动态增加或者删除不能影响这个发布订阅系统<br>3. 订阅者不应该阻塞发布者。</p>

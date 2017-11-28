@@ -62,6 +62,9 @@
 
   <h1 class="post-title">nodejs菜鸟需跨过的坎</h1>
   <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#作用域"><span class="toc-text">作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包"><span class="toc-text">闭包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上下文对象this"><span class="toc-text">上下文对象this</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#call和apply"><span class="toc-text">call和apply</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环"><span class="toc-text">循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原型"><span class="toc-text">原型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编程风格"><span class="toc-text">编程风格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
     <h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>javascript的作用域是函数作用域，不是以大括号为起始的块级作用域。在一个函数中定义的变量只在这个函数的内部可见。在函数中引用变量时，会一级一级去搜索变量，直到全局作用域。</p>
 <p>在访问未定义的变量或者未初始化的变量获得的值是undefined。</p>
 <pre><code>var scope = &apos;global&apos;

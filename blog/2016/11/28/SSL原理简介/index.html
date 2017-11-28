@@ -62,6 +62,9 @@
 
   <h1 class="post-title">SSL原理简介</h1>
   <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SSL原理"><span class="toc-text">SSL原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SSL证书"><span class="toc-text">SSL证书</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考链接"><span class="toc-text">参考链接</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
     <h1 id="SSL原理"><a href="#SSL原理" class="headerlink" title="SSL原理"></a>SSL原理</h1><p>SSL (Secure Sockets Layer) 是一个标准的用于在Web服务端和浏览器端建立安全连接的技术。这一连接保证Web服务器和浏览器之间的数据传输都是私密的，不会被黑客窃取。SSL是一个工业标准，广泛用于各大网站保护用户的交易数据。</p>
 <p>如果网站使用SSL，则会在浏览器的地址栏显示锁形标志，如果使用的是EV证书，那么地址栏会是绿色的。</p>
 <p>Transport Layer Security (TLS) 是SSL的升级版协议。和SSL的加密方式类似，用于加密传输的数据和信息。<br>SSL是在TCP层之上，作为一个安全层工作。上层的协议不需要修改，底层的协议也可以按照通常的方式运行。<br>如果SSL证书被正确的使用，一个攻击者只能看到这个连接的IP和端口信息，以及有多少数据发送，但无法知道其他的URL地址，因为这些地址是被加密的。他们可能会中断连接，但是服务端和客户端可以感知到这一破坏。攻击者是无法截获任何信息，即使他们有很强的计算能力。</p>

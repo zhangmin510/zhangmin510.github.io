@@ -55,6 +55,9 @@
 
   <h1 class="post-title">3n+1 poj 1207</h1>
   <section class="post-content article-entry">
+    
+  </section>
+  <section class="post-content article-entry">
     <p>`#include&lt;stdio.h&gt;<br>/*</p>
 <ul>
 <li>3n+1 problem<br><em>*/<br>int calCycleLength(int n){<br>int length = 1;<br>while(1 != n){<br>length ++;<br>if(n % 2 == 0){<br>n = n/2;<br>}<br>else{<br>n = 3</em>n + 1;<br>}<br>}<br>return length;<br>}<br>int main(){<br>int i,j,n,max,tmp,end,begin;<br>while(scanf(“%d %d”,&amp;i,&amp;j) != EOF){<br>max = 0;<br>if(i&lt; j){//i may be less than j<br>begin = i;<br>end = j;<br>}else{<br>begin = j;<br>end = i;<br>}<br>for(n = begin;n &lt;= end;n++){         tmp = calCycleLength(n);         if(tmp &gt; max){<br>max = tmp;<br>}<br>}<br>printf(“%d %d %dn”,i,j,max);//only one space<br>}<br>return 0;<br>}</li>
