@@ -14,6 +14,9 @@
 
   <h1 class="post-title"><%- post.title %></h1>
   <section class="post-content article-entry">
+    <%- toc(page.content, {list_number: false}) %>
+  </section>
+  <section class="post-content article-entry">
     <%- post.content %>
   </section>
   <footer class="post-footer">
