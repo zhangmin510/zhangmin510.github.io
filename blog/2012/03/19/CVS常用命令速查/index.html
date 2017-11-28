@@ -55,7 +55,7 @@
 
   <h1 class="post-title">CVS常用命令速查</h1>
   <section class="post-content article-entry">
-    <p>作者： 车东 chedong@bigfoot.com<br>版权声明：可以任意转载，转载时请务必以超链接形式标明文章原始出处和作者信息及本声明<br><a href="http://www.chedong.com/tech/cvs_card.html" target="_blank" rel="external">http://www.chedong.com/tech/cvs_card.html</a><br>关键词：CVS CVSWeb CVSTrac WinCVS CVSROOT<br>内容提要：<br>CVS环境初始化：CVS环境的搭建 管理员<br>CVS的日常使用：日常开发中最常用的CVS命令， 开发人员 管理员<br>CVS的分支开发：项目按照不同进度和目标并发进行 管理员<br>CVS的用户认证：通过SSH的远程用户认证，安全，简单 管理员<br>CVSWEB：CVS的WEB访问界面大大提高代码版本比较的效率 管理员<br>CVS TAG：将$Header$加入代码注释中，方便开发过程的跟踪 开发人员<br>CVS vs VSS: CVS和Virsual SourceSafe的比较 开发人员 管理员<br>WinCVS: 通过SSH认证的WinCVS认证设置<br>基于CVSTrac的小组开发环境搭建：通过CVSTrac实现web界面的CVS用户管理及集成的BUG跟踪和WIKI交流。<br>一个系统20%的功能往往能够满足80%的需求，CVS也不例外，以下是CVS最常用的功能，可能还不到它全部命令选项的20%，更多的功能在实际应用过程中体会，你想用多少就学多少，不时回头看看经常有意外的收获。</p>
+    <p>作者： 车东 chedong@bigfoot.com<br>版权声明：可以任意转载，转载时请务必以超链接形式标明文章原始出处和作者信息及本声明<br><a href="http://www.chedong.com/tech/cvs_card.html" target="_blank" rel="noopener">http://www.chedong.com/tech/cvs_card.html</a><br>关键词：CVS CVSWeb CVSTrac WinCVS CVSROOT<br>内容提要：<br>CVS环境初始化：CVS环境的搭建 管理员<br>CVS的日常使用：日常开发中最常用的CVS命令， 开发人员 管理员<br>CVS的分支开发：项目按照不同进度和目标并发进行 管理员<br>CVS的用户认证：通过SSH的远程用户认证，安全，简单 管理员<br>CVSWEB：CVS的WEB访问界面大大提高代码版本比较的效率 管理员<br>CVS TAG：将$Header$加入代码注释中，方便开发过程的跟踪 开发人员<br>CVS vs VSS: CVS和Virsual SourceSafe的比较 开发人员 管理员<br>WinCVS: 通过SSH认证的WinCVS认证设置<br>基于CVSTrac的小组开发环境搭建：通过CVSTrac实现web界面的CVS用户管理及集成的BUG跟踪和WIKI交流。<br>一个系统20%的功能往往能够满足80%的需求，CVS也不例外，以下是CVS最常用的功能，可能还不到它全部命令选项的20%，更多的功能在实际应用过程中体会，你想用多少就学多少，不时回头看看经常有意外的收获。</p>
 <h1 id="CVS环境初始化"><a href="#CVS环境初始化" class="headerlink" title="CVS环境初始化"></a>CVS环境初始化</h1><p>环境设置：指定CVS库的路径CVSROOT<br>tcsh<br>setenv CVSROOT /path/to/cvsroot<br>bash<br>CVSROOT=/path/to/cvsroot ; export CVSROOT</p>
 <p>后面还提到远程CVS服务器的设置：<br>CVSROOT=:extUSER@test.server.address#port:/path/to/cvsroot CVS_RSH=ssh; export CVSROOT CVS_RSH</p>
 <p>初始化：CVS版本库的初始化。<br>cvs init</p>
@@ -95,8 +95,8 @@
 <p>解决的方法是做一个脚本指定端口转向（不能使用alias，会出找不到文件错误）：<br>创建一个/usr/bin/ssh_cvs文件：</p>
 <p>#!/usr/bin/sh<br>/path/to/ssh -p 34567 “$@”<br>然后：chmod +x /usr/bin/ssh_cvs<br>并CVS_RSH=ssh_cvs; export CVS_RSH</p>
 <p>注意：port是指相应服务器SSH的端口，不是cvs pserver的端口</p>
-<h1 id="CVSWEB：提高文件浏览效率"><a href="#CVSWEB：提高文件浏览效率" class="headerlink" title="CVSWEB：提高文件浏览效率"></a>CVSWEB：提高文件浏览效率</h1><p>CVSWEB就是CVS的WEB界面，可以大大提高程序员定位修改的效率:<br>使用的样例可以看：<a href="http://www.freebsd.org/cgi/cvsweb.cgi" target="_blank" rel="external">http://www.freebsd.org/cgi/cvsweb.cgi</a></p>
-<p>CVSWEB的下载：CVSWEB从最初的版本已经演化出很多功能界面更丰富的版本，这个是我个人感觉安装设置比较方便的：<br><a href="http://www.spaghetti-code.de/software/linux/cvsweb/" target="_blank" rel="external">http://www.spaghetti-code.de/software/linux/cvsweb/</a></p>
+<h1 id="CVSWEB：提高文件浏览效率"><a href="#CVSWEB：提高文件浏览效率" class="headerlink" title="CVSWEB：提高文件浏览效率"></a>CVSWEB：提高文件浏览效率</h1><p>CVSWEB就是CVS的WEB界面，可以大大提高程序员定位修改的效率:<br>使用的样例可以看：<a href="http://www.freebsd.org/cgi/cvsweb.cgi" target="_blank" rel="noopener">http://www.freebsd.org/cgi/cvsweb.cgi</a></p>
+<p>CVSWEB的下载：CVSWEB从最初的版本已经演化出很多功能界面更丰富的版本，这个是我个人感觉安装设置比较方便的：<br><a href="http://www.spaghetti-code.de/software/linux/cvsweb/" target="_blank" rel="noopener">http://www.spaghetti-code.de/software/linux/cvsweb/</a></p>
 <p>下载解包：<br>tar zxf cvsweb.tgz<br>把配置文件cvsweb.conf放到安全的地方（比如和apache的配置放在同一个目录下），<br>修改：cvsweb.cgi让CGI找到配置文件：<br>$config = $ENV{‘CVSWEB_CONFIG’} || ‘/path/to/apache/conf/cvsweb.conf’;</p>
 <p>转到/path/to/apache/conf下并修改cvsweb.conf：</p>
 <p>修改CVSROOT路径设置：<br>%CVSROOT = (<br>‘Development’ =&gt;; ‘/path/to/cvsroot’, #&lt;==修改指向本地的CVSROOT<br>);<br>缺省不显示已经删除的文档：<br>“hideattic” =&gt;; “1”,#&lt;==缺省不显示已经删除的文档<br>在配置文件cvsweb.conf中还可以定制页头的描述信息，你可以修改$long_intro成你需要的文字<br>CVSWEB可不能随便开放给所有用户，因此需要使用WEB用户认证：<br>先生成 passwd:<br>/path/to/apache/bin/htpasswd -c cvsweb.passwd user</p>
@@ -111,12 +111,12 @@
 <p>$Header$ $Date$这样的标记在Virsual SourceSafe中称之为Keyword Explaination，缺省是关闭的，需要通过OPITION打开，并指定需要进行源文件关键词扫描的文件类型：<em>.txt,</em>.java,*.html…</p>
 <p>对于Virsual SourceSafe和CVS都通用的TAG有：<br>$Header$<br>$Author$<br>$Date$<br>$Revision$</p>
 <p>我建议尽量使用通用的关键词保证代码在CVS和VSS都能方便的跟踪。</p>
-<h1 id="WinCVS"><a href="#WinCVS" class="headerlink" title="WinCVS"></a>WinCVS</h1><p>下载：<br>cvs Windows客户端：目前稳定版本为1.2<br><a href="http://www.wincvs.org/" target="_blank" rel="external">http://www.wincvs.org/</a><br>ssh Windows客户端<br><a href="http://www.networksimplicity.com/openssh/" target="_blank" rel="external">http://www.networksimplicity.com/openssh/</a></p>
+<h1 id="WinCVS"><a href="#WinCVS" class="headerlink" title="WinCVS"></a>WinCVS</h1><p>下载：<br>cvs Windows客户端：目前稳定版本为1.2<br><a href="http://www.wincvs.org/" target="_blank" rel="noopener">http://www.wincvs.org/</a><br>ssh Windows客户端<br><a href="http://www.networksimplicity.com/openssh/" target="_blank" rel="noopener">http://www.networksimplicity.com/openssh/</a></p>
 <p>安装好以上2个软件以后：<br>WinCVS客户端的admin==&gt;;preference设置<br>1 在general选单里<br>设置CVSROOT： username@192.168.0.123:/home/cvsroot<br>设置Authorization: 选择SSH server</p>
 <p>2 Port选单里<br>钩上：check for alternate rsh name<br>并设置ssh.exe的路径，缺省是装在 C:Program FilesNetworkSimplicitysshssh.exe</p>
 <p>然后就可以使用WinCVS进行cvs操作了，所有操作都会跳出命令行窗口要求你输入服务器端的认证密码。</p>
 <p>当然，如果你觉得这样很烦的话，还有一个办法就是生成一个没有密码的公钥/私钥对，并设置CVS使用基于公钥/私钥的SSH认证（在general选单里）。</p>
-<p>可以选择的diff工具：examdiff<br>下载：<br><a href="http://www.prestosoft.com/examdiff/examdiff.htm" target="_blank" rel="external">http://www.prestosoft.com/examdiff/examdiff.htm</a><br>还是在WinCVS菜单admin==&gt;;preference的WinCVS选单里<br>选上：Externel diff program<br>并设置diff工具的路径，比如：C:Program Filesed16iExamDiff.exe<br>在对文件进行版本diff时，第一次需要将窗口右下角的use externel diff选上。</p>
+<p>可以选择的diff工具：examdiff<br>下载：<br><a href="http://www.prestosoft.com/examdiff/examdiff.htm" target="_blank" rel="noopener">http://www.prestosoft.com/examdiff/examdiff.htm</a><br>还是在WinCVS菜单admin==&gt;;preference的WinCVS选单里<br>选上：Externel diff program<br>并设置diff工具的路径，比如：C:Program Filesed16iExamDiff.exe<br>在对文件进行版本diff时，第一次需要将窗口右下角的use externel diff选上。</p>
 <h1 id="基于CVSTrac的小组开发环境搭建"><a href="#基于CVSTrac的小组开发环境搭建" class="headerlink" title="基于CVSTrac的小组开发环境搭建"></a>基于CVSTrac的小组开发环境搭建</h1><p>作为一个小组级的开发环境，版本控制系统和BUG跟踪系统等都涉及到用户认证部分。如何方便的将这些系统集成起来是一个非常困难的事情，毕竟我们不能指望Linux下有像Source Offsite那样集成度很高的版本控制/BUG跟踪集成系统。</p>
 <p>我个人是很反对使用pserver模式的远程用户认证的，但如果大部分组员使用WINDOWS客户端进行开发的话，总体来说使用CVSROOT/passwd认证还是很难避免的，但CVS本身用户的管理比较麻烦。本来我打算自己用perl写一个管理界面的，直到我发现了CVSTrac：一个基于WEB界面的BUG跟踪系统，它外挂在CVS系统上的BUG跟踪系统，其中就包括了WEB界面的CVSROOT/passwd文件的管理，甚至还集成了WIKIWIKI讨论组功能。</p>
 <p>这里首先说一下CVS的pserver模式下的用户认证，CVS的用户认证服务是基于inetd中的：<br>cvspserver stream tcp nowait nobody /usr/bin/cvs cvs –allow-root=/home/cvsroot pserver<br>一般在2401端口</p>
@@ -126,27 +126,27 @@
 <p>进一步的，你可以将用户分别映射到2组用户上，利用2个用户的权限设置，避免2个项目组的文件互相访问。<br>new:geBvosup/zKl2:proj1<br>setup:aISQuNAAoY3qw:proj2<br>test:hwEpz/BX.rEDU:proj1</p>
 <p>CVSTrac很好的解决了CVSROOT/passwd的管理问题，而且包含了BUG跟踪报告系统和集成WIKIWIKI交流功能等，使用的CGI方式的安装，并且基于GNU Public License：</p>
 <p>安装过程</p>
-<p>下载：可以从<a href="http://www.cvstrac.org" target="_blank" rel="external">http://www.cvstrac.org</a> 下载<br>我用的是已经在Linux上编译好的应用程序包：cvstrac-1.1.1.bin.gz，<br>%gzip -d cvstrac-1.1.1.bin.gz<br>%chmod +x cvstrac-1.1.1.bin</p>
+<p>下载：可以从<a href="http://www.cvstrac.org" target="_blank" rel="noopener">http://www.cvstrac.org</a> 下载<br>我用的是已经在Linux上编译好的应用程序包：cvstrac-1.1.1.bin.gz，<br>%gzip -d cvstrac-1.1.1.bin.gz<br>%chmod +x cvstrac-1.1.1.bin</p>
 <p>#mv cvstarc-1.1.1.bin /usr/bin/cvstrac</p>
 <p>初始化cvstrac数据库：假设数据库名是 myproj<br>在已经装好的CVS服务器上（CVS库这时候应该已经是初始化好了，比如：cvs init初始化在/home/cvsroot里），运行一下<br>%cvstrac init /home/cvsroot myproj<br>运行后，/home/cvsroot里会有一个的myproj.db库，使用CVSTRAC服务，/home/cvsroot/myproj.db /home/cvsroot/CVSROOT/readers /home/cvsroot/CVSROOT/writers /home/cvsroot/CVSROOT/passwd这几个文件对于web服务的运行用户应该是可写的，在RedHat8上，缺省就有一个叫apache用户和一个apache组，所以我在httpd.conf文件中设置了用apache用户运行web服务：<br>User apache<br>Group apache，<br>如果服务器上apache用的是其他用户，比如：nobody nogroup运行，则后面相应的配置中用户/组都设置为nobody nogroup<br>然后我设置了#chown -R apache:apache /home/cvsroot<br>-rw-r–r– 1 apache apache 55296 Jan 5 19:40 myproj.db<br>drwxrwxr-x 3 apache apache 4096 Oct 24 13:04 CVSROOT/<br>drwxrwxr-x 2 apache apache 4096 Aug 30 19:47 some_proj/<br>此外还在/home/cvsroot/CVSROOT中设置了：<br>chmod 664 readers writers passwd</p>
 <p>在apche/cgi-bin目录中创建脚本cvstrac:</p>
 <p>#!/bin/sh<br>/usr/bin/cvstrac cgi /home/cvsroot<br>设置脚本可执行：<br>chmod +x /home/apache/cgi-bin/cvstrac</p>
-<p>从 <a href="http://cvs.server.address/cgi-bin/cvstrac/myproj" target="_blank" rel="external">http://cvs.server.address/cgi-bin/cvstrac/myproj</a> 进入管理界面<br>缺省登录名：setup 密码 setup<br>对于一般用户可以从：<br><a href="http://cvs.server.address/cgi-bin/cvstrac/myproj" target="_blank" rel="external">http://cvs.server.address/cgi-bin/cvstrac/myproj</a><br>修改登录密码，进行BUG报告等，<br>更多使用细节可以在使用中慢慢了解。<br>备注：<br>在inetd里加入cvspserver服务：<br>cvspserver stream tcp nowait apache /usr/bin/cvs cvs –allow-root=/home/cvsroot pserver</p>
+<p>从 <a href="http://cvs.server.address/cgi-bin/cvstrac/myproj" target="_blank" rel="noopener">http://cvs.server.address/cgi-bin/cvstrac/myproj</a> 进入管理界面<br>缺省登录名：setup 密码 setup<br>对于一般用户可以从：<br><a href="http://cvs.server.address/cgi-bin/cvstrac/myproj" target="_blank" rel="noopener">http://cvs.server.address/cgi-bin/cvstrac/myproj</a><br>修改登录密码，进行BUG报告等，<br>更多使用细节可以在使用中慢慢了解。<br>备注：<br>在inetd里加入cvspserver服务：<br>cvspserver stream tcp nowait apache /usr/bin/cvs cvs –allow-root=/home/cvsroot pserver</p>
 <p>xietd的配置文件：%cat cvspserver<br>service cvspserver<br>{<br>disable = no<br>socket_type = stream<br>wait = no<br>user = apache<br>server = /usr/bin/cvs<br>server_args = -f –allow-root=/home/cvsroot pserver<br>log_on_failure += USERID<br>}</p>
 <p>注意：这里的用户设置成apache目的是和/home/cvsroot的所有用户一致，并且必须让这个这个用户对/home/cvsroot/下的CVSROOT/passwd和cvstrac初始化生成的myproj.db有读取权限。</p>
 <p>对于前面提到的WinCVS在perference里设置：<br>CVSROOT栏输入：username@ip.address.of.cvs:/home/cvsroot<br>Authenitication选择：use passwd file on server side<br>就可以了从服务器上导出项目了。</p>
 <p>总结：</p>
 <p>利用cvs + (WinCVS/cvsweb/cvstrac)，构成了一个相对完善的跨平台工作组开发版本控制环境。</p>
 <p>相关资源：</p>
-<p>CVS HOME：<br><a href="http://www.cvshome.org" target="_blank" rel="external">http://www.cvshome.org</a></p>
-<p>CVS FAQ：<br><a href="http://www.loria.fr/~molli/cvs-index.html" target="_blank" rel="external">http://www.loria.fr/~molli/cvs-index.html</a></p>
-<p>相关网站:<br><a href="http://directory.google.com/Top/Computers/Software/Configuration_Management/Tools/Concurrent_Versions_System/" target="_blank" rel="external">http://directory.google.com/Top/Computers/Software/Configuration_Management/Tools/Concurrent_Versions_System/</a></p>
-<p>CVS 免费书:<br><a href="http://cvsbook.red-bean.com/" target="_blank" rel="external">http://cvsbook.red-bean.com/</a></p>
-<p>CVS 命令的速查卡片：<br><a href="http://www.refcards.com/about/cvs.html" target="_blank" rel="external">http://www.refcards.com/about/cvs.html</a></p>
-<p>WinCVS:<br><a href="http://cvsgui.sourceforge.net/" target="_blank" rel="external">http://cvsgui.sourceforge.net/</a></p>
-<p>CVSTrac: A Web-Based Bug And Patch-Set Tracking System For CVS<br><a href="http://www.cvstrac.org" target="_blank" rel="external">http://www.cvstrac.org</a></p>
-<p>StatCVS：基于CVS的代码统计工具：按代码量，按开发者的统计表等<br><a href="http://sourceforge.net/projects/statcvs" target="_blank" rel="external">http://sourceforge.net/projects/statcvs</a></p>
-<p>原文出处：<a href="http://www.chedong.com/tech/cvs_card.html" target="_blank" rel="external">;http://www.chedong.com/tech/cvs_card.html</a>;</p>
+<p>CVS HOME：<br><a href="http://www.cvshome.org" target="_blank" rel="noopener">http://www.cvshome.org</a></p>
+<p>CVS FAQ：<br><a href="http://www.loria.fr/~molli/cvs-index.html" target="_blank" rel="noopener">http://www.loria.fr/~molli/cvs-index.html</a></p>
+<p>相关网站:<br><a href="http://directory.google.com/Top/Computers/Software/Configuration_Management/Tools/Concurrent_Versions_System/" target="_blank" rel="noopener">http://directory.google.com/Top/Computers/Software/Configuration_Management/Tools/Concurrent_Versions_System/</a></p>
+<p>CVS 免费书:<br><a href="http://cvsbook.red-bean.com/" target="_blank" rel="noopener">http://cvsbook.red-bean.com/</a></p>
+<p>CVS 命令的速查卡片：<br><a href="http://www.refcards.com/about/cvs.html" target="_blank" rel="noopener">http://www.refcards.com/about/cvs.html</a></p>
+<p>WinCVS:<br><a href="http://cvsgui.sourceforge.net/" target="_blank" rel="noopener">http://cvsgui.sourceforge.net/</a></p>
+<p>CVSTrac: A Web-Based Bug And Patch-Set Tracking System For CVS<br><a href="http://www.cvstrac.org" target="_blank" rel="noopener">http://www.cvstrac.org</a></p>
+<p>StatCVS：基于CVS的代码统计工具：按代码量，按开发者的统计表等<br><a href="http://sourceforge.net/projects/statcvs" target="_blank" rel="noopener">http://sourceforge.net/projects/statcvs</a></p>
+<p>原文出处：<a href="http://www.chedong.com/tech/cvs_card.html" target="_blank" rel="noopener">;http://www.chedong.com/tech/cvs_card.html</a>;</p>
 
   </section>
   <footer class="post-footer">
@@ -176,7 +176,7 @@
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-CVS常用命令速查" data-title="CVS常用命令速查" data-url="http://www.zhangmin.name/blog/blog/2012/03/19/CVS常用命令速查/"></div>
+	 <div class="ds-thread" data-thread-key="post-CVS常用命令速查" data-title="CVS常用命令速查" data-url="http://www.zhangmin.name/blog/2012/03/19/CVS常用命令速查/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

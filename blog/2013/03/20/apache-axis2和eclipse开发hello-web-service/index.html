@@ -65,9 +65,9 @@
     <p><strong>Axis2</strong></p>
 <p>Axis2是下一代 Apache Axis。Axis2 虽然由 Axis 1.x 处理程序模型提供支持，但它具有更强的灵活性并可扩展到新的体系结构。Axis2 基于新的体系结构进行了全新编写，而且没有采用 Axis 1.x 的常用代码。支持开发 Axis2 的动力是探寻模块化更强、灵活性更高和更有效的体系结构，这种体系结构可以很容易地插入到其他相关 Web 服务标准和协议（如 WS-Security、WS-ReliableMessaging 等）的实现中。<br>Apache Axis2 是Axis的后续版本，是新一代的SOAP引擎。</p>
 <p><strong>下载与安装</strong></p>
-<p>下载axis2 Binary Distribution：<a href="http://axis.apache.org/axis2/java/core/download.cgi" target="_blank" rel="external">http://axis.apache.org/axis2/java/core/download.cgi</a></p>
+<p>下载axis2 Binary Distribution：<a href="http://axis.apache.org/axis2/java/core/download.cgi" target="_blank" rel="noopener">http://axis.apache.org/axis2/java/core/download.cgi</a></p>
 <p>解压到一个单独的目录即可。</p>
-<p>下载 Service Archive Wizard - Eclipse Plug-in和Code Generator Wizard - Eclipse Plug-in：<a href="http://axis.apache.org/axis2/java/core/tools/index.html" target="_blank" rel="external">http://axis.apache.org/axis2/java/core/tools/index.html</a></p>
+<p>下载 Service Archive Wizard - Eclipse Plug-in和Code Generator Wizard - Eclipse Plug-in：<a href="http://axis.apache.org/axis2/java/core/tools/index.html" target="_blank" rel="noopener">http://axis.apache.org/axis2/java/core/tools/index.html</a></p>
 <p>解压后，将两个jar 文件放到eclipse的dropsin目录，并重启eclipse。</p>
 <p><strong>编写服务代码</strong></p>
 <p>新建一个java项目，代码如下：</p>
@@ -86,16 +86,16 @@
 <p>然后利用Axis2 Service Archiver打包-&gt;class file location 为项目的bin目录-&gt;选择skip wsdl-&gt;如果没有引用其他jar文件点击下一步-&gt;选择自动生成service xml文件-&gt;输入服务名称(随意)、类全名-&gt;设置aar文件名以及存放目录-&gt;Finish.</p>
 <p>这是生成一个HelloWebService.aar文件，该文件很像一个jar包，文件中META-INF目录下的service.xml 内容如下，描述了你创建的服务。</p>
 <p>[xml]</p>
-<p>&lt;?xml version=&quot;1.0&quot;?&gt;<br>-&lt;service name=&quot;HelloWebService&quot;&gt; &lt;description&gt; Please Type your service description here &lt;/description&gt; -&lt;messageReceivers&gt; &lt;messageReceiver class=&quot;org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver&quot; mep=&quot;<a href="http://www.w3.org/2004/08/wsdl/in-only&quot;/&amp;gt" target="_blank" rel="external">http://www.w3.org/2004/08/wsdl/in-only&quot;/&amp;gt</a>; &lt;messageReceiver class=&quot;org.apache.axis2.rpc.receivers.RPCMessageReceiver&quot; mep=&quot;<a href="http://www.w3.org/2004/08/wsdl/in-out&quot;/&amp;gt" target="_blank" rel="external">http://www.w3.org/2004/08/wsdl/in-out&quot;/&amp;gt</a>; &lt;/messageReceivers&gt; &lt;parameter name=&quot;ServiceClass&quot;&gt;com.example.HelloWebService&lt;/parameter&gt; &lt;/service&gt;</p>
+<p>&lt;?xml version=&quot;1.0&quot;?&gt;<br>-&lt;service name=&quot;HelloWebService&quot;&gt; &lt;description&gt; Please Type your service description here &lt;/description&gt; -&lt;messageReceivers&gt; &lt;messageReceiver class=&quot;org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver&quot; mep=&quot;<a href="http://www.w3.org/2004/08/wsdl/in-only&quot;/&amp;gt" target="_blank" rel="noopener">http://www.w3.org/2004/08/wsdl/in-only&quot;/&amp;gt</a>; &lt;messageReceiver class=&quot;org.apache.axis2.rpc.receivers.RPCMessageReceiver&quot; mep=&quot;<a href="http://www.w3.org/2004/08/wsdl/in-out&quot;/&amp;gt" target="_blank" rel="noopener">http://www.w3.org/2004/08/wsdl/in-out&quot;/&amp;gt</a>; &lt;/messageReceivers&gt; &lt;parameter name=&quot;ServiceClass&quot;&gt;com.example.HelloWebService&lt;/parameter&gt; &lt;/service&gt;</p>
 <p>[/xml]</p>
 <p><strong>发布Web Service</strong></p>
-<p>将生成的HelloWebService.aar 文件拷贝到…axis2-1.6.2repositoryservices目录中，然后运行…axis2-1.6.2bin中的axis2server.bat 文件。启动后访问<a href="http://localhost:8080/axis2/services/就可以看到你的服务的描述了。" target="_blank" rel="external">http://localhost:8080/axis2/services/就可以看到你的服务的描述了。</a></p>
+<p>将生成的HelloWebService.aar 文件拷贝到…axis2-1.6.2repositoryservices目录中，然后运行…axis2-1.6.2bin中的axis2server.bat 文件。启动后访问<a href="http://localhost:8080/axis2/services/就可以看到你的服务的描述了。" target="_blank" rel="noopener">http://localhost:8080/axis2/services/就可以看到你的服务的描述了。</a></p>
 <p>HelloWebService</p>
 <p>Available operations</p>
 <ul>
 <li>add</li>
-<li>sayHello<br>点击<a href="http://localhost:8080/axis2/services/HelloWebService?wsdl" target="_blank" rel="external">HelloWebService</a>可以看到发布服务的wsdl文件。<br><strong>生成客户端代码
-</strong>选择Eclipse Wizard 中的Axis2 Code Generator-&gt;选择Generate Java source code from a WSDL file-&gt;输入wsdl location：<a href="http://localhost:8080/axis2/services/HelloWebService?wsdl-&gt;选择output为你的项目-&gt;Finish。" target="_blank" rel="external">http://localhost:8080/axis2/services/HelloWebService?wsdl-&gt;选择output为你的项目-&gt;Finish。</a><br>然后添加axis2 Binary Distribution lib中的所有jar文件。</li>
+<li>sayHello<br>点击<a href="http://localhost:8080/axis2/services/HelloWebService?wsdl" target="_blank" rel="noopener">HelloWebService</a>可以看到发布服务的wsdl文件。<br><strong>生成客户端代码
+</strong>选择Eclipse Wizard 中的Axis2 Code Generator-&gt;选择Generate Java source code from a WSDL file-&gt;输入wsdl location：<a href="http://localhost:8080/axis2/services/HelloWebService?wsdl-&gt;选择output为你的项目-&gt;Finish。" target="_blank" rel="noopener">http://localhost:8080/axis2/services/HelloWebService?wsdl-&gt;选择output为你的项目-&gt;Finish。</a><br>然后添加axis2 Binary Distribution lib中的所有jar文件。</li>
 </ul>
 <p><strong>编写测试代码
 </strong>编写代码如下：<br>[java]<br>package com.example.test;<br>import java.rmi.RemoteException;<br>import com.example.Add;<br>import com.example.AddResponse;<br>import com.example.HelloWebService;<br>import com.example.HelloWebServiceStub;<br>import com.example.SayHello;<br>import com.example.SayHelloResponse;<br>public class Client {<br> /**</p>
@@ -108,10 +108,10 @@
 <p><strong>可能出现的错误的解决方法</strong></p>
 <p>Unsupported major.minor version 51.0 错误：用jdk7编译的class文件放到基于jdk6运行在tomcat之中，就会报这个错。打开exclipse中项目上的属性—java compiler–选择一个合适的版本后重新编译即可。</p>
 <p><em>参考文章</em></p>
-<p><em>1)<a href="http://blog.csdn.net/xiaochunyong/article/details/7764683" target="_blank" rel="external">http://blog.csdn.net/xiaochunyong/article/details/7764683</a></em></p>
-<p><em>2)<a href="http://blog.163.com/tuchengju@126/blog/static/38071165201111196597487/" target="_blank" rel="external">http://blog.163.com/tuchengju@126/blog/static/38071165201111196597487/</a></em></p>
-<p><em>3)<a href="http://baike.baidu.com/view/2435061.htm" target="_blank" rel="external">http://baike.baidu.com/view/2435061.htm</a></em></p>
-<p>4)<a href="http://axis.apache.org/axis2/java/core/index.html" target="_blank" rel="external">http://axis.apache.org/axis2/java/core/index.html</a></p>
+<p><em>1)<a href="http://blog.csdn.net/xiaochunyong/article/details/7764683" target="_blank" rel="noopener">http://blog.csdn.net/xiaochunyong/article/details/7764683</a></em></p>
+<p><em>2)<a href="http://blog.163.com/tuchengju@126/blog/static/38071165201111196597487/" target="_blank" rel="noopener">http://blog.163.com/tuchengju@126/blog/static/38071165201111196597487/</a></em></p>
+<p><em>3)<a href="http://baike.baidu.com/view/2435061.htm" target="_blank" rel="noopener">http://baike.baidu.com/view/2435061.htm</a></em></p>
+<p>4)<a href="http://axis.apache.org/axis2/java/core/index.html" target="_blank" rel="noopener">http://axis.apache.org/axis2/java/core/index.html</a></p>
 
   </section>
   <footer class="post-footer">
@@ -141,7 +141,7 @@
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-apache-axis2和eclipse开发hello-web-service" data-title="apache axis2和eclipse开发hello web service" data-url="http://www.zhangmin.name/blog/blog/2013/03/20/apache-axis2和eclipse开发hello-web-service/"></div>
+	 <div class="ds-thread" data-thread-key="post-apache-axis2和eclipse开发hello-web-service" data-title="apache axis2和eclipse开发hello web service" data-url="http://www.zhangmin.name/blog/2013/03/20/apache-axis2和eclipse开发hello-web-service/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

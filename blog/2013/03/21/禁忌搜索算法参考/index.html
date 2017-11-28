@@ -67,7 +67,7 @@
 <p>邻域的构造依赖于决策变量的表示。</p>
 <p><strong>局部搜索的两种策略</strong><br>1)选定一个可行的初始解，定义邻域。从邻域中找到最好的解与初始解比较，然后取最小的解为新的初始解。如此迭代直到解满足一定条件后停止。<br>2）随机法。从初始可行解邻域中随机选择一点，与初始解比较，循环直到解的质量达到一定程度。</p>
 <p><strong>局部搜索的缺点</strong><br>1)无法保证得到全局最优解。<br>2）解的质量依赖于起始点和领域的选取。<br>3）为了得到高质量的解，需要比较不同的邻域结构和初始解，只有在选择足够多时，才能保证得到最优解。</p>
-<p><strong>禁忌搜索算法的提出</strong><br>禁忌搜索（Tabu Search)是局部领域算法的推广，Fred Glover(<a href="http://spot.colorato.edu/~glover）在1986年提出这个概念，进而进一步形成一套完整的算法。算法的特点就是禁忌，禁止重复前面的工作，跳出局部最优点。" target="_blank" rel="external">http://spot.colorato.edu/~glover）在1986年提出这个概念，进而进一步形成一套完整的算法。算法的特点就是禁忌，禁止重复前面的工作，跳出局部最优点。</a></p>
+<p><strong>禁忌搜索算法的提出</strong><br>禁忌搜索（Tabu Search)是局部领域算法的推广，Fred Glover(<a href="http://spot.colorato.edu/~glover）在1986年提出这个概念，进而进一步形成一套完整的算法。算法的特点就是禁忌，禁止重复前面的工作，跳出局部最优点。" target="_blank" rel="noopener">http://spot.colorato.edu/~glover）在1986年提出这个概念，进而进一步形成一套完整的算法。算法的特点就是禁忌，禁止重复前面的工作，跳出局部最优点。</a></p>
 <p><strong>禁忌算法的一般步骤</strong></p>
 <p>[java]<br>设定初始解和禁忌对象及禁忌长度<br>产生候选集合（如果候选集合中出现禁忌的对象直接逃过）<br>比较，更新初始解，禁忌长度，禁忌对象<br>[/java]</p>
 <p>候选集合可以从邻域中该选择若干目标值最佳的邻居，或者是在邻域中的一部分邻居中选择若干目标值最佳的状态，或者是随机选择。候选集合的评价函数可以是直接评价函数（通过目标函数的运算得到评价函数）或者是间接评价函数（构造其他评价函数替代目标函数，应反映目标函数的特性，减少计算复杂性）。</p>
@@ -107,7 +107,7 @@
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-禁忌搜索算法参考" data-title="禁忌搜索算法参考" data-url="http://www.zhangmin.name/blog/blog/2013/03/21/禁忌搜索算法参考/"></div>
+	 <div class="ds-thread" data-thread-key="post-禁忌搜索算法参考" data-title="禁忌搜索算法参考" data-url="http://www.zhangmin.name/blog/2013/03/21/禁忌搜索算法参考/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

@@ -55,13 +55,13 @@
 
   <h1 class="post-title">微软等数据结构+算法面试100题全部答案完整亮相</h1>
   <section class="post-content article-entry">
-    <p>本文转载自CSDN大牛的一篇博客：<a href="http://blog.csdn.net/v_july_v/article/details/6870251" target="_blank" rel="external">http://blog.csdn.net/v_july_v/article/details/6870251</a></p>
+    <p>本文转载自CSDN大牛的一篇博客：<a href="http://blog.csdn.net/v_july_v/article/details/6870251" target="_blank" rel="noopener">http://blog.csdn.net/v_july_v/article/details/6870251</a></p>
 <p>作者：July、阿财<br>时间：二零一一年十月十三日。</p>
 <p>我能够看到此文，还要多谢陈同学！让我得以及时分享给大家</p>
 <p>引言<br>无私分享造就开源的辉煌。<br>今是二零一一年十月十三日，明日14日即是本人刚好开博一周年。在一周年之际，特此分享出微软面试全部100题答案的完整版，以作为对读者的回馈。<br>一 年之前的10月14日，一个名叫July的人在一个叫csdn的论坛上开帖分享微软等公司数据结构+算法面试100题，自此，与上千网友一起思考，解答这 些面试题目，最终成就了一个名为：结构之法算法之道的面试编程与算法研究并重的博客，如今，此博客影响力逐步渗透到海外，及至到整个互联网。<br>在此之前，由于本人笨拙，这微软面试100题的答案只整理到了前60题，故此，常有朋友留言或来信询问后面40题的答案。只是因个人认为：一、答案只是作 为一个参考，不可太过依赖；二、常常因一些事情耽搁。自此，后面40题的答案迟迟未得整理。且个人已经整理的前60题的答案，在我看来，是有诸多问题与弊 端的，甚至很多答案都是错误的。<br>互联网总是能带来惊喜。前几日，一位现局美国加州的名叫阿财的朋友发来一封邮件，并把他自己做的全部100题的答案一并发予给我，自此，便似遇见了知己。十分感谢。<br>话不絮烦。本只需贴出后面40题的答案，因为前60题的答案本人早已整理上传至网上，但多一种思路多一种参考亦未尝不可。把阿财的答案再稍加整理番，特此，全部100题的答案现今都贴出来。有任何问题，欢迎不吝指正。谢谢。</p>
 <p>上千上万的人都关注过此100题，且大都都各自贡献了自己的思路，或回复于微软100题的维护帖子上，或回复于本博客内，人数众多，无法一一标明，特此向他们诸位表示敬意和感谢。谢谢大家，诸君的努力足以影响整个互联网，咱们已经迎来一个分享互利的新时代。</p>
 <p>微软面试100题全部答案<br>个人整理的前60题的答案可参见以下三篇文章：</p>
-<p>微软100题第1题-20题答案 <a href="http://blog.csdn.net/v_JULY_v/archive/2011/01/10/6126406.aspx" target="_blank" rel="external">http://blog.csdn.net/v_JULY_v/archive/2011/01/10/6126406.aspx</a> [博文 I]<br>微软100题第21-40题答案 <a href="http://blog.csdn.net/v_JULY_v/archive/2011/01/10/6126444.aspx" target="_blank" rel="external">http://blog.csdn.net/v_JULY_v/archive/2011/01/10/6126444.aspx</a> [博文II]<br>微软100题第41-60题答案 <a href="http://blog.csdn.net/v_JULY_v/archive/2011/02/01/6171539.aspx" target="_blank" rel="external">http://blog.csdn.net/v_JULY_v/archive/2011/02/01/6171539.aspx</a> [博文III]<br>最新整理的全部100题的答案参见如下（重复的，以及一些无关紧要的题目跳过）：</p>
+<p>微软100题第1题-20题答案 <a href="http://blog.csdn.net/v_JULY_v/archive/2011/01/10/6126406.aspx" target="_blank" rel="noopener">http://blog.csdn.net/v_JULY_v/archive/2011/01/10/6126406.aspx</a> [博文 I]<br>微软100题第21-40题答案 <a href="http://blog.csdn.net/v_JULY_v/archive/2011/01/10/6126444.aspx" target="_blank" rel="noopener">http://blog.csdn.net/v_JULY_v/archive/2011/01/10/6126444.aspx</a> [博文II]<br>微软100题第41-60题答案 <a href="http://blog.csdn.net/v_JULY_v/archive/2011/02/01/6171539.aspx" target="_blank" rel="noopener">http://blog.csdn.net/v_JULY_v/archive/2011/02/01/6171539.aspx</a> [博文III]<br>最新整理的全部100题的答案参见如下（重复的，以及一些无关紧要的题目跳过）：</p>
 <p>1.把二元查找树转变成排序的双向链表<br>题目：<br>输入一棵二元查找树，将该二元查找树转换成一个排序的双向链表。<br>要求不能创建任何新的结点，只调整指针的指向。<br>10<br>/<br>6 14<br>/  /<br>4 8 12 16<br>转换成双向链表<br>4=6=8=10=12=14=16。<br>首先我们定义的二元查找树节点的数据结构如下：<br>struct BSTreeNode<br>{<br>int m_nValue; // value of node<br>BSTreeNode <em>m_pLeft; // left child of node<br>BSTreeNode </em>m_pRight; // right child of node<br>};<br>ANSWER:<br>This is a traditional problem that can be solved using recursion.<br>For each node, connect the double linked lists created from left and right child node to form a full list.</p>
 <p>/**</p>
 <ul>
@@ -136,8 +136,8 @@
 <h1 id="微软面试题，挑战你的智商"><a href="#微软面试题，挑战你的智商" class="headerlink" title="微软面试题，挑战你的智商"></a>微软面试题，挑战你的智商</h1><p>说明：如果你是第一次看到这种题，并且以前从来没有见过类似的题型，<br>并且能够在半个小时之内做出答案，说明你的智力超常..）<br>1.第一题. 五个海盗抢到了100 颗宝石，每一颗都一样大小和价值连城。他们决定这么分：<br>抽签决定自己的号码（1、2、3、4、5）<br>首先，由1 号提出分配方案，然后大家表决，当且仅当超过半数的人同意时，<br>按照他的方案进行分配，否则将被扔进大海喂鲨鱼<br>如果1 号死后，再由2 号提出分配方案，然后剩下的4 人进行表决，<br>当且仅当超过半数的人同意时，按照他的方案进行分配，否则将被扔入大海喂鲨鱼。<br>依此类推<br>条件：每个海盗都是很聪明的人，都能很理智地做出判断，从而做出选择。<br>问题：第一个海盗提出怎样的分配方案才能使自己的收益最大化？<br>Answer:<br>A traditional brain teaser.<br>Consider #5, whatever #4 proposes, he won’t agree, so #4 must agree whatever #3 proposes. So if there are only #3-5, #3 should propose (100, 0, 0). So the expected income of #3 is 100, and #4 and #5 is 0 for 3 guy problem. So whatever #2 proposes, #3 won’t agree, but if #2 give #4 and #5 $1, they can get more than 3-guy subproblem. So #2 will propose (98, 0, 1, 1). So for #1, if give #2 less than $98, #2 won’t agree. But he can give #3 $1 and #4 or #5 $2, so this is a (97, 0, 1, 2, 0) solution.</p>
 <p>2.一道关于飞机加油的问题，已知：<br>每个飞机只有一个油箱，<br>飞机之间可以相互加油（注意是相互，没有加油机）<br>一箱油可供一架飞机绕地球飞半圈，<br>问题：<br>为使至少一架飞机绕地球一圈回到起飞时的飞机场，至少需要出动几架飞机？<br>（所有飞机从同一机场起飞，而且必须安全返回机场，不允许中途降落，中间没有飞机场）</p>
 <hr>
-<p>更多面试题，请参见：<br>微软、谷歌、百度等公司经典面试100题[第1-60题] （微软100题第二版前60题）<br>微软、Google等公司非常好的面试题及解答[第61-70题] （微软100题第二版第61-70题）<br>十道海量数据处理面试题与十个方法大总结 （十道海量数据处理面试题）<br>海量数据处理面试题集锦与Bit-map详解 （十七道海量数据处理面试题）<br>九月腾讯，创新工场，淘宝等公司最新面试十三题（2011年度9月最新面试30题）<br>十月百度，阿里巴巴，迅雷搜狗最新面试十一题（2011年度十月最新面试题集锦）<br>一切的详情，可看此文：<br>横空出世，席卷Csdn–评微软等数据结构+算法面试100题 （在此文中，你能找到与微软100题所有一切相关的东西）<br>所有的资源下载（题目+答案）地址：<br><a href="http://v_july_v.download.csdn.net/" target="_blank" rel="external">http://v_july_v.download.csdn.net/</a></p>
-<p>本微软等100 题系列V0.1 版，永久维护地址：<br><a href="http://topic.csdn.net/u/20101126/10/b4f12a00-6280-492f-b785-cb6835a63dc9.html" target="_blank" rel="external">http://topic.csdn.net/u/20101126/10/b4f12a00-6280-492f-b785-cb6835a63dc9.html</a></p>
+<p>更多面试题，请参见：<br>微软、谷歌、百度等公司经典面试100题[第1-60题] （微软100题第二版前60题）<br>微软、Google等公司非常好的面试题及解答[第61-70题] （微软100题第二版第61-70题）<br>十道海量数据处理面试题与十个方法大总结 （十道海量数据处理面试题）<br>海量数据处理面试题集锦与Bit-map详解 （十七道海量数据处理面试题）<br>九月腾讯，创新工场，淘宝等公司最新面试十三题（2011年度9月最新面试30题）<br>十月百度，阿里巴巴，迅雷搜狗最新面试十一题（2011年度十月最新面试题集锦）<br>一切的详情，可看此文：<br>横空出世，席卷Csdn–评微软等数据结构+算法面试100题 （在此文中，你能找到与微软100题所有一切相关的东西）<br>所有的资源下载（题目+答案）地址：<br><a href="http://v_july_v.download.csdn.net/" target="_blank" rel="noopener">http://v_july_v.download.csdn.net/</a></p>
+<p>本微软等100 题系列V0.1 版，永久维护地址：<br><a href="http://topic.csdn.net/u/20101126/10/b4f12a00-6280-492f-b785-cb6835a63dc9.html" target="_blank" rel="noopener">http://topic.csdn.net/u/20101126/10/b4f12a00-6280-492f-b785-cb6835a63dc9.html</a></p>
 <p>作者声明:<br>“本人July 对以上所有任何内容和资料享有版权，转载请注明作者本人July 及出处。<br>向你的厚道致敬。谢谢。二零一一年十月十三日、以诸君为傲。</p>
 <p>欢迎，任何人，就以上任何内容，题目与答案思路，或其它任何问题、与我联系：<br>本人邮箱：zhoulei0907@yahoo.cn ”</p>
 
@@ -169,7 +169,7 @@
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-微软等数据结构-算法面试100题全部答案完整亮相" data-title="微软等数据结构+算法面试100题全部答案完整亮相" data-url="http://www.zhangmin.name/blog/blog/2012/10/24/微软等数据结构-算法面试100题全部答案完整亮相/"></div>
+	 <div class="ds-thread" data-thread-key="post-微软等数据结构-算法面试100题全部答案完整亮相" data-title="微软等数据结构+算法面试100题全部答案完整亮相" data-url="http://www.zhangmin.name/blog/2012/10/24/微软等数据结构-算法面试100题全部答案完整亮相/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

@@ -89,7 +89,7 @@
 <p>Scanner in = new Scanner(System.in);<br>while(in.hasNext()) {<br>int step = in.nextInt();<br>BigInteger[] f = new BigInteger[step+1];<br>for(int i = 0;i &lt;= step;i ++){<br>f[i] = new BigInteger(&quot;0&quot;);<br>}<br>f[0] = new BigInteger(&quot;1&quot;);<br>f[1] = new BigInteger(&quot;3&quot;);<br>for(int i=2;i &lt;= step;i++){<br>BigInteger sum= new BigInteger(&quot;0&quot;);<br>for(int j=0;j &lt;= i-2;j++){<br>sum = sum.add(f[j]);<br>}<br>sum = sum.add(new BigInteger(&quot;1&quot;));<br>sum = sum.multiply(new BigInteger(&quot;2&quot;));<br>f[i] = f[i].add(f[i-1].add(sum));<br>}<br>System.out.println(f[step].toString());</p>
 <p>}</p>
 <p>}<br>}<br>[/java]</p>
-<p>此解法思路来自博客：激情与梦想<a href="http://www.cnblogs.com/easyFancy/archive/2013/04/05/3000759.html" target="_blank" rel="external">http://www.cnblogs.com/easyFancy/archive/2013/04/05/3000759.html</a></p>
+<p>此解法思路来自博客：激情与梦想<a href="http://www.cnblogs.com/easyFancy/archive/2013/04/05/3000759.html" target="_blank" rel="noopener">http://www.cnblogs.com/easyFancy/archive/2013/04/05/3000759.html</a></p>
 <p>解法二：</p>
 <p>对于大神精妙简洁的解法，我的枚举法简直是不值一提，但毕竟是自己的东西还是贴出来了。知道差距，才能更好进步。</p>
 <p>[java]<br>import java.util.Iterator;<br>import java.util.Scanner;<br>import java.util.ArrayList;</p>
@@ -144,7 +144,7 @@
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-2013编程之美测试赛之踩方格" data-title="2013编程之美测试赛之踩方格" data-url="http://www.zhangmin.name/blog/blog/2013/04/09/2013编程之美测试赛之踩方格/"></div>
+	 <div class="ds-thread" data-thread-key="post-2013编程之美测试赛之踩方格" data-title="2013编程之美测试赛之踩方格" data-url="http://www.zhangmin.name/blog/2013/04/09/2013编程之美测试赛之踩方格/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
