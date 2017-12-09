@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>区块链开发入门 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/blog/"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  December 9, 2017
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/区块链/'>区块链</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">区块链开发入门</h1>
+  <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#缘起"><span class="toc-text">缘起</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区块链技术分享会总结"><span class="toc-text">区块链技术分享会总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#开发公有链的一般流程"><span class="toc-text">开发公有链的一般流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#成为区块链开发者的必备条件"><span class="toc-text">成为区块链开发者的必备条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#学习资料汇总"><span class="toc-text">学习资料汇总</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
+    <h2 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h2><p>今天去参加了一个区块链技术分享活动，在听专家么讲区块链的过程中，自己就萌生了一个想法，要参与到区块链技术的发展中。主要基于以下几点原因：</p>
+<ol>
+<li>我是从事分布式开发相关的，而区块链也是分布式系统。</li>
+<li>区块链目前技术处于幻灭期，潮水过去，谁在裸泳，谁在游泳一看便知。</li>
+<li>区块链的应用还有无穷的想象空间，各大金融公司，包括各国央行都在积极拥抱区块链技术（<a href="http://v.youku.com/v_show/id_XMjc5NzAyMDk1Ng==.html）。" target="_blank" rel="noopener">http://v.youku.com/v_show/id_XMjc5NzAyMDk1Ng==.html）。</a></li>
+</ol>
+<p>学习的路线图首先是区块链基本概念，当前存在的系统及其优缺点，还有哪些问题需要解决，应用场景有哪些。其中重点观众分布式系统中的共识问题。</p>
+<h2 id="区块链技术分享会总结"><a href="#区块链技术分享会总结" class="headerlink" title="区块链技术分享会总结"></a>区块链技术分享会总结</h2><p>以下内容来自 朗豫@bytom.io的分享。</p>
+<h3 id="开发公有链的一般流程"><a href="#开发公有链的一般流程" class="headerlink" title="开发公有链的一般流程"></a>开发公有链的一般流程</h3><p>首先需要思考清楚的就是为什么要开发新的公有链技术，有哪些现有系统没有的功能和特性。</p>
+<p>然后需要撰写技术白皮书，经济白皮书，可行性说明书。技术说明书阐述自己项目的必要性和解决的问题。经济白皮书公开Token的激励方案，整体分配的策略。可行性说明书描述整体技术的架构，难点和所需要的资源。最关键的是要突出自己项目的亮点和竞争优势。</p>
+<p>最后就是具体的实现，构建社区，打造应用生态。</p>
+<h3 id="成为区块链开发者的必备条件"><a href="#成为区块链开发者的必备条件" class="headerlink" title="成为区块链开发者的必备条件"></a>成为区块链开发者的必备条件</h3><p>需要理解比特币，区块链的价值；理解开发公有链为什么有Token系统；理解区块链的“不可能三角”；经济学知识和金融知识。</p>
+<h2 id="学习资料汇总"><a href="#学习资料汇总" class="headerlink" title="学习资料汇总"></a>学习资料汇总</h2><ol>
+<li>Bitcoin: A Peer-to-Peer Electronic Cash System <a href="http://bitcoin.org/bitcoin.pdf" target="_blank" rel="noopener">http://bitcoin.org/bitcoin.pdf</a></li>
+<li>比原链的白皮书相关 <a href="http://bytom.io/cn" target="_blank" rel="noopener">http://bytom.io/cn</a></li>
+<li>区块链技术指南 <a href="https://www.gitbook.com/book/yeasy/blockchain_guide/details" target="_blank" rel="noopener">https://www.gitbook.com/book/yeasy/blockchain_guide/details</a></li>
+<li>掌握比特币 <a href="http://8btc.com/topic-mastering-bitcoin.html" target="_blank" rel="noopener">http://8btc.com/topic-mastering-bitcoin.html</a></li>
+</ol>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2017/11/28/回到起点看DNS/">
+        <!--回到起点看DNS--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-区块链开发入门" data-title="区块链开发入门" data-url="http://www.zhangmin.name/blog/2017/12/09/区块链开发入门/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2017 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>
