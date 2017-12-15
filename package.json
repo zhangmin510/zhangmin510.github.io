@@ -5,6 +5,10 @@
   "hexo": {
     "version": "3.4.2"
   },
+  "scripts": {
+    "local": "hexo server",
+    "deploy": "hexo generate && git add . && git commit -m \" Updated $(date)\" "
+  },
   "dependencies": {
     "hexo": "^3.4.2",
     "hexo-addlink": "^1.0.4",
