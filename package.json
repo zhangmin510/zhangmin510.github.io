@@ -7,7 +7,7 @@
   },
   "scripts": {
     "local": "hexo server",
-    "deploy": "hexo generate && git add . && git commit -m \" Updated $(date)\" "
+    "deploy": "hexo generate && git add . && git commit -m \" Updated $(date)\" && git push origin master "
   },
   "dependencies": {
     "hexo": "^3.4.2",
