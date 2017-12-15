@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangmin.name/blog/readings/index.html</loc>
+    
+    <lastmod>2017-12-15T03:29:53.682Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangmin.name/blog/2017/12/09/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/</loc>
     
     <lastmod>2017-12-09T15:27:17.000Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://www.zhangmin.name/blog/2017/11/28/%E5%9B%9E%E5%88%B0%E8%B5%B7%E7%82%B9%E7%9C%8BDNS/</loc>
     
     <lastmod>2017-11-28T15:25:55.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.zhangmin.name/blog/readings/index.html</loc>
-    
-    <lastmod>2017-11-28T15:23:16.195Z</lastmod>
     
   </url>
   

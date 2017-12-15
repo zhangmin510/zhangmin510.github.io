@@ -81,4 +81,8 @@ date: 2013-09-08 11:21:36
 
 # 2017
 
+* 《Linux内核设计与实现》Robert Love
+* 《MySQL技术内幕 Innodb存储引擎》姜承尧
+* 《学习Go语言》Miek Gieben
+* 《每天听本书》得到 137本
 
