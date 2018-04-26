@@ -205,7 +205,7 @@
 <li>公有云或者CDN厂商清洗DDoS攻击流量，将清洗过后的正常流量回送到站点域名原解析记录的IP。</li>
 </ol>
 <h2 id="5-1-云计算中的DDoS防护架构"><a href="#5-1-云计算中的DDoS防护架构" class="headerlink" title="5.1 云计算中的DDoS防护架构"></a>5.1 云计算中的DDoS防护架构</h2><p>一般的DDoS防护架构使用镜像/分光（采集）、sflow/netflow（分析）、DDoS 清洗设备（清洗）三位一体的架构是目前很多企业采用的防DDoS架构，但是一般只适用于有自己机房或者在IDC 业务规模比较大的企业。如下图所示，在IDC 或者自建机房出口下通过镜像/分光采集流量，集中到异常流量监测系统中进行分析，一旦发现异常流量，则与DDoS 清洗设备进行联动，下发清洗规则和路由规则进行清洗。</p>
-<p><img src="http://mmbiz.qpic.cn/mmbiz_png/Kp8zGHrttZaXns3K9cs7Q3K0XGxKYySPXuGuHds91LiazEL8aQH8icoGvIQMWUOOoy1v94XHgl6BfJTkPPpelp2g/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="网易云DDoS防护架构"></p>
+<p><img src="http://www.zhangmin.name/images/ddos/ddos-arch.jpeg" alt="网易云DDoS防护架构"></p>
 <p>对于大型的运营商网络或大流量的网络，一般会采用上述这种单臂式旁路部署模式。单臂式旁路部署的优势是不需要改变原有网络拓扑，不会引起单点故障，方便扩容，更容易部署。异常流量清洗的单臂式旁路部署模式主要由异常流量检测、流量牵引、流量清洗、流量回注4个阶段组成：</p>
 <ol>
 <li>流量检测：异常流量检测设备可通过镜像、分光、NetFlow/NetStream/nFlow流日志等方式，对指定的流量进行检测，把这些目标的流量信息反馈给管理平台供用户参考，当发生攻击时，可及时发送告警。</li>
