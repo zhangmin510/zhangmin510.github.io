@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="http://www.zhangmin.name/images/horse.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="http://www.zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>Docker技术基本原理及镜像构建最佳实践 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="http://www.zhangmin.name"><img src="http://www.zhangmin.name/images/horse.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="http://www.zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+<h6><a href="/blog/ir">Investor Relations</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  April 26, 2018
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/Docker/'>Docker</a>
+    
+    </span>
+  
+
+  <h1 class="post-title">Docker技术基本原理及镜像构建最佳实践</h1>
+  <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Docker介绍"><span class="toc-text">1 Docker介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Docker核心技术"><span class="toc-text">2 Docker核心技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-Linux命名空间（Namespace）"><span class="toc-text">2.1 Linux命名空间（Namespace）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-控制组"><span class="toc-text">2.2 控制组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-联合文件系统"><span class="toc-text">2.3 联合文件系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-虚拟化网络"><span class="toc-text">2.4 虚拟化网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-Docker安全"><span class="toc-text">2.5 Docker安全</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Docker镜像构建"><span class="toc-text">3 Docker镜像构建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-build-context"><span class="toc-text">3.1 build context</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-directive-escape"><span class="toc-text">3.2 directive escape</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-dockerignore"><span class="toc-text">3.3 .dockerignore</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-环境替换"><span class="toc-text">3.4 环境替换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-5-支持的命令"><span class="toc-text">3.5 支持的命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Dockerfile最佳实践"><span class="toc-text">4 Dockerfile最佳实践</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-通用的指导和建议"><span class="toc-text">4.1 通用的指导和建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-命令使用建议"><span class="toc-text">4.2  命令使用建议</span></a></li></ol></li></ol>
+  </section>
+  <section class="post-content article-entry">
+    <h1 id="1-Docker介绍"><a href="#1-Docker介绍" class="headerlink" title="1 Docker介绍"></a>1 Docker介绍</h1><p>Docker是一种轻量级（进程级别）的虚拟化技术。Docker技术的目标是“Build, Ship and Run Any App”，即对引用进行封装（Packaging），分发（Distribution），部署（Deployment）和运行（Runtime）等生命周期管理，达到应用级别的“一次封装，随处运行”。</p>
+<p><img src="https://docs.docker.com/get-started/images/laurel-docker-containers.png" alt=""></p>
+<p>Docker是在Linux容器（Linux Container，LXC）技术基础上优化了容器的使用体验。比如更快捷的交付和部署，更高效的资源利用，更轻松的迁移和扩展，更简单的更新管理。</p>
+<p>在Docker中，需要理解镜像（Image），容器（Container）和仓库（Repository）这三个核心概念。<br>镜像类似于虚拟机镜像，可以理解为是一种面向Docker引擎的只读模板（分层组织数据），包含了文件系统。镜像自身是只读的，容器从镜像启动的时候，Docker会在镜像的最上层创建一个可写层，镜像本身的内容保持不变。</p>
+<p>容器类似于一个轻量级的沙箱（Sandbox），Docker利用容器来运行和隔离应用。</p>
+<p>仓库类似于Github代码仓库，是Docker存放镜像文件的场所。Docker Registry是存放仓库的地方，包括多个仓库，每个仓库存放某一类镜像，多个镜像文件按照标签（Tag）来区分。</p>
+<h1 id="2-Docker核心技术"><a href="#2-Docker核心技术" class="headerlink" title="2 Docker核心技术"></a>2 Docker核心技术</h1><p>Docker是一种容器虚拟化技术。Docker底层依赖的核心技术包括Linux 命名空间（Namespace），控制组（Control Groups）和Union File System以及<br>Linux 虚拟网络支持。Docker采用标准的C/S架构，S是Docker Daemon，C是Docker CLI，C和S通过本地socket或者RESTful API通信。</p>
+<h2 id="2-1-Linux命名空间（Namespace）"><a href="#2-1-Linux命名空间（Namespace）" class="headerlink" title="2.1 Linux命名空间（Namespace）"></a>2.1 Linux命名空间（Namespace）</h2><p>Linux实现容器虚拟化引入的特性，使得每个容器可以拥有自己的独立的命名空间，运行在其中应用就像是运行在<br>独立的操作系统上。命名空间提供了容器间的隔离性。</p>
+<p>Linux命名空间包括：</p>
+<ol>
+<li>进程命名空间（PID）。通过命名空间管理进程实现进程隔离。</li>
+<li>网络命名空间。实现网络资源隔离，拥有独立的网络协议栈。Docker默认是通过虚拟网络设备的方式，将多个容器中的虚拟网卡和宿主机的docker0网桥连接在一起，从而实现容器间网络的互通。</li>
+<li>IPC命名空间。进程间的交互隔离。</li>
+<li>挂载命名空间。类似chroot，将进程切换到一个特定目录执行。</li>
+<li>UTS命名空间。主机名域名隔离。</li>
+<li>用户命名空间。隔离用户。</li>
+</ol>
+<p><strong>参考资料：<a href="http://man7.org/linux/man-pages/man7/namespaces.7.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man7/namespaces.7.html</a></strong></p>
+<h2 id="2-2-控制组"><a href="#2-2-控制组" class="headerlink" title="2.2 控制组"></a>2.2 控制组</h2><p>控制组（cgroups）是Linux内核的特性，用于共享资源的隔离，限制和审计。具体的功能包括：</p>
+<ol>
+<li>资源限制。如设定内存和CPU使用限制。</li>
+<li>优先级。使用CPU的优先级。</li>
+<li>资源审计。统计资源利用，CPU使用时间。</li>
+<li>隔离。隔离命名空间。</li>
+<li>控制。挂起，恢复和重启等操作。</li>
+</ol>
+<h2 id="2-3-联合文件系统"><a href="#2-3-联合文件系统" class="headerlink" title="2.3 联合文件系统"></a>2.3 联合文件系统</h2><p>联合文件系统（UnionFS）是一种轻量级的高性能分层文件系统。它支持将文件系统中的修改信息作为一次提交，并层层叠加，同时支持将不同目录挂载到同一个虚拟文件系统。</p>
+<p>联合文件系统是Docker镜像的实现基础，镜像可以分层继承。</p>
+<h2 id="2-4-虚拟化网络"><a href="#2-4-虚拟化网络" class="headerlink" title="2.4 虚拟化网络"></a>2.4 虚拟化网络</h2><p>Docker的网络实现使用了Linux上的网络命名空间和虚拟网络设备（特别是veth pair）。Linux通过内核中进行数据复制来实现虚拟端口间的数据转发，性能高。</p>
+<h2 id="2-5-Docker安全"><a href="#2-5-Docker安全" class="headerlink" title="2.5 Docker安全"></a>2.5 Docker安全</h2><p>Docker的安全实现主要是通过Linux内核的命名空间技术提供容器隔离安全；Linux控制组技术提供容器使用资源的控制能力安全；Linux内核的能力机制来保证操作安全。</p>
+<h1 id="3-Docker镜像构建"><a href="#3-Docker镜像构建" class="headerlink" title="3 Docker镜像构建"></a>3 Docker镜像构建</h1><h2 id="3-1-build-context"><a href="#3-1-build-context" class="headerlink" title="3.1 build context"></a>3.1 build context</h2><p>docker build从Dockerfile和当前上下文构建镜像。镜像构建是由docker daemon实现的，cli只是将上下文传送给docker daemon。上下文包括目录或者URL。</p>
+<p>大多数情况都是以一个空目录作为上下文，里面包含Dockerfile和必要的其他文件。</p>
+<p>在构建镜像之前，会检查Dockerfile是否有效。一行一行的执行命令，每次执行都提交一次。<br>由于每行命令产生新的一层，所以每行之间是没有联系的。比如切换目录，只会在当前这一层生效。如果可能Docker在构建时会使用每一层的缓存，如在本地存在或者之前构建过。</p>
+<ol>
+<li>命令最好大写，以区分普通命令。</li>
+<li>一行如果以#号开头说明是注释，在其他位置都不是注释，就是正常的#号。</li>
+</ol>
+<h2 id="3-2-directive-escape"><a href="#3-2-directive-escape" class="headerlink" title="3.2 directive escape"></a>3.2 directive escape</h2><p>dockerfile支持指令，必须是在Dockerfile的最开始，当前只支持转移字符，如将换行符<code>\</code>改为```。</p>
+<h2 id="3-3-dockerignore"><a href="#3-3-dockerignore" class="headerlink" title="3.3 .dockerignore"></a>3.3 .dockerignore</h2><p>可以使用.dockerignore文件来忽略上下文中的指定文件或者目录。</p>
+<p>CLI在发送context之前会在更目录检查该文件，修改需要发送的上下文。</p>
+<h2 id="3-4-环境替换"><a href="#3-4-环境替换" class="headerlink" title="3.4 环境替换"></a>3.4 环境替换</h2><p>ENV命令声明的环境变量可以在命令中使用。使用方法<code>$variable_name or ${variable_name}.</code></p>
+<p><code>${variable_name}</code> syntax also supports a few of the standard bash modifiers as specified below:</p>
+<ol>
+<li><code>${variable:-word}</code> indicates that if variable is set then the result will be that value. If variable is not set then word will be the result.</li>
+<li><code>${variable:+word}</code> indicates that if variable is set then word will be the result, otherwise the result is the empty string.</li>
+</ol>
+<p>Environment variables are supported by the following list of instructions in the Dockerfile:</p>
+<ol>
+<li>ADD</li>
+<li>COPY</li>
+<li>ENV</li>
+<li>EXPOSE</li>
+<li>FROM</li>
+<li>LABEL</li>
+<li>STOPSIGNAL</li>
+<li>USER</li>
+<li>VOLUME</li>
+<li>WORKDIR as well as:</li>
+<li>ONBUILD (when combined with one of the supported instructions above)</li>
+</ol>
+<p>同一个环境变量同时赋值多次，需要注意顺序：</p>
+<p>Environment variable substitution will use the same value for each variable throughout the entire instruction. In other words, in this example:</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ENV <span class="attribute">abc</span>=hello</span><br><span class="line">ENV <span class="attribute">abc</span>=bye <span class="attribute">def</span>=<span class="variable">$abc</span></span><br><span class="line">ENV <span class="attribute">ghi</span>=<span class="variable">$abc</span></span><br></pre></td></tr></table></figure>
+<p>will result in def having a value of hello, not bye. However, ghi will have a value of bye because it is not part of the same instruction that set abc to bye.</p>
+<h2 id="3-5-支持的命令"><a href="#3-5-支持的命令" class="headerlink" title="3.5 支持的命令"></a>3.5 支持的命令</h2><blockquote>
+<p>Docker core concept:core concepts of Docker where commits are cheap and containers can be created from any point in an image’s history, much like source control.</p>
+</blockquote>
+<ol>
+<li>FROM。支持创建多层。多个FROM。FROM之前可以使用ARG指定变量。ARG是在构建阶段之前的，在FROM之后的命令就不能使用，除非再次声明。</li>
+<li>RUN。两种形式。每次RUN生成一层并提交供下一层使用。会有缓存，可以使用<code>docker build --no-cache</code>不使用缓存。<ul>
+<li>RUN <command>。默认在shell里运行，linux下为<code>/bin/sh -c</code></li>
+<li>RUN [“executable”, “param1”, “param2”]。不会运行shell进程，即依赖于shell处理，如环境变量替换是不能完成的。除非写成 RUN [“sh”, “-c”, “echo $HOME”]。要对反斜杠进行转义。</li>
+</ul>
+</li>
+<li>CMD。只能又一个CMD，最后一个生效。目的是提供容器的默认运行命令。If you would like your container to run the same executable every time, then you should consider using ENTRYPOINT in combination with CMD。RUN actually runs a command and commits the result; CMD does not execute anything at build time, but specifies the intended command for the image.<ul>
+<li>CMD [“executable”,”param1”,”param2”] (exec form, this is the preferred form)</li>
+<li>CMD [“param1”,”param2”] (as default parameters to ENTRYPOINT)</li>
+<li>CMD command param1 param2 (shell form)</li>
+</ul>
+</li>
+<li>LABEL。对镜像增加元数据。key=value格式</li>
+<li>EXPOSE。说明暴露哪些端口，文档性质。默认是tcp。可以指定udp。</li>
+<li>ENV。容器运行后，ENV会被持久化。只在一个命令使用：RUN <key>=<value> <command>.</value></key></li>
+<li>ADD。复制文件。可以是本地目录文件或者URL。支持解压。src目录是相对于context的；dest的是绝对目录，相对于WORKDIR。默认的user和group是0，除非指定chown。<ul>
+<li>ADD [–chown=<user>:<group>] <src>… <dest></dest></src></group></user></li>
+<li>ADD [–chown=<user>:<group>] [“<src>“,… “<dest>“] (this form is required for paths containing whitespace)</dest></src></group></user></li>
+</ul>
+</li>
+<li>COPY。只能是本地文件和目录，支持额外的–from参数。<ul>
+<li>ADD [–chown=<user>:<group>] <src>… <dest></dest></src></group></user></li>
+<li>ADD [–chown=<user>:<group>] [“<src>“,… “<dest>“] (this form is required for paths containing whitespace)</dest></src></group></user></li>
+</ul>
+</li>
+<li>ENTRYPOINT。配置容器运行时的可执行文件。最后一条ENTRYPOINT生效。<a href="https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact" target="_blank" rel="noopener">https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact</a> 。可以和CMD一起使用。ENTRYPOINT指定固定部分，CMD提供变化的参数。<ul>
+<li>ENTRYPOINT [“executable”, “param1”, “param2”] (exec form, preferred)。<br>-ENTRYPOINT command param1 param2 (shell form)。会忽略CMD或者run命令的命令行参数，但是会以<code>/bin/sh -c</code>，可执行文件不是容器的PID 1，无法接受信号。</li>
+</ul>
+</li>
+<li>VOLUME。创建挂载点。宿主机或者其他容器上的。</li>
+<li>USER。设置运行命令的用户和组。之后的RUN, CMD and ENTRYPOINT命令使用。</li>
+<li>WORKDIR。设置工作目录。之后的RUN, CMD, ENTRYPOINT, COPY and ADD 使用。如果多次，以前一个为相对目录。</li>
+<li>ARG。指定镜像构建时的参数。生命周期是一个构建周期内。</li>
+<li>ONBUILD。加入一个触发器，如果当前镜像作为其他镜像的基础镜像。只能继承一次，即不能再孙镜像中使用。</li>
+<li>STOPSIGNAL。设置容器停止时，发送的信号。</li>
+<li>HEALTHCHECK。设置容器健康检查，怎么样才是健康的。如进程假死。1.12引入。</li>
+<li>SHELL。指定默认的shell。1.12引入。</li>
+</ol>
+<p><strong>参考资料：<a href="https://docs.docker.com/engine/reference/builder/" target="_blank" rel="noopener">https://docs.docker.com/engine/reference/builder/</a></strong></p>
+<h1 id="4-Dockerfile最佳实践"><a href="#4-Dockerfile最佳实践" class="headerlink" title="4 Dockerfile最佳实践"></a>4 Dockerfile最佳实践</h1><h2 id="4-1-通用的指导和建议"><a href="#4-1-通用的指导和建议" class="headerlink" title="4.1 通用的指导和建议"></a>4.1 通用的指导和建议</h2><ol>
+<li>容器应该是短暂的。可以停止和销毁，并以最小的配置启动新的。</li>
+<li>最小化构建context。docker build运行所在的目录是build context。</li>
+<li>使用.dockerignore。</li>
+<li>Docker 17.05之后可以选择多阶段构建。分为多层按照变化频率从低到高：1）安装工具；2）安装或者升级库依赖；3）生成应用。</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> golang:<span class="number">1.9</span>.<span class="number">2</span>-alpine3.<span class="number">6</span> AS build</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install tools required to build the project</span></span><br><span class="line"><span class="comment"># We need to run `docker build --no-cache .` to update those dependencies</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apk add --no-cache git</span></span><br><span class="line"><span class="bash">RUN go get github.com/golang/dep/cmd/dep</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Gopkg.toml and Gopkg.lock lists project dependencies</span></span></span><br><span class="line"><span class="bash"><span class="comment"># These layers are only re-built when Gopkg files are updated</span></span></span><br><span class="line"><span class="bash">COPY Gopkg.lock Gopkg.toml /go/src/project/</span></span><br><span class="line"><span class="bash">WORKDIR /go/src/project/</span></span><br><span class="line"><span class="bash"><span class="comment"># Install library dependencies</span></span></span><br><span class="line"><span class="bash">RUN dep ensure -vendor-only</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Copy all project and build it</span></span></span><br><span class="line"><span class="bash"><span class="comment"># This layer is rebuilt when ever a file has changed in the project directory</span></span></span><br><span class="line"><span class="bash">COPY . /go/src/project/</span></span><br><span class="line"><span class="bash">RUN go build -o /bin/project</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># This results in a single layer image</span></span></span><br><span class="line"><span class="bash">FROM scratch</span></span><br><span class="line"><span class="bash">COPY --from=build /bin/project /bin/project</span></span><br><span class="line"><span class="bash">ENTRYPOINT [<span class="string">"/bin/project"</span>]</span></span><br><span class="line"><span class="bash">CMD [<span class="string">"--help"</span>]</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>只安装必须的包。减少镜像大小，构建时间。</li>
+<li>每个镜像只有一个目的。便于水平扩展和重用。一个容器只运行一类进程。</li>
+<li>最小化层。In Docker 1.10 and higher, only RUN, COPY, and ADD instructions create layers. Other instructions create temporary intermediate images, and no longer directly increase the size of the build. Docker 17.05 and higher add support for multi-stage builds, which allow you to copy only the artifacts you need into the final image. This allows you to include tools and debug information in your intermediate build stages without increasing the size of the final image</li>
+<li>多行参数进行排序，翻遍以后修改。</li>
+<li>使用构建缓存。了解缓存什么时候可以，什么时候不行。Docker构建使用缓存的机制。<a href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#build-cache。" target="_blank" rel="noopener">https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#build-cache。</a></li>
+</ol>
+<h2 id="4-2-命令使用建议"><a href="#4-2-命令使用建议" class="headerlink" title="4.2  命令使用建议"></a>4.2  命令使用建议</h2><ol>
+<li>FROM使用官方的，特别是Alpine，小巧。</li>
+<li>LABEL写成一行。</li>
+<li>RUN 将常的命令使用反斜杠分为多行。RUN apt-get update &amp;&amp; apt-get install -y。保证最新的软件版本。<br>缓存穿透技术。也可以指定软件包版本来穿透Docker build缓存。因为缓存比较时只是比较RUN的命令，而不是具体的内容。使用管道。</li>
+</ol>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">RUN apt-get update &amp;&amp; apt-get install -y <span class="string">\</span></span><br><span class="line">    aufs-tools <span class="string">\</span></span><br><span class="line">    automake <span class="string">\</span></span><br><span class="line">    build-essential <span class="string">\</span></span><br><span class="line">    curl <span class="string">\</span></span><br><span class="line">    dpkg-sig <span class="string">\</span></span><br><span class="line">    libcap-dev <span class="string">\</span></span><br><span class="line">    libsqlite3-dev <span class="string">\</span></span><br><span class="line">    mercurial <span class="string">\</span></span><br><span class="line">    reprepro <span class="string">\</span></span><br><span class="line">    ruby1.<span class="number">9.1</span> <span class="string">\</span></span><br><span class="line">    ruby1.<span class="number">9.1</span>-dev <span class="string">\</span></span><br><span class="line">    s3cmd=<span class="number">1.1</span>.* <span class="string">\</span></span><br><span class="line"> &amp;&amp; rm -rf <span class="regexp">/var/lib/apt/lists/</span>*</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">RUN set -o pipefail &amp;&amp; wget -O - https:<span class="regexp">//some.site | wc -l &gt; /number</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>CMD。使用这种形式CMD [“executable”, “param1”, “param2”…]。一般不要和ENTRYPOINT配合使用。</li>
+<li>EXPOSE。使用常识的端口，如http 80。使用环境变量在容器之间传递。</li>
+<li>ENV。每次ENV都是一层。定义常量，PATH等。如果只是在RUN使用，可以用bash的环境变量替代。防止在镜像的层中存在。</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> alpine</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">export</span> ADMIN_USER=<span class="string">"mark"</span> \</span></span><br><span class="line"><span class="bash">    &amp;&amp; <span class="built_in">echo</span> <span class="variable">$ADMIN_USER</span> &gt; ./mark \</span></span><br><span class="line"><span class="bash">    &amp;&amp; <span class="built_in">unset</span> ADMIN_USER</span></span><br><span class="line"><span class="bash">CMD sh</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>ADD vs COPY。推荐使用COPY，ADD额外提供的功能，如本地解压，URL获取；一般也很少使用。COPY要多次，以防止缓存很难失效。</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RUN mkdir -p <span class="regexp">/usr/</span>src<span class="regexp">/things \</span></span><br><span class="line"><span class="regexp">    &amp;&amp; curl -SL http:/</span><span class="regexp">/example.com/</span>big.tar.xz \</span><br><span class="line">    | tar -xJC <span class="regexp">/usr/</span>src<span class="regexp">/things \</span></span><br><span class="line"><span class="regexp">    &amp;&amp; make -C /u</span>sr<span class="regexp">/src/</span>things all</span><br></pre></td></tr></table></figure>
+<ol>
+<li>ENTRYPOINT。用于设置镜像的主命令。可以搭配启动脚本一起使用。记得要保障运行的程序的PID为1.</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">set</span> -e</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">'postgres'</span> ]; <span class="keyword">then</span></span><br><span class="line">    chown -R postgres <span class="string">"<span class="variable">$PGDATA</span>"</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> [ -z <span class="string">"<span class="variable">$(ls -A "$PGDATA")</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">        gosu postgres initdb</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">exec</span> gosu postgres <span class="string">"<span class="variable">$@</span>"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">exec</span> <span class="string">"<span class="variable">$@</span>"</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>VOLUME。挂载容易变化的文件或者目录。</li>
+<li>USER。如果可以在非特权模式运行，则创建USER。不要使用sudo，因为有tty和信号量问题。建议使用gosu。不要频繁切换USER。</li>
+<li>WORKDIR。使用绝对路径。</li>
+<li>ONBUILD。将ONBUILD是为父镜像给子镜像的。构建时，在子镜像的所有命令之前运行。onbuild有独立的tag。注意COPY和ADD的使用，可能由于某个文件不存在导致失败。参考：<a href="https://github.com/docker-library/ruby/blob/master/2.4/jessie/onbuild/Dockerfile" target="_blank" rel="noopener">https://github.com/docker-library/ruby/blob/master/2.4/jessie/onbuild/Dockerfile</a></li>
+</ol>
+<p><strong>参考资料：<a href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/" target="_blank" rel="noopener">https://docs.docker.com/develop/develop-images/dockerfile_best-practices/</a></strong></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2018/04/22/meltdown攻击原理/">
+        <!--meltdown攻击原理--> next →
+    </a>
+    
+</nav>
+
+<!-- Begin Comments Code -->
+<div id="comments">
+  <!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="post-Docker技术基本原理及镜像构建最佳实践" data-title="Docker技术基本原理及镜像构建最佳实践" data-url="http://www.zhangmin.name/blog/2018/04/26/Docker技术基本原理及镜像构建最佳实践/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangmin"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</div>
+<!-- End Comments Code -->
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2018 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>
