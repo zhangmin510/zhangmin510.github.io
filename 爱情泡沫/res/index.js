@@ -121,10 +121,11 @@
         together.setMilliseconds(0);
         $("#code").show().typewriter();
         $("#clock-box").fadeIn(500);
-        while (true) {
-            timeElapse(together);
-            $await(Jscex.Async.sleep(1000));
-        }
+        timeElapse(together);
+        // while (true) {
+        //     timeElapse(together);
+        //     $await(Jscex.Async.sleep(1000));
+        // }
     }));
     var runAsync = eval(Jscex.compile("async", function () {
         $await(seedAnimate());
