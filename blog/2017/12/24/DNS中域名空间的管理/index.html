@@ -66,7 +66,7 @@
     <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#名词解释"><span class="toc-text">名词解释</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DNS域名空间"><span class="toc-text">DNS域名空间</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS域名空间管理"><span class="toc-text">DNS域名空间管理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#区数据的管理和运维"><span class="toc-text">区数据的管理和运维</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建一个子区"><span class="toc-text">创建一个子区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构建区数据"><span class="toc-text">构建区数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动区的域名服务器"><span class="toc-text">启动区的域名服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区数据传输"><span class="toc-text">区数据传输</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
   </section>
   <section class="post-content article-entry">
-    <p>在<a href="http://www.zhangmin.name/blog/2017/11/28/%E5%9B%9E%E5%88%B0%E8%B5%B7%E7%82%B9%E7%9C%8BDNS/">前一篇文章</a>中介绍了DNS系统的历史以及DNS系统的组成，这篇文章主要介绍DNS中域名数据的管理。</p>
+    <p>在<a href="https://zhangmin.name/blog/2017/11/28/%E5%9B%9E%E5%88%B0%E8%B5%B7%E7%82%B9%E7%9C%8BDNS/">前一篇文章</a>中介绍了DNS系统的历史以及DNS系统的组成，这篇文章主要介绍DNS中域名数据的管理。</p>
 <h1 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h1><ol>
 <li>域名（domain name），是由一个或者多个标签（label）以点连接组成，最后一个标签是空标签代表根。如对于域名<code>www.zhangmin.name</code>，有三个标签，分别是<code>www</code>，<code>zhangmin</code>，<code>name</code>。还有一个空标签一般省略不写，代表根。大多数软件使用的域名的完全合规的形式（FQDN，Fully Qualified Domain Name）即<code>www.zhangmin.name.</code>，通过这个域名的QFDN可以精确的描述这个域名在整个域名空间树中的位置。</li>
 <li>区（zone），区定义了连续的域名空间，通常是域名的管理边界。</li>
@@ -76,7 +76,7 @@
 <h1 id="DNS域名空间"><a href="#DNS域名空间" class="headerlink" title="DNS域名空间"></a>DNS域名空间</h1><p>DNS域名空间是一个树结构，类似linux中的目录结构（如图1所示）。每一个节点和叶子节点对应资源记录集合，可能为空。域名系统没有区分内部节点和叶子节点的使用，所以统一使用节点来描述。</p>
 <p>每个节点都有一个标签（label），长度是0-63个字节。兄弟节点不能有相同的标签。但是相同的标签可以用于非兄弟节点。有一个标签是保留的，及空标签（长度为0），用于表示根。</p>
 <p>一个节点的域名的就是由从根到当前节点的标签的组成，通过点来分隔。通常，组成域名的标签是按照从左到右的方式来显示。 从最具体的（最低，离根最远的）节点到最不具体的（最高，离根近的）节点。</p>
-<p><img src="http://www.zhangmin.name/images/dns/dns-namespace.jpg" alt="DNS命名空间"></p>
+<p><img src="https://zhangmin.name/images/dns/dns-namespace.jpg" alt="DNS命名空间"></p>
 <p>​                                                     图 1 DNS命名空间树</p>
 <p>在程序实现时，操作域名的程序应该把域名当做标签序列来处理，每个标签由一个字节表示长度，剩余63字节是标签内容。由于所有的域名都是以空标签（根）结尾，程序内部可以使用一个0字节来作为域名结尾。为了简化实现，一个域名最大的大小为255，即所有的标签和标签长度加起来的大小。</p>
 <p>当用户需要输入一个域名，每个标签的长度可以忽略，每个标签以点分隔。由于完整的域名以根标签结束， 所以域名显示为以点结尾。以此来区分：</p>
@@ -88,7 +88,7 @@
 <p>在域名空间数的每个节点都可以存储不同类型的资源记录，如对于节点<code>hz.netease.com</code>存储的资源记录有A（IPv4地址）和MX（邮箱服务器记录）。</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">hz</span><span class="selector-class">.netease</span><span class="selector-class">.com</span>.         17893   <span class="selector-tag">IN</span>      <span class="selector-tag">A</span>       115<span class="selector-class">.236</span><span class="selector-class">.113</span><span class="selector-class">.65</span></span><br><span class="line"><span class="selector-tag">hz</span><span class="selector-class">.netease</span><span class="selector-class">.com</span>.         15188   <span class="selector-tag">IN</span>      <span class="selector-tag">MX</span>      10 <span class="selector-tag">smtp</span><span class="selector-class">.hz</span><span class="selector-class">.netease</span><span class="selector-class">.com</span>.</span><br></pre></td></tr></table></figure>
 <h2 id="DNS域名空间管理"><a href="#DNS域名空间管理" class="headerlink" title="DNS域名空间管理"></a>DNS域名空间管理</h2><p>DNS的是数据库里存储的内容就是域名及其关联的资源记录。域名服务器是构成整个域名数据库的信息仓库。整个DNS的数据库按照DNS域名空间树被分成不同的部分，叫做区（zone）。 这些区都分布在不同的域名服务器上。域名服务器可以提供额外的功能和数据，但其最重要的工作就是使用本地的区数据来回答查询请求。</p>
-<p><img src="http://www.zhangmin.name/images/dns/dns-zone-delegation.jpg" alt="DNS区管理"></p>
+<p><img src="https://zhangmin.name/images/dns/dns-zone-delegation.jpg" alt="DNS区管理"></p>
 <p>​                                图 2 DNS区数据及其授权关系</p>
 <p>在设计上，域名服务器以一种简单的方式响应查询请求：用本地的区数据来生成响应。 响应既可以是查询的目标数据，也可以指向临近的域名服务器有需要的数据。</p>
 <p>为了高可用，一个区会在多个域名服务器上，一般要求至少两个域名服务器。</p>

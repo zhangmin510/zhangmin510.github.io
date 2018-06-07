@@ -74,11 +74,11 @@
 <h1 id="3-理解Meltdown攻击过程"><a href="#3-理解Meltdown攻击过程" class="headerlink" title="3 理解Meltdown攻击过程"></a>3 理解Meltdown攻击过程</h1><p>为了理解Meltdown攻击原理，需要了解以下三个方面的背景知识，如处理器乱序执行，内存隔离技术和缓存攻击。</p>
 <h2 id="3-1-现代处理器中的乱序执行技术"><a href="#3-1-现代处理器中的乱序执行技术" class="headerlink" title="3.1 现代处理器中的乱序执行技术"></a>3.1 现代处理器中的乱序执行技术</h2><p>现代处理器为了最大程度的利用所有的执行单元，就开始使用乱序执行技术。在处理其中，指令不是严格顺序执行，而是一旦指令所需要的条件满足，就会被并行地执行。如果当前的执行单元已经被占用，可以使用其他的执行单元。</p>
 <p>Intel的处理器架构中的流水线由前端，执行引擎和存储子系统组成。前端从内存读取x86指令，并解码为微指令（uOPs）。这些微指令会不断地发送到处理引擎。乱序执行就是由执行引擎实现的。</p>
-<p><img src="http://www.zhangmin.name/images/meltdown/intel-pipeline.jpg" alt="intel处理机架构图"></p>
+<p><img src="https://zhangmin.name/images/meltdown/intel-pipeline.jpg" alt="intel处理机架构图"></p>
 <p><code>Reorder Buffer</code>负责分配寄存器，包括寄存器重命名和失效。然后指令被转发到<code>Unified Reservation Station</code>进行排队。每个执行单元可以执行不同的操作，如地址生成，读内存，写内存等。一般指令都不是线性执行的，所以处理器还有分支预测单元，预测接下来将要执行的指令。分支预测在分支条件还未被评估之前<br>就会决定执行某一个分支。执行路径上没有依赖的会提前执行，如果分支预测正确，它们的结果可以被利用。<br>如果分支预测失败，<code>Reorder Buffer</code>会回滚，清理<code>Reorder Buffer</code>，<br>重新初始化<code>Unified Reservation Station</code>。</p>
 <h2 id="3-2-计算机系统中的内存隔离技术"><a href="#3-2-计算机系统中的内存隔离技术" class="headerlink" title="3.2 计算机系统中的内存隔离技术"></a>3.2 计算机系统中的内存隔离技术</h2><p>操作系统保证用户程序只能访问自己的内存，而不能访问其他程序的内存，而且用户程序是不能读写内核空间内存。这种内存隔离对于多用户多进程的计算机系统是非常重要和关键的，特别是在云计算环境中。为了隔离不同的进程，处理器支持虚拟地址空间。虚拟地址空间地址可以映射到物理地址。</p>
 <p>虚拟地址空间被分为不同的部分，使用多级内存地址翻译表来映射到物理内存。内存地址翻译表定义映射的物理地址，以及一些保护性质的特权检查位，如可读，可写，可执行，用户可访问等。内存翻译表在CPU的特定寄存器中，每次上下文切换，操作系统将这个地址设置为下一个进程的内存翻译表的地址，从而实现进程级别的虚拟地址空间。每一个虚拟地址空间又分为用户和内核部分。内核部分只能在CPU的特权模式访问，这是通过设置相应内存翻译表中用户可访问的特权标记位来实现。只有进入内核空间才能设置这个超级权限标记位，当<br>切换到用户空间时被清除。这个硬件特性允许内核将整个内核映射到每一个用户进程，从而使得内核和用户空间之间的切换更高效，如处理中断。</p>
-<p><img src="http://www.zhangmin.name/images/meltdown/address-mapping.jpg" alt="内存地址空间映射"></p>
+<p><img src="https://zhangmin.name/images/meltdown/address-mapping.jpg" alt="内存地址空间映射"></p>
 <p>物理空间直接映射到内核空间的特定偏移。用户可以访问的物理地址会同时映射到用户空间和内核空间。<br>内核地址空间不仅仅只有内核自己使用的物理地址，还需要操作用户的地址，所以整个物理内存都映射到了内核空间。在Linux和Mac OS这个是通过直接物理内存映射实现。</p>
 <p>一般针对内存的攻击都需要知道特定数据的地址。为了阻止这类攻击，内核使用ASLR技术（Address Space Layout Randomization）。KASLR每次启动时都会随机化设置驱动的偏移，使得攻击者无法猜测到内核数据结果的准确位置。但是利用软件的漏洞和内核地址信息还是可以执行特权代码。</p>
 <h2 id="3-3-缓存攻击"><a href="#3-3-缓存攻击" class="headerlink" title="3.3 缓存攻击"></a>3.3 缓存攻击</h2><p>为了加速处理器访问数据和虚拟空间地址翻译，处理器使用缓存来存储经常访问的数据。<br>通过使用内部的，高速的缓存来降低访问内存的延迟。现代处理器有多级缓存。地址空间翻译表也在内存中存储，也会被缓存。</p>
@@ -91,14 +91,14 @@
 <h2 id="4-1-一个简单的攻击的例子"><a href="#4-1-一个简单的攻击的例子" class="headerlink" title="4.1 一个简单的攻击的例子"></a>4.1 一个简单的攻击的例子</h2><figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">1 </span>raise_exception();</span><br><span class="line"><span class="symbol">2 </span>// the <span class="keyword">line</span> below is never reached</span><br><span class="line"><span class="symbol">3 </span>access(probe_array[<span class="keyword">data</span> * <span class="number">4096</span>]);</span><br></pre></td></tr></table></figure>
 <p>第一步触发异常（如访问非法地址，除0等）。第二步访问数组。正常情况下，异常的发生使得第二步操作不会再异常之后执行，而是陷入到操作系统内核的异常处理程序。但是由于处理器乱序执行的特性，因为后面的指令没有数据依赖，这些指令可能已经部分被执行，而且中间状态没有被清除。</p>
 <p>乱序执行的指令由于访问了内存，相应地址的内存会被读取到寄存器，并被缓存。如果乱序执行结果被丢弃，这些寄存器和内存结果就不会被提交。尽管如此，缓存的内存数据还是停留在缓存中。可以使用宏观架构的边路信道攻击，检测到被缓存的内存地址，从而使得硬件层面的改变在外部被观测到。</p>
-<p><img src="http://www.zhangmin.name/images/meltdown/cache-access-time.jpg" alt="缓存时间"></p>
+<p><img src="https://zhangmin.name/images/meltdown/cache-access-time.jpg" alt="缓存时间"></p>
 <p>基于data的取值，不同部分的缓存可以被获取，当乱序执行时。data被乘以4096使得probe_array被分散到4KB的距离（如果probe_array是1B的数据类型）。之所以将数据分散是为了移除错误率，由于处理区的数据预取机制。但是数据预取<br>不能访问不同的内存页，即不能跨越页边界。因此，data就会单项映射到不同的内存页，即不会有两个data的值映射到相同的内存页。如果通过缓存攻击知道哪一个页被缓存，我们就知道了data的值。</p>
 <p>当data=84后，尽管后面的数组访问由于异常没有执行，但是可以看到被访问的index的数据还是被缓存了。<br>迭代probe_array的内存页，可以看到84页命中，这就是在乱序执行过程中被访问的内存页。</p>
 <p>这个例子表明指令虽然实际上（按照正确的处理逻辑）没有执行，但是由于处理器的乱序执行特性，还是改变了处理器<br>的状态，并且这个状态可以在处理器外部获取到，从而实现meltdown攻击。</p>
 <h2 id="4-2-构建Meltdown攻击"><a href="#4-2-构建Meltdown攻击" class="headerlink" title="4.2 构建Meltdown攻击"></a>4.2 构建Meltdown攻击</h2><p>通用化的攻击，如读取未授权的数据。在上下文切换时，寄存器<br>中的值会存到内存中，也会存到物理内存中。</p>
 <p>越过权限隔离，直接读取内核空间，包括物理内存。</p>
 <p>完整的meltdown攻击包括两部分：</p>
-<p><img src="http://www.zhangmin.name/images/meltdown/full-meltdown.jpg" alt="meltdown"></p>
+<p><img src="https://zhangmin.name/images/meltdown/full-meltdown.jpg" alt="meltdown"></p>
 <p>The Meltdown attack uses exception handling or suppression, e.g., TSX, to run a series of transient instructions. These transient instructions obtain a (per- sistent) secret value and change the microarchitectural state of the processor based on this secret value. This forms the sending part of a microarchitectural covert channel. The receiving side reads the microarchitectural state, making it architectural and recovering the secret value.</p>
 <p>使用异常处理程序或者异常抑制程序，如TSX，来运行<code>transient instruction</code>，这些<code>transient instruction</code>获取一个secret value，并通过这个secret value改变处理器的状态。作为隐蔽信道攻击的发送端。<br>接收端读到这种状态，并重建出secret value。</p>
 <ol>
