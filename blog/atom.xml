@@ -5,9 +5,9 @@
   <subtitle>勤思敏行 思行合一</subtitle>
   <link href="/blog/atom.xml" rel="self"/>
   
-  <link href="http://www.zhangmin.name/blog/"/>
+  <link href="https://www.zhangmin.name/blog/"/>
   <updated>2018-05-03T08:37:54.000Z</updated>
-  <id>http://www.zhangmin.name/blog/</id>
+  <id>https://www.zhangmin.name/blog/</id>
   
   <author>
     <name>ZhangMin.name</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>为什么DNS的UDP包有512字节的限制</title>
-    <link href="http://www.zhangmin.name/blog/2018/05/03/%E4%B8%BA%E4%BB%80%E4%B9%88DNS%E7%9A%84UDP%E5%8C%85%E6%9C%89512%E5%AD%97%E8%8A%82%E7%9A%84%E9%99%90%E5%88%B6/"/>
-    <id>http://www.zhangmin.name/blog/2018/05/03/为什么DNS的UDP包有512字节的限制/</id>
+    <link href="https://www.zhangmin.name/blog/2018/05/03/%E4%B8%BA%E4%BB%80%E4%B9%88DNS%E7%9A%84UDP%E5%8C%85%E6%9C%89512%E5%AD%97%E8%8A%82%E7%9A%84%E9%99%90%E5%88%B6/"/>
+    <id>https://www.zhangmin.name/blog/2018/05/03/为什么DNS的UDP包有512字节的限制/</id>
     <published>2018-05-03T08:37:54.000Z</published>
     <updated>2018-05-03T08:37:54.000Z</updated>
     
@@ -35,17 +35,17 @@
     
     </summary>
     
-      <category term="DNS" scheme="http://www.zhangmin.name/blog/categories/DNS/"/>
+      <category term="DNS" scheme="https://www.zhangmin.name/blog/categories/DNS/"/>
     
     
-      <category term="DNS" scheme="http://www.zhangmin.name/blog/tags/DNS/"/>
+      <category term="DNS" scheme="https://www.zhangmin.name/blog/tags/DNS/"/>
     
   </entry>
   
   <entry>
     <title>RFC文档中对DNS域名格式的说明</title>
-    <link href="http://www.zhangmin.name/blog/2018/05/01/RFC%E6%96%87%E6%A1%A3%E4%B8%AD%E5%AF%B9DNS%E5%9F%9F%E5%90%8D%E6%A0%BC%E5%BC%8F%E7%9A%84%E8%AF%B4%E6%98%8E/"/>
-    <id>http://www.zhangmin.name/blog/2018/05/01/RFC文档中对DNS域名格式的说明/</id>
+    <link href="https://www.zhangmin.name/blog/2018/05/01/RFC%E6%96%87%E6%A1%A3%E4%B8%AD%E5%AF%B9DNS%E5%9F%9F%E5%90%8D%E6%A0%BC%E5%BC%8F%E7%9A%84%E8%AF%B4%E6%98%8E/"/>
+    <id>https://www.zhangmin.name/blog/2018/05/01/RFC文档中对DNS域名格式的说明/</id>
     <published>2018-05-01T03:22:05.000Z</published>
     <updated>2018-05-01T03:22:05.000Z</updated>
     
@@ -60,17 +60,17 @@
     
     </summary>
     
-      <category term="DNS" scheme="http://www.zhangmin.name/blog/categories/DNS/"/>
+      <category term="DNS" scheme="https://www.zhangmin.name/blog/categories/DNS/"/>
     
     
-      <category term="DNS" scheme="http://www.zhangmin.name/blog/tags/DNS/"/>
+      <category term="DNS" scheme="https://www.zhangmin.name/blog/tags/DNS/"/>
     
   </entry>
   
   <entry>
     <title>Docker技术基本原理及镜像构建最佳实践</title>
-    <link href="http://www.zhangmin.name/blog/2018/04/26/Docker%E6%8A%80%E6%9C%AF%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8A%E9%95%9C%E5%83%8F%E6%9E%84%E5%BB%BA%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"/>
-    <id>http://www.zhangmin.name/blog/2018/04/26/Docker技术基本原理及镜像构建最佳实践/</id>
+    <link href="https://www.zhangmin.name/blog/2018/04/26/Docker%E6%8A%80%E6%9C%AF%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8A%E9%95%9C%E5%83%8F%E6%9E%84%E5%BB%BA%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"/>
+    <id>https://www.zhangmin.name/blog/2018/04/26/Docker技术基本原理及镜像构建最佳实践/</id>
     <published>2018-04-26T14:01:02.000Z</published>
     <updated>2018-04-26T14:01:02.000Z</updated>
     
@@ -85,17 +85,17 @@
     
     </summary>
     
-      <category term="练笔" scheme="http://www.zhangmin.name/blog/categories/%E7%BB%83%E7%AC%94/"/>
+      <category term="练笔" scheme="https://www.zhangmin.name/blog/categories/%E7%BB%83%E7%AC%94/"/>
     
     
-      <category term="Docker" scheme="http://www.zhangmin.name/blog/tags/Docker/"/>
+      <category term="Docker" scheme="https://www.zhangmin.name/blog/tags/Docker/"/>
     
   </entry>
   
   <entry>
     <title>meltdown攻击原理</title>
-    <link href="http://www.zhangmin.name/blog/2018/04/22/meltdown%E6%94%BB%E5%87%BB%E5%8E%9F%E7%90%86/"/>
-    <id>http://www.zhangmin.name/blog/2018/04/22/meltdown攻击原理/</id>
+    <link href="https://www.zhangmin.name/blog/2018/04/22/meltdown%E6%94%BB%E5%87%BB%E5%8E%9F%E7%90%86/"/>
+    <id>https://www.zhangmin.name/blog/2018/04/22/meltdown攻击原理/</id>
     <published>2018-04-22T14:07:00.000Z</published>
     <updated>2018-04-22T14:07:00.000Z</updated>
     
@@ -110,17 +110,17 @@
     
     </summary>
     
-      <category term="练笔" scheme="http://www.zhangmin.name/blog/categories/%E7%BB%83%E7%AC%94/"/>
+      <category term="练笔" scheme="https://www.zhangmin.name/blog/categories/%E7%BB%83%E7%AC%94/"/>
     
     
-      <category term="练笔" scheme="http://www.zhangmin.name/blog/tags/%E7%BB%83%E7%AC%94/"/>
+      <category term="练笔" scheme="https://www.zhangmin.name/blog/tags/%E7%BB%83%E7%AC%94/"/>
     
   </entry>
   
   <entry>
     <title>比特币白皮书学习笔记</title>
-    <link href="http://www.zhangmin.name/blog/2018/04/22/%E6%AF%94%E7%89%B9%E5%B8%81%E7%99%BD%E7%9A%AE%E4%B9%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>http://www.zhangmin.name/blog/2018/04/22/比特币白皮书学习笔记/</id>
+    <link href="https://www.zhangmin.name/blog/2018/04/22/%E6%AF%94%E7%89%B9%E5%B8%81%E7%99%BD%E7%9A%AE%E4%B9%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>https://www.zhangmin.name/blog/2018/04/22/比特币白皮书学习笔记/</id>
     <published>2018-04-22T13:59:28.000Z</published>
     <updated>2018-04-22T13:59:28.000Z</updated>
     
@@ -135,17 +135,17 @@
     
     </summary>
     
-      <category term="区块链" scheme="http://www.zhangmin.name/blog/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://www.zhangmin.name/blog/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
     
-      <category term="区块链" scheme="http://www.zhangmin.name/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://www.zhangmin.name/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
   </entry>
   
   <entry>
     <title>代码级理解加密数字货币原理</title>
-    <link href="http://www.zhangmin.name/blog/2018/04/22/%E4%BB%A3%E7%A0%81%E7%BA%A7%E7%90%86%E8%A7%A3%E5%8A%A0%E5%AF%86%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E5%8E%9F%E7%90%86/"/>
-    <id>http://www.zhangmin.name/blog/2018/04/22/代码级理解加密数字货币原理/</id>
+    <link href="https://www.zhangmin.name/blog/2018/04/22/%E4%BB%A3%E7%A0%81%E7%BA%A7%E7%90%86%E8%A7%A3%E5%8A%A0%E5%AF%86%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E5%8E%9F%E7%90%86/"/>
+    <id>https://www.zhangmin.name/blog/2018/04/22/代码级理解加密数字货币原理/</id>
     <published>2018-04-22T13:57:24.000Z</published>
     <updated>2018-04-22T13:57:24.000Z</updated>
     
@@ -161,17 +161,17 @@
     
     </summary>
     
-      <category term="区块链" scheme="http://www.zhangmin.name/blog/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://www.zhangmin.name/blog/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
     
-      <category term="区块链" scheme="http://www.zhangmin.name/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://www.zhangmin.name/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
   </entry>
   
   <entry>
     <title>关于DDoS防护的总结笔记</title>
-    <link href="http://www.zhangmin.name/blog/2018/04/22/%E5%85%B3%E4%BA%8EDDoS%E9%98%B2%E6%8A%A4%E7%9A%84%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0/"/>
-    <id>http://www.zhangmin.name/blog/2018/04/22/关于DDoS防护的总结笔记/</id>
+    <link href="https://www.zhangmin.name/blog/2018/04/22/%E5%85%B3%E4%BA%8EDDoS%E9%98%B2%E6%8A%A4%E7%9A%84%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0/"/>
+    <id>https://www.zhangmin.name/blog/2018/04/22/关于DDoS防护的总结笔记/</id>
     <published>2018-04-22T13:53:15.000Z</published>
     <updated>2018-04-22T13:53:15.000Z</updated>
     
@@ -186,17 +186,17 @@
     
     </summary>
     
-      <category term="云计算" scheme="http://www.zhangmin.name/blog/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/"/>
+      <category term="云计算" scheme="https://www.zhangmin.name/blog/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/"/>
     
     
-      <category term="DDoS" scheme="http://www.zhangmin.name/blog/tags/DDoS/"/>
+      <category term="DDoS" scheme="https://www.zhangmin.name/blog/tags/DDoS/"/>
     
   </entry>
   
   <entry>
     <title>我终于找到了防止犯错的方法——清单</title>
-    <link href="http://www.zhangmin.name/blog/2018/03/04/%E6%88%91%E7%BB%88%E4%BA%8E%E6%89%BE%E5%88%B0%E4%BA%86%E9%98%B2%E6%AD%A2%E7%8A%AF%E9%94%99%E7%9A%84%E6%96%B9%E6%B3%95%E2%80%94%E2%80%94%E6%B8%85%E5%8D%95/"/>
-    <id>http://www.zhangmin.name/blog/2018/03/04/我终于找到了防止犯错的方法——清单/</id>
+    <link href="https://www.zhangmin.name/blog/2018/03/04/%E6%88%91%E7%BB%88%E4%BA%8E%E6%89%BE%E5%88%B0%E4%BA%86%E9%98%B2%E6%AD%A2%E7%8A%AF%E9%94%99%E7%9A%84%E6%96%B9%E6%B3%95%E2%80%94%E2%80%94%E6%B8%85%E5%8D%95/"/>
+    <id>https://www.zhangmin.name/blog/2018/03/04/我终于找到了防止犯错的方法——清单/</id>
     <published>2018-03-04T13:25:23.000Z</published>
     <updated>2018-03-04T13:25:23.000Z</updated>
     
@@ -214,17 +214,17 @@
     
     </summary>
     
-      <category term="成事" scheme="http://www.zhangmin.name/blog/categories/%E6%88%90%E4%BA%8B/"/>
+      <category term="成事" scheme="https://www.zhangmin.name/blog/categories/%E6%88%90%E4%BA%8B/"/>
     
     
-      <category term="思维" scheme="http://www.zhangmin.name/blog/tags/%E6%80%9D%E7%BB%B4/"/>
+      <category term="思维" scheme="https://www.zhangmin.name/blog/tags/%E6%80%9D%E7%BB%B4/"/>
     
   </entry>
   
   <entry>
     <title>DNS中域名空间的管理</title>
-    <link href="http://www.zhangmin.name/blog/2017/12/24/DNS%E4%B8%AD%E5%9F%9F%E5%90%8D%E7%A9%BA%E9%97%B4%E7%9A%84%E7%AE%A1%E7%90%86/"/>
-    <id>http://www.zhangmin.name/blog/2017/12/24/DNS中域名空间的管理/</id>
+    <link href="https://www.zhangmin.name/blog/2017/12/24/DNS%E4%B8%AD%E5%9F%9F%E5%90%8D%E7%A9%BA%E9%97%B4%E7%9A%84%E7%AE%A1%E7%90%86/"/>
+    <id>https://www.zhangmin.name/blog/2017/12/24/DNS中域名空间的管理/</id>
     <published>2017-12-24T03:10:30.000Z</published>
     <updated>2017-12-24T03:10:30.000Z</updated>
     
@@ -239,17 +239,17 @@
     
     </summary>
     
-      <category term="成事" scheme="http://www.zhangmin.name/blog/categories/%E6%88%90%E4%BA%8B/"/>
+      <category term="成事" scheme="https://www.zhangmin.name/blog/categories/%E6%88%90%E4%BA%8B/"/>
     
     
-      <category term="DNS" scheme="http://www.zhangmin.name/blog/tags/DNS/"/>
+      <category term="DNS" scheme="https://www.zhangmin.name/blog/tags/DNS/"/>
     
   </entry>
   
   <entry>
     <title>区块链开发入门</title>
-    <link href="http://www.zhangmin.name/blog/2017/12/09/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/"/>
-    <id>http://www.zhangmin.name/blog/2017/12/09/区块链开发入门/</id>
+    <link href="https://www.zhangmin.name/blog/2017/12/09/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/"/>
+    <id>https://www.zhangmin.name/blog/2017/12/09/区块链开发入门/</id>
     <published>2017-12-09T15:27:17.000Z</published>
     <updated>2017-12-09T15:27:17.000Z</updated>
     
@@ -264,17 +264,17 @@
     
     </summary>
     
-      <category term="成事" scheme="http://www.zhangmin.name/blog/categories/%E6%88%90%E4%BA%8B/"/>
+      <category term="成事" scheme="https://www.zhangmin.name/blog/categories/%E6%88%90%E4%BA%8B/"/>
     
     
-      <category term="区块链" scheme="http://www.zhangmin.name/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+      <category term="区块链" scheme="https://www.zhangmin.name/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
   </entry>
   
   <entry>
     <title>回到起点看DNS</title>
-    <link href="http://www.zhangmin.name/blog/2017/11/28/%E5%9B%9E%E5%88%B0%E8%B5%B7%E7%82%B9%E7%9C%8BDNS/"/>
-    <id>http://www.zhangmin.name/blog/2017/11/28/回到起点看DNS/</id>
+    <link href="https://www.zhangmin.name/blog/2017/11/28/%E5%9B%9E%E5%88%B0%E8%B5%B7%E7%82%B9%E7%9C%8BDNS/"/>
+    <id>https://www.zhangmin.name/blog/2017/11/28/回到起点看DNS/</id>
     <published>2017-11-28T15:25:55.000Z</published>
     <updated>2017-11-28T15:25:55.000Z</updated>
     
@@ -290,17 +290,17 @@
     
     </summary>
     
-      <category term="DNS" scheme="http://www.zhangmin.name/blog/categories/DNS/"/>
+      <category term="DNS" scheme="https://www.zhangmin.name/blog/categories/DNS/"/>
     
     
-      <category term="DNS" scheme="http://www.zhangmin.name/blog/tags/DNS/"/>
+      <category term="DNS" scheme="https://www.zhangmin.name/blog/tags/DNS/"/>
     
   </entry>
   
   <entry>
     <title>Openstack了解</title>
-    <link href="http://www.zhangmin.name/blog/2016/12/31/Openstack%E4%BA%86%E8%A7%A3/"/>
-    <id>http://www.zhangmin.name/blog/2016/12/31/Openstack了解/</id>
+    <link href="https://www.zhangmin.name/blog/2016/12/31/Openstack%E4%BA%86%E8%A7%A3/"/>
+    <id>https://www.zhangmin.name/blog/2016/12/31/Openstack了解/</id>
     <published>2016-12-31T07:34:27.000Z</published>
     <updated>2016-12-31T07:34:27.000Z</updated>
     
@@ -315,17 +315,17 @@
     
     </summary>
     
-      <category term="练笔" scheme="http://www.zhangmin.name/blog/categories/%E7%BB%83%E7%AC%94/"/>
+      <category term="练笔" scheme="https://www.zhangmin.name/blog/categories/%E7%BB%83%E7%AC%94/"/>
     
     
-      <category term="练笔" scheme="http://www.zhangmin.name/blog/tags/%E7%BB%83%E7%AC%94/"/>
+      <category term="练笔" scheme="https://www.zhangmin.name/blog/tags/%E7%BB%83%E7%AC%94/"/>
     
   </entry>
   
   <entry>
     <title>http2</title>
-    <link href="http://www.zhangmin.name/blog/2016/12/01/http2/"/>
-    <id>http://www.zhangmin.name/blog/2016/12/01/http2/</id>
+    <link href="https://www.zhangmin.name/blog/2016/12/01/http2/"/>
+    <id>https://www.zhangmin.name/blog/2016/12/01/http2/</id>
     <published>2016-12-01T15:02:57.000Z</published>
     <updated>2016-12-01T15:02:57.000Z</updated>
     
@@ -340,17 +340,17 @@
     
     </summary>
     
-      <category term="学习笔记" scheme="http://www.zhangmin.name/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="学习笔记" scheme="https://www.zhangmin.name/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="HTTP" scheme="http://www.zhangmin.name/blog/tags/HTTP/"/>
+      <category term="HTTP" scheme="https://www.zhangmin.name/blog/tags/HTTP/"/>
     
   </entry>
   
   <entry>
     <title>SSL原理简介</title>
-    <link href="http://www.zhangmin.name/blog/2016/11/28/SSL%E5%8E%9F%E7%90%86%E7%AE%80%E4%BB%8B/"/>
-    <id>http://www.zhangmin.name/blog/2016/11/28/SSL原理简介/</id>
+    <link href="https://www.zhangmin.name/blog/2016/11/28/SSL%E5%8E%9F%E7%90%86%E7%AE%80%E4%BB%8B/"/>
+    <id>https://www.zhangmin.name/blog/2016/11/28/SSL原理简介/</id>
     <published>2016-11-28T14:45:24.000Z</published>
     <updated>2016-11-28T14:45:24.000Z</updated>
     
@@ -365,17 +365,17 @@
     
     </summary>
     
-      <category term="学习笔记" scheme="http://www.zhangmin.name/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="学习笔记" scheme="https://www.zhangmin.name/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="SSL" scheme="http://www.zhangmin.name/blog/tags/SSL/"/>
+      <category term="SSL" scheme="https://www.zhangmin.name/blog/tags/SSL/"/>
     
   </entry>
   
   <entry>
     <title>杭州西湖故事</title>
-    <link href="http://www.zhangmin.name/blog/2016/11/08/%E6%9D%AD%E5%B7%9E%E8%A5%BF%E6%B9%96%E6%95%85%E4%BA%8B/"/>
-    <id>http://www.zhangmin.name/blog/2016/11/08/杭州西湖故事/</id>
+    <link href="https://www.zhangmin.name/blog/2016/11/08/%E6%9D%AD%E5%B7%9E%E8%A5%BF%E6%B9%96%E6%95%85%E4%BA%8B/"/>
+    <id>https://www.zhangmin.name/blog/2016/11/08/杭州西湖故事/</id>
     <published>2016-11-08T15:49:16.000Z</published>
     <updated>2016-11-08T15:49:16.000Z</updated>
     
@@ -390,17 +390,17 @@
     
     </summary>
     
-      <category term="练笔" scheme="http://www.zhangmin.name/blog/categories/%E7%BB%83%E7%AC%94/"/>
+      <category term="练笔" scheme="https://www.zhangmin.name/blog/categories/%E7%BB%83%E7%AC%94/"/>
     
     
-      <category term="练笔" scheme="http://www.zhangmin.name/blog/tags/%E7%BB%83%E7%AC%94/"/>
+      <category term="练笔" scheme="https://www.zhangmin.name/blog/tags/%E7%BB%83%E7%AC%94/"/>
     
   </entry>
   
   <entry>
     <title>hexo用起来</title>
-    <link href="http://www.zhangmin.name/blog/2016/10/31/hexo%E7%94%A8%E8%B5%B7%E6%9D%A5/"/>
-    <id>http://www.zhangmin.name/blog/2016/10/31/hexo用起来/</id>
+    <link href="https://www.zhangmin.name/blog/2016/10/31/hexo%E7%94%A8%E8%B5%B7%E6%9D%A5/"/>
+    <id>https://www.zhangmin.name/blog/2016/10/31/hexo用起来/</id>
     <published>2016-10-31T15:15:47.000Z</published>
     <updated>2017-11-28T15:23:16.119Z</updated>
     
@@ -417,17 +417,17 @@
     
     </summary>
     
-      <category term="练笔" scheme="http://www.zhangmin.name/blog/categories/%E7%BB%83%E7%AC%94/"/>
+      <category term="练笔" scheme="https://www.zhangmin.name/blog/categories/%E7%BB%83%E7%AC%94/"/>
     
     
-      <category term="练笔" scheme="http://www.zhangmin.name/blog/tags/%E7%BB%83%E7%AC%94/"/>
+      <category term="练笔" scheme="https://www.zhangmin.name/blog/tags/%E7%BB%83%E7%AC%94/"/>
     
   </entry>
   
   <entry>
     <title>混沌学院产品课程笔记</title>
-    <link href="http://www.zhangmin.name/blog/2016/01/06/%E6%B7%B7%E6%B2%8C%E5%AD%A6%E9%99%A2%E4%BA%A7%E5%93%81%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/"/>
-    <id>http://www.zhangmin.name/blog/2016/01/06/混沌学院产品课程笔记/</id>
+    <link href="https://www.zhangmin.name/blog/2016/01/06/%E6%B7%B7%E6%B2%8C%E5%AD%A6%E9%99%A2%E4%BA%A7%E5%93%81%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/"/>
+    <id>https://www.zhangmin.name/blog/2016/01/06/混沌学院产品课程笔记/</id>
     <published>2016-01-06T14:08:27.000Z</published>
     <updated>2017-11-28T15:23:16.119Z</updated>
     
@@ -442,19 +442,19 @@
     
     </summary>
     
-      <category term="学习笔记" scheme="http://www.zhangmin.name/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="学习笔记" scheme="https://www.zhangmin.name/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="博观约取" scheme="http://www.zhangmin.name/blog/tags/%E5%8D%9A%E8%A7%82%E7%BA%A6%E5%8F%96/"/>
+      <category term="博观约取" scheme="https://www.zhangmin.name/blog/tags/%E5%8D%9A%E8%A7%82%E7%BA%A6%E5%8F%96/"/>
     
-      <category term="混沌学院" scheme="http://www.zhangmin.name/blog/tags/%E6%B7%B7%E6%B2%8C%E5%AD%A6%E9%99%A2/"/>
+      <category term="混沌学院" scheme="https://www.zhangmin.name/blog/tags/%E6%B7%B7%E6%B2%8C%E5%AD%A6%E9%99%A2/"/>
     
   </entry>
   
   <entry>
     <title>时间的朋友2015演讲笔记</title>
-    <link href="http://www.zhangmin.name/blog/2016/01/03/%E6%97%B6%E9%97%B4%E7%9A%84%E6%9C%8B%E5%8F%8B2015%E6%BC%94%E8%AE%B2%E7%AC%94%E8%AE%B0/"/>
-    <id>http://www.zhangmin.name/blog/2016/01/03/时间的朋友2015演讲笔记/</id>
+    <link href="https://www.zhangmin.name/blog/2016/01/03/%E6%97%B6%E9%97%B4%E7%9A%84%E6%9C%8B%E5%8F%8B2015%E6%BC%94%E8%AE%B2%E7%AC%94%E8%AE%B0/"/>
+    <id>https://www.zhangmin.name/blog/2016/01/03/时间的朋友2015演讲笔记/</id>
     <published>2016-01-03T14:08:27.000Z</published>
     <updated>2017-11-28T15:23:16.119Z</updated>
     
@@ -471,19 +471,19 @@
     
     </summary>
     
-      <category term="学习笔记" scheme="http://www.zhangmin.name/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="学习笔记" scheme="https://www.zhangmin.name/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="时间的朋友" scheme="http://www.zhangmin.name/blog/tags/%E6%97%B6%E9%97%B4%E7%9A%84%E6%9C%8B%E5%8F%8B/"/>
+      <category term="时间的朋友" scheme="https://www.zhangmin.name/blog/tags/%E6%97%B6%E9%97%B4%E7%9A%84%E6%9C%8B%E5%8F%8B/"/>
     
-      <category term="博观约取" scheme="http://www.zhangmin.name/blog/tags/%E5%8D%9A%E8%A7%82%E7%BA%A6%E5%8F%96/"/>
+      <category term="博观约取" scheme="https://www.zhangmin.name/blog/tags/%E5%8D%9A%E8%A7%82%E7%BA%A6%E5%8F%96/"/>
     
   </entry>
   
   <entry>
     <title>关于Nodejs的core文件</title>
-    <link href="http://www.zhangmin.name/blog/2015/12/29/%E5%85%B3%E4%BA%8ENodejs%E7%9A%84core%E6%96%87%E4%BB%B6/"/>
-    <id>http://www.zhangmin.name/blog/2015/12/29/关于Nodejs的core文件/</id>
+    <link href="https://www.zhangmin.name/blog/2015/12/29/%E5%85%B3%E4%BA%8ENodejs%E7%9A%84core%E6%96%87%E4%BB%B6/"/>
+    <id>https://www.zhangmin.name/blog/2015/12/29/关于Nodejs的core文件/</id>
     <published>2015-12-29T05:54:27.000Z</published>
     <updated>2017-11-28T15:23:16.119Z</updated>
     
@@ -498,17 +498,17 @@
     
     </summary>
     
-      <category term="学习笔记" scheme="http://www.zhangmin.name/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="学习笔记" scheme="https://www.zhangmin.name/blog/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="nodejs" scheme="http://www.zhangmin.name/blog/tags/nodejs/"/>
+      <category term="nodejs" scheme="https://www.zhangmin.name/blog/tags/nodejs/"/>
     
   </entry>
   
   <entry>
     <title>nodejs菜鸟需跨过的坎</title>
-    <link href="http://www.zhangmin.name/blog/2015/12/02/nodejs%E8%8F%9C%E9%B8%9F%E9%9C%80%E8%B7%A8%E8%BF%87%E7%9A%84%E5%9D%8E/"/>
-    <id>http://www.zhangmin.name/blog/2015/12/02/nodejs菜鸟需跨过的坎/</id>
+    <link href="https://www.zhangmin.name/blog/2015/12/02/nodejs%E8%8F%9C%E9%B8%9F%E9%9C%80%E8%B7%A8%E8%BF%87%E7%9A%84%E5%9D%8E/"/>
+    <id>https://www.zhangmin.name/blog/2015/12/02/nodejs菜鸟需跨过的坎/</id>
     <published>2015-12-02T05:57:10.000Z</published>
     <updated>2017-11-28T15:23:16.139Z</updated>
     
@@ -523,10 +523,10 @@
     
     </summary>
     
-      <category term="nodejs" scheme="http://www.zhangmin.name/blog/categories/nodejs/"/>
+      <category term="nodejs" scheme="https://www.zhangmin.name/blog/categories/nodejs/"/>
     
     
-      <category term="nodejs" scheme="http://www.zhangmin.name/blog/tags/nodejs/"/>
+      <category term="nodejs" scheme="https://www.zhangmin.name/blog/tags/nodejs/"/>
     
   </entry>
   
