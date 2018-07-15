@@ -72,7 +72,7 @@
 <p>Dynamo通过各节点之间定期进行通信来了解节点的活动状态，从而侦测是否有失效存在。如果出现失效状态，，由于哈希方式的数据划分策略，使得系统中各个节点既作为存储节点也作为服务节点，服务迁移的过程伴随着大量的数据迁移，因而系统必须认真应对各种失效状态，以使失效恢复过程中尽量避免大规模存储数据迁移带来的系统开销。</p>
 <p>BigTable通过分布式锁服务chubby来跟踪主控节点和子表节点的服务状态。如果出现失效状态，主控节点将停止失效的节点，并将相关服务转移到其他节点。服务的迁移并不涉及存储数据的移动，不会引入额外的系统开销，因而也就无需区分各种失效状态。这种依赖于底层分布式文件系统的共享存储方式，简化了系统的失效恢复。</p>
 <p>上述差异归纳如下表所示。</p>
-<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/04/dynamoVsBigtable.jpg"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/04/dynamoVsBigtable.jpg" alt="dynamoVsBigtable"></a></p>
+<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/04/dynamoVsBigtable.jpg" target="_blank" rel="noopener"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/04/dynamoVsBigtable.jpg" alt="dynamoVsBigtable"></a></p>
 <p>参考文献</p>
 <p>1.郭斯杰，贾鸿飞，熊劲，互联网海量数据存储和处理技术综述，《信息技术快报》第7卷第5期</p>
 <p>2.大数据101：非结构化数据分析</p>

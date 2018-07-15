@@ -66,11 +66,11 @@
     
   </section>
   <section class="post-content article-entry">
-    <p>本教程你将学到如何创建storm topology及如何将topology部署到storm集群。Java将是主要使用的语言，但有一些示例使用Python，用以说明storm的多语言特性。<br><strong>预备内容</strong><br>本教程将使用<a href="https://github.com/nathanmarz/storm-starter" title="storm starter" target="_blank" rel="noopener">storm-starter</a>项目，建议克隆该项目并了解该项目的最新情况。阅读<a href="http://www.zhangmin.name/blog/?p=997" title="配置storm环境">如何配置开发环境和创建新的storm项目</a>正确配置你的开发环境。</p>
+    <p>本教程你将学到如何创建storm topology及如何将topology部署到storm集群。Java将是主要使用的语言，但有一些示例使用Python，用以说明storm的多语言特性。<br><strong>预备内容</strong><br>本教程将使用<a href="https://github.com/nathanmarz/storm-starter" title="storm starter" target="_blank" rel="noopener">storm-starter</a>项目，建议克隆该项目并了解该项目的最新情况。阅读<a href="http://www.zhangmin.name/blog/?p=997" title="配置storm环境" target="_blank" rel="noopener">如何配置开发环境和创建新的storm项目</a>正确配置你的开发环境。</p>
 <p><strong>Storm集群的组成</strong><br>一个storm集群与hadoop集群在表面上相似，然而在hadoop上运行MapReduce jobs，在storm上运行topology。Jobs和topology是不同的。一个关键的不同之处就是一个MapReduce job最终会结束，而一个topology会不停地处理消息（直到你主动的停止它）。<br>Storm集群中有两种类型的节点：master节点和worker节点。Master节点运行一个叫守护进程叫Nimbus，该进程与hadoop的JobTracker相似.Nimbus 负责在集群分发代码，分配任务到机器，监控任务的执行。</p>
 <p>每一个worker节点运行一个守护进程叫Supervisor,监控Nimbus分配给本机worker的任务，按照需要开始和停止worker进程。每一个worker进程执行topology的一个子集，一个运行的topology包括多个worker进程且分布在多个机器上。</p>
 <p>所有Nimbus和Supervisor之间的协作通过ZooKeeper集群完成。另外，Nimbus和Supervisor守护进程能够快速重启且是无状态的。所有的状态信息保存在ZooKeeper中或本地磁盘上。这意味着你可以kill -9杀死Nimbus和Supervisor进程，但是它们很快重启就像什么都没发生一样。这一设计使得storm非常稳定。</p>
-<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/storm-cluster.png"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/storm-cluster.png" alt="storm-cluster"></a></p>
+<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/storm-cluster.png" target="_blank" rel="noopener"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/storm-cluster.png" alt="storm-cluster"></a></p>
 <p><strong>Topology </strong></p>
 <p>在storm上进行实时计算，你需要创建topology。一个topology是计算的表示方式。Topology中每一个节点包含处理逻辑，节点之间的连接表示数据将如何传输。运行一个topology的非常简单。首先，将所有的代码及依赖的库打包为一个jar文件，然后运行以下命令：</p>
 <p>[java]storm jar all-my-code.jar backtype.storm.MyTopology arg1 arg2[/java]</p>
@@ -81,7 +81,7 @@
 <p>Spout和bolt打包为一个topology，一种更高层次的抽象。用于在storm集群上执行。一个topology是流变换或处理的一张图。图中每个节点代表spout或bolt，边代表bolt订阅了那些流。当一个spout或bolt将元组转换为流后，它将产生的流发送到所有订阅了该流的bolt。节点之间的边表示数据的传递路线。例如如果spoutA和boltB之间有一个连接，同样，spoutA和boltC之间也有一个连接，boltB和boltC之间有一个连接。然后，每一次spoutA发送一个元组，它将发送该元组到boltB和boltC。所有boltB的输出都将发送到boltC。</p>
 <p>Storm topology的每个节点都是并行执行的，可以在你的代码中设置并行度。然后storm将产生相应数量的线程在整个集群中执行。</p>
 <p>一个topology将永远运行，或者你可以停止它。Storm将自动分配执行失败的任务。另外，storm确保没有数据丢失，即使是机器宕机或消息被放弃。</p>
-<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/topology.png"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/topology.png" alt="topology"></a></p>
+<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/topology.png" target="_blank" rel="noopener"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/topology.png" alt="topology"></a></p>
 <p><strong>数据模型</strong></p>
 <p>Storm的数据模型就是元组（Tuple），一个元组就是一系列命名的值，每一个值可以是任何类型的对象。Storm创造性的支持原始数据类型，字符串，字节数组作为元组的值。如果使用其他类型的数据对象，只需要实现相应类型的Serializer.</p>
 <p>每一个节点必须声明要输出的元组的字段（域），例如下面的bolt声明发送2个含有域double和triple的元组。</p>
@@ -108,7 +108,7 @@
 <p>另外，输入元组被当做第一个参数传送给emit。最后要对输入元组进行确认。这是storm保证没有数据丢失的可靠性API中的一部分，后面讲详细介绍。</p>
 <p>当bolt被关闭时，需要清理打开的资源时会调用cleanup方法。在集群上能保证该方法会被调用。例如，如果一台机器正在运行，就没有办法调用该方法。一般情况下，会在本地模式运行topology时才会调用cleanup方法。你可以运行或停止任何topology而且没有资源的泄漏。</p>
 <p>declareOutputFields方法声明ExclamationBolt发送一个名称为word的一元元组。</p>
-<p>getComponentConfiguration方法允许你配置该模块将如何运行。将在<a href="http://www.zhangmin.name/blog/?p=1003" title="storm配置">配置</a>一节中详细介绍。</p>
+<p>getComponentConfiguration方法允许你配置该模块将如何运行。将在<a href="http://www.zhangmin.name/blog/?p=1003" title="storm配置" target="_blank" rel="noopener">配置</a>一节中详细介绍。</p>
 <p>像cleanup和getComponentConfiguration一般不在bolt的实现中，你可以更简便地利用基类定义bolt。ExclamationBolt可以通过继承BaseRichBolt方便地实现，如：</p>
 <p>[java]public static class ExclamationBolt extends BaseRichBolt {<br>    OutputCollector _collector;<br>    public void prepare(Map conf, TopologyContext context, OutputCollector collector) {<br>        _collector = collector;<br>    }<br>    public void execute(Tuple tuple) {<br>        _collector.emit(tuple, new Values(tuple.getString(0) + &quot;!!!&quot;));<br>        _collector.ack(tuple);<br>    }<br>    public void declareOutputFields(OutputFieldsDeclarer declarer) {<br>        declarer.declare(new Fields(&quot;word&quot;));<br>    }<br>}[/java]</p>
 <p><strong>在本地运行ExclamationTopology</strong></p>
@@ -124,7 +124,7 @@
 <p>当然，还有很多的配置方面配置topology，可以查看Javadoc的Config获得更多配置信息。</p>
 <p><strong>流分组</strong></p>
 <p>流分组告诉topology如何在两个模块之间发送元组。注意，spout和bolt在集群上以多任务的方式并行执行。如果想了解一个topology在任务级如何运行，可以看下面的例子。</p>
-<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/topology-tasks.png"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/topology-tasks.png" alt="topology-tasks"></a></p>
+<p><a href="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/topology-tasks.png" target="_blank" rel="noopener"><img src="http://www.zhangmin.name/blog/wp-content/uploads/2013/03/topology-tasks.png" alt="topology-tasks"></a></p>
 <p>Bolt A的一个任务发送一个元组到Bolt B的那个任务呢？</p>
 <p>流分组回答了这一问题。通过告诉storm如何在任务集合之间发送元组。在深入流分组之前，我们先来研究一下storm-starter的另一个topology。WordCountTopology从流和spout读取语句，然后经过WordCountBolt处理后，输出所有的单词及每个单词的计数。</p>
 <p>[java]TopologyBuilder builder = new TopologyBuilder();<br>builder.setSpout(&quot;sentences&quot;, new RandomSentenceSpout(), 5);<br>builder.setBolt(&quot;split&quot;, new SplitSentence(), 8)<br>        .shuffleGrouping(&quot;sentences&quot;);<br>builder.setBolt(&quot;count&quot;, new WordCount(), 12)<br>        .fieldsGrouping(&quot;split&quot;, new Fields(&quot;word&quot;));[/java]</p>
@@ -132,7 +132,7 @@
 <p>最简单的流分组就是随机分组，将元组随机地发送到一个任务。在WordCountTopology中，随机分组将元组从一个RandomSentenceSpout发送到SplitSentence bolt，它将在所有的SplitSentence bolt中均匀分发元组。</p>
 <p>一个更有意思的分组就是域分组，该分组方式用于从SplitSentence bolt到一个WordCount bolt。必须严格保证WordCout bolt相同的单词又如同一个任务进行处理。否则，多于一个任务处理该单词，每个将生成错误的计数。因为每一个都没有完整的信息。域分组将域相同的额元组交由一个相同的任务进行处理。</p>
 <p>由于WordCount利用域分组订阅了SplitSentence的输出流，相同的单词将有同一个任务处理，最后改该bolt将输出正确的结果。</p>
-<p>域分组是完全流合并和流聚集的基础，同样也是其他应用的基础。域分组是用模哈希实现的，还有其他类型的分组，详见 <a href="http://www.zhangmin.name/blog/?p=1001" title="storm 概念">概念</a> 一节。</p>
+<p>域分组是完全流合并和流聚集的基础，同样也是其他应用的基础。域分组是用模哈希实现的，还有其他类型的分组，详见 <a href="http://www.zhangmin.name/blog/?p=1001" title="storm 概念" target="_blank" rel="noopener">概念</a> 一节。</p>
 <p><strong>用其他语言定义bolt</strong></p>
 <p>Bolt可以用任意的语言进行定义，通过使用其他语言定义bolt将以子进程的方式执行，storm通过基于JSON的标准输入输出协议与之通信。通信协议只需要100行的适配器库，storm已经提供了的库包括Ruby，Python和Fancy。这里是WordCountTopology里的SplitSentence bolt的定义：</p>
 <p>[java]public static class SplitSentence extends ShellBolt implements IRichBolt {<br>    public SplitSentence() {<br>        super(&quot;python&quot;, &quot;splitsentence.py&quot;);<br>    }<br>    public void declareOutputFields(OutputFieldsDeclarer declarer) {<br>        declarer.declare(new Fields(&quot;word&quot;));<br>    }<br>}[/java]</p>
@@ -142,7 +142,7 @@
 <p><strong>保证消息处理</strong></p>
 <p>详见 保证消息处理一节。</p>
 <p><strong>事务Topology</strong></p>
-<p>Storm保证消息在topology至少被处理一次，一个明显的问题就是storm是如何计数的，会不会过度计数。Storm的一个特性就是事务topology，可以确保精确一次的消息语义。详见<a href="http://www.zhangmin.name/blog/?p=1001" title="storm 原理">原理</a>一节。</p>
+<p>Storm保证消息在topology至少被处理一次，一个明显的问题就是storm是如何计数的，会不会过度计数。Storm的一个特性就是事务topology，可以确保精确一次的消息语义。详见<a href="http://www.zhangmin.name/blog/?p=1001" title="storm 原理" target="_blank" rel="noopener">原理</a>一节。</p>
 <p><strong>分布式RPC</strong></p>
 <p>详见具体的章节</p>
 <p><strong>总结</strong></p>
