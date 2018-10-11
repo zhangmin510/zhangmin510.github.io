@@ -9,7 +9,7 @@
         <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="https://zhangmin.name/blog/atom.xml">
         <link rel="canonical" href="http://www.zhangmin.name/">
 
-        <title>Ubuntu Unity界面消失的解决方法 | ZhangMin.name</title>
+        <title>敏而好学之WHAT——队列的精髓 | ZhangMin.name</title>
         <meta name="description" content="{{meta_description}}">
 
         <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
@@ -53,43 +53,32 @@
 
 <article class="post">
 
-  April 14, 2012
+  October 11, 2018
   
     <span class="taglist">  &middot;
     
     
-      <a href='/blog/tags/Linux/'>Linux</a>
-    
-      <a href='/blog/tags/Ubuntu/'>Ubuntu</a>
+      <a href='/blog/tags/数据结构与算法/'>数据结构与算法</a>
     
     </span>
   
 
-  <h1 class="post-title">Ubuntu Unity界面消失的解决方法</h1>
+  <h1 class="post-title">敏而好学之WHAT——队列的精髓</h1>
   <section class="post-content article-entry">
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#队列征状"><span class="toc-text">队列征状</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#队列实现"><span class="toc-text">队列实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#队列应用"><span class="toc-text">队列应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#资源有限场景的调度"><span class="toc-text">资源有限场景的调度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高性能队列"><span class="toc-text">高性能队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#公平锁"><span class="toc-text">公平锁</span></a></li></ol></li></ol>
   </section>
   <section class="post-content article-entry">
-    <p><img src="http://www.zhangmin.name/blog/wp-content/uploads/ubuntu_logo_black-orange-300x67.png" alt="ubuntu_logo"></p>
-<p>在Ubuntu 11.10中，修改Compizconfig-settings- 时，由于禁止了某些必要的插件，使得Unity界面消失了，没有了Lancher，标题栏也消失了，在网上看了很多的资料，解决方法如下：</p>
-<p>重新设置Unity，打开Terminal(ctr+alt+f1 或是alt+f2,输入gnome-terminal)输入：</p>
-<p><code>sudo apt-get install compizconfig-settings-manager</code></p>
-<p><code>sudo unity --reset</code></p>
-<p>一般情况下需要一分钟的时间重置unity，在运行过程中可能会出现控制台没有任何反馈输入，保险起见，两到三分钟后再按ctr+c终止程序。</p>
-<p>然后重新启动GDM 或是 LightDM(如果termianl 不好使可以进入tty1，ctrl+alt+f1)，命令如下：</p>
-<p><code>sudo service gdm restart</code></p>
-<p>或是</p>
-<p><code>sudo service lightdm restart</code></p>
-<p>如果上述方法不成功，你可以重新按转compiz和unity，命令如下：</p>
-<p>`sudo apt-get update</p>
-<pre><code>sudo apt-get install compiz
-
-sudo apt-get install compizconfig-settings-manager
-
-sudo apt-get install unity`
-</code></pre><p>然后再重启GDM或是LightDM。</p>
-<p>如果你的窗口标题栏消失了，可以用一下的命令：</p>
-<p><code>gtk-window-decorator --replace</code></p>
+    <p><em>本文是<a href="https://time.geekbang.org/column/126" target="_blank" rel="noopener">数据结构与算法之美专栏</a>的学习笔记。</em></p>
+<h1 id="队列征状"><a href="#队列征状" class="headerlink" title="队列征状"></a>队列征状</h1><p>队列，文明人生活的标配。队列的原则就是先来后到，不许插队。队列只有两个操作，队头出队，队尾入队。<br>这一限制与栈相似，也是一种操作受限的线性表。</p>
+<h1 id="队列实现"><a href="#队列实现" class="headerlink" title="队列实现"></a>队列实现</h1><p>与栈的实现类似，可以使用数组或者链表实现队列。</p>
+<p>队列的实现需要注意队尾和队头的位置，因为操作都是发生在这两个位置。在数组实现的队列中，需要注意的是因为出队和入队的不确定性，所以会导致数组的利用率不足。优化的思路是保持出队操作不变，而在入队的时候如果队列满，就进行数据的移动。</p>
+<p>对于循环队列，即队头和队尾相连的队列。如果使用循环队列，就可以避免数据的移动。只要处理好队列空和队列满的情况。在基于数组是实现的循环队列中当<code>(tail+1)%n=head</code>时表示队列满。</p>
+<p>对于阻塞队列，当队列为空是，出队会阻塞。入队时，如果队列满会阻塞。使用阻塞队列可以实现生产者-消费者模型，协调生产者和消费者。</p>
+<p>并发队列，就是在多线程的环境下，对入队和除对操作进行加锁。基于数组实现的循环队列使用CAS可以实现高效的并发队列。</p>
+<h1 id="队列应用"><a href="#队列应用" class="headerlink" title="队列应用"></a>队列应用</h1><h2 id="资源有限场景的调度"><a href="#资源有限场景的调度" class="headerlink" title="资源有限场景的调度"></a>资源有限场景的调度</h2><p>CPU调度，排队使用CPU资源。在资源有限的情况下，如果没有资源可用，要么直接拒绝请求；要么放入队列阻塞，直到有可用资源时继续处理。</p>
+<p>需要考虑应用的具体需求，比如对时间是否敏感。</p>
+<h2 id="高性能队列"><a href="#高性能队列" class="headerlink" title="高性能队列"></a>高性能队列</h2><p>Disruptor，Linxu环形缓存。</p>
+<h2 id="公平锁"><a href="#公平锁" class="headerlink" title="公平锁"></a>公平锁</h2><p>Java中使用ArrayBlockingQueue实现公平锁。</p>
 
   </section>
   <footer class="post-footer">
@@ -104,14 +93,10 @@ sudo apt-get install unity`
 
 <nav class="pagination" role="pagination">
     
-    <a class="newer-posts" href="/blog/2012/04/16/《写给程序员的web设计书》笔记/">
-        ← prev <!--《写给程序员的web设计书》笔记-->
-    </a>
-    
     <span class="page-number">•</span>
     
-    <a class="older-posts" href="/blog/2012/04/11/25个让Java程序员更高效的Eclipse插件/">
-        <!--25个让Java程序员更高效的Eclipse插件--> next →
+    <a class="older-posts" href="/blog/2018/10/11/Hyperledger-Fabric的交易处理流程/">
+        <!--Hyperledger-Fabric的交易处理流程--> next →
     </a>
     
 </nav>
@@ -119,7 +104,7 @@ sudo apt-get install unity`
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-Ubuntu-Unity界面消失的解决方法" data-title="Ubuntu Unity界面消失的解决方法" data-url="https://zhangmin.name/blog/2012/04/14/Ubuntu-Unity界面消失的解决方法/"></div>
+	 <div class="ds-thread" data-thread-key="post-敏而好学之WHAT——队列的精髓" data-title="敏而好学之WHAT——队列的精髓" data-url="https://zhangmin.name/blog/2018/10/11/敏而好学之WHAT——队列的精髓/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
