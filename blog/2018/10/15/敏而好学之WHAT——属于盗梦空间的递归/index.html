@@ -9,7 +9,7 @@
         <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="https://zhangmin.name/blog/atom.xml">
         <link rel="canonical" href="http://www.zhangmin.name/">
 
-        <title>推介:百度开放研究社区 | ZhangMin.name</title>
+        <title>敏而好学之WHAT——属于盗梦空间的递归 | ZhangMin.name</title>
         <meta name="description" content="{{meta_description}}">
 
         <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
@@ -53,35 +53,37 @@
 
 <article class="post">
 
-  May 31, 2013
+  October 15, 2018
   
     <span class="taglist">  &middot;
     
     
-      <a href='/blog/tags/UCAS/'>UCAS</a>
-    
-      <a href='/blog/tags/国科大/'>国科大</a>
-    
-      <a href='/blog/tags/技术/'>技术</a>
+      <a href='/blog/tags/数据结构与算法/'>数据结构与算法</a>
     
     </span>
   
 
-  <h1 class="post-title">推介:百度开放研究社区</h1>
+  <h1 class="post-title">敏而好学之WHAT——属于盗梦空间的递归</h1>
   <section class="post-content article-entry">
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#递归"><span class="toc-text">递归</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实战递归"><span class="toc-text">实战递归</span></a></li></ol>
   </section>
   <section class="post-content article-entry">
-    <p>想做云计算相关开发，可是没有真实集群？</p>
-<p>想做大数据挖掘，可是没有大数据？</p>
-<p>想用真实集群版的hadoop，mahout,hdfs,hbase，可是哪里有呢?</p>
-<p>来百度开发研究社区吧！</p>
-<p><img src="http://openresearch.baidu.com/r/cms/www/bd01/images/yj.jpg" alt="百度开发研究社区"></p>
-<p><strong>百度开发研究社区介绍</strong></p>
-<p>随着互联网的飞速发展，人类处于知识爆炸时代，包括生物、金融、互联网在内的多个领域都遇到了前所未有的数据挑战，现在的研究已经不能仅仅局限在实验室里就能完成的了。研究人员需要海量的真实的用户数据支撑他们的研究，同时更需要更多的计算资源去支撑这些海量数据的运算。但是对于高校来说无论是真实的数据集，还是海量数据的分析平台都很难获得。为了帮助科研人员解决当前的困境，百度校园创建了一个融汇技术资源的开放技术社区——百度开放研究技术社区，这个平台上提供了100G的百度真实的数据集以及由250台服务器组成的开放研究云平台，并利用网络社区没有地域限制、自由、灵活、快捷等特点，为科研人员提供一个互动交流的平台，让技术沟通和海量的数据分析变得简洁而高效。</p>
-<p><strong>社区三大特点之百度开放研究云平台</strong></p>
-<p>百度开放研究社区提供了百度开放研究云平台，该平台是由250台服务器组成，基于Hadoop分布式操作系统进行部署的。平台上有来自百度业务部门的100G真实的数据集。在今年5月份基于百度开放研究云平台，百度联合北京航空航天大学成功的举办了首届“中国云•移动互联网创新大奖赛”。现在百度开放云平台以及数据集正式对所有的研究人员开放，并在近期推出代码托管功能，届时您可以轻松的在社区上进行代码编译以及分布式运算。</p>
-<p>网站地址:<a href="http://openresearch.baidu.com/" target="_blank" rel="noopener">百度开放研究社区</a></p>
+    <p><em>本文是<a href="https://time.geekbang.org/column/126" target="_blank" rel="noopener">数据结构与算法之美专栏</a>的学习笔记。</em></p>
+<h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><p>在数据结构与算法中，最难理解的就是知识点之一：递归和动态规划。递归是一种解决问题的方法，先将被求解的问题进行分解后逐个求解，最后再将结果进行合并处理。</p>
+<p>递归的通用公式:</p>
+<p> <code>f(n)=f(n-1) + c, f(1)=0</code></p>
+<p>能用递归求解的问题首先必须是能够分解为子问题：</p>
+<ol>
+<li>每个子问题之间除了将要处理的数据不同外，处理的思路完全相同。</li>
+<li>每个子问题有一个最终终止条件，从而终结递归，返回结果。</li>
+</ol>
+<h1 id="实战递归"><a href="#实战递归" class="headerlink" title="实战递归"></a>实战递归</h1><p>对于面试题：假如有n个台阶，每次可以跨1个或者2个台阶，问有多少种走法？</p>
+<p>首先这个问题可以分解为：第一步走了1个台阶或者第一步走了2个台阶。那么这个问题就可以分解为：<br><code>f(n) = f(n-1) + f(n-2)</code></p>
+<p>递归公式确定后，就需要确定终止条件。如果只有1个台阶，即f(1)=1, 如果有2个台阶。有两种走法：每次走1个或者一次走2个，即f(2) = 2。</p>
+<p>可见，使用递归解决问题的方法就是先根据问题的分解策略规律，写出递归公式。然后再确定递归的终止条件。</p>
+<p>编写递归代码最容易遇到的问题就是堆栈溢出，这种一般发生在递归过深的情况下。一种优化思路是将重复的子问题的解进行记录，从而去掉一些递归调用，减少递归的深度。一般使用散列表来保存重复的子问题的结果。</p>
+<p>递归还有一个问题就是递归会导致过多的函数调用，每次函数调用需要入栈，出栈操作，以及上下文的切换，会影响最终的时间复杂度。</p>
+<p>综上，递归代码的特点就是简单，直接；缺点就是空间复杂度高，有堆栈溢出，重复计算，多次函数调用的问题。一般而言，递归代码都可以改写为迭代的方式实现，从而避免递归带来的上述问题。</p>
 
   </section>
   <footer class="post-footer">
@@ -96,14 +98,10 @@
 
 <nav class="pagination" role="pagination">
     
-    <a class="newer-posts" href="/blog/2013/06/01/六月你好/">
-        ← prev <!--六月你好-->
-    </a>
-    
     <span class="page-number">•</span>
     
-    <a class="older-posts" href="/blog/2013/05/30/Speaking-on-Special-Occasions/">
-        <!--Speaking on Special Occasions--> next →
+    <a class="older-posts" href="/blog/2018/10/15/以太坊私有链实战/">
+        <!--以太坊私有链实战--> next →
     </a>
     
 </nav>
@@ -111,7 +109,7 @@
 <!-- Begin Comments Code -->
 <div id="comments">
   <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-推介-百度开放研究社区" data-title="推介:百度开放研究社区" data-url="https://zhangmin.name/blog/2013/05/31/推介-百度开放研究社区/"></div>
+	 <div class="ds-thread" data-thread-key="post-敏而好学之WHAT——属于盗梦空间的递归" data-title="敏而好学之WHAT——属于盗梦空间的递归" data-url="https://zhangmin.name/blog/2018/10/15/敏而好学之WHAT——属于盗梦空间的递归/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

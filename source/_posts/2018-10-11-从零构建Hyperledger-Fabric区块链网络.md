@@ -1,7 +1,7 @@
 ---
 title: 从零构建Hyperledger-Fabric区块链网络
 date: 2018-10-11 09:19:24
-tags: Hyperledger Fabric 
+tags: [Hyperledger Fabric, 区块链]
 ---
 # 1 Hyperledger Fabric网络的组成要件
 

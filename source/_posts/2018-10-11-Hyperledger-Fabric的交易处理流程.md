@@ -1,5 +1,5 @@
 title: Hyperledger-Fabric的交易处理流程
-tags: Hyperledger Fabric
+tags: [Hyperledger Fabric, 区块链]
 date: 2018-10-11 19:09:05
 updated: 2018-10-11 19:09:05
 ---

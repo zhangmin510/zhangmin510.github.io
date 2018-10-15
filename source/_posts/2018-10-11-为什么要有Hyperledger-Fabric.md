@@ -1,7 +1,7 @@
 ---
 title: 为什么要有Hyperledger-Fabric.md
 date: 2018-10-11 09:19:24
-tags: Hyperledger Fabric 
+tags: [Hyperledger Fabric, 区块链]
 ---
 # 1 区块链是什么
 
