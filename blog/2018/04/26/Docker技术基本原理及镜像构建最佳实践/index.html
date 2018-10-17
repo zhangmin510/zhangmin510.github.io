@@ -61,6 +61,9 @@
       <a href='/blog/tags/Docker/'>Docker</a>
     
     </span>
+    <span class="taglist">本文字数: 3.2k </span>
+    <span class="taglist">阅读时长：13 min </span>
+    <span class="taglist">全站字数：344.2k</span>
   
 
   <h1 class="post-title">Docker技术基本原理及镜像构建最佳实践</h1>
@@ -105,7 +108,7 @@
 <li>命令最好大写，以区分普通命令。</li>
 <li>一行如果以#号开头说明是注释，在其他位置都不是注释，就是正常的#号。</li>
 </ol>
-<h2 id="3-2-directive-escape"><a href="#3-2-directive-escape" class="headerlink" title="3.2 directive escape"></a>3.2 directive escape</h2><p>dockerfile支持指令，必须是在Dockerfile的最开始，当前只支持转移字符，如将换行符<code>\</code>改为```。</p>
+<h2 id="3-2-directive-escape"><a href="#3-2-directive-escape" class="headerlink" title="3.2 directive escape"></a>3.2 directive escape</h2><p>dockerfile支持指令，必须是在Dockerfile的最开始，当前只支持转移字符，如将换行符<code>\</code>改为<code>\`</code>。</p>
 <h2 id="3-3-dockerignore"><a href="#3-3-dockerignore" class="headerlink" title="3.3 .dockerignore"></a>3.3 .dockerignore</h2><p>可以使用.dockerignore文件来忽略上下文中的指定文件或者目录。</p>
 <p>CLI在发送context之前会在更目录检查该文件，修改需要发送的上下文。</p>
 <h2 id="3-4-环境替换"><a href="#3-4-环境替换" class="headerlink" title="3.4 环境替换"></a>3.4 环境替换</h2><p>ENV命令声明的环境变量可以在命令中使用。使用方法<code>$variable_name or ${variable_name}.</code></p>
@@ -182,7 +185,7 @@
 <li>Docker 17.05之后可以选择多阶段构建。分为多层按照变化频率从低到高：1）安装工具；2）安装或者升级库依赖；3）生成应用。</li>
 </ol>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> golang:<span class="number">1.9</span>.<span class="number">2</span>-alpine3.<span class="number">6</span> AS build</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install tools required to build the project</span></span><br><span class="line"><span class="comment"># We need to run `docker build --no-cache .` to update those dependencies</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apk add --no-cache git</span></span><br><span class="line"><span class="bash">RUN go get github.com/golang/dep/cmd/dep</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Gopkg.toml and Gopkg.lock lists project dependencies</span></span></span><br><span class="line"><span class="bash"><span class="comment"># These layers are only re-built when Gopkg files are updated</span></span></span><br><span class="line"><span class="bash">COPY Gopkg.lock Gopkg.toml /go/src/project/</span></span><br><span class="line"><span class="bash">WORKDIR /go/src/project/</span></span><br><span class="line"><span class="bash"><span class="comment"># Install library dependencies</span></span></span><br><span class="line"><span class="bash">RUN dep ensure -vendor-only</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Copy all project and build it</span></span></span><br><span class="line"><span class="bash"><span class="comment"># This layer is rebuilt when ever a file has changed in the project directory</span></span></span><br><span class="line"><span class="bash">COPY . /go/src/project/</span></span><br><span class="line"><span class="bash">RUN go build -o /bin/project</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># This results in a single layer image</span></span></span><br><span class="line"><span class="bash">FROM scratch</span></span><br><span class="line"><span class="bash">COPY --from=build /bin/project /bin/project</span></span><br><span class="line"><span class="bash">ENTRYPOINT [<span class="string">"/bin/project"</span>]</span></span><br><span class="line"><span class="bash">CMD [<span class="string">"--help"</span>]</span></span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="5">
 <li>只安装必须的包。减少镜像大小，构建时间。</li>
 <li>每个镜像只有一个目的。便于水平扩展和重用。一个容器只运行一类进程。</li>
 <li>最小化层。In Docker 1.10 and higher, only RUN, COPY, and ADD instructions create layers. Other instructions create temporary intermediate images, and no longer directly increase the size of the build. Docker 17.05 and higher add support for multi-stage builds, which allow you to copy only the artifacts you need into the final image. This allows you to include tools and debug information in your intermediate build stages without increasing the size of the final image</li>
@@ -195,21 +198,21 @@
 <li>RUN 将常的命令使用反斜杠分为多行。RUN apt-get update &amp;&amp; apt-get install -y。保证最新的软件版本。<br>缓存穿透技术。也可以指定软件包版本来穿透Docker build缓存。因为缓存比较时只是比较RUN的命令，而不是具体的内容。使用管道。</li>
 </ol>
 <figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">RUN apt-get update &amp;&amp; apt-get install -y <span class="string">\</span></span><br><span class="line">    aufs-tools <span class="string">\</span></span><br><span class="line">    automake <span class="string">\</span></span><br><span class="line">    build-essential <span class="string">\</span></span><br><span class="line">    curl <span class="string">\</span></span><br><span class="line">    dpkg-sig <span class="string">\</span></span><br><span class="line">    libcap-dev <span class="string">\</span></span><br><span class="line">    libsqlite3-dev <span class="string">\</span></span><br><span class="line">    mercurial <span class="string">\</span></span><br><span class="line">    reprepro <span class="string">\</span></span><br><span class="line">    ruby1.<span class="number">9.1</span> <span class="string">\</span></span><br><span class="line">    ruby1.<span class="number">9.1</span>-dev <span class="string">\</span></span><br><span class="line">    s3cmd=<span class="number">1.1</span>.* <span class="string">\</span></span><br><span class="line"> &amp;&amp; rm -rf <span class="regexp">/var/lib/apt/lists/</span>*</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">RUN set -o pipefail &amp;&amp; wget -O - https:<span class="regexp">//some.site | wc -l &gt; /number</span></span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="4">
 <li>CMD。使用这种形式CMD [“executable”, “param1”, “param2”…]。一般不要和ENTRYPOINT配合使用。</li>
 <li>EXPOSE。使用常识的端口，如http 80。使用环境变量在容器之间传递。</li>
 <li>ENV。每次ENV都是一层。定义常量，PATH等。如果只是在RUN使用，可以用bash的环境变量替代。防止在镜像的层中存在。</li>
 </ol>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> alpine</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">export</span> ADMIN_USER=<span class="string">"mark"</span> \</span></span><br><span class="line"><span class="bash">    &amp;&amp; <span class="built_in">echo</span> <span class="variable">$ADMIN_USER</span> &gt; ./mark \</span></span><br><span class="line"><span class="bash">    &amp;&amp; <span class="built_in">unset</span> ADMIN_USER</span></span><br><span class="line"><span class="bash">CMD sh</span></span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="7">
 <li>ADD vs COPY。推荐使用COPY，ADD额外提供的功能，如本地解压，URL获取；一般也很少使用。COPY要多次，以防止缓存很难失效。</li>
 </ol>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RUN mkdir -p <span class="regexp">/usr/</span>src<span class="regexp">/things \</span></span><br><span class="line"><span class="regexp">    &amp;&amp; curl -SL http:/</span><span class="regexp">/example.com/</span>big.tar.xz \</span><br><span class="line">    | tar -xJC <span class="regexp">/usr/</span>src<span class="regexp">/things \</span></span><br><span class="line"><span class="regexp">    &amp;&amp; make -C /u</span>sr<span class="regexp">/src/</span>things all</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="8">
 <li>ENTRYPOINT。用于设置镜像的主命令。可以搭配启动脚本一起使用。记得要保障运行的程序的PID为1.</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">set</span> -e</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">'postgres'</span> ]; <span class="keyword">then</span></span><br><span class="line">    chown -R postgres <span class="string">"<span class="variable">$PGDATA</span>"</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> [ -z <span class="string">"<span class="variable">$(ls -A "$PGDATA")</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">        gosu postgres initdb</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">exec</span> gosu postgres <span class="string">"<span class="variable">$@</span>"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">exec</span> <span class="string">"<span class="variable">$@</span>"</span></span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="9">
 <li>VOLUME。挂载容易变化的文件或者目录。</li>
 <li>USER。如果可以在非特权模式运行，则创建USER。不要使用sudo，因为有tty和信号量问题。建议使用gosu。不要频繁切换USER。</li>
 <li>WORKDIR。使用绝对路径。</li>
@@ -242,26 +245,22 @@
     
 </nav>
 
-<!-- Begin Comments Code -->
-<div id="comments">
-  <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-Docker技术基本原理及镜像构建最佳实践" data-title="Docker技术基本原理及镜像构建最佳实践" data-url="https://zhangmin.name/blog/2018/04/26/Docker技术基本原理及镜像构建最佳实践/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zhangmin"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0]
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-</div>
-<!-- End Comments Code -->
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2018/04/26/Docker技术基本原理及镜像构建最佳实践/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "Docker技术基本原理及镜像构建最佳实践"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
 
 
         </main>

@@ -81,7 +81,7 @@
 <p>MinStack MinStackInit(int maxSize) {<br>MinStack stack;<br>stack.size = maxSize;<br>stack.data = (MinStackElement<em>) malloc(sizeof(MinStackElement)</em>maxSize);<br>stack.top = 0;<br>return stack;<br>}<br>void MinStackFree(MinStack stack) {<br>free(stack.data);<br>}<br>void MinStackPush(MinStack stack, int d) {<br>if (stack.top == stack.size) error(“out of stack space.”);<br>MinStackElement* p = stack.data[stack.top];<br>p-&gt;data = d;<br>p-&gt;min = (stack.top==0?d : stack.data[top-1]);<br>if (p-&gt;min &gt; d) p-&gt;min = d;<br>top ++;<br>}<br>int MinStackPop(MinStack stack) {<br>if (stack.top == 0) error(“stack is empty!”);<br>return stack.data[–stack.top].data;<br>}<br>int MinStackMin(MinStack stack) {<br>if (stack.top == 0) error(“stack is empty!”);<br>return stack.data[stack.top-1].min;<br>}<br>3.求子数组的最大和<br>题目：<br>输入一个整形数组，数组里有正数也有负数。<br>数组中连续的一个或多个整数组成一个子数组，每个子数组都有一个和。<br>求所有子数组的和的最大值。要求时间复杂度为O(n)。<br>例如输入的数组为1, -2, 3, 10, -4, 7, 2, -5，和最大的子数组为3, 10, -4, 7, 2，<br>因此输出为该子数组的和18。<br>ANSWER:<br>A traditional greedy approach.<br>Keep current sum, slide from left to right, when sum &lt; 0, reset sum to 0.</p>
 <p>int maxSubarray(int a[], int size) {<br>if (size int sum = 0;<br>int max = - (1 &lt;&lt; 31);<br>int cur = 0;<br>while (cur &lt; size) { sum += a[cur++]; if (sum &gt; max) {<br>max = sum;<br>} else if (sum &lt; 0) { sum = 0; } } return max; } 4.在二元树中找出和为某一值的所有路径 题目：输入一个整数和一棵二元树。 从树的根结点开始往下访问一直到叶结点所经过的所有结点形成一条路径。 打印出和与输入整数相等的所有路径。 例如输入整数22 和如下二元树 10 /  5 12 /  4 7 则打印出两条路径：10, 12 和10, 5, 7。 二元树节点的数据结构定义为： struct BinaryTreeNode // a node in the binary tree { int m_nValue; // value of node BinaryTreeNode <em>m_pLeft; // left child of node BinaryTreeNode </em>m_pRight; // right child of node }; ANSWER: Use backtracking and recurison. We need a stack to help backtracking the path. struct TreeNode { int data; TreeNode <em> left; TreeNode </em> right; }; void printPaths(TreeNode <em> root, int sum) { int path[MAX_HEIGHT]; helper(root, sum, path, 0); } void helper(TreeNode </em> root, int sum, int path[], int top) { path[top++] = root.data; sum -= root.data; if (root-&gt;left == NULL &amp;&amp; root-&gt;right==NULL) {<br>if (sum == 0) printPath(path, top);<br>} else {<br>if (root-&gt;left != NULL) helper(root-&gt;left, sum, path, top);<br>if (root-&gt;right!=NULL) helper(root-&gt;right, sum, path, top);<br>}<br>top –;<br>sum -= root.data;<br>}</p>
 <p>5.查找最小的k 个元素<br>题目：输入n 个整数，输出其中最小的k 个。<br>例如输入1，2，3，4，5，6，7 和8 这8 个数字，则最小的4 个数字为1，2，3 和4。<br>ANSWER:<br>This is a very traditional question…<br>O(nlogn): cat I_FILE | sort -n | head -n K<br>O(kn): do insertion sort until k elements are retrieved.<br>O(n+klogn): Take O(n) time to bottom-up build a min-heap. Then sift-down k-1 times.<br>So traditional that I don’t want to write the codes…<br>Only gives the siftup and siftdown function.</p>
-<p>/<em>*
+<p>/*<em>
 </em>@param i the index of the element in heap a[0…n-1] to be sifted up<br>void siftup(int a[], int i, int n) {<br>while (i&gt;0) {<br>int j=(i&amp;1==0 ? i-1 : i+1);<br>int p=(i-1)&gt;&gt;1;<br>if (j if (a[i] &lt; a[p]) swap(a, i, p);<br>i = p;<br>}<br>}<br>void siftdown(int a[], int i, int n) {<br>while (2<em>i+1 int l=2</em>i+1;<br>if (l+1 if (a[l] &lt; a[i]) swap(a, i, l); i=l; } } 第6 题 腾讯面试题： 给你10 分钟时间，根据上排给出十个数，在其下排填出对应的十个数 要求下排每个数都是先前上排那十个数在下排出现的次数。 上排的十个数如下： 【0，1，2，3，4，5，6，7，8，9】 举一个例子， 数值: 0,1,2,3,4,5,6,7,8,9 分配: 6,2,1,0,0,0,1,0,0,0 0 在下排出现了6 次，1 在下排出现了2 次， 2 在下排出现了1 次，3 在下排出现了0 次…. 以此类推.. ANSWER: I don’t like brain teasers. Will skip most of them… 第7 题 微软亚院之编程判断俩个链表是否相交 给出俩个单向链表的头指针，比如h1，h2，判断这俩个链表是否相交。 为了简化问题，我们假设俩个链表均不带环。 问题扩展： 1.如果链表可能有环列? 2.如果需要求出俩个链表相交的第一个节点列? ANSWER: struct Node { int data; int Node <em>next; }; // if there is no cycle. int isJoinedSimple(Node </em> h1, Node * h2) { while (h1-&gt;next != NULL) {<br>h1 = h1-&gt;next;<br>}<br>while (h2-&gt;next != NULL) {<br>h2 = h2-&gt; next;<br>}<br>return h1 == h2;<br>}</p>
 <p>// if there could exist cycle<br>int isJoined(Node <em>h1, Node </em> h2) {<br>Node<em> cylic1 = testCylic(h1);<br>Node</em> cylic2 = testCylic(h2);<br>if (cylic1+cylic2==0) return isJoinedSimple(h1, h2);<br>if (cylic1==0 &amp;&amp; cylic2!=0 || cylic1!=0 &amp;&amp;cylic2==0) return 0;<br>Node *p = cylic1;<br>while (1) {<br>if (p==cylic2 || p-&gt;next == cylic2) return 1;<br>p=p-&gt;next-&gt;next;<br>cylic1 = cylic1-&gt;next;<br>if (p==cylic1) return 0;<br>}<br>}</p>
 <p>Node<em> testCylic(Node </em> h1) {<br>Node <em> p1 = h1, </em>p2 = h1;<br>while (p2!=NULL &amp;&amp; p2-&gt;next!=NULL) {<br>p1 = p1-&gt;next;<br>p2 = p2-&gt;next-&gt;next;<br>if (p1 == p2) {<br>return p1;<br>}<br>}<br>return NULL;<br>}</p>
@@ -145,7 +145,7 @@
 <p>更多面试题，请参见：<br>微软、谷歌、百度等公司经典面试100题[第1-60题] （微软100题第二版前60题）<br>微软、Google等公司非常好的面试题及解答[第61-70题] （微软100题第二版第61-70题）<br>十道海量数据处理面试题与十个方法大总结 （十道海量数据处理面试题）<br>海量数据处理面试题集锦与Bit-map详解 （十七道海量数据处理面试题）<br>九月腾讯，创新工场，淘宝等公司最新面试十三题（2011年度9月最新面试30题）<br>十月百度，阿里巴巴，迅雷搜狗最新面试十一题（2011年度十月最新面试题集锦）<br>一切的详情，可看此文：<br>横空出世，席卷Csdn–评微软等数据结构+算法面试100题 （在此文中，你能找到与微软100题所有一切相关的东西）<br>所有的资源下载（题目+答案）地址：<br><a href="http://v_july_v.download.csdn.net/" target="_blank" rel="noopener">http://v_july_v.download.csdn.net/</a></p>
 <p>本微软等100 题系列V0.1 版，永久维护地址：<br><a href="http://topic.csdn.net/u/20101126/10/b4f12a00-6280-492f-b785-cb6835a63dc9.html" target="_blank" rel="noopener">http://topic.csdn.net/u/20101126/10/b4f12a00-6280-492f-b785-cb6835a63dc9.html</a></p>
 <p>作者声明:<br>“本人July 对以上所有任何内容和资料享有版权，转载请注明作者本人July 及出处。<br>向你的厚道致敬。谢谢。二零一一年十月十三日、以诸君为傲。</p>
-<p>欢迎，任何人，就以上任何内容，题目与答案思路，或其它任何问题、与我联系：<br>本人邮箱：zhoulei0907@yahoo.cn ”</p>
+<p>欢迎，任何人，就以上任何内容，题目与答案思路，或其它任何问题、与我联系：<br>本人邮箱：<a href="mailto:zhoulei0907@yahoo.cn" target="_blank" rel="noopener">zhoulei0907@yahoo.cn</a> ”</p>
 
   </section>
   <footer class="post-footer">
@@ -172,26 +172,22 @@
     
 </nav>
 
-<!-- Begin Comments Code -->
-<div id="comments">
-  <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-微软等数据结构-算法面试100题全部答案完整亮相" data-title="微软等数据结构+算法面试100题全部答案完整亮相" data-url="https://zhangmin.name/blog/2012/10/24/微软等数据结构-算法面试100题全部答案完整亮相/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zhangmin"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0]
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-</div>
-<!-- End Comments Code -->
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2012/10/24/微软等数据结构-算法面试100题全部答案完整亮相/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "微软等数据结构+算法面试100题全部答案完整亮相"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
 
 
         </main>

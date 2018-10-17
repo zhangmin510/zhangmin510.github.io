@@ -61,6 +61,9 @@
       <a href='/blog/tags/Java/'>Java</a>
     
     </span>
+    <span class="taglist">本文字数: 1.9k </span>
+    <span class="taglist">阅读时长：7 min </span>
+    <span class="taglist">全站字数：344.2k</span>
   
 
   <h1 class="post-title">Spring中的缓存支持</h1>
@@ -95,7 +98,7 @@
 </ol>
 <h2 id="2-4-如何自定义缓存后端存储"><a href="#2-4-如何自定义缓存后端存储" class="headerlink" title="2.4 如何自定义缓存后端存储"></a>2.4 如何自定义缓存后端存储</h2><p>需要实现<code>CacheManager</code> 和 <code>Cache</code> 。这些类就是适配器，用于将缓存抽象层的操作映射为具体后端存储的API操作。可以参考ehcache的实现。大多数 <code>CacheManager</code> 都可以直接使用<code>org.springframework.cache.support</code> 的方法，如<code>AbstractCacheManager</code>实现了缓存操作的代码模板，只剩具体的映射操作没有实现。</p>
 <h1 id="3-Spring-Boog中使用缓存"><a href="#3-Spring-Boog中使用缓存" class="headerlink" title="3. Spring Boog中使用缓存"></a>3. Spring Boog中使用缓存</h1><p>使用注解 <code>@EnableCaching</code>，Spring Boot自动配置缓存。虽然Spring同时支持 Spring Cache和 JCache，但建议不要混合使用。</p>
-<h1 id="4-Spring-Boot缓存踩坑记"><a href="#4-Spring-Boot缓存踩坑记" class="headerlink" title="4. Spring Boot缓存踩坑记"></a>4. Spring Boot缓存踩坑记</h1><h2 id="4-1-Null-key-returned-for-cache-operation"><a href="#4-1-Null-key-returned-for-cache-operation" class="headerlink" title="4.1 Null key returned for cache operation"></a>4.1 Null key returned for cache operation</h2><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Cachable(key = <span class="string">"#name"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> User <span class="title">findByName</span>(<span class="params">String name</span>) </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">如果使用缓存是报错：</span><br><span class="line">java.lang.IllegalArgumentException: <span class="function">Null key returned <span class="keyword">for</span> cache <span class="title">operation</span> (<span class="params">maybe you are <span class="keyword">using</span> named <span class="keyword">params</span> <span class="keyword">on</span> classes without debug info?</span>)</span></span><br></pre></td></tr></table></figure>
+<h1 id="4-Spring-Boot缓存踩坑记"><a href="#4-Spring-Boot缓存踩坑记" class="headerlink" title="4. Spring Boot缓存踩坑记"></a>4. Spring Boot缓存踩坑记</h1><h2 id="4-1-Null-key-returned-for-cache-operation"><a href="#4-1-Null-key-returned-for-cache-operation" class="headerlink" title="4.1 Null key returned for cache operation"></a>4.1 Null key returned for cache operation</h2><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Cachable(key = <span class="string">"#name"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> User <span class="title">findByName</span>(<span class="params">String name</span>)</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">如果使用缓存是报错：</span><br><span class="line">java.lang.IllegalArgumentException: <span class="function">Null key returned <span class="keyword">for</span> cache <span class="title">operation</span> (<span class="params">maybe you are <span class="keyword">using</span> named <span class="keyword">params</span> <span class="keyword">on</span> classes without debug info?</span>)</span></span><br></pre></td></tr></table></figure>
 <p>这里的原因是由于key的指定没有生效，如果编译时没有指定debug模式，则class文件时没有参数名信息，所以稳妥的是使用 <code>#a0</code>或者<code>#p0</code>来指定参数。If for some reason the names are not available (e.g. no debug information), the argument names are also available under the #a&lt;#arg&gt; where #arg stands for the argument index (starting from 0).）</p>
 <h2 id="4-2-缓存null值"><a href="#4-2-缓存null值" class="headerlink" title="4.2 缓存null值"></a>4.2 缓存null值</h2><p>如果缓存对null的结果进行了缓存，需要改成:</p>
 <figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Cachable(<span class="keyword">unless</span> = <span class="string">"<span class="subst">#result</span> == null)</span></span><br></pre></td></tr></table></figure>
@@ -131,26 +134,22 @@
     
 </nav>
 
-<!-- Begin Comments Code -->
-<div id="comments">
-  <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-Spring中的缓存支持" data-title="Spring中的缓存支持" data-url="https://zhangmin.name/blog/2018/07/15/Spring中的缓存支持/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zhangmin"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0]
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-</div>
-<!-- End Comments Code -->
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2018/07/15/Spring中的缓存支持/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "Spring中的缓存支持"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
 
 
         </main>

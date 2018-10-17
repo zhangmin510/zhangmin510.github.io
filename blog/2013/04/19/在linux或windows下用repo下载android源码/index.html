@@ -63,6 +63,9 @@
       <a href='/blog/tags/Linux/'>Linux</a>
     
     </span>
+    <span class="taglist">本文字数: 492 </span>
+    <span class="taglist">阅读时长：2 min </span>
+    <span class="taglist">全站字数：344.2k</span>
   
 
   <h1 class="post-title">在linux或windows下用repo下载android源码</h1>
@@ -77,8 +80,7 @@
 <p>3）同步文件</p>
 <p>[java]<br>$ repo sync<br>[/java]</p>
 <p>详见<a href="http://source.android.com/source/downloading.html" target="_blank" rel="noopener">http://source.android.com/source/downloading.html</a><br><strong>2.Windows</strong><br>1）安装cygwin。需要安装的库有<br>curl<br>git,git-completion<br>vim<br>python<br>GnuPG<br>2）配置repo<br>同linux<br>3）下载android源码<br>同linux<br><strong>在windows下可能出现的问题及解决方案</strong><br>问题一：1 [main] python 5536 child_info_fork::abort: unable to remap select.dll to same address as parent (00C70000) - try running rebaseall<br>Traceback (most recent call last):<br>File “/cygdrive/f/android/source/.repo/repo/main.py”, line 385, in<br>_Main(sys.argv[1:])……<br>解决方案：关闭所有cygwin进程，启动cygwin的bin目录下的ash，运行./rebaseall -v<br>问题二：error: error setting certificate verify locations:<br>CAfile: /usr/ssl/certs/ca-bundle.crt<br>CApath: none while accessing <a href="https://github.com/username/repositoryname/info/refs" target="_blank" rel="noopener">https://github.com/username/repositoryname/info/refs</a><br>fatal: HTTP request failed<br>解决方案：缺少证书所致，重新运行cygwin的setup.exe，然后安装ca-certificates包即可解决问题。</p>
-<p><em>参考文献<br>1.<a href="http://tech.idv2.com/2012/09/14/cygwin-git-error/" target="_blank" rel="noopener">http://tech.idv2.com/2012/09/14/cygwin-git-error/</a><br>2.<a href="http://www.java123.net/detail/view-20392.html" target="_blank" rel="noopener">http://www.java123.net/detail/view-20392.html</a><br>3.<a href="http://blog.163.com/liuyichaoweiyi@126/blog/static/21743855201231321814801/" target="_blank" rel="noopener">http://blog.163.com/liuyichaoweiyi@126/blog/static/21743855201231321814801/</a>
-</em></p>
+<p>_参考文献<br>1.<a href="http://tech.idv2.com/2012/09/14/cygwin-git-error/" target="_blank" rel="noopener">http://tech.idv2.com/2012/09/14/cygwin-git-error/</a><br>2.<a href="http://www.java123.net/detail/view-20392.html" target="_blank" rel="noopener">http://www.java123.net/detail/view-20392.html</a><br>3.<a href="http://blog.163.com/liuyichaoweiyi@126/blog/static/21743855201231321814801/" target="_blank" rel="noopener">http://blog.163.com/liuyichaoweiyi@126/blog/static/21743855201231321814801/</a><br>_</p>
 
   </section>
   <footer class="post-footer">
@@ -105,26 +107,22 @@
     
 </nav>
 
-<!-- Begin Comments Code -->
-<div id="comments">
-  <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-在linux或windows下用repo下载android源码" data-title="在linux或windows下用repo下载android源码" data-url="https://zhangmin.name/blog/2013/04/19/在linux或windows下用repo下载android源码/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zhangmin"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0]
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-</div>
-<!-- End Comments Code -->
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2013/04/19/在linux或windows下用repo下载android源码/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "在linux或windows下用repo下载android源码"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
 
 
         </main>

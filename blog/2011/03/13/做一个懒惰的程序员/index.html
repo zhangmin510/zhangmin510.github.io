@@ -99,11 +99,11 @@
 <p><strong>2 让代码自己生成</strong></p>
 <p>最简单的代码生成是非逻辑生成，比如<a href="http://blog.csdn.net/absurd/archive/2006/08/26/1123781.aspx" target="_blank" rel="noopener">李先静</a>曾经举过这样一个例子：</p>
 <p><em>前几天遇到一个问题，要定义一组宏，它的格式是这样的：</em></p>
-<p>_KEYMAP(GDK_Op_Left, GDK_F12, DIKS<em>F12)</em></p>
-<p>_KEYMAP(GDK_Op_Right, GDK_F13, DIKS<em>F13)、</em></p>
-<p><em>…</em></p>
-<p>_大约有30多行，第一列的Op<em>Left之类是自定义的按键，是我们讨论的结果，放在一个表格中，手工把这份表格转换成以上的宏，不难也要不了多少时间，但这样单调的事很容易出错，特别对于我这样粗心大意的人来说。于是决定用awk来做：</em></p>
-<p><em>awk ‘BEGIN{i = 4} {print “KEYMAP(GDK</em>” $1 “, GDK_F” i “, DIKS<em>F” i “)”; i++}’ keys.txt</em></p>
+<p>_KEYMAP(GDK_Op_Left, GDK_F12, DIKS_F12)_</p>
+<p>_KEYMAP(GDK_Op_Right, GDK_F13, DIKS_F13)、_</p>
+<p>_…_</p>
+<p>_大约有30多行，第一列的Op_Left之类是自定义的按键，是我们讨论的结果，放在一个表格中，手工把这份表格转换成以上的宏，不难也要不了多少时间，但这样单调的事很容易出错，特别对于我这样粗心大意的人来说。于是决定用awk来做：_</p>
+<p><em>awk ‘BEGIN{i = 4} {print “KEYMAP(GDK</em>” $1 “, GDK_F” i “, DIKS_F” i “)”; i++}’ keys.txt_</p>
 <p><em>这就是代码产生器！就一行代码。简单吧，它却产生了30多行代码。其实我经常在用这样的代码产生器，给我节省了不少时间，减少了出错的可能。所以能用脚本就用脚本，脚本实现困难时才考虑用C/C++等编译语言。</em></p>
 <p>复杂的代码生成便是逻辑生成，有这样一篇文章可以参考：《<a href="http://blog.csdn.net/wishfly/archive/2007/12/14/1937556.aspx" target="_blank" rel="noopener">浅谈代码生成</a>》</p>
 <p><strong>第四 不调试程序</strong></p>
@@ -140,26 +140,22 @@
     
 </nav>
 
-<!-- Begin Comments Code -->
-<div id="comments">
-  <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-做一个懒惰的程序员" data-title="做一个懒惰的程序员" data-url="https://zhangmin.name/blog/2011/03/13/做一个懒惰的程序员/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zhangmin"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0]
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-</div>
-<!-- End Comments Code -->
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2011/03/13/做一个懒惰的程序员/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "做一个懒惰的程序员"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
 
 
         </main>

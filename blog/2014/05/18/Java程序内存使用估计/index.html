@@ -63,6 +63,9 @@
       <a href='/blog/tags/Java/'>Java</a>
     
     </span>
+    <span class="taglist">本文字数: 707 </span>
+    <span class="taglist">阅读时长：2 min </span>
+    <span class="taglist">全站字数：344.2k</span>
   
 
   <h1 class="post-title">Java程序内存使用估计</h1>
@@ -80,7 +83,7 @@
 <p><img src="http://b.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=503b32b2324e251fe6f7e4fd97bdb82a/960a304e251f95cac0c7023ecb177f3e67095203.jpg?referer=436975ae0b24ab18b901d4079e01&amp;x=.jpg" alt="Java String 对象"></p>
 <p>String对象总的内存大小为40 + 24 + 2N bytes。其中24 + 2N bytes是value数组的开销。String代表的字符串代为value[offset] 到value[offset + count - 1]之间的字符（包括端点）。对于String的常用操作都是subString，由于String是不可变的，一般value数组在各个String对象之间共享。使用subString时只需要40bytes，因为value数组可以共享。这样可以提高内存使用率。也就是说对于一个较长的字符串，创建子字符串只需要常数时间和常数空间。这种时空复杂度和字符串长度无关的设计对于字符处理算法是非常有效的。<br><img src="http://f.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=913c29fce9f81a4c2232eccce7111164/8644ebf81a4c510f44f679926259252dd42aa50c.jpg?referer=91fb9f15c9ef7609651cacaf0302&amp;x=.jpg" alt=""></p>
 <p><em>参考文献</em></p>
-<p><em>Algorithms 4th Edition by Robert Sedgewick and Kevin Wayne </em></p>
+<p>_Algorithms 4th Edition by Robert Sedgewick and Kevin Wayne _</p>
 
   </section>
   <footer class="post-footer">
@@ -107,26 +110,22 @@
     
 </nav>
 
-<!-- Begin Comments Code -->
-<div id="comments">
-  <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-Java程序内存使用估计" data-title="Java程序内存使用估计" data-url="https://zhangmin.name/blog/2014/05/18/Java程序内存使用估计/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zhangmin"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0]
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-</div>
-<!-- End Comments Code -->
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2014/05/18/Java程序内存使用估计/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "Java程序内存使用估计"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
 
 
         </main>

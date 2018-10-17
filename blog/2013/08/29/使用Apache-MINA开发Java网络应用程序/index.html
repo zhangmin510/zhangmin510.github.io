@@ -63,6 +63,9 @@
       <a href='/blog/tags/技术/'>技术</a>
     
     </span>
+    <span class="taglist">本文字数: 679 </span>
+    <span class="taglist">阅读时长：3 min </span>
+    <span class="taglist">全站字数：344.2k</span>
   
 
   <h1 class="post-title">使用Apache MINA开发Java网络应用程序</h1>
@@ -76,11 +79,11 @@
 <p>所以，如果你要创建一个基于MINA的网络应用程序，你需要：<br>1. 创建I/O Service。可以从已有的Service（*Accepter）中选择或者自己创建。<br>2. 创建Filter Chain。从已有的Filters中选择或者自定义。<br>3. 创建I/O Handler。处理消息或实现具体的业务逻辑。</p>
 <p>下面是一个基于TCP/IP的TimeServer：</p>
 <p>TimeServer的代码如下：</p>
-<p>[java]<br>/<em>*
+<p>[java]<br>/*<em>
  </em></p>
 <ul>
 <li>MinaTimeServer.java</li>
-<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>ZhangMin.name - <a href="mailto:zhangmin@zhangmin.name">zhangmin@zhangmin.name</a></li>
 <li>name.zhangmin.java<br><em>
 </em>/<br>package name.zhangmin.java.mina;<br>import java.io.IOException;<br>import java.net.InetSocketAddress;<br>import java.nio.charset.Charset;<br>import org.apache.mina.core.service.IoAcceptor;<br>import org.apache.mina.core.session.IdleStatus;<br>import org.apache.mina.filter.codec.ProtocolCodecFilter;<br>import org.apache.mina.filter.codec.textline.TextLineCodecFactory;<br>import org.apache.mina.filter.logging.LoggingFilter;<br>import org.apache.mina.transport.socket.nio.NioSocketAcceptor;<br>/**</li>
 <li>@author ZhangMin.name<br><em>
@@ -97,11 +100,11 @@ new TextLineCodecFactory(
 <p>}</p>
 <p>[/java]</p>
 <p>Handler的代码如下：</p>
-<p>[java]<br>/<em>*
+<p>[java]<br>/*<em>
  </em></p>
 <ul>
 <li>TimeServerHandler.java</li>
-<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>ZhangMin.name - <a href="mailto:zhangmin@zhangmin.name">zhangmin@zhangmin.name</a></li>
 <li>name.zhangmin.java<br><em>
 </em>/<br>package name.zhangmin.java.mina;<br>import java.util.Date;<br>import org.apache.mina.core.service.IoHandlerAdapter;<br>import org.apache.mina.core.session.IdleStatus;<br>import org.apache.mina.core.session.IoSession;<br>/**</li>
 <li><p>@author ZhangMin.name<br><em>
@@ -155,26 +158,22 @@ System.out.println(&amp;quot;IDLE: &amp;quot; + session.getIdleCount(status));
     
 </nav>
 
-<!-- Begin Comments Code -->
-<div id="comments">
-  <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-使用Apache-MINA开发Java网络应用程序" data-title="使用Apache MINA开发Java网络应用程序" data-url="https://zhangmin.name/blog/2013/08/29/使用Apache-MINA开发Java网络应用程序/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zhangmin"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0]
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-</div>
-<!-- End Comments Code -->
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2013/08/29/使用Apache-MINA开发Java网络应用程序/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "使用Apache MINA开发Java网络应用程序"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
 
 
         </main>

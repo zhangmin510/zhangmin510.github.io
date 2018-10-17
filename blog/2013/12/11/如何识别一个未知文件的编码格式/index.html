@@ -63,6 +63,9 @@
       <a href='/blog/tags/技术/'>技术</a>
     
     </span>
+    <span class="taglist">本文字数: 824 </span>
+    <span class="taglist">阅读时长：4 min </span>
+    <span class="taglist">全站字数：344.2k</span>
   
 
   <h1 class="post-title">如何识别一个未知文件的编码格式</h1>
@@ -72,11 +75,11 @@
   <section class="post-content article-entry">
     <p>识别一个未知文件的格式（英文专业术语为Codepage-detection）在诸多领域有应用，如搜索引擎，浏览器等。<br>对于Unicode编码的文件，在文件的开头有两个字节或者多个字节用于表示文件的编码格式及字节顺序。这几个字节不会出现在文件的内容中，只会影响文件被装进内存时的方式。UTF-8，UCS-2/UTF-16等编码格式可以通过文件开头的BOM（Byte Order Mark）来识别。常见BOM及对应编码格式如下所示：<br>FF FE  UCS-2LE or UTF-16LE<br>FE FF  UCS-2BE or UTF-16BE<br>EF BB BF  UTF-8<br>当然这个方法也不能保证识别的正确性，因为有的文件开头可能就会有相同的字节。况且大多数文件都没有BOM。</p>
 <p>由于所有其他的编码格式都兼容ASCII编码，所以如果一个文件的内容都是ASCII，就不能判断该文件的编码格式。如果一个文件既有ASCII编码的字符也有UTF-8编码的字符可以通过寻找UTF-8的字节序列来实现，如：<br>0xxxxxxx  ASCII &lt; 0x80 (128)<br>110xxxxx 10xxxxxx  2-byte &gt;= 0x80<br>1110xxxx 10xxxxxx 10xxxxxx  3-byte &gt;= 0x400<br>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx  4-byte &gt;= 0x10000</p>
-<p>在java中有几种工具可以进行文件编码的识别，如Mozilla jchardet（<a href="http://jchardet.sourceforge.net/）和IBM的ICU4j（http://site.icu-project.org/）。相比而言，后者的准确性更高。" target="_blank" rel="noopener">http://jchardet.sourceforge.net/）和IBM的ICU4j（http://site.icu-project.org/）。相比而言，后者的准确性更高。</a><br>下面是两个工具的使用示例：<br>[java]<br>/<em>*
+<p>在java中有几种工具可以进行文件编码的识别，如Mozilla jchardet（<a href="http://jchardet.sourceforge.net/）和IBM的ICU4j（http://site.icu-project.org/）。相比而言，后者的准确性更高。" target="_blank" rel="noopener">http://jchardet.sourceforge.net/）和IBM的ICU4j（http://site.icu-project.org/）。相比而言，后者的准确性更高。</a><br>下面是两个工具的使用示例：<br>[java]<br>/*<em>
  </em></p>
 <ul>
 <li>ICUExample.java</li>
-<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>ZhangMin.name - <a href="mailto:zhangmin@zhangmin.name">zhangmin@zhangmin.name</a></li>
 <li>name.zhangmin.timediary<br><em>
 </em>/<br>package name.zhangmin.timediary.util;</li>
 </ul>
@@ -112,15 +115,15 @@ if(cm != null){
 </li>
 </ul>
 <p>[/java]</p>
-<p>[java]<br>/<em>*
+<p>[java]<br>/*<em>
  </em></p>
 <ul>
 <li>JchardetExample.java</li>
-<li>ZhangMin.name - zhangmin@zhangmin.name</li>
+<li>ZhangMin.name - <a href="mailto:zhangmin@zhangmin.name">zhangmin@zhangmin.name</a></li>
 <li>name.zhangmin.timediary<br><em>
 </em>/<br>package name.zhangmin.timediary.util;</li>
 </ul>
-<p>import java.io.BufferedInputStream;<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.IOException;<br>import org.mozilla.intl.chardet.<em> ;<br>/*</em></p>
+<p>import java.io.BufferedInputStream;<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.IOException;<br>import org.mozilla.intl.chardet.* ;<br>/**</p>
 <ul>
 <li><p>@author ZhangMin.name<br><em>
 </em>/<br>public class JchardetExample {<br> public static boolean found = false;<br> /**</p>
@@ -203,26 +206,22 @@ if(!found){
     
 </nav>
 
-<!-- Begin Comments Code -->
-<div id="comments">
-  <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-如何识别一个未知文件的编码格式" data-title="如何识别一个未知文件的编码格式" data-url="https://zhangmin.name/blog/2013/12/11/如何识别一个未知文件的编码格式/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zhangmin"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0]
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-</div>
-<!-- End Comments Code -->
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2013/12/11/如何识别一个未知文件的编码格式/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "如何识别一个未知文件的编码格式"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
 
 
         </main>

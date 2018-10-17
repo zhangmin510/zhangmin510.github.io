@@ -61,6 +61,9 @@
       <a href='/blog/tags/区块链/'>区块链</a>
     
     </span>
+    <span class="taglist">本文字数: 7.7k </span>
+    <span class="taglist">阅读时长：31 min </span>
+    <span class="taglist">全站字数：344.2k</span>
   
 
   <h1 class="post-title">代码级理解加密数字货币原理</h1>
@@ -199,16 +202,16 @@
 <li>正确的交易数据结构</li>
 </ol>
 <figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const isValidTransactionStructure = <span class="function"><span class="params">(transaction: Transaction)</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> transaction.id !== <span class="string">'string'</span>) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'transactionId missing'</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">       <span class="regexp">//</span>check also the other members <span class="keyword">of</span> <span class="class"><span class="keyword">class</span></span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="2">
 <li>验证交易Id</li>
 </ol>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (getTransactionId(<span class="keyword">transaction</span>) !== <span class="keyword">transaction</span>.<span class="built_in">id</span>) &#123;</span><br><span class="line">    console.<span class="built_in">log</span>('invalid tx <span class="built_in">id</span>: ' + <span class="keyword">transaction</span>.<span class="built_in">id</span>);</span><br><span class="line"><span class="built_in">    return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="3">
 <li>验证交易输入</li>
 </ol>
 <p>交易输入的签名必须有效，而且必须指向一个为花费的交易输出。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> validateTxIn = (txIn: TxIn, <span class="attr">transaction</span>: Transaction, <span class="attr">aUnspentTxOuts</span>: UnspentTxOut[]): <span class="function"><span class="params">boolean</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> referencedUTxOut: UnspentTxOut =</span><br><span class="line">        aUnspentTxOuts.find(<span class="function">(<span class="params">uTxO</span>) =&gt;</span> uTxO.txOutId === txIn.txOutId &amp;&amp; uTxO.txOutId === txIn.txOutId);</span><br><span class="line">    <span class="keyword">if</span> (referencedUTxOut == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'referenced txOut not found: '</span> + <span class="built_in">JSON</span>.stringify(txIn));</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> address = referencedUTxOut.address;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> key = ec.keyFromPublic(address, <span class="string">'hex'</span>);</span><br><span class="line">    <span class="keyword">return</span> key.verify(transaction.id, txIn.signature);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="4">
 <li>验证交易输出</li>
 </ol>
 <p>交易的输出总和必须等于交易输入的总和。</p>
@@ -339,26 +342,22 @@
     
 </nav>
 
-<!-- Begin Comments Code -->
-<div id="comments">
-  <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-代码级理解加密数字货币原理" data-title="代码级理解加密数字货币原理" data-url="https://zhangmin.name/blog/2018/04/22/代码级理解加密数字货币原理/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zhangmin"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0]
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-</div>
-<!-- End Comments Code -->
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2018/04/22/代码级理解加密数字货币原理/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "代码级理解加密数字货币原理"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
 
 
         </main>

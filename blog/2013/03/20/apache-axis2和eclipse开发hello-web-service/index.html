@@ -61,6 +61,9 @@
       <a href='/blog/tags/Web-Service/'>Web Service</a>
     
     </span>
+    <span class="taglist">本文字数: 886 </span>
+    <span class="taglist">阅读时长：4 min </span>
+    <span class="taglist">全站字数：344.2k</span>
   
 
   <h1 class="post-title">apache axis2和eclipse开发hello web service</h1>
@@ -82,7 +85,7 @@
 <ul>
 <li>say hello service</li>
 <li>@param name</li>
-<li>@return<br><em>/<br>public String sayHello(String name){<br>return &quot;hello &quot;+name;<br>}<br>/*</em></li>
+<li>@return<br>*/<br>public String sayHello(String name){<br>return &quot;hello &quot;+name;<br>}<br>/**</li>
 <li>add service</li>
 <li>@param a</li>
 <li>@param b</li>
@@ -92,7 +95,7 @@
 <p>然后利用Axis2 Service Archiver打包-&gt;class file location 为项目的bin目录-&gt;选择skip wsdl-&gt;如果没有引用其他jar文件点击下一步-&gt;选择自动生成service xml文件-&gt;输入服务名称(随意)、类全名-&gt;设置aar文件名以及存放目录-&gt;Finish.</p>
 <p>这是生成一个HelloWebService.aar文件，该文件很像一个jar包，文件中META-INF目录下的service.xml 内容如下，描述了你创建的服务。</p>
 <p>[xml]</p>
-<p>&lt;?xml version=&quot;1.0&quot;?&gt;<br>-&lt;service name=&quot;HelloWebService&quot;&gt; &lt;description&gt; Please Type your service description here &lt;/description&gt; -&lt;messageReceivers&gt; &lt;messageReceiver class=&quot;org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver&quot; mep=&quot;<a href="http://www.w3.org/2004/08/wsdl/in-only&quot;/&amp;gt" target="_blank" rel="noopener">http://www.w3.org/2004/08/wsdl/in-only&quot;/&amp;gt</a>; &lt;messageReceiver class=&quot;org.apache.axis2.rpc.receivers.RPCMessageReceiver&quot; mep=&quot;<a href="http://www.w3.org/2004/08/wsdl/in-out&quot;/&amp;gt" target="_blank" rel="noopener">http://www.w3.org/2004/08/wsdl/in-out&quot;/&amp;gt</a>; &lt;/messageReceivers&gt; &lt;parameter name=&quot;ServiceClass&quot;&gt;com.example.HelloWebService&lt;/parameter&gt; &lt;/service&gt;</p>
+<p>&lt;?xml version=&quot;1.0&quot;?&gt;<br>-&lt;service name=&quot;HelloWebService&quot;&gt; &lt;description&gt; Please Type your service description here &lt;/description&gt; -&lt;messageReceivers&gt; &lt;messageReceiver class=&quot;org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver&quot; mep=&quot;<a href="http://www.w3.org/2004/08/wsdl/in-only&quot;/" target="_blank" rel="noopener">http://www.w3.org/2004/08/wsdl/in-only&quot;/</a>&gt; &lt;messageReceiver class=&quot;org.apache.axis2.rpc.receivers.RPCMessageReceiver&quot; mep=&quot;<a href="http://www.w3.org/2004/08/wsdl/in-out&quot;/" target="_blank" rel="noopener">http://www.w3.org/2004/08/wsdl/in-out&quot;/</a>&gt; &lt;/messageReceivers&gt; &lt;parameter name=&quot;ServiceClass&quot;&gt;com.example.HelloWebService&lt;/parameter&gt; &lt;/service&gt;</p>
 <p>[/xml]</p>
 <p><strong>发布Web Service</strong></p>
 <p>将生成的HelloWebService.aar 文件拷贝到…axis2-1.6.2repositoryservices目录中，然后运行…axis2-1.6.2bin中的axis2server.bat 文件。启动后访问<a href="http://localhost:8080/axis2/services/就可以看到你的服务的描述了。" target="_blank" rel="noopener">http://localhost:8080/axis2/services/就可以看到你的服务的描述了。</a></p>
@@ -144,26 +147,22 @@
     
 </nav>
 
-<!-- Begin Comments Code -->
-<div id="comments">
-  <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-apache-axis2和eclipse开发hello-web-service" data-title="apache axis2和eclipse开发hello web service" data-url="https://zhangmin.name/blog/2013/03/20/apache-axis2和eclipse开发hello-web-service/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zhangmin"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0]
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-</div>
-<!-- End Comments Code -->
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2013/03/20/apache-axis2和eclipse开发hello-web-service/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "apache axis2和eclipse开发hello web service"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
 
 
         </main>

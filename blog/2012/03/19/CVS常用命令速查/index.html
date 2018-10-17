@@ -61,9 +61,9 @@
     <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CVS环境初始化"><span class="toc-text">CVS环境初始化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CVS的日常使用"><span class="toc-text">CVS的日常使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CVS-Branch：项目多分支同步开发"><span class="toc-text">CVS Branch：项目多分支同步开发</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CVS的远程认证：通过SSH远程访问CVS"><span class="toc-text">CVS的远程认证：通过SSH远程访问CVS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CVSWEB：提高文件浏览效率"><span class="toc-text">CVSWEB：提高文件浏览效率</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CVS-TAGS-who-when"><span class="toc-text">CVS TAGS: who? when?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CVS-vs-VSS"><span class="toc-text">CVS vs VSS　</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WinCVS"><span class="toc-text">WinCVS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于CVSTrac的小组开发环境搭建"><span class="toc-text">基于CVSTrac的小组开发环境搭建</span></a></li></ol>
   </section>
   <section class="post-content article-entry">
-    <p>作者： 车东 chedong@bigfoot.com<br>版权声明：可以任意转载，转载时请务必以超链接形式标明文章原始出处和作者信息及本声明<br><a href="http://www.chedong.com/tech/cvs_card.html" target="_blank" rel="noopener">http://www.chedong.com/tech/cvs_card.html</a><br>关键词：CVS CVSWeb CVSTrac WinCVS CVSROOT<br>内容提要：<br>CVS环境初始化：CVS环境的搭建 管理员<br>CVS的日常使用：日常开发中最常用的CVS命令， 开发人员 管理员<br>CVS的分支开发：项目按照不同进度和目标并发进行 管理员<br>CVS的用户认证：通过SSH的远程用户认证，安全，简单 管理员<br>CVSWEB：CVS的WEB访问界面大大提高代码版本比较的效率 管理员<br>CVS TAG：将$Header$加入代码注释中，方便开发过程的跟踪 开发人员<br>CVS vs VSS: CVS和Virsual SourceSafe的比较 开发人员 管理员<br>WinCVS: 通过SSH认证的WinCVS认证设置<br>基于CVSTrac的小组开发环境搭建：通过CVSTrac实现web界面的CVS用户管理及集成的BUG跟踪和WIKI交流。<br>一个系统20%的功能往往能够满足80%的需求，CVS也不例外，以下是CVS最常用的功能，可能还不到它全部命令选项的20%，更多的功能在实际应用过程中体会，你想用多少就学多少，不时回头看看经常有意外的收获。</p>
+    <p>作者： 车东 <a href="mailto:chedong@bigfoot.com" target="_blank" rel="noopener">chedong@bigfoot.com</a><br>版权声明：可以任意转载，转载时请务必以超链接形式标明文章原始出处和作者信息及本声明<br><a href="http://www.chedong.com/tech/cvs_card.html" target="_blank" rel="noopener">http://www.chedong.com/tech/cvs_card.html</a><br>关键词：CVS CVSWeb CVSTrac WinCVS CVSROOT<br>内容提要：<br>CVS环境初始化：CVS环境的搭建 管理员<br>CVS的日常使用：日常开发中最常用的CVS命令， 开发人员 管理员<br>CVS的分支开发：项目按照不同进度和目标并发进行 管理员<br>CVS的用户认证：通过SSH的远程用户认证，安全，简单 管理员<br>CVSWEB：CVS的WEB访问界面大大提高代码版本比较的效率 管理员<br>CVS TAG：将$Header$加入代码注释中，方便开发过程的跟踪 开发人员<br>CVS vs VSS: CVS和Virsual SourceSafe的比较 开发人员 管理员<br>WinCVS: 通过SSH认证的WinCVS认证设置<br>基于CVSTrac的小组开发环境搭建：通过CVSTrac实现web界面的CVS用户管理及集成的BUG跟踪和WIKI交流。<br>一个系统20%的功能往往能够满足80%的需求，CVS也不例外，以下是CVS最常用的功能，可能还不到它全部命令选项的20%，更多的功能在实际应用过程中体会，你想用多少就学多少，不时回头看看经常有意外的收获。</p>
 <h1 id="CVS环境初始化"><a href="#CVS环境初始化" class="headerlink" title="CVS环境初始化"></a>CVS环境初始化</h1><p>环境设置：指定CVS库的路径CVSROOT<br>tcsh<br>setenv CVSROOT /path/to/cvsroot<br>bash<br>CVSROOT=/path/to/cvsroot ; export CVSROOT</p>
-<p>后面还提到远程CVS服务器的设置：<br>CVSROOT=:extUSER@test.server.address#port:/path/to/cvsroot CVS_RSH=ssh; export CVSROOT CVS_RSH</p>
+<p>后面还提到远程CVS服务器的设置：<br>CVSROOT=:<a href="mailto:extUSER@test.server.address" target="_blank" rel="noopener">extUSER@test.server.address</a>#port:/path/to/cvsroot CVS_RSH=ssh; export CVSROOT CVS_RSH</p>
 <p>初始化：CVS版本库的初始化。<br>cvs init</p>
 <p>一个项目的首次导入<br>cvs import -m “write some comments here” project_name vendor_tag release_tag<br>执行后：会将所有源文件及目录导入到/path/to/cvsroot/project_name目录下<br>vender_tag: 开发商标记<br>release_tag: 版本发布标记</p>
 <p>项目导出：将代码从CVS库里导出<br>cvs checkout project_name<br>cvs 将创建project_name目录，并将最新版本的源代码导出到相应目录中。这个checkout和Virvual SourceSafe中的check out不是一个概念，相对于Virvual SourceSafe的check out是cvs update， check in是cvs commit。</p>
@@ -92,11 +92,11 @@
 <p>一些人先在另外一个目录下导出release_1_0_patch这个分支：解决1.0中的紧急问题，<br>cvs checkout -r release_1_0_patch<br>而其他人员仍旧在项目的主干分支2.x上开发</p>
 <p>在release_1_0_patch上修正错误后，标记一个1.0的错误修正版本号<br>cvs tag release_1_0_patch_1</p>
 <p>如果2.0认为这些错误修改在2.0里也需要，也可以在2.0的开发目录下合并release_1_0_patch_1中的修改到当前代码中：<br>cvs update -j release_1_0_patch_1</p>
-<h1 id="CVS的远程认证：通过SSH远程访问CVS"><a href="#CVS的远程认证：通过SSH远程访问CVS" class="headerlink" title="CVS的远程认证：通过SSH远程访问CVS"></a>CVS的远程认证：通过SSH远程访问CVS</h1><p>使用cvs本身基于pserver的远程认证很麻烦,需要定义服务器和用户组，用户名，设置密码等，<br>常见的登陆格式如下：<br>cvs -d :pserver:cvs_user_name@cvs.server.address:/path/to/cvsroot login<br>例子：<br>cvs -d :pserver:cvs@samba.org:/cvsroot login</p>
-<p>不是很安全，因此一般是作为匿名只读CVS访问的方式。从安全考虑，通过系统本地帐号认证并通过SSH传输是比较好的办法，通过在客户机的/etc/profile里设置一下内容：<br>CVSROOT=:extUSER@cvs.server.address#port:/path/to/cvsroot CVS_RSH=ssh; export CVSROOT CVS_RSH<br>所有客户机所有本地用户都可以映射到CVS服务器相应同名帐号了。</p>
+<h1 id="CVS的远程认证：通过SSH远程访问CVS"><a href="#CVS的远程认证：通过SSH远程访问CVS" class="headerlink" title="CVS的远程认证：通过SSH远程访问CVS"></a>CVS的远程认证：通过SSH远程访问CVS</h1><p>使用cvs本身基于pserver的远程认证很麻烦,需要定义服务器和用户组，用户名，设置密码等，<br>常见的登陆格式如下：<br>cvs -d :pserver:<a href="mailto:cvs_user_name@cvs.server.address" target="_blank" rel="noopener">cvs_user_name@cvs.server.address</a>:/path/to/cvsroot login<br>例子：<br>cvs -d :pserver:<a href="mailto:cvs@samba.org" target="_blank" rel="noopener">cvs@samba.org</a>:/cvsroot login</p>
+<p>不是很安全，因此一般是作为匿名只读CVS访问的方式。从安全考虑，通过系统本地帐号认证并通过SSH传输是比较好的办法，通过在客户机的/etc/profile里设置一下内容：<br>CVSROOT=:<a href="mailto:extUSER@cvs.server.address" target="_blank" rel="noopener">extUSER@cvs.server.address</a>#port:/path/to/cvsroot CVS_RSH=ssh; export CVSROOT CVS_RSH<br>所有客户机所有本地用户都可以映射到CVS服务器相应同名帐号了。</p>
 <p>比如:</p>
-<p>CVS服务器是192.168.0.3，上面CVSROOT路径是/home/cvsroot，另外一台开发客户机是192.168.0.4，如果tom在2台机器上都有同名的帐号，那么从192.168.0.4上设置了：<br>export CVSROOT=:ext:tom@192.168.0.3:/home/cvsroot<br>export CVS_RSH=ssh<br>tom就可以直接在192.168.0.4上对192.168.0.3的cvsroot进行访问了（如果有权限的话）<br>cvs checkout project_name<br>cd project_name<br>cvs update<br>…<br>cvs commit</p>
-<p>如果CVS所在服务器的SSH端口不在缺省的22，或者和客户端与CVS服务器端SSH缺省端口不一致，有时候设置了：<br>:extUSER@test.server.address#port:/path/to/cvsroot</p>
+<p>CVS服务器是192.168.0.3，上面CVSROOT路径是/home/cvsroot，另外一台开发客户机是192.168.0.4，如果tom在2台机器上都有同名的帐号，那么从192.168.0.4上设置了：<br>export CVSROOT=:ext:<a href="mailto:tom@192.168.0.3" target="_blank" rel="noopener">tom@192.168.0.3</a>:/home/cvsroot<br>export CVS_RSH=ssh<br>tom就可以直接在192.168.0.4上对192.168.0.3的cvsroot进行访问了（如果有权限的话）<br>cvs checkout project_name<br>cd project_name<br>cvs update<br>…<br>cvs commit</p>
+<p>如果CVS所在服务器的SSH端口不在缺省的22，或者和客户端与CVS服务器端SSH缺省端口不一致，有时候设置了：<br>:<a href="mailto:extUSER@test.server.address" target="_blank" rel="noopener">extUSER@test.server.address</a>#port:/path/to/cvsroot</p>
 <p>仍然不行，比如有以下错误信息：<br>ssh: test.server.address#port: Name or service not known<br>cvs [checkout aborted]: end of file from server (consult above messages if any)</p>
 <p>解决的方法是做一个脚本指定端口转向（不能使用alias，会出找不到文件错误）：<br>创建一个/usr/bin/ssh_cvs文件：</p>
 <p>#!/usr/bin/sh<br>/path/to/ssh -p 34567 “$@”<br>然后：chmod +x /usr/bin/ssh_cvs<br>并CVS_RSH=ssh_cvs; export CVS_RSH</p>
@@ -118,7 +118,7 @@
 <p>对于Virsual SourceSafe和CVS都通用的TAG有：<br>$Header$<br>$Author$<br>$Date$<br>$Revision$</p>
 <p>我建议尽量使用通用的关键词保证代码在CVS和VSS都能方便的跟踪。</p>
 <h1 id="WinCVS"><a href="#WinCVS" class="headerlink" title="WinCVS"></a>WinCVS</h1><p>下载：<br>cvs Windows客户端：目前稳定版本为1.2<br><a href="http://www.wincvs.org/" target="_blank" rel="noopener">http://www.wincvs.org/</a><br>ssh Windows客户端<br><a href="http://www.networksimplicity.com/openssh/" target="_blank" rel="noopener">http://www.networksimplicity.com/openssh/</a></p>
-<p>安装好以上2个软件以后：<br>WinCVS客户端的admin==&gt;;preference设置<br>1 在general选单里<br>设置CVSROOT： username@192.168.0.123:/home/cvsroot<br>设置Authorization: 选择SSH server</p>
+<p>安装好以上2个软件以后：<br>WinCVS客户端的admin==&gt;;preference设置<br>1 在general选单里<br>设置CVSROOT： <a href="mailto:username@192.168.0.123" target="_blank" rel="noopener">username@192.168.0.123</a>:/home/cvsroot<br>设置Authorization: 选择SSH server</p>
 <p>2 Port选单里<br>钩上：check for alternate rsh name<br>并设置ssh.exe的路径，缺省是装在 C:Program FilesNetworkSimplicitysshssh.exe</p>
 <p>然后就可以使用WinCVS进行cvs操作了，所有操作都会跳出命令行窗口要求你输入服务器端的认证密码。</p>
 <p>当然，如果你觉得这样很烦的话，还有一个办法就是生成一个没有密码的公钥/私钥对，并设置CVS使用基于公钥/私钥的SSH认证（在general选单里）。</p>
@@ -126,8 +126,7 @@
 <h1 id="基于CVSTrac的小组开发环境搭建"><a href="#基于CVSTrac的小组开发环境搭建" class="headerlink" title="基于CVSTrac的小组开发环境搭建"></a>基于CVSTrac的小组开发环境搭建</h1><p>作为一个小组级的开发环境，版本控制系统和BUG跟踪系统等都涉及到用户认证部分。如何方便的将这些系统集成起来是一个非常困难的事情，毕竟我们不能指望Linux下有像Source Offsite那样集成度很高的版本控制/BUG跟踪集成系统。</p>
 <p>我个人是很反对使用pserver模式的远程用户认证的，但如果大部分组员使用WINDOWS客户端进行开发的话，总体来说使用CVSROOT/passwd认证还是很难避免的，但CVS本身用户的管理比较麻烦。本来我打算自己用perl写一个管理界面的，直到我发现了CVSTrac：一个基于WEB界面的BUG跟踪系统，它外挂在CVS系统上的BUG跟踪系统，其中就包括了WEB界面的CVSROOT/passwd文件的管理，甚至还集成了WIKIWIKI讨论组功能。</p>
 <p>这里首先说一下CVS的pserver模式下的用户认证，CVS的用户认证服务是基于inetd中的：<br>cvspserver stream tcp nowait nobody /usr/bin/cvs cvs –allow-root=/home/cvsroot pserver<br>一般在2401端口</p>
-<p>CVS用户数据库是基于CVSROOT/passwd文件，文件格式：</p>
-<p>由于密码都用的是UNIX标准的CRYPT加密，这个passwd文件的格式基本上是apache的htpasswd格式的扩展（比APACHE的PASSWD文件多一个系统用户映射字段），所以这个文件最简单的方法可以用<br>apache/bin/htpasswd -b myname mypassword<br>创建。注意：通过htpasswd创建出来的文件会没有映射系统用户的字段<br>例如：<br>new:geBvosup/zKl2<br>setup:aISQuNAAoY3qw<br>test:hwEpz/BX.rEDU</p>
+<p>CVS用户数据库是基于CVSROOT/passwd文件，文件格式：<br>[username]:[crypt_password]:[mapping_system_user]<br>由于密码都用的是UNIX标准的CRYPT加密，这个passwd文件的格式基本上是apache的htpasswd格式的扩展（比APACHE的PASSWD文件多一个系统用户映射字段），所以这个文件最简单的方法可以用<br>apache/bin/htpasswd -b myname mypassword<br>创建。注意：通过htpasswd创建出来的文件会没有映射系统用户的字段<br>例如：<br>new:geBvosup/zKl2<br>setup:aISQuNAAoY3qw<br>test:hwEpz/BX.rEDU</p>
 <p>映射系统用户的目的在于：你可以创建一个专门的CVS服务帐号，比如叫cvs，并将/home/cvsroot目录下的所有权限赋予这个用户，然后在passwd文件里创建不同的开发用户帐号，但开发用户帐号最后的文件读写权限都映射为cvs用户，避免了在SSH模式下多个开发用户新建文件后的对于其他用户的文件读写权限问题。</p>
 <p>进一步的，你可以将用户分别映射到2组用户上，利用2个用户的权限设置，避免2个项目组的文件互相访问。<br>new:geBvosup/zKl2:proj1<br>setup:aISQuNAAoY3qw:proj2<br>test:hwEpz/BX.rEDU:proj1</p>
 <p>CVSTrac很好的解决了CVSROOT/passwd的管理问题，而且包含了BUG跟踪报告系统和集成WIKIWIKI交流功能等，使用的CGI方式的安装，并且基于GNU Public License：</p>
@@ -140,7 +139,7 @@
 <p>从 <a href="http://cvs.server.address/cgi-bin/cvstrac/myproj" target="_blank" rel="noopener">http://cvs.server.address/cgi-bin/cvstrac/myproj</a> 进入管理界面<br>缺省登录名：setup 密码 setup<br>对于一般用户可以从：<br><a href="http://cvs.server.address/cgi-bin/cvstrac/myproj" target="_blank" rel="noopener">http://cvs.server.address/cgi-bin/cvstrac/myproj</a><br>修改登录密码，进行BUG报告等，<br>更多使用细节可以在使用中慢慢了解。<br>备注：<br>在inetd里加入cvspserver服务：<br>cvspserver stream tcp nowait apache /usr/bin/cvs cvs –allow-root=/home/cvsroot pserver</p>
 <p>xietd的配置文件：%cat cvspserver<br>service cvspserver<br>{<br>disable = no<br>socket_type = stream<br>wait = no<br>user = apache<br>server = /usr/bin/cvs<br>server_args = -f –allow-root=/home/cvsroot pserver<br>log_on_failure += USERID<br>}</p>
 <p>注意：这里的用户设置成apache目的是和/home/cvsroot的所有用户一致，并且必须让这个这个用户对/home/cvsroot/下的CVSROOT/passwd和cvstrac初始化生成的myproj.db有读取权限。</p>
-<p>对于前面提到的WinCVS在perference里设置：<br>CVSROOT栏输入：username@ip.address.of.cvs:/home/cvsroot<br>Authenitication选择：use passwd file on server side<br>就可以了从服务器上导出项目了。</p>
+<p>对于前面提到的WinCVS在perference里设置：<br>CVSROOT栏输入：<a href="mailto:username@ip.address.of.cvs" target="_blank" rel="noopener">username@ip.address.of.cvs</a>:/home/cvsroot<br>Authenitication选择：use passwd file on server side<br>就可以了从服务器上导出项目了。</p>
 <p>总结：</p>
 <p>利用cvs + (WinCVS/cvsweb/cvstrac)，构成了一个相对完善的跨平台工作组开发版本控制环境。</p>
 <p>相关资源：</p>
@@ -179,26 +178,22 @@
     
 </nav>
 
-<!-- Begin Comments Code -->
-<div id="comments">
-  <!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="post-CVS常用命令速查" data-title="CVS常用命令速查" data-url="https://zhangmin.name/blog/2012/03/19/CVS常用命令速查/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"zhangmin"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0]
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-</div>
-<!-- End Comments Code -->
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2012/03/19/CVS常用命令速查/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "CVS常用命令速查"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
 
 
         </main>
