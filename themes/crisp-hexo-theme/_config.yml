@@ -1,4 +1,4 @@
 # config
 logo: https://zhangmin.name/images/horse.jpg
 feed: https://zhangmin.name/blog/atom.xml
-google_analytics:
+disqus: zhangmin
