@@ -10,4 +10,5 @@ date: 2017-11-28 23:26:36
 
 # 联系我
 
-微信：`zhangmin_name`（备注来自博客）
+微信: `zhangmin_name` (备注来自博客)
+邮箱: `zhangmin#zhangmin.name`(#替换为@)
