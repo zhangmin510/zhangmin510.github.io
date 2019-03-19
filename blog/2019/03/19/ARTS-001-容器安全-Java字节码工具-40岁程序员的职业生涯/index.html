@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="https://zhangmin.name/images/me.jpg"/>
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="https://zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>ARTS-001-容器安全-Java字节码工具-40岁程序员的职业生涯 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="https://zhangmin.name"><img src="https://zhangmin.name/images/me.jpg" alt="ZhangMin.name" /></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="https://zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+<h6><a href="/blog/ir">Investor Relations</a></h6>
+<h6><a href="https://www.toutiao.com/c/user/100118204993/">头条号10XChange</a></h6>
+<h6><a href="https://juejin.im/user/5ba22f41e51d450e4a1bb1a8/">掘金Protopia</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  March 19, 2019
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href='/blog/tags/ARTS/'>ARTS</a>
+    
+    </span>
+    <span class="taglist">本文字数: 1.5k </span>
+    <span class="taglist">阅读时长：6 min </span>
+    <span class="taglist">全站字数：347.5k</span>
+  
+
+  <h1 class="post-title">ARTS-001-容器安全-Java字节码工具-40岁程序员的职业生涯</h1>
+  <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Algorithm"><span class="toc-text">Algorithm</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Review"><span class="toc-text">Review</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是容器和微服务"><span class="toc-text">什么是容器和微服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#微服务化和容器化中的安全风险"><span class="toc-text">微服务化和容器化中的安全风险</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最佳安全实践"><span class="toc-text">最佳安全实践</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tips"><span class="toc-text">Tips</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Share"><span class="toc-text">Share</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
+    <h1 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h1><p><a href="/blog/2019/03/19/反转字符串/">反转字符串</a></p>
+<h1 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h1><p>英文文章<a href="https://www.apriorit.com/dev-blog/558-microservice-container-security-best-practices" target="_blank" rel="noopener">microservice container security best practices</a>.</p>
+<p>这篇文章主要介绍了使用容器实现微服务化时, 为了达到一定的安全性,<br>所采取的最佳实践.</p>
+<h2 id="什么是容器和微服务"><a href="#什么是容器和微服务" class="headerlink" title="什么是容器和微服务"></a>什么是容器和微服务</h2><p>容器和微服务的定义可以参考美国NIST的<a href="https://csrc.nist.gov/publications/detail/sp/800-180/draft" target="_blank" rel="noopener">定义</a>.</p>
+<blockquote>
+<p>Microservices: A microservice is a basic element that results from the<br>architectural decomposition of an application’s components into loosely coupled patterns<br>consisting of self-contained services that communicate with each other using<br>a standard communications protocol and a set of well-defined APIs, independent of any vendor, product or<br>technology.</p>
+</blockquote>
+<blockquote>
+<p>Microservices are built around capabilities as opposed to services, builds<br>on SOA and is implemented using Agile techniques. Microservices are typically deployed<br>inside Application Containers.</p>
+</blockquote>
+<p>微服务是将应用架构分解成为松散耦合, 自包含的服务,<br>这些服务之间通过标准通信协议进行交互. 微服务现在通常在容器中运行.</p>
+<p>微服务和容器的结合可以获取的优势有以下几点:</p>
+<ol>
+<li>服务快速部署. 代码构建,打包为容器镜像.</li>
+<li>提升了服务的独立性.</li>
+<li>快速启动, 按需扩容.</li>
+</ol>
+<h2 id="微服务化和容器化中的安全风险"><a href="#微服务化和容器化中的安全风险" class="headerlink" title="微服务化和容器化中的安全风险"></a>微服务化和容器化中的安全风险</h2><ol>
+<li>运行的服务众多。带来可维护性和安全性的同时，也很容易被攻击</li>
+<li>通信风险。微服务之间的通信会带来通信速度和安全挑战。</li>
+<li>容器技术本身的安全风险。如攻击者构造镜像来获取应用的数据文件，或者通过恶意代码感染一个容器后，再以此为跳板，攻击其他容器，甚至是宿主机。</li>
+<li>多人可以获取代码权限。修改代码影响整个分布式工作环境。</li>
+</ol>
+<h2 id="最佳安全实践"><a href="#最佳安全实践" class="headerlink" title="最佳安全实践"></a>最佳安全实践</h2><p>这些安全实践主要来自Apriorit团队以及微服务的实践者, 工业标准文档如:</p>
+<ol>
+<li>NIST Special Publication 800-180, NIST Definition of Microservices, Application Containers and System Virtual Machines</li>
+<li>NIST Special Publication 800-190,Application Container Security Guide</li>
+<li>NISTIR 8176, Security Assurance Requirements for Linux Application Container Deployments</li>
+<li>DWP Security Policies and Standards, Security Standard - Microservices Architecture (SS-028)</li>
+</ol>
+<p>最佳安全实践的主要内容:</p>
+<ol>
+<li>创建不可变容器。禁止开启容器的shell访问，调试和访问要通过运行时API或者创建宿主机的远程shell。数据要存储在外面。</li>
+<li>只用可信任的官方镜像。检查镜像签名。</li>
+<li>加强镜像仓库的安全性。基于角色的授权访问（系统运维，操作容器或者编排容器），只接受安全可信任的官方镜像，定期修复安全漏洞，标记有安全问题的容器</li>
+<li>每个宿主机部署一个微服务。一个微服务的所有容器使用相同的操作系统内核。不同的微服务不同的系统内核。</li>
+<li>加强宿主机的安全性。NIST建议使用容器定制的宿主机，去除无用功能，减少攻击面。防火墙或者路由器控制出口的流量。控制容器在宿主机的权限， 容器引擎运内核空间，那是容器运行在用户空间。使用linux的安全能力，如 Linux namespaces, Seccomp, Cgroups, SELinux, and Linux capabilities.</li>
+<li>构建多层防护网。过滤通信流，验证和授权对微服务的访问，使用加密技术。内部和外部环境的隔离。使用私有网络管理容器，使用私有的镜像仓库。</li>
+<li>加入自动化的安全测试用例到构建和CI流程中。</li>
+<li>使用容器的原生监控工具。如Docker Security Scanner其他一些安全工具。监控首先收集容器的事件，然后应用安全规则。静态规则可以定义可以运行的容器以及可以请求外部HTTP的容器。动态规则可以创建基线，通知可能的网络嗅探和异常的流量。</li>
+<li>使用微服务编排引擎。1） 使用API 网关作为编排层; 2）将编排作为一个单独的微服务。编排服务拉取容器镜像，部署容器，管理容器的运行。自动化部署以及提升容器的安全性。</li>
+<li>控制微服务的API访问权限。</li>
+</ol>
+<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h1><p>Java的字节码查看工具javap, 将Class文件反编译为可读的格式.</p>
+<p>一般使用<code>javap -v &lt;Class&gt;</code>即可, 具体可以查看帮助<code>javap --help</code></p>
+<h1 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h1><p>关于40+程序员的职业生涯问题的<a href="https://onezero.medium.com/ctrl-alt-delete-the-planned-obsolescence-of-old-coders-9c5f440ee68" target="_blank" rel="noopener">文章</a>.</p>
+<blockquote>
+<p>Old coders never die, they just become middle managers.</p>
+<p>In 2007, Mark Zuckerberg, then 22, said out loud what many in the software<br>industry think: “Young people are just smarter.”</p>
+<p> “I’m always surprised when older programmers keep up on technology.”</p>
+<p>Despite his decades of experience, he was rejected for all other positions</p>
+</blockquote>
+<p>40+程序员的职业问题。这个问题极少有人关注，无法获得相关数据。整个软件行业的是年龄分布是比较年轻的。Google和Amazon的中位数是30.<br>而美国工作人员的中位数是42.</p>
+<p>2018年Stack Overflow的对100，000程序员的调查，75%是在35岁之下。在Hacker News会周期性的出现老的开发者怎么办的问题。</p>
+<blockquote>
+<p>According to a 2018 research paper, skills change faster in science,<br>technology, engineering, and mathematics (STEM) jobs than in other industries,<br>and the headlong rate of change for programmers is especially severe</p>
+</blockquote>
+<p>需要不断更新自己的技能, 解决难题, 通过写作,演讲,指导, 提升技术领导力.<br>将自身的经验, 如安全风险的把控能力应用到新的项目中.</p>
+<blockquote>
+<p>Kadeem L. Noray, one of the paper’s authors, says that “STEM is more<br>skills-oriented that other fields,” valuing short-lived competencies over<br>durable wisdom. For each skill a STEM professional learns, another becomes<br>obsolete, leaving little chance for accumulating skills and increasing salary.</p>
+</blockquote>
+<p>而有些人是内向的, 或者无法通过他人来完成工作, 所以也不适合当管理者.</p>
+<p>在大公司虽然有Individual Contributor Track, 但是相比管理线的晋升,<br>还是有很多缺点. 如晋升速度慢, 级别之间定义模糊.</p>
+<blockquote>
+<p>Proven engineers who occupy the most senior roles should be deployed to solve<br>the hardest problems on the most critical projects. Their roles should<br>emphasize technical leadership through writing, speaking, and mentoring.</p>
+</blockquote>
+<blockquote>
+<p>Because of their deep knowledge and broad experience, older programmers are able<br>to translate their knowledge into ordinary terms, which puts them in a position<br>to act as ambassadors to the nonprogramming world</p>
+</blockquote>
+<blockquote>
+<p>in a society increasingly governed by software and algorithms, programmers<br>must gain some wisdom to match their power.</p>
+</blockquote>
+<blockquote>
+<p>Cultivating lifelong coders will ensure that the lessons learned today are<br>still remembered 50 years from now.</p>
+</blockquote>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2019/03/19/反转字符串/">
+        ← prev <!--反转字符串-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2018/11/19/VNC相关的技术资源整理/">
+        <!--VNC相关的技术资源整理--> next →
+    </a>
+    
+</nav>
+
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2019/03/19/ARTS-001-容器安全-Java字节码工具-40岁程序员的职业生涯/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "ARTS-001-容器安全-Java字节码工具-40岁程序员的职业生涯"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>
