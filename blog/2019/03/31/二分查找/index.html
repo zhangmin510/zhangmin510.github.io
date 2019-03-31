@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+    <head><meta name="generator" content="Hexo 3.8.0">
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="https://zhangmin.name/images/favicon.png">
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="https://zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>二分查找 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="https://zhangmin.name"><img src="https://zhangmin.name/images/me.jpg" alt="ZhangMin.name"></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="https://zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+<h6><a href="/blog/ir">Investor Relations</a></h6>
+<h6><a href="https://www.toutiao.com/c/user/100118204993/">头条号10XChange</a></h6>
+<h6><a href="https://juejin.im/user/5ba22f41e51d450e4a1bb1a8/">掘金Protopia</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  March 31, 2019
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href="/blog/tags/数据结构与算法/">数据结构与算法</a>
+    
+    </span>
+    <span class="taglist">本文字数: 796 </span>
+    <span class="taglist">阅读时长：4 min </span>
+    <span class="taglist">全站字数：350.8k</span>
+  
+
+  <h1 class="post-title">二分查找</h1>
+  <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#二分查找的适用范围"><span class="toc-text">二分查找的适用范围</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二分查找代码模板"><span class="toc-text">二分查找代码模板</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#非递归版本"><span class="toc-text">非递归版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#递归版本"><span class="toc-text">递归版本</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode题目练习"><span class="toc-text">leetcode题目练习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#暴力解法"><span class="toc-text">暴力解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#先进行二分查找-再顺序查找"><span class="toc-text">先进行二分查找, 再顺序查找</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#两次二分查找"><span class="toc-text">两次二分查找</span></a></li></ol></li></ol>
+  </section>
+  <section class="post-content article-entry">
+    <h1 id="二分查找的适用范围"><a href="#二分查找的适用范围" class="headerlink" title="二分查找的适用范围"></a>二分查找的适用范围</h1><p>二分查找的数据必须是有序的, 而且是线性表, 即可以通过下标通过O(1)复杂度获取元素.<br>另外数据规模太小, 二分查找的优势不明显;数据规模太大, 由于需要连续内存空间, 也不适合<br>使用二分查找, 除非内存空间足够.</p>
+<p>另外二分查找不适用于动态变化的数据集合, 该类问题使用二叉搜索树或者红黑树. 二分查找<br>最适用于的场景是范围查询, 这一点二叉搜索树和红黑树都很难做到.</p>
+<h1 id="二分查找代码模板"><a href="#二分查找代码模板" class="headerlink" title="二分查找代码模板"></a>二分查找代码模板</h1><h2 id="非递归版本"><a href="#非递归版本" class="headerlink" title="非递归版本"></a>非递归版本</h2><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">bsearch</span>(<span class="params"><span class="keyword">int</span>[] a, <span class="keyword">int</span> n, <span class="keyword">int</span> <span class="keyword">value</span></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">int</span> low = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> high = n - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (low &lt;= high) &#123;<span class="comment">//必须是小于等于,防止死循环</span></span><br><span class="line">    <span class="keyword">int</span> mid = low+((high-low)&gt;&gt;<span class="number">1</span>);<span class="comment">//位运算替代除法,性能优化; 避免整数溢出</span></span><br><span class="line">    <span class="keyword">if</span> (a[mid] == <span class="keyword">value</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> mid;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[mid] &lt; <span class="keyword">value</span>) &#123;</span><br><span class="line">      low = mid + <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      high = mid - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="递归版本"><a href="#递归版本" class="headerlink" title="递归版本"></a>递归版本</h2><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 二分查找的递归实现</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">bsearch</span>(<span class="params"><span class="keyword">int</span>[] a, <span class="keyword">int</span> n, <span class="keyword">int</span> val</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> bsearchInternally(a, <span class="number">0</span>, n - <span class="number">1</span>, val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">bsearchInternally</span>(<span class="params"><span class="keyword">int</span>[] a, <span class="keyword">int</span> low, <span class="keyword">int</span> high, <span class="keyword">int</span> <span class="keyword">value</span></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (low &gt; high) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> mid =  low + ((high - low) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">if</span> (a[mid] == <span class="keyword">value</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> mid;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[mid] &lt; <span class="keyword">value</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> bsearchInternally(a, mid+<span class="number">1</span>, high, <span class="keyword">value</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> bsearchInternally(a, low, mid<span class="number">-1</span>, <span class="keyword">value</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="leetcode题目练习"><a href="#leetcode题目练习" class="headerlink" title="leetcode题目练习"></a>leetcode题目练习</h1><p><a href="https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array" target="_blank" rel="noopener">34. Find First and Last Position of Element in Sorted Array</a></p>
+<h2 id="暴力解法"><a href="#暴力解法" class="headerlink" title="暴力解法"></a>暴力解法</h2><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] searchRange(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> <span class="keyword">target</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] ret = <span class="keyword">new</span> <span class="keyword">int</span>[] &#123;<span class="number">-1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span> (++i &lt; nums.length) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] == <span class="keyword">target</span>) &#123;</span><br><span class="line">                ret[<span class="number">0</span>] = i;</span><br><span class="line">                ret[<span class="number">1</span>] = i;</span><br><span class="line">                <span class="keyword">while</span> (++i &lt; nums.length &amp;&amp; nums[i] == <span class="keyword">target</span>) &#123;</span><br><span class="line">                    ret[<span class="number">1</span>]++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> ret;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>时间复杂度O(n), 空间复杂度O(1).</p>
+<h2 id="先进行二分查找-再顺序查找"><a href="#先进行二分查找-再顺序查找" class="headerlink" title="先进行二分查找, 再顺序查找"></a>先进行二分查找, 再顺序查找</h2><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Solution &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span>[] searchRange(<span class="built_in">int</span>[] nums, <span class="built_in">int</span> target) &#123;</span><br><span class="line">        <span class="built_in">int</span>[] ret = <span class="keyword">new</span> <span class="built_in">int</span>[] &#123;<span class="number">-1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line">        <span class="built_in">int</span> hi = nums.length - <span class="number">1</span>, lo = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (lo &lt;= hi) &#123;</span><br><span class="line">            <span class="built_in">int</span> <span class="built_in">mid</span> = lo + ((hi - lo) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (nums[<span class="built_in">mid</span>] == target) &#123;</span><br><span class="line">                ret[<span class="number">0</span>] = ret[<span class="number">1</span>] = <span class="built_in">mid</span>;</span><br><span class="line">                <span class="built_in">int</span> i = <span class="built_in">mid</span> - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">while</span> (i &gt;= <span class="number">0</span> &amp;&amp; nums[i] == target) &#123;</span><br><span class="line">                    ret[<span class="number">0</span>]--;</span><br><span class="line">                    i--;</span><br><span class="line">                &#125;</span><br><span class="line">                i = <span class="built_in">mid</span> + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">while</span> (i &lt; nums.length &amp;&amp; nums[i] == target) &#123;</span><br><span class="line">                    ret[<span class="number">1</span>]++;</span><br><span class="line">                    i++;</span><br><span class="line">                &#125;</span><br><span class="line">                return ret;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[<span class="built_in">mid</span>] &lt; target) &#123;</span><br><span class="line">                lo = <span class="built_in">mid</span> + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                hi = <span class="built_in">mid</span> - <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>时间复杂度O(logn)， 在最差情况下， 数组元素完全一样时，复杂度是O(n), 空间复杂度O(1).</p>
+<h2 id="两次二分查找"><a href="#两次二分查找" class="headerlink" title="两次二分查找"></a>两次二分查找</h2><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] searchRange(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> <span class="keyword">target</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] ret = <span class="keyword">new</span> <span class="keyword">int</span>[] &#123;<span class="number">-1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// find leftmost</span></span><br><span class="line">        <span class="keyword">int</span> lo = <span class="number">0</span>, len = nums.length, hi = len - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (lo &lt;= hi) &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = lo + ((hi - lo) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (nums[mid] &lt; <span class="keyword">target</span>) &#123;</span><br><span class="line">                lo = mid + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(nums[mid] &gt; <span class="keyword">target</span>)</span> </span>&#123;</span><br><span class="line">                hi = mid - <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (mid == <span class="number">0</span> || nums[mid - <span class="number">1</span>] != <span class="keyword">target</span>) &#123;</span><br><span class="line">                    ret[<span class="number">0</span>] = mid;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    hi = mid - <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (ret[<span class="number">0</span>] == <span class="number">-1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> ret;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// find rightmost</span></span><br><span class="line">        lo = ret[<span class="number">0</span>];</span><br><span class="line">        hi = len - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (lo &lt;= hi) &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = lo + ((hi - lo) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (nums[mid] &lt; <span class="keyword">target</span>) &#123;</span><br><span class="line">                lo = mid + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(nums[mid] &gt; <span class="keyword">target</span>)</span> </span>&#123;</span><br><span class="line">                hi = mid - <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (mid == nums.length - <span class="number">1</span> || nums[mid + <span class="number">1</span>] != <span class="keyword">target</span>) &#123;</span><br><span class="line">                    ret[<span class="number">1</span>] = mid;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    lo = mid + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>时间复杂度O(logn), 空间复杂度O(1).</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2019/03/31/ARTS-001-二分查找-Java标准化HTTP客户端API-私有云计算成本比较-GC调优/">
+        ← prev <!--ARTS-001-二分查找-Java标准化HTTP客户端API-私有云计算成本比较-GC调优-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2019/03/19/反转字符串/">
+        <!--反转字符串--> next →
+    </a>
+    
+</nav>
+
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2019/03/31/二分查找/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "二分查找"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

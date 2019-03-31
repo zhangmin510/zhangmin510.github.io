@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
-    <head>
+    <head><meta name="generator" content="Hexo 3.8.0">
 		
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="ZhangMin.name's blog">
-        <link rel="shortcut icon" href="https://zhangmin.name/images/favicon.png"/>
+        <link rel="shortcut icon" href="https://zhangmin.name/images/favicon.png">
         <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="https://zhangmin.name/blog/atom.xml">
         <link rel="canonical" href="http://www.zhangmin.name/">
 
@@ -14,9 +14,9 @@
 
         <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
-        <meta name="HandheldFriendly" content="True" />
-        <meta name="MobileOptimized" content="320" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -29,7 +29,7 @@
 	
 
         <header id="header">
-            <a id="logo" href="https://zhangmin.name"><img src="https://zhangmin.name/images/me.jpg" alt="ZhangMin.name" /></a>
+            <a id="logo" href="https://zhangmin.name"><img src="https://zhangmin.name/images/me.jpg" alt="ZhangMin.name"></a>
             <h1><a href="/blog/">ZhangMin.name</a></h1>
             <p>勤思敏行 思行合一</p>
             <div id="follow-icons">
@@ -58,12 +58,12 @@
     <span class="taglist">  &middot;
     
     
-      <a href='/blog/tags/DDoS/'>DDoS</a>
+      <a href="/blog/tags/DDoS/">DDoS</a>
     
     </span>
     <span class="taglist">本文字数: 17.9k </span>
     <span class="taglist">阅读时长：63 min </span>
-    <span class="taglist">全站字数：347.5k</span>
+    <span class="taglist">全站字数：350.8k</span>
   
 
   <h1 class="post-title">关于DDoS防护的总结笔记</h1>
@@ -227,7 +227,7 @@
 <h3 id="5-1-2-流量牵引"><a href="#5-1-2-流量牵引" class="headerlink" title="5.1.2 流量牵引"></a>5.1.2 流量牵引</h3><p>在发现DDoS攻击时，异常流量清洗设向邻居的路由器/交换机发布BGP更新路由通告，自动、迅速地将被攻击用户的流量牵引到清洗设备上来对其进行清洗。攻击结束后，异常流量检测设备Probe3000会发送攻击结束的告警日志，将这个IP的流量恢复原路径。</p>
 <p>流量牵引技术可使用BGP、OSPF、策略路由、MPLS等，通常情况下，采用BGP作为流量牵引的方式。</p>
 <p>攻击发生时，清洗设备通过BGP协议会向核心路由器发布BGP更新路由通告，更新核心路由器上的路由表项，将流经所有核心设备上的被攻击服务器的流量动态的牵引到清洗中心进行清洗。同时清洗设备发布的BGP路由添加no-advertise属性，确保清洗设备发布的路由不会被扩散到整个网络。</p>
-<p><img src="http://www.dptech.com/upload/201309/201309261030434223.jpg" alt=""></p>
+<p><img src="http://www.dptech.com/upload/201309/201309261030434223.jpg" alt></p>
 <h3 id="5-1-3-流量清洗"><a href="#5-1-3-流量清洗" class="headerlink" title="5.1.3 流量清洗"></a>5.1.3 流量清洗</h3><p>流量清洗主要利用DDoS防御原理中的方法清洗流量。异常流量清洗设备通过异常流量限速，动态规则过滤，以及一些高级防御技术如指纹识别智能防护系统，可以实现多层次安全防护，精确过滤各种网络层和应用层的攻击和未知恶意流量。</p>
 <p>如SYN Cookie防护。异常流量清洗设对TCP新建连接的协商SYN报文进行拦截处理，通过连接信息计算出一个cookie值，作为SYN/ACK报文的初始序列号（seq number）返回给客户端，再对客户端回应的ACK报文中携带的cookie信息来进行报文有效性确认。如果确认是合法请求，清洗设备将作为代理会向服务器端发送SYN报文建立连接，客户端与服务器间关于此次连接的后续报文都将通过清洗设备进行代理转发。当攻击者向服务器发起SYN Flood攻击时，由于无法发送有效的cookie信息，因此无法与服务器建立连接并造成资源的消耗。在整个过程中，清洗设备作为代理服务器和客户端交互，同时也模拟客户端与服务器进行交互，为服务器过滤掉恶意连接，保证了业务的正常稳定运行。</p>
 <p>如SYN Reset防护。SYN Cookie技术能较为有效的防护SYN Flood攻击，但是这种技术由于需要清洗设备一直作为代理进行转发，因此对于设备的性能要求较高。SYN Reset技术在SYN Cookie基础上做了进一步的优化。当客户端发起新建连接SYN报文时，异常清洗设备会先丢弃这个SYN报文，然后模拟服务器向客户端回应一个SYN/ACK报文，其中的确认序列号（ack number）未按协议规定要求生成，而是通过特殊算法计算的cookie值，与客户端的期望值不一样。正常请求的客户端获取到这个SYN/ACK报文后，发现确认序列号和预期的不一致，从而会向服务器回应一个序列号为cookie信息的RST报文，终止这条连接。清洗设备提取这个报文中的cookie信息，随后与设备中的防护表项中的信息进行校验。如果校验通过，则连接被认为是可信的，然后就记录这个客户端IP到设备白名单中，随后的报文可以直接通过。由于攻击者一般不会处理回应的SYN/ACK报文，所以它不会回应RST报文进行验证，也就无法加入到IP地址白名单中，从而无法与服务器建立连接从而造成攻击。由于SYN Reset防护技术中清洗设备只需验证客户端的合法性，不需要作为代理进行转发，因此对于清洗设备的性能消耗非常小。</p>

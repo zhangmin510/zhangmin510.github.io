@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+    <head><meta name="generator" content="Hexo 3.8.0">
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="https://zhangmin.name/images/favicon.png">
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="https://zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>JDK8-GC性能调优指南 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="https://zhangmin.name"><img src="https://zhangmin.name/images/me.jpg" alt="ZhangMin.name"></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="https://zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+<h6><a href="/blog/ir">Investor Relations</a></h6>
+<h6><a href="https://www.toutiao.com/c/user/100118204993/">头条号10XChange</a></h6>
+<h6><a href="https://juejin.im/user/5ba22f41e51d450e4a1bb1a8/">掘金Protopia</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  March 31, 2019
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href="/blog/tags/Java/">Java</a>
+    
+    </span>
+    <span class="taglist">本文字数: 1.3k </span>
+    <span class="taglist">阅读时长：4 min </span>
+    <span class="taglist">全站字数：350.8k</span>
+  
+
+  <h1 class="post-title">JDK8-GC性能调优指南</h1>
+  <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-HotSpot垃圾回收"><span class="toc-text">Java HotSpot垃圾回收</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JDK8默认垃圾回收器"><span class="toc-text">JDK8默认垃圾回收器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于行为的调优"><span class="toc-text">基于行为的调优</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#调优策略"><span class="toc-text">调优策略</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
+    <h1 id="Java-HotSpot垃圾回收"><a href="#Java-HotSpot垃圾回收" class="headerlink" title="Java HotSpot垃圾回收"></a>Java HotSpot垃圾回收</h1><p>垃圾回收器是一种内存管理工具，通过下面的操作来实现自动化内存管理：</p>
+<ol>
+<li>在年轻代分配对象，并将年老的对象晋升到老年代。</li>
+<li>当Java的堆空间占用超过默认阈值，会触发并发标记。通过并发的标记，在老年代中寻找活着的对象。</li>
+<li>通过并行复制来压缩存活对象，从而释放内存空间。</li>
+</ol>
+<p>Java HostSpot VM提供多种垃圾回收器，每一种垃圾回收器设计满足不同的应用需求。</p>
+<h1 id="JDK8默认垃圾回收器"><a href="#JDK8默认垃圾回收器" class="headerlink" title="JDK8默认垃圾回收器"></a>JDK8默认垃圾回收器</h1><p>Serial垃圾回收器适用于大多数小规模的应用，如堆空间小于100M。使用其他的垃圾回收器会有额外的开销或者复杂性，已提供额外的功能特性。Serial不适用于大量内存，多余两个的处理器。对于server模式运行的JVM，会选择并行垃圾回收器作为默认。</p>
+<p>对服务器级别的机器的定义：</p>
+<ol>
+<li>2个或者大于两个的物理处理器。</li>
+<li>2G或者大于2G的物理内存。</li>
+</ol>
+<p>服务器级别的默认配置：</p>
+<ol>
+<li>高吞吐垃圾回收器</li>
+<li>初始化堆大小是物理内存的1/64，最大1GB</li>
+<li>最大的堆大小是物理内存的1/4，最大是1GB</li>
+<li>使用服务端运行时编译器</li>
+</ol>
+<p>64位机器的堆大小和并行垃圾回收器也是不同的。</p>
+<p>如果应用可以容忍轻度的频率和时长的停顿， 那么就不需要关心垃圾回收器的选择。但对于有大量数据，多个线程，和高TPS的场景则必须选择合适的垃圾回收器。</p>
+<blockquote>
+<p>Amdahl’s law：并行对问题的加速取决于问题中的有序性部分。大部分的负载是不能并行化的。有些部分是顺序化的，不能通过并行来加速。</p>
+</blockquote>
+<p>JVM提供平台依赖的垃圾回收器、堆大小和运行时编译器配置。从而减少命令行的调优。另外基于行为的调优会动态调整堆大小来满足特定应用的需求。优先使用默认的垃圾回收器。</p>
+<h1 id="基于行为的调优"><a href="#基于行为的调优" class="headerlink" title="基于行为的调优"></a>基于行为的调优</h1><p>对于并行垃圾回收器，Java SE提供两个调优参数，最大停顿时间和吞吐率。这两个目标可能无法同时满足，堆大小要足够放下所有存活的对象。</p>
+<ol>
+<li>最大停顿时间目标。停顿时间是指垃圾回期间导致应用暂停的时长。垃圾回收器会维护平均的停顿时间及其变化趋势。越近的停顿时间权重越大。可以通过命令行参数 -XX:MaxGCPauseMillis=来调整。垃圾回收器会动态调整堆大小和其他参数来保证最大的停顿时间小于该值。默认是没有设置改值的。这个值的修改会导致垃圾回收更频繁，从而降低总体的吞吐率。垃圾回收器总是优先满足最大停顿时间优于吞吐率。然后，有可能总是无法满足最大停顿时间的要求。</li>
+<li>最大吞吐率目标。吞吐率=(应用时间)/(应用时间+垃圾回收时间）。可以通过命令行参数 -XX:GCTimeRatio=来调整。如果设置该值为19，则最终的值为1/(19+1)，即5%的总时间用于垃圾回收。垃圾回收的时间包括年轻代和年老的的总时间。如果无法满足这个值，垃圾回收器会增大年轻代或者年老代的大小，来增加两次垃圾回收时间之间应用的运行时间。</li>
+<li>内存占用。如果最大停顿时间和最大吞吐率都满足了，垃圾回收器会降低堆的大小直到其中一个无法满足。</li>
+</ol>
+<h1 id="调优策略"><a href="#调优策略" class="headerlink" title="调优策略"></a>调优策略</h1><ol>
+<li>不要设置最大的堆大小值，除非你需要改成比默认的堆大小还大。<br>选择一个合适的应用的吞吐率指标。</li>
+<li>堆大小会根据吞吐率目标的实现与否而改变。应用行为的改变，如较高的对象分配也会导致堆变大以维持相同的吞吐率。</li>
+<li>如果堆已经到了最大值，但是仍然无法满足吞吐率目标， 则需要调整堆的最大值。堆的值要接近最大物理聂村但是要小于导致应用发生内存swap。</li>
+<li>如果还是无法满足吞吐率目标，则在给定的可用内存下，吞吐率目标设置太高了。</li>
+<li>如果吞吐率目标达到，但是停顿时间太长，然后选择一个最大的停顿时间目标，应用需要权衡。</li>
+<li>即使应用稳定运行，堆的空间也会变大。实现吞吐率目标需要增加堆的大小，降低内存占用和停顿时间则需要降低堆大小。</li>
+</ol>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2019/03/31/ARTS-001-二分查找-Java标准化HTTP客户端API-私有云计算成本比较-GC调优/">
+        <!--ARTS-001-二分查找-Java标准化HTTP客户端API-私有云计算成本比较-GC调优--> next →
+    </a>
+    
+</nav>
+
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2019/03/31/JDK8-GC性能调优指南/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "JDK8-GC性能调优指南"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

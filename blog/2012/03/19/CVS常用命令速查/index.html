@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
-    <head>
+    <head><meta name="generator" content="Hexo 3.8.0">
 		
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="ZhangMin.name's blog">
-        <link rel="shortcut icon" href="https://zhangmin.name/images/favicon.png"/>
+        <link rel="shortcut icon" href="https://zhangmin.name/images/favicon.png">
         <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="https://zhangmin.name/blog/atom.xml">
         <link rel="canonical" href="http://www.zhangmin.name/">
 
@@ -14,9 +14,9 @@
 
         <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
-        <meta name="HandheldFriendly" content="True" />
-        <meta name="MobileOptimized" content="320" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -29,7 +29,7 @@
 	
 
         <header id="header">
-            <a id="logo" href="https://zhangmin.name"><img src="https://zhangmin.name/images/me.jpg" alt="ZhangMin.name" /></a>
+            <a id="logo" href="https://zhangmin.name"><img src="https://zhangmin.name/images/me.jpg" alt="ZhangMin.name"></a>
             <h1><a href="/blog/">ZhangMin.name</a></h1>
             <p>勤思敏行 思行合一</p>
             <div id="follow-icons">
@@ -107,7 +107,7 @@
 <p>转到/path/to/apache/conf下并修改cvsweb.conf：</p>
 <p>修改CVSROOT路径设置：<br>%CVSROOT = (<br>‘Development’ =&gt;; ‘/path/to/cvsroot’, #&lt;==修改指向本地的CVSROOT<br>);<br>缺省不显示已经删除的文档：<br>“hideattic” =&gt;; “1”,#&lt;==缺省不显示已经删除的文档<br>在配置文件cvsweb.conf中还可以定制页头的描述信息，你可以修改$long_intro成你需要的文字<br>CVSWEB可不能随便开放给所有用户，因此需要使用WEB用户认证：<br>先生成 passwd:<br>/path/to/apache/bin/htpasswd -c cvsweb.passwd user</p>
 <p>修改httpd.conf: 增加</p>
-<p><directory "="" path="" to="" apache="" cgi-bin="" cvsweb="">;<br>AuthName “CVS Authorization”<br>AuthType Basic<br>AuthUserFile /path/to/cvsweb.passwd<br>require valid-user<br></directory>;</p>
+<p><directory " path to apache cgi-bin cvsweb>;<br>AuthName “CVS Authorization”<br>AuthType Basic<br>AuthUserFile /path/to/cvsweb.passwd<br>require valid-user<br></directory>;</p>
 <h1 id="CVS-TAGS-who-when"><a href="#CVS-TAGS-who-when" class="headerlink" title="CVS TAGS: who? when?"></a>CVS TAGS: who? when?</h1><p>将$Id$ 加在程序文件开头的注释里是一个很好的习惯，cvs能够自动解释更新其中的内容成：file_name version time user_name 的格式，比如：cvs_card.txt,v 1.1 2002/04/05 04:24:12 chedong Exp，可以这些信息了解文件的最后修改人和修改时间</p>
 <p>几个常用的缺省文件：default.php&lt;?php/<em> </em> Copyright (c) 2002 Company Name. <em> $Header$ </em>/?&gt;;====================================Default.java: 注意文件头一般注释用 /<em> 开始 JAVADOC注释用 /** 开始的区别/</em> <em> Copyright (c) 2002 MyCompany Name. </em> $Header$ <em>/package com.mycompany;import java.;/** </em> comments here <em>/public class Default {    /**     </em> Comments here     <em> @param     </em> @return     */    public toString() {    }}====================================default.pl:#!/usr/bin/perl -w# Copyright (c) 2002 Company Name.# $Header$# file comments hereuse strict;</p>
 <h1 id="CVS-vs-VSS"><a href="#CVS-vs-VSS" class="headerlink" title="CVS vs VSS　"></a>CVS vs VSS　</h1><p>CVS没有文件锁定模式，VSS在check out同时，同时记录了文件被导出者锁定。</p>
