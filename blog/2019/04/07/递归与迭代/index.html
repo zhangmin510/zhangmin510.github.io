@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+    <head><meta name="generator" content="Hexo 3.8.0">
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="https://zhangmin.name/images/favicon.png">
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="https://zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>递归与迭代 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="https://zhangmin.name"><img src="https://zhangmin.name/images/me.jpg" alt="ZhangMin.name"></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="https://zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+<h6><a href="/blog/ir">Investor Relations</a></h6>
+<h6><a href="https://www.toutiao.com/c/user/100118204993/">头条号10XChange</a></h6>
+<h6><a href="https://juejin.im/user/5ba22f41e51d450e4a1bb1a8/">掘金Protopia</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  April 7, 2019
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href="/blog/tags/数据结构与算法/">数据结构与算法</a>
+    
+    </span>
+    <span class="taglist">本文字数: 1.6k </span>
+    <span class="taglist">阅读时长：5 min </span>
+    <span class="taglist">全站字数：355k</span>
+  
+
+  <h1 class="post-title">递归与迭代</h1>
+  <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#迭代"><span class="toc-text">迭代</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#递归"><span class="toc-text">递归</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
+    <p>递归和迭代可以说是在计算机编程中最终要的两种方法了。现代的编程语言对递归和迭代都有非常好的支持。本文将对递归和迭代的内容进行总结。</p>
+<h1 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h1><p>所谓迭代就是，不断用旧的值，通过递推计算出新的值，依次循环往复，直到计算出结果。</p>
+<p>迭代很容易使用编程语言中的循环进行实现。由于计算机非常适合进行重复性的计算，可以让计算机重复执行递推的步骤，最后推导出变量的最终值。</p>
+<p>在计算机应用中，迭代法常用于解决下面几类问题：</p>
+<p>第一个是求数值的精确解或者近似解。如使用二分法或者牛顿迭代法求一个数的根，以及通过无穷次的逼近，求解方程的精确或者近似的根。</p>
+<p>第二类是在一定范围内查找目标值，典型的应用就是二分查找。</p>
+<p>第三类就是机器学习算法中的各种迭代算法。如k-means clustering，PageRank，gradient descent等。</p>
+<p>一般情况下，如果一个问题能够通过不断的更新变量的值或者缩小搜索的区间范围就能得到最终的解，就可以尝试使用迭代法来解决。</p>
+<p>使用迭代法的一般步骤：</p>
+<ol>
+<li>确定用于迭代的变量。</li>
+<li>建立迭代变量之间的递推关系。</li>
+<li>控制迭代的过程。</li>
+</ol>
+<p>下面就以使用迭代法求正整数n的平方根这个问题来演示如何使用迭代法求解数值的近似解的问题。</p>
+<p>如果n是正整数，这个平方根一定小于n本身，并且大于1。问题可以进一步转化为在1到n之间找一个数字等于n的平方根。最常见的就是使用二分查找，每次查找区间内的中间值，检查是否符合标准。如求10的平方根的过程如下：</p>
+<p>1-10的中间值是5.5，其平方大于10，所以在1-5.5这个区间查找，其中间值是3.25，3.25平方大于10，继续在1-3.25区间的中间值，即2.125，依次按照这个步骤计算，最终发现某个数的平方正好等于10。</p>
+<p>代码实现如下：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 二分法求一个证书的平方根。</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> n 待求平方根的正整数</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> deltaThreshold 误差的阈值，或精度，近似解即可，否则需要耗费大量的时间和计算资源</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> maxTry 最大查找次数，防止死循环</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span> 该正整数的平方根</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">double</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">double</span> deltaThreshold, <span class="keyword">int</span> maxTry)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"n must greater than 1"</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (maxTry &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"maxTry must greater than 0"</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">double</span> lo = <span class="number">1.0</span>, hi = (<span class="keyword">double</span>) n;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; maxTry; i++) &#123;</span><br><span class="line">           <span class="keyword">double</span> mid = (lo + hi) / <span class="number">2</span>;</span><br><span class="line">           <span class="keyword">double</span> square = mid * mid;</span><br><span class="line">           <span class="comment">// (square - n) / n </span></span><br><span class="line">           <span class="keyword">double</span> delta = Math.abs((square / n) - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">           <span class="keyword">if</span> (delta &lt;= deltaThreshold) &#123;</span><br><span class="line">               <span class="keyword">return</span> mid;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="keyword">if</span> (square &gt; n) &#123;</span><br><span class="line">                   hi = mid;</span><br><span class="line">               &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                   lo = mid;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">-1.0</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>上述代码中，迭代的变量值就是<code>mid</code>， 在迭代过程中，我们通过计算<code>(square - n) / n</code>来衡量精度，以及使用<code>maxTry</code>来控制最大循环次数。</p>
+<h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><p>假设有这样一个问题：有四种面额的钱币，1元，2元，5元和10元，给定一个总额n，求解可以进行找零的方式。如对于5元，可以直接使用1张5元，也可以使用2张2元1张1元，还可以使用5张1元。</p>
+<p>这个问题虽然可以使用迭代法实现，但是需要保存大量的中间状态，如第一次使用了1元，下面就要好几种选择，每种选择都需要记录下来。那有没有更好的解决方法呢？</p>
+<p>答案是有的，那就是递归。递归其实也是一种迭代，只不过迭代不是通过普通的循环来实现，而是通过函数调用来实现。函数调用过程会保存函数中的局部变量，正好可以保存上述问题中的中间状态，从而省去了大量中间变量的操作，极大的方便了设计和编程。</p>
+<p>递归，从字面意思可以分为“递“和“归”两部分。“递”的过程就是将问题分解为子问题，子问题在问题规模上比原问题要小，但是解决思路却和原问题一模一样。当子问题不断划分，划分到不能再分，并且可以直接求解后，“递”的过程结束，开始进行“归”，合并子问题的结果，最终返回最终的结果。</p>
+<p>下面是使用递归的解法：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span>[] REWARDS = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">10</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getRewardMethod</span>(<span class="params"><span class="keyword">long</span> totalReward, ArrayList result</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (totalReward == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">// 递归结束，输出结果</span></span><br><span class="line">            System.<span class="keyword">out</span>.println(result);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (totalReward &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; REWARDS.length; i++) &#123;</span><br><span class="line">            ArrayList newResult = (ArrayList)(result.clone());</span><br><span class="line">            newResult.<span class="keyword">add</span>(REWARDS[i]);<span class="comment">// 记录当前选择</span></span><br><span class="line">            <span class="comment">// 解决子问题</span></span><br><span class="line">            getRewardMethod(totalReward - REWARDS[i], newResult);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>从上面的解法可以总结出递归的代码模板：</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def recursion(level, param1, param2):</span><br><span class="line">  # 递归终止条件</span><br><span class="line">  <span class="keyword">if</span> leval &gt; MAX_LEVEL:</span><br><span class="line">     print_result</span><br><span class="line">     return</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 处理当前层的逻辑</span></span><br><span class="line">   process_data(level, data...)</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 下钻</span></span><br><span class="line">  recursion(level + <span class="number">1</span>, p1, ...)</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 如果需要恢复当前层的状态</span></span><br><span class="line">   reverse_state(level)</span><br></pre></td></tr></table></figure>
+<p>由于递归本身就是基于操作系统中的栈来进行实现，所以，在理论上，如果在递归实现中手动引入栈，手动模拟入栈和出栈过程，这样上述的递归代码也可以改造成为循环实现的方式。可以根据问题的规模和具体的场景来进行选择。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本文介绍了迭代和递归，其实递归也是广义上的迭代，只不过其迭代的方式是通过函数调用来实现，而函数调用本身是通过栈来实现。</p>
+<p>迭代和递归最关键的就是要写出递推公式或者递推关系，然后通过循环或者函数调用去实现，从而求得最终的解。</p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2019/04/07/ARTS-003-递归-SpringCloud-Go-GC日志/">
+        ← prev <!--ARTS-003-递归-SpringCloud-Go-GC日志-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2019/03/31/JDK8-GC性能调优指南/">
+        <!--JDK8-GC性能调优指南--> next →
+    </a>
+    
+</nav>
+
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2019/04/07/递归与迭代/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "递归与迭代"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+    <head><meta name="generator" content="Hexo 3.8.0">
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="https://zhangmin.name/images/favicon.png">
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="https://zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>SpringCloud概览 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="https://zhangmin.name"><img src="https://zhangmin.name/images/me.jpg" alt="ZhangMin.name"></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="https://zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+<h6><a href="/blog/ir">Investor Relations</a></h6>
+<h6><a href="https://www.toutiao.com/c/user/100118204993/">头条号10XChange</a></h6>
+<h6><a href="https://juejin.im/user/5ba22f41e51d450e4a1bb1a8/">掘金Protopia</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  April 7, 2019
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href="/blog/tags/ARTS/">ARTS</a>
+    
+    </span>
+    <span class="taglist">本文字数: 523 </span>
+    <span class="taglist">阅读时长：1 min </span>
+    <span class="taglist">全站字数：355k</span>
+  
+
+  <h1 class="post-title">SpringCloud概览</h1>
+  <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring-Cloud的功能"><span class="toc-text">Spring Cloud的功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#云原生应用"><span class="toc-text">云原生应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-Cloud-Context"><span class="toc-text">Spring Cloud Context</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-Cloud-Commons"><span class="toc-text">Spring Cloud Commons</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
+    <h1 id="Spring-Cloud的功能"><a href="#Spring-Cloud的功能" class="headerlink" title="Spring Cloud的功能"></a>Spring Cloud的功能</h1><p>Spring Cloud提供的典型的使用示例和扩展机制：</p>
+<ol>
+<li>分布式多版本配置。</li>
+<li>服务注册和发现。</li>
+<li>路由。</li>
+<li>服务到服务的调用。</li>
+<li>负载均衡。</li>
+<li>熔断器。</li>
+<li>分布式消息。</li>
+</ol>
+<h1 id="云原生应用"><a href="#云原生应用" class="headerlink" title="云原生应用"></a>云原生应用</h1><p>云原生是一种应用开发风格，鼓励使用持续交付的最佳实践和价值导向的开发。和云原生相关的是12-factor应用。</p>
+<p>云原生应用的开发会与应用的交付和运维相结合。如使用声明式的编程，管理和监控。</p>
+<p>Spring Cloud加速云原生应用的开发，提供分布式应用中最常见的组件。这些组件都是基于Spring Boot开发。主要提供两个类库：Spring Cloud Context和Spring Cloud Common。</p>
+<ul>
+<li>Spring Cloud Context为Spring Cloud的应用的ApplicationContext提供工具类和特殊服务，如启动上下文，加密，作用域刷新，环境等。</li>
+<li>Spring Cloud Common是通用类的抽象，在Spring Cloud的各种实现中使用，如Spring Cloud Netflix和Spring Cloud Consul。</li>
+</ul>
+<h2 id="Spring-Cloud-Context"><a href="#Spring-Cloud-Context" class="headerlink" title="Spring Cloud Context"></a>Spring Cloud Context</h2><p>Spring Boot有其自己的规范，如通用配置文件的位置，通用的管理和监控任务。Spring Cloud基于Spring Boot构建，提供新的特性，这些特性在开发云原生应用时会被用到。</p>
+<p>Spring Cloud应用的运行时通过创建“bootstrap”上下文，这个上下文是应用的父上下文，复杂加载配置文件和解密外部的配置文件。</p>
+<p>另外还介绍了bootstrap上下文的自定义方式，日志配置，环境改变，作用域刷新，加密解密以及监控端点。</p>
+<h2 id="Spring-Cloud-Commons"><a href="#Spring-Cloud-Commons" class="headerlink" title="Spring Cloud Commons"></a>Spring Cloud Commons</h2><p>服务发现，负载均衡，熔断器等作为通用的抽象层，和具体的实现分离，如服务发现可以使用Eureka和Consul实现。</p>
+<p>然后介绍了<code>@EnableDiscoverClient</code>注解的工作原理，服务注册，负载均衡客户端和Spring已有的HTTP客户端的集成使用，忽略特定的网络接口，HTTP客户端工厂配置，Spring Cloud Feature的监控端点配置等。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><a href="https://cloud.spring.io/spring-cloud-static/Greenwich.RELEASE/single/spring-cloud.html#_cloud_native_applications" target="_blank" rel="noopener">SpringCloud官方文档</a></li>
+</ol>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2019/04/07/GC日志阅读/">
+        ← prev <!--GC日志阅读-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2019/04/07/ARTS-003-递归-SpringCloud-Go-GC日志/">
+        <!--ARTS-003-递归-SpringCloud-Go-GC日志--> next →
+    </a>
+    
+</nav>
+
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2019/04/07/SpringCloud概览/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "SpringCloud概览"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>
