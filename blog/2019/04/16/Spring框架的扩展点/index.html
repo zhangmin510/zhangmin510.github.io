@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+    <head><meta name="generator" content="Hexo 3.8.0">
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="https://zhangmin.name/images/favicon.png">
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="https://zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>Spring框架的扩展点 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="https://zhangmin.name"><img src="https://zhangmin.name/images/me.jpg" alt="ZhangMin.name"></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="https://zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+<h6><a href="/blog/ir">Investor Relations</a></h6>
+<h6><a href="https://www.toutiao.com/c/user/100118204993/">头条号10XChange</a></h6>
+<h6><a href="https://juejin.im/user/5ba22f41e51d450e4a1bb1a8/">掘金Protopia</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  April 16, 2019
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href="/blog/tags/JAVA/">JAVA</a>
+    
+    </span>
+    <span class="taglist">本文字数: 922 </span>
+    <span class="taglist">阅读时长：3 min </span>
+    <span class="taglist">全站字数：359.2k</span>
+  
+
+  <h1 class="post-title">Spring框架的扩展点</h1>
+  <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring设计哲学"><span class="toc-text">Spring设计哲学</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何定制化bean"><span class="toc-text">如何定制化bean</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何扩展Spring"><span class="toc-text">如何扩展Spring</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
+    <h1 id="Spring设计哲学"><a href="#Spring设计哲学" class="headerlink" title="Spring设计哲学"></a>Spring设计哲学</h1><p>Spring框架诞生于2003年，Spring的主要目标就是让创建Java企业应用更容易。因此，Spring并没有完全支持Java EE，而是选择性支持Servlet API， WebSocket API，Concurrency Utilities, JSON Binding API , Bean Validation, JPA, JMS等。Spring框架是模块化的，最核心的是容器模块，包括配置模型和依赖注入机制。</p>
+<p>Spring的设计哲学：</p>
+<ol>
+<li>在每一层提供选择机制。最大化延迟设计决策的时间，如可以通过修改配置切换持久化实现，而不需要改代码。</li>
+<li>满足多种需求，强大的灵活性。</li>
+<li>强大的向后兼容。谨慎的选择支持JDK版本和第三方类库。</li>
+<li>优雅的API设计。</li>
+<li>注重代码质量。完整的javadoc， 没有包的循环依赖。</li>
+</ol>
+<h1 id="如何定制化bean"><a href="#如何定制化bean" class="headerlink" title="如何定制化bean"></a>如何定制化bean</h1><p>Spring提供三类接口来满足对Bean的定制化需求，这三类接口是<code>Lifecycle Callback</code>，<code>ApplicationContextAware</code>和<code>BeanNameAware</code>，以及其他<code>Aware</code>接口。</p>
+<p>第一种<code>Lifecycle Callbacks</code>主要用于和Bean的生命周期进行交互。可以通过实现<code>InitializingBean</code>和<code>DisposableBean</code>接口实现。Spring容器会在<code>afterPropertiesSet()</code>中调用<code>InitializingBean</code>，在<code>destroy()</code>中调用<code>DisposableBean</code>。</p>
+<p>但是，一般用于接收生命周期回调的最佳实践是<br>使用<code>JSR-250</code>的<code>@PostConstruct</code>和<code>@PreDestroy</code>注解。使用这两个注解可以和<code>Spring</code>解耦。另外，还有一种解耦机制就是定义Bean时的<code>init-method</code>和<code>destroy-method</code>。</p>
+<p>在Spring内部，Spring框架使用<code>BeanPostProcessor</code>来处理可以发现的回调接口，并调用他们。</p>
+<p>第二种方法，当一个Bean实现了<code>ApplicationContextAware</code>和<code>BeanNameAware</code>接口，这个Bean就会通过回调函数的形式获得ApplicationContext和Bean Name，从而可以进行定制化的配置。</p>
+<p>第三种方法是使用各种其他Aware接口，实现的类可以获取相应的实例对象。具体参考<a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#aware-list" target="_blank" rel="noopener">Aware-List</a></p>
+<h1 id="如何扩展Spring"><a href="#如何扩展Spring" class="headerlink" title="如何扩展Spring"></a>如何扩展Spring</h1><p>在实际开发过程中，开发者还需要扩展Spring来实现自己的需求。一般开发者不需要通过继承ApplicationContext来实现对Spring的扩展，Spring的扩展是通过插件化的接口实现：</p>
+<ol>
+<li>通过使用<code>BeanPostProcessor</code>来自定义Bean。该接口定义了回调方法可以用于实现自定义的Bean初始化逻辑，依赖解析或者其他。如果你想在Spring容器完成了实例化，配置和初始化Bean之后进行自定的操作，就可以插入一个或者多个自定的<code>BeanPostProcessor</code>来实现。多个实例还可以通过实现<code>Orderd</code>接口来控制执行的顺序。需要注意的是BeanPostProcessor操作的是Bean实例，如果想修改Bean的定义，则需要定制化<code>BeanFactoryPostProcessor</code>来实现；另外，<code>BeanPostProcessor</code>和具体的容器绑定的，且只能在绑定的容器中生效。<code>BeanPostProcessor</code>提供的方法：<ul>
+<li><code>Object postProcessBeforeInitialization(Object bean, String beanName)</code>. 初始化之前的操作。</li>
+<li><code>Object postProcessAfterInitialization(Object bean, String beanName)</code>. 初始化之后的操作。</li>
+</ul>
+</li>
+<li>使用<code>BeanFactoryPostProcessor</code>自定义配置Bean的元数据。相比<code>BeanPostProcessor</code>，<code>BeanFactoryPostProcessor</code>可以读取和操作Bean的配置元数据，在容器实例化任何Bean之前进行修改。也可以通过实现<code>Orderd</code>接口来控制多个<code>BeanFactoryPostProcessor</code>的执行顺序。提供的方法有：<ul>
+<li><code>void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory)</code>。此时Bean的定义信息已经加载，但是Bean还没有初始化。</li>
+</ul>
+</li>
+<li>通过实现<code>FactoryBean</code>来自定义实例化逻辑。FactoryBean是Spring IoC容器初始化的一个可插拔的扩展点，可以实现具有较复杂实例化逻辑。提供三个方法：<ul>
+<li><code>Object getObject()</code>. 返回这个工厂创建的实例。</li>
+<li><code>boolean isSingleton()</code>. 创建实例作用域，singleton还是其他。</li>
+<li><code>Class getObjectType()</code>. 返回创建实例的类型。</li>
+</ul>
+</li>
+</ol>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-factory-nature" target="_blank" rel="noopener">自定义bean</a></li>
+<li><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-factory-extension" target="_blank" rel="noopener">Spring的扩展点</a></li>
+</ol>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2019/04/16/如何实现自己的SpringBoot-Autoconfiguration/">
+        ← prev <!--如何实现自己的SpringBoot Autoconfigure-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2019/04/07/GC日志阅读/">
+        <!--GC日志阅读--> next →
+    </a>
+    
+</nav>
+
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2019/04/16/Spring框架的扩展点/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "Spring框架的扩展点"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>

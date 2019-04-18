@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+    <head><meta name="generator" content="Hexo 3.8.0">
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="https://zhangmin.name/images/favicon.png">
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="https://zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>如何实现自己的SpringBoot Autoconfigure | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="https://zhangmin.name"><img src="https://zhangmin.name/images/me.jpg" alt="ZhangMin.name"></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="https://zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+<h6><a href="/blog/ir">Investor Relations</a></h6>
+<h6><a href="https://www.toutiao.com/c/user/100118204993/">头条号10XChange</a></h6>
+<h6><a href="https://juejin.im/user/5ba22f41e51d450e4a1bb1a8/">掘金Protopia</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  April 16, 2019
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href="/blog/tags/JAVA/">JAVA</a>
+    
+    </span>
+    <span class="taglist">本文字数: 1.1k </span>
+    <span class="taglist">阅读时长：5 min </span>
+    <span class="taglist">全站字数：359.2k</span>
+  
+
+  <h1 class="post-title">如何实现自己的SpringBoot Autoconfigure</h1>
+  <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SpringBoot基本原理"><span class="toc-text">SpringBoot基本原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现自己的AutoConfiguration"><span class="toc-text">实现自己的AutoConfiguration</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一步：引入Spring官方依赖"><span class="toc-text">第一步：引入Spring官方依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二步：编写Java-Configuration，并添加条件注解"><span class="toc-text">第二步：编写Java Configuration，并添加条件注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三步：定位自动配置"><span class="toc-text">第三步：定位自动配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第四步：定义自动配置的执行顺序"><span class="toc-text">第四步：定义自动配置的执行顺序</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何在不支持SpringBoot的老版本Spring中实现SpringBoot"><span class="toc-text">如何在不支持SpringBoot的老版本Spring中实现SpringBoot</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
+    <h1 id="SpringBoot基本原理"><a href="#SpringBoot基本原理" class="headerlink" title="SpringBoot基本原理"></a>SpringBoot基本原理</h1><p><code>SpringBoot</code>可以帮助我们更好的使用<code>Spring</code>，更快的配置一个可以运行的Spring应用。</p>
+<p><code>SpringBoot</code>实现自动配置实现的入口是<code>@EnableAutoConfiguration</code>注解，该注解又通过<code>@Import</code>注解导入了<code>AutoConfigurationImportSelector</code>，在该类中实现了对<code>META-INF/spring.factories</code>中<br><code>org.springframework.boot.autoconfigure.EnableAutoConfiguration</code>属性指定的所有配置，如<code>org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration</code>。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//文件：spring-boot-autoconfigure-2.1.3.RELEASE.jar!/META-INF/spring.factories</span></span><br><span class="line"></span><br><span class="line"># Auto Configure</span><br><span class="line">org.springframework.<span class="keyword">boot</span>.autoconfigure.EnableAutoConfiguration=\</span><br><span class="line">org.springframework.<span class="keyword">boot</span>.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\</span><br><span class="line">org.springframework.<span class="keyword">boot</span>.autoconfigure.aop.AopAutoConfiguration,\</span><br><span class="line">org.springframework.<span class="keyword">boot</span>.autoconfigure.amqp.RabbitAutoConfiguration,\</span><br><span class="line">org.springframework.<span class="keyword">boot</span>.autoconfigure.batch.BatchAutoConfiguration,\</span><br><span class="line">org.springframework.<span class="keyword">boot</span>.autoconfigure.cache.CacheAutoConfiguration,\</span><br></pre></td></tr></table></figure>
+<p>在CacheAutoConfiguration中，通过条件注解<code>@ConditionalOnXXX</code>，以及<code>@Import</code>注解来实现对缓存功能的相关<code>Bean</code>的自动配置。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 文件：spring-boot-autoconfigure-2.1.3.RELEASE-sources.jar!/org/springframework/boot/autoconfigure/cache/CacheAutoConfiguration.java</span></span><br><span class="line"></span><br><span class="line"><span class="variable">@Configuration</span></span><br><span class="line"><span class="variable">@ConditionalOnClass</span>(CacheManager.class)</span><br><span class="line"><span class="variable">@ConditionalOnBean</span>(CacheAspectSupport.class)</span><br><span class="line"><span class="variable">@ConditionalOnMissingBean</span>(value = CacheManager.class, name = <span class="string">"cacheResolver"</span>)</span><br><span class="line"><span class="variable">@EnableConfigurationProperties</span>(CacheProperties.class)</span><br><span class="line"><span class="variable">@AutoConfigureAfter</span>(&#123; CouchbaseAutoConfiguration.class, HazelcastAutoConfiguration.class,</span><br><span class="line">truetrueHibernateJpaAutoConfiguration.class, RedisAutoConfiguration.class &#125;)</span><br><span class="line"><span class="variable">@Import</span>(CacheConfigurationImportSelector.class)</span><br><span class="line">public class CacheAutoConfiguration &#123;</span><br><span class="line"></span><br><span class="line">true<span class="variable">@Bean</span></span><br><span class="line">true<span class="variable">@ConditionalOnMissingBean</span></span><br><span class="line">truepublic CacheManagerCustomizers cacheManagerCustomizers(</span><br><span class="line">truetruetrueObjectProvider&lt;CacheManagerCustomizer&lt;?&gt;&gt; customizers) &#123;</span><br><span class="line">truetrue<span class="selector-tag">return</span> <span class="selector-tag">new</span> <span class="selector-tag">CacheManagerCustomizers</span>(</span><br><span class="line">truetruetruetruecustomizers.orderedStream().collect(Collectors.toList()));</span><br><span class="line">true&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="实现自己的AutoConfiguration"><a href="#实现自己的AutoConfiguration" class="headerlink" title="实现自己的AutoConfiguration"></a>实现自己的AutoConfiguration</h1><p>在实际开发过程中，我们可能需要将公司内部的，或者Spring官方还不支持的第三方类库集成到我们的项目中。但是为了重用，最好能够按照SpringBoot的自动配置来配置。</p>
+<h2 id="第一步：引入Spring官方依赖"><a href="#第一步：引入Spring官方依赖" class="headerlink" title="第一步：引入Spring官方依赖"></a>第一步：引入Spring官方依赖</h2><p>项目的pom文件：</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span></span><br><span class="line"><span class="xml">	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;</span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!-- 和Spring官方的自动配置做区分 --&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>geektime.spring.hello<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>geektime-spring-boot-autoconfigure<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>geektime-spring-boot-autoconfigure<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>Demo project for Spring Boot<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">properties</span>&gt;</span></span></span><br><span class="line"><span class="xml">		<span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span></span><br><span class="line"><span class="xml">		<span class="tag">&lt;<span class="name">spring-boot.version</span>&gt;</span>2.1.3.RELEASE<span class="tag">&lt;/<span class="name">spring-boot.version</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">     <span class="comment">&lt;!-- 引入Spring官方的配置管理 --&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span></span><br><span class="line"><span class="xml">		<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span></span><br><span class="line"><span class="xml">			<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span></span><br><span class="line"><span class="xml">				<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></span><br><span class="line"><span class="xml">				<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></span><br><span class="line"><span class="xml">				<span class="tag">&lt;<span class="name">version</span>&gt;</span>$</span><span class="template-variable">&#123;spring-boot.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></span><br><span class="line"><span class="xml">				<span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span></span><br><span class="line"><span class="xml">				<span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span></span><br><span class="line"><span class="xml">			<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span></span><br><span class="line"><span class="xml">		<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span></span><br><span class="line"><span class="xml">         <span class="comment">&lt;!-- 引入SpringBoot的自动配置模块 --&gt;</span></span></span><br><span class="line"><span class="xml">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span></span><br><span class="line"><span class="xml">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></span><br><span class="line"><span class="xml">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-autoconfigure<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></span><br><span class="line"><span class="xml">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        <span class="comment">&lt;!-- 自己的定义第三方依赖 --&gt;</span></span></span><br><span class="line"><span class="xml">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span></span><br><span class="line"><span class="xml">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>geektime.spring.hello<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></span><br><span class="line"><span class="xml">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>greeting<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></span><br><span class="line"><span class="xml">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></span><br><span class="line"><span class="xml">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span></span><br><span class="line"><span class="xml">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="第二步：编写Java-Configuration，并添加条件注解"><a href="#第二步：编写Java-Configuration，并添加条件注解" class="headerlink" title="第二步：编写Java Configuration，并添加条件注解"></a>第二步：编写Java Configuration，并添加条件注解</h2><p>Spring支持的条件注解：</p>
+<ul>
+<li>条件注解@Conditional</li>
+<li>类条件@ConditionalOnClass，@ConditionalOnMissingClass</li>
+<li>属性条件@ConditionalOnProperty</li>
+<li>Bean 条件@ConditionalOnBean，@ConditionalOnMissingBean，@ConditionalOnSingleCandidate</li>
+<li>资源条件@ConditionalOnResource</li>
+<li>Web 应⽤用条件@ConditionalOnWebApplication，@ConditionalOnNotWebApplication</li>
+<li>其他条件@ConditionalOnExpression，@ConditionalOnJava，@ConditionalOnJndi</li>
+</ul>
+<p>Java Configuration代码如下：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Configuration</span></span><br><span class="line"><span class="variable">@ConditionalOnClass</span>(GreetingApplicationRunner.class)</span><br><span class="line">public class GreetingAutoConfiguration &#123;</span><br><span class="line">    <span class="variable">@Bean</span></span><br><span class="line">    <span class="variable">@ConditionalOnMissingBean</span>(GreetingApplicationRunner.class)</span><br><span class="line">    <span class="variable">@ConditionalOnProperty</span>(name = <span class="string">"greeting.enabled"</span>, havingValue = <span class="string">"true"</span>, matchIfMissing = true)</span><br><span class="line">    public GreetingApplicationRunner greetingApplicationRunner() &#123;</span><br><span class="line">        <span class="selector-tag">return</span> <span class="selector-tag">new</span> <span class="selector-tag">GreetingApplicationRunner</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="第三步：定位自动配置"><a href="#第三步：定位自动配置" class="headerlink" title="第三步：定位自动配置"></a>第三步：定位自动配置</h2><p>在当前项目的<code>resource</code>目录下的<code>META-INF</code>目录下创建<code>spring.factories</code>文件，内容如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">org<span class="selector-class">.springframework</span><span class="selector-class">.boot</span><span class="selector-class">.autoconfigure</span><span class="selector-class">.EnableAutoConfiguration</span>=\</span><br><span class="line">geektime<span class="selector-class">.spring</span><span class="selector-class">.hello</span><span class="selector-class">.greeting</span><span class="selector-class">.GreetingAutoConfiguration</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="第四步：定义自动配置的执行顺序"><a href="#第四步：定义自动配置的执行顺序" class="headerlink" title="第四步：定义自动配置的执行顺序"></a>第四步：定义自动配置的执行顺序</h2><p>主要的注解有：</p>
+<ul>
+<li>@AutoConfigureBefore</li>
+<li>@AutoConfigureAfter</li>
+<li>@AutoConfigureOrder</li>
+</ul>
+<p>一般不需要，具体使用可以参考<a href="https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure" target="_blank" rel="noopener">Spring官方的自动配置</a>。</p>
+<h1 id="如何在不支持SpringBoot的老版本Spring中实现SpringBoot"><a href="#如何在不支持SpringBoot的老版本Spring中实现SpringBoot" class="headerlink" title="如何在不支持SpringBoot的老版本Spring中实现SpringBoot"></a>如何在不支持SpringBoot的老版本Spring中实现SpringBoot</h1><p>如果在老版本的Spring中实现类似SpringBoot的自动配置功能，则需要使用Spring的扩展点机制，原理可以参考博文<a href="/blog/2019/04/16/Spring框架的扩展点/">Spring框架的扩展点</a>。</p>
+<p>添加一个Configuration：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GreetingAutoConfiguration</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> GreetingBeanFactoryPostProcessor <span class="title">greetingBeanFactoryPostProcessor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> GreetingBeanFactoryPostProcessor();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>自定义一个<code>BeanFactoryPostProcessor</code>实现类似条件注解的功能：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GreetingBeanFactoryPostProcessor</span> <span class="keyword">implements</span> <span class="title">BeanFactoryPostProcessor</span> &#123;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) <span class="keyword">throws</span> BeansException &#123;</span><br><span class="line">        <span class="keyword">boolean</span> hasClass = ClassUtils.isPresent(<span class="string">"geektime.spring.hello.greeting.GreetingApplicationRunner"</span>,</span><br><span class="line">                GreetingBeanFactoryPostProcessor.<span class="keyword">class</span>.getClassLoader());</span><br><span class="line">        <span class="keyword">if</span> (!hasClass) &#123;</span><br><span class="line">            log.info(<span class="string">"GreetingApplicationRunner is NOT present in CLASSPATH."</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (beanFactory.containsBeanDefinition(<span class="string">"greetingApplicationRunner"</span>)) &#123;</span><br><span class="line">            log.info(<span class="string">"We already have a greetingApplicationRunner bean registered."</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        register(beanFactory);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> register(ConfigurableListableBeanFactory beanFactory) &#123;</span><br><span class="line">        <span class="keyword">if</span> (beanFactory <span class="keyword">instanceof</span> BeanDefinitionRegistry) &#123;</span><br><span class="line">            GenericBeanDefinition beanDefinition = <span class="keyword">new</span> GenericBeanDefinition();</span><br><span class="line">            beanDefinition.setBeanClass(GreetingApplicationRunner.<span class="keyword">class</span>);</span><br><span class="line"></span><br><span class="line">            ((BeanDefinitionRegistry) beanFactory)</span><br><span class="line">                    .registerBeanDefinition(<span class="string">"greetingApplicationRunner"</span>,</span><br><span class="line">                            beanDefinition);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            beanFactory.registerSingleton(<span class="string">"greetingApplicationRunner"</span>,</span><br><span class="line">                    <span class="keyword">new</span> GreetingApplicationRunner());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><a href="/blog/2019/04/16/Spring框架的扩展点/">Spring框架的扩展点</a></li>
+<li><a href="https://time.geekbang.org/course/detail/156-87616" target="_blank" rel="noopener">Spring全家桶视频课程之SpringBoot</a></li>
+<li><a href="https://github.com/digitalsonic/geektime-spring-family/tree/master/Chapter%209" target="_blank" rel="noopener">Spring全家桶课程代码</a></li>
+</ol>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2019/04/16/Largest-Number/">
+        ← prev <!-- Largest Number-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2019/04/16/Spring框架的扩展点/">
+        <!--Spring框架的扩展点--> next →
+    </a>
+    
+</nav>
+
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2019/04/16/如何实现自己的SpringBoot-Autoconfiguration/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "如何实现自己的SpringBoot Autoconfigure"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>
