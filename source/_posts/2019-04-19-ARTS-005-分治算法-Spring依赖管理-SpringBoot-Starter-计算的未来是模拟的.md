@@ -1,4 +1,4 @@
-title: ARTS-005-20190415-分治算法-Spring依赖管理-SpringBoot-Starter-计算的未来是模拟的
+title: ARTS-005-分治算法-Spring依赖管理-SpringBoot-Starter-计算的未来是模拟的
 tags:
   - ARTS
   - ''
