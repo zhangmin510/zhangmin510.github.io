@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+    <head><meta name="generator" content="Hexo 3.8.0">
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="ZhangMin.name's blog">
+        <link rel="shortcut icon" href="https://zhangmin.name/images/favicon.png">
+        <link rel="alternate" type="application/rss+xml" title="ZhangMin.name" href="https://zhangmin.name/blog/atom.xml">
+        <link rel="canonical" href="http://www.zhangmin.name/">
+
+        <title>分治算法 | ZhangMin.name</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/blog/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="https://zhangmin.name"><img src="https://zhangmin.name/images/me.jpg" alt="ZhangMin.name"></a>
+            <h1><a href="/blog/">ZhangMin.name</a></h1>
+            <p>勤思敏行 思行合一</p>
+            <div id="follow-icons">
+	<a href="http://instagram.com/zhangmin510"><i class="fa fa-instagram fa-2x"></i></a>
+	<a href="http://pinterest.com/zhangmin510"><i class="fa fa-pinterest-square fa-2x"></i></a>
+	<a href="http://github.com/zhangmin510"><i class="fa fa-github-square fa-2x"></i></a>
+	<a href="http://facebook.com/zhangmin510"><i class="fa fa-facebook-square fa-2x"></i></a>
+	<a href="http://twitter.com/zhangmin510"><i class="fa fa-twitter-square fa-2x"></i></a>
+	<a href="http://linkedin.com/in/zhangmin510"><i class="fa fa-linkedin-square fa-2x"></i></a>
+	<a href="https://zhangmin.name/blog/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+</div>
+<h6><a href="/blog/about">About</a></h6>
+<h6><a href="/blog/readings">Readings</a></h6>
+<h6><a href="/blog/ir">Investor Relations</a></h6>
+<h6><a href="https://www.toutiao.com/c/user/100118204993/">头条号10XChange</a></h6>
+<h6><a href="https://juejin.im/user/5ba22f41e51d450e4a1bb1a8/">掘金Protopia</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+
+  April 19, 2019
+  
+    <span class="taglist">  &middot;
+    
+    
+      <a href="/blog/tags/数据结构与算法/">数据结构与算法</a>
+    
+    </span>
+    <span class="taglist">本文字数: 1.4k </span>
+    <span class="taglist">阅读时长：5 min </span>
+    <span class="taglist">全站字数：361.8k</span>
+  
+
+  <h1 class="post-title">分治算法</h1>
+  <section class="post-content article-entry">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#分治算法"><span class="toc-text">分治算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#海量数据处理中的分治思想"><span class="toc-text">海量数据处理中的分治思想</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分治算法典型框架-MapReduce"><span class="toc-text">分治算法典型框架-MapReduce</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么现在硅谷一线公司都不在使用MapReduce了"><span class="toc-text">为什么现在硅谷一线公司都不在使用MapReduce了</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#系统复杂，维护困难"><span class="toc-text">系统复杂，维护困难</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时间性能差"><span class="toc-text">时间性能差</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+  </section>
+  <section class="post-content article-entry">
+    <h1 id="分治算法"><a href="#分治算法" class="headerlink" title="分治算法"></a>分治算法</h1><p>分治算法（Divide and Conquer）就是分而治之。将问题划分成n个较小规模的问题，每个子问题的结构和原问题相似，递归的解决这些子问题，最后合并这些子问题的结果来得到原问题的解。这里需要说明的是分治算法是一种处理问题的思想，而递归是一种编程技巧。分治算法的实现一般都是使用递归来实现，在每一层的递归进行三个操作：</p>
+<ol>
+<li>分解问题。将原问题按照一定的规则分解成为独立的子问题。</li>
+<li>解决子问题。递归求解各个子问题。</li>
+<li>合并结果。将子问题的结果合并成原问题的结果。</li>
+</ol>
+<p>能够用分治算法求解的问题需要满足以下几个条件：</p>
+<ol>
+<li>原问题和分解后的子问题的模式相同。</li>
+<li>子问题可以独立求解，子问题之间没有关联性。</li>
+<li>当子问题规模足够小时，可以直接求解。</li>
+<li>子问题的解合并为原问题的解的复杂度不能太高，否则算法整体复杂度过高。</li>
+</ol>
+<p>分治算法最典型的应用就是排序算法中的归并排序。看一下归并排序的模板代码：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">def</span> divide_conquer(problem, <span class="built_in">p1</span>, <span class="built_in">p2</span>):</span><br><span class="line">  // 递归终止条件</span><br><span class="line">  <span class="meta">if</span> problem is None:</span><br><span class="line">   print_result</span><br><span class="line">   return</span><br><span class="line"></span><br><span class="line">  // 准备数据</span><br><span class="line">  <span class="meta">data</span> = prepare_data(problem)</span><br><span class="line">  <span class="keyword">sub_problems </span>= split_problem(problem, <span class="meta">data</span>)</span><br><span class="line"></span><br><span class="line">  // 分治子问题</span><br><span class="line">  <span class="keyword">sub_result_0= </span>divide_conquer(<span class="keyword">sub_problem[0], </span><span class="built_in">p1</span>)</span><br><span class="line">   <span class="keyword">sub_result_1 </span>= divide_conquer(<span class="keyword">sub_problem[1], </span><span class="built_in">p1</span>)</span><br><span class="line">  // 处理分支结果，生成最终结果</span><br><span class="line">  result = process_result(<span class="keyword">sub_result_0, </span><span class="keyword">sub_result_1)</span></span><br></pre></td></tr></table></figure>
+<p>归并排序的代码实现：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> int[] mergeSort(int[] nums) &#123;</span><br><span class="line">     <span class="keyword">if</span> (nums == null) &#123;</span><br><span class="line">         <span class="keyword">return</span> new int[<span class="number">0</span>];</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 子数组只剩一个元素了，直接返回该数组</span></span><br><span class="line">     <span class="keyword">if</span> (nums.length == <span class="number">1</span>) &#123;</span><br><span class="line">         <span class="keyword">return</span> nums;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 将数组分为两半</span></span><br><span class="line">     int mid = nums.length &gt;&gt; <span class="number">1</span>;</span><br><span class="line">     int[] <span class="keyword">left</span> = <span class="type">Arrays</span>.copyOfRange(nums, <span class="number">0</span>, mid);</span><br><span class="line">     int[] <span class="keyword">right</span> = <span class="type">Arrays</span>.copyOfRange(nums, mid, nums.length);</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 嵌套调用，处理两个子数组</span></span><br><span class="line">     <span class="keyword">left</span> = mergeSort(<span class="keyword">left</span>);</span><br><span class="line">     <span class="keyword">right</span> = mergeSort(<span class="keyword">right</span>);</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 合并两个已经排好序的数组</span></span><br><span class="line">     int[] merged = merge(<span class="keyword">left</span>, <span class="keyword">right</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> merged;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">static</span> int[] merge(int[] <span class="keyword">left</span>, int[] <span class="keyword">right</span>) &#123;</span><br><span class="line">     <span class="keyword">if</span> (<span class="keyword">left</span> == null) &#123;</span><br><span class="line">         <span class="keyword">left</span> = new int[<span class="number">0</span>];</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">if</span> (<span class="keyword">right</span> == null) &#123;</span><br><span class="line">         <span class="keyword">right</span> = new int[<span class="number">0</span>];</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     int[] merged = new int[<span class="keyword">left</span>.length + <span class="keyword">right</span>.length];</span><br><span class="line">     int i = <span class="number">0</span>, j = <span class="number">0</span>, k = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 合并两个数组</span></span><br><span class="line">     <span class="keyword">while</span> (i &lt; <span class="keyword">left</span>.length &amp;&amp; j &lt; <span class="keyword">right</span>.length) &#123;</span><br><span class="line">         <span class="keyword">if</span> (<span class="keyword">left</span>[i] &lt;= <span class="keyword">right</span>[j]) &#123;</span><br><span class="line">             merged[k] = <span class="keyword">left</span>[i];</span><br><span class="line">             i++;</span><br><span class="line">         &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">             merged[k] = <span class="keyword">right</span>[j];</span><br><span class="line">             j++;</span><br><span class="line">         &#125;</span><br><span class="line">         k++;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 直接拷贝剩余的数组</span></span><br><span class="line">     <span class="keyword">if</span> (i &lt; <span class="keyword">left</span>.length) &#123;</span><br><span class="line">         <span class="keyword">for</span> (int m = i; m &lt; <span class="keyword">left</span>.length; m++) &#123;</span><br><span class="line">             merged[k] = <span class="keyword">left</span>[m];</span><br><span class="line">             k++;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (j &lt; <span class="keyword">right</span>.length) &#123;</span><br><span class="line">         <span class="keyword">for</span> (int m = j; m &lt; <span class="keyword">right</span>.length; m++) &#123;</span><br><span class="line">             merged[k] = <span class="keyword">right</span>[m];</span><br><span class="line">             k++;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> merged;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="海量数据处理中的分治思想"><a href="#海量数据处理中的分治思想" class="headerlink" title="海量数据处理中的分治思想"></a>海量数据处理中的分治思想</h1><p>海量数据处理的典型问题就是：需要排序的数组很大（比如达到 1024GB 的时候），无法把这些数据都载入一台普通机器的内存里。此时该如何对这个数组排序？</p>
+<p>利用分治算法，把这个超级大的数据集，分解为多个更小的数据集（比如 16GB 或者更小），然后分配到多台机器，让它们并行地处理。</p>
+<p>在单台机器上实现归并排序的时候，我们只需要在递归函数内，实现数据分组以及合并就行了。而在多个机器之间分配数据的时候，递归函数内除了分组及合并，还要负责把数据分发到某台机器上。</p>
+<h1 id="分治算法典型框架-MapReduce"><a href="#分治算法典型框架-MapReduce" class="headerlink" title="分治算法典型框架-MapReduce"></a>分治算法典型框架-MapReduce</h1><p>2003 年，Google发布论文《MapReduce: Simplified Data Processing on Large Clusters》，标志着MapReduce的诞生。杰夫（Jeff Dean）和桑杰（Sanjay Ghemawat）从纷繁复杂的业务逻辑中，为我们抽象出了 Map 和 Reduce 这样足够通用的编程模型。</p>
+<p>Google的MapReduce框架其实是一个任务调度器，它底层依赖GFS来存储任务数据，依赖Borg管理的机器来处理任务。</p>
+<h2 id="为什么现在硅谷一线公司都不在使用MapReduce了"><a href="#为什么现在硅谷一线公司都不在使用MapReduce了" class="headerlink" title="为什么现在硅谷一线公司都不在使用MapReduce了"></a>为什么现在硅谷一线公司都不在使用MapReduce了</h2><h3 id="系统复杂，维护困难"><a href="#系统复杂，维护困难" class="headerlink" title="系统复杂，维护困难"></a>系统复杂，维护困难</h3><p>使用MapReduce，必须严格遵循分步Map和Reduce的步骤。如果构建复杂的处理架构时，需要协调多个Map和多个Reduce任务，而每一步的MapReduce都可能出错，为了处理这些异常，有人设计自己的协调系统，如一个状态机，这增加了整个系统的复杂度。</p>
+<p>例如一个收集数据进行识别的项目，就需要划分成不同的MapReduce任务，如：先进行数据收集，这其中包括数据导入，数据统一化，数据压缩，数据备份等步骤；数据收集完成还需要进行质量控制，如校验数据的时间的有效性，照片对焦较正等；最后才是从图片中识别，包括标注数据，标注结果下载，标注异议整合，标注结果结构化。</p>
+<p>在上面的整个过程中，每一步都可能出错，需要重试和异常处理逻辑，需要一个和业务紧密耦合的状态机。如此复杂的系统，维护起来的难度可想而知。</p>
+<h3 id="时间性能差"><a href="#时间性能差" class="headerlink" title="时间性能差"></a>时间性能差</h3><p>编写优秀的MapReduce程序需要很高的学习门槛。 Google 500 多页的 MapReduce 性能优化手册足够说明其复杂度了。如分片策略，缓冲大小，分片多少，预抓取策略，缓存大小等。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><a href="https://time.geekbang.org/column/article/90081" target="_blank" rel="noopener">为什么MapReduce会被硅谷一线公司淘汰</a></li>
+<li><a href="https://time.geekbang.org/column/article/73503" target="_blank" rel="noopener">分治算法：谈一谈大规模计算框架MapReduce中的分治思想</a></li>
+<li><a href="https://time.geekbang.org/column/article/73834" target="_blank" rel="noopener">递归（下）：分而治之，从归并排序到MapReduce</a></li>
+</ol>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>ZhangMin.name</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2019/04/19/ARTS-005-20190415-分治算法-Spring依赖管理-SpringBoot-Starter-计算的未来是模拟的/">
+        ← prev <!--ARTS-005-20190415-分治算法-Spring依赖管理-SpringBoot-Starter-计算的未来是模拟的-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/blog/2019/04/16/Spring依赖管理/">
+        <!--Spring依赖管理--> next →
+    </a>
+    
+</nav>
+
+  <div id="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = "https://zhangmin.name/blog/2019/04/19/分治算法/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "分治算法"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        var disqus_shortname = 'zhangmin';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 ZhangMin.name. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme customized by <a href="http://zhangmin.name" target="_blank">ZhangMin.name</a>.</section>
+        </footer>
+    </body>
+</html>
